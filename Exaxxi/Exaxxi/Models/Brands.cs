@@ -19,7 +19,7 @@ namespace Exaxxi.Models
         public int order { get; set; }
 
         public int id_department { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_department")]
         public Departments department { get; set; }
 
         public IEnumerable<Categories> categories { get; set; }

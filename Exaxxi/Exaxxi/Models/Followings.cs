@@ -12,10 +12,10 @@ namespace Exaxxi.Models
         [Key]
         public int id { get; set; }
         public int id_user { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_user")]
         public Users user { get; set; }
         public int id_size { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_size")]
         public Sizes wish { get; set; }
     }
 }

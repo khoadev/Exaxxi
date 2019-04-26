@@ -13,11 +13,11 @@ namespace Exaxxi.Models
         public double last_sale {get;set; }
 
         public int id_ds_size { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_ds_size")]
         public ds_Size size { get; set; }
 
         public int id_item { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_item")]
         public Items item { get; set; }
 
         public IEnumerable<Posts> posts { get; set; }

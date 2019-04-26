@@ -24,10 +24,10 @@ namespace Exaxxi.Models
         public DateTime date_create { get; set; }
         public bool active { get; set; }
         public int id_admin { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_admin")]
         public Admins admin { get; set; }
         public int id_department { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_department")]
         public Departments department { get; set; }
     }
 }

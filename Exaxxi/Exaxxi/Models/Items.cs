@@ -7,7 +7,7 @@ namespace Exaxxi.Models
     public class Items
     {
         [Key]
-        int id { get; set; }
+        public int id { get; set; }
         [Display(Name = "Tên sản phẩm")]
         [Required]
         [MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
@@ -28,10 +28,10 @@ namespace Exaxxi.Models
         public bool active { get; set; }
 
         public int id_admin { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_admin")]
         public Admins admin { get; set; }
         public int id_category { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_category")]
         public Categories category { get; set; }
 
         public IEnumerable<Sizes> sizes { get; set; }

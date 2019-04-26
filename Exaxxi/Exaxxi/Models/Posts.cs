@@ -23,10 +23,10 @@ namespace Exaxxi.Models
         [Display(Name = "Hình thức giao dịch")]
         public int kind { get; set; }
         public int id_size { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_size")]
         public Sizes size { get; set; }
         public int id_user { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_user")]
         public Users user { get; set; } 
     }
 }

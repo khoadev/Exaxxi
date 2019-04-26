@@ -17,7 +17,7 @@ namespace Exaxxi.Models
         public int order { get; set; }
 
         public int id_brand { get; set; }
-        [ForeignKey("id")]
+        [ForeignKey("id_brand")]
         public Brands brand { get; set; }
 
         public IEnumerable<Items> items { get; set; }

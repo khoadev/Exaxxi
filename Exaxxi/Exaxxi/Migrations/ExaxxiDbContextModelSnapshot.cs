@@ -49,7 +49,9 @@ namespace Exaxxi.Migrations
 
             modelBuilder.Entity("Exaxxi.Models.Brands", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("active");
 
@@ -63,12 +65,16 @@ namespace Exaxxi.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("id_department");
+
                     b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Categories", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("active");
 
@@ -81,6 +87,8 @@ namespace Exaxxi.Migrations
                     b.Property<int>("order");
 
                     b.HasKey("id");
+
+                    b.HasIndex("id_brand");
 
                     b.ToTable("Categories");
                 });
@@ -127,7 +135,9 @@ namespace Exaxxi.Migrations
 
             modelBuilder.Entity("Exaxxi.Models.Followings", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("id_size");
 
@@ -135,12 +145,18 @@ namespace Exaxxi.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("id_size");
+
+                    b.HasIndex("id_user");
+
                     b.ToTable("Followings");
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Items", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("active");
 
@@ -165,12 +181,18 @@ namespace Exaxxi.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("id_admin");
+
+                    b.HasIndex("id_category");
+
                     b.ToTable("Items");
                 });
 
             modelBuilder.Entity("Exaxxi.Models.News", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("active");
 
@@ -189,12 +211,18 @@ namespace Exaxxi.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("id_admin");
+
+                    b.HasIndex("id_department");
+
                     b.ToTable("News");
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Posts", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("date_end");
 
@@ -210,12 +238,18 @@ namespace Exaxxi.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("id_size");
+
+                    b.HasIndex("id_user");
+
                     b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Sizes", b =>
                 {
-                    b.Property<int>("id");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("Adminsid");
 
@@ -232,6 +266,10 @@ namespace Exaxxi.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("Adminsid");
+
+                    b.HasIndex("id_ds_size");
+
+                    b.HasIndex("id_item");
 
                     b.ToTable("Sizes");
                 });
@@ -278,7 +316,7 @@ namespace Exaxxi.Migrations
                 {
                     b.HasOne("Exaxxi.Models.Departments", "department")
                         .WithMany("brands")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_department")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -286,7 +324,7 @@ namespace Exaxxi.Migrations
                 {
                     b.HasOne("Exaxxi.Models.Brands", "brand")
                         .WithMany("categories")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_brand")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -294,12 +332,12 @@ namespace Exaxxi.Migrations
                 {
                     b.HasOne("Exaxxi.Models.Sizes", "wish")
                         .WithMany("followings")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_size")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Exaxxi.Models.Users", "user")
                         .WithMany("followings")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_user")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -307,12 +345,12 @@ namespace Exaxxi.Migrations
                 {
                     b.HasOne("Exaxxi.Models.Admins", "admin")
                         .WithMany("items")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_admin")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Exaxxi.Models.Categories", "category")
                         .WithMany("items")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_category")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -320,12 +358,12 @@ namespace Exaxxi.Migrations
                 {
                     b.HasOne("Exaxxi.Models.Admins", "admin")
                         .WithMany("news")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_admin")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Exaxxi.Models.Departments", "department")
                         .WithMany("news")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_department")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -333,12 +371,12 @@ namespace Exaxxi.Migrations
                 {
                     b.HasOne("Exaxxi.Models.Sizes", "size")
                         .WithMany("posts")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_size")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Exaxxi.Models.Users", "user")
                         .WithMany("posts")
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_user")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -348,14 +386,14 @@ namespace Exaxxi.Migrations
                         .WithMany("sizes")
                         .HasForeignKey("Adminsid");
 
-                    b.HasOne("Exaxxi.Models.Items", "item")
-                        .WithMany("sizes")
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Exaxxi.Models.ds_Size", "size")
                         .WithMany()
-                        .HasForeignKey("id")
+                        .HasForeignKey("id_ds_size")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Exaxxi.Models.Items", "item")
+                        .WithMany("sizes")
+                        .HasForeignKey("id_item")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
