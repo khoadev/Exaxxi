@@ -62,3 +62,8 @@ C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Exaxxi.
 C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Exaxxi.dll
 C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Exaxxi.pdb
 C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Exaxxi.csproj.CopyComplete
+C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Razor\Views\Departments\Create.g.cshtml.cs
+C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Razor\Views\Departments\Delete.g.cshtml.cs
+C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Razor\Views\Departments\Details.g.cshtml.cs
+C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Razor\Views\Departments\Edit.g.cshtml.cs
+C:\Users\Admin\source\repos\Exaxxi\Exaxxi\Exaxxi\obj\Debug\netcoreapp2.1\Razor\Views\Departments\Index.g.cshtml.cs
