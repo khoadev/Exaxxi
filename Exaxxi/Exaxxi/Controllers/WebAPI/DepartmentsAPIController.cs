@@ -9,7 +9,7 @@ using Exaxxi.Models;
 
 namespace Exaxxi.Controllers.WebAPI
 {
-    [Route("api/[controller]")]
+    [Route("api/DepartmentsAPI")]
     [ApiController]
     public class DepartmentsAPIController : ControllerBase
     {
@@ -24,17 +24,13 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Departments> GetDepartments()
         {
-            return _context.Departments;
+            return _context.Departments.ToList();
         }
 
         // GET: api/Departments/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDepartments([FromRoute] int id)
+        public async Task<ActionResult<Departments>> GetDepartments([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             var departments = await _context.Departments.FindAsync(id);
 
@@ -43,7 +39,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return NotFound();
             }
 
-            return Ok(departments);
+            return departments;
         }
 
         // PUT: api/Departments/5
@@ -90,7 +86,9 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest(ModelState);
             }
 
+            //API Add
             _context.Departments.Add(departments);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDepartments", new { id = departments.id }, departments);

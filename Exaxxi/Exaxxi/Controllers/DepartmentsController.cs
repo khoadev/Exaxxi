@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.Controllers.WebAPI;
 using System.Diagnostics;
+using Exaxxi.Helper;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Exaxxi.Controllers
 {
@@ -15,6 +19,10 @@ namespace Exaxxi.Controllers
     {
         private readonly ExaxxiDbContext _context;
         private DepartmentsAPIController de;
+
+        //helper
+        DepartmentsAPI _api = new DepartmentsAPI();
+
         public Stopwatch watch = new Stopwatch();
         public DepartmentsController(ExaxxiDbContext context)
         {
@@ -63,14 +71,19 @@ namespace Exaxxi.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,active,order")] Departments departments)
-        {
-            if (ModelState.IsValid)
+        {            
+            //await de.PostDepartments(departments);
+            HttpClient client = _api.Initial();
+            var stringContent = new StringContent(JsonConvert.SerializeObject(departments), Encoding.UTF8, "application/json");
+            HttpResponseMessage res = await client.PostAsync("api/DepartmentsAPI", stringContent);
+            if (res.IsSuccessStatusCode)
             {
-                _context.Add(departments);
-                await _context.SaveChangesAsync();
+                var result = res.Content.ReadAsStringAsync().Result;
+                Departments dep = JsonConvert.DeserializeObject<Departments>(result);
                 return RedirectToAction(nameof(Index));
             }
-            return View(departments);
+
+            return View();
         }
 
         // GET: Departments/Edit/5

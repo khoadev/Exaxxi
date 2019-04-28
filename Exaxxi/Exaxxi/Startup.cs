@@ -51,7 +51,7 @@ namespace Exaxxi
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -61,6 +61,7 @@ namespace Exaxxi
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                //template: "api/{controller=Departments}/{id?}");
             });
         }
     }
