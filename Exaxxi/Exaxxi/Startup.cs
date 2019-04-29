@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Exaxxi
 {
     public class Startup
@@ -51,7 +50,7 @@ namespace Exaxxi
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -62,7 +61,12 @@ namespace Exaxxi
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
                 //template: "api/{controller=Departments}/{id?}");
+                routes.MapRoute(
+                    name: "DefaultAPI",
+                    template: "api/{controller=Home}/{action=Index}/{id?}");
+
             });
+            
         }
     }
 }

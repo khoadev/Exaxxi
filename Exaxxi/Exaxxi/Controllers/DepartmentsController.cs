@@ -21,36 +21,31 @@ namespace Exaxxi.Controllers
         private DepartmentsAPIController de;
 
         //helper
-        DepartmentsAPI _api = new DepartmentsAPI();
+        CallAPI _api = new CallAPI();
 
-        public Stopwatch watch = new Stopwatch();
         public DepartmentsController(ExaxxiDbContext context)
         {
-            watch.Start();
             _context = context;
             de = new DepartmentsAPIController(_context);
         }
 
         // GET: Departments
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            IEnumerable<Departments> resuit = new List<Departments>();
-            resuit = de.GetDepartments();
-            watch.Stop();
-            ViewBag.time = watch.ElapsedMilliseconds.ToString();
+            IEnumerable<Departments> resuit = JsonConvert.DeserializeObject<List<Departments>>(_api.getAPI("api/DepartmentsAPI").Result);
+            ViewBag.test = DepartmentsExists(6);
             return View(resuit);
         }
 
         // GET: Departments/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var departments = await _context.Departments
-                .FirstOrDefaultAsync(m => m.id == id);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
             if (departments == null)
             {
                 return NotFound();
@@ -70,16 +65,12 @@ namespace Exaxxi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,active,order")] Departments departments)
+        public IActionResult Create([Bind("id,name,active,order")] Departments departments)
         {            
             //await de.PostDepartments(departments);
-            HttpClient client = _api.Initial();
-            var stringContent = new StringContent(JsonConvert.SerializeObject(departments), Encoding.UTF8, "application/json");
-            HttpResponseMessage res = await client.PostAsync("api/DepartmentsAPI", stringContent);
-            if (res.IsSuccessStatusCode)
+            
+            if (_api.postAPI(departments, "api/DepartmentsAPI").Result)
             {
-                var result = res.Content.ReadAsStringAsync().Result;
-                Departments dep = JsonConvert.DeserializeObject<Departments>(result);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -87,14 +78,14 @@ namespace Exaxxi.Controllers
         }
 
         // GET: Departments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var departments = await _context.Departments.FindAsync(id);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
             if (departments == null)
             {
                 return NotFound();
@@ -118,8 +109,7 @@ namespace Exaxxi.Controllers
             {
                 try
                 {
-                    _context.Update(departments);
-                    await _context.SaveChangesAsync();
+                    var result = await _api.putAPI(departments, $"api/DepartmentsAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,15 +128,14 @@ namespace Exaxxi.Controllers
         }
 
         // GET: Departments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var departments = await _context.Departments
-                .FirstOrDefaultAsync(m => m.id == id);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
             if (departments == null)
             {
                 return NotFound();
@@ -160,15 +149,13 @@ namespace Exaxxi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var departments = await _context.Departments.FindAsync(id);
-            _context.Departments.Remove(departments);
-            await _context.SaveChangesAsync();
+            var result = await _api.deleteAPI($"api/DepartmentsAPI/{id}");
             return RedirectToAction(nameof(Index));
         }
 
         private bool DepartmentsExists(int id)
-        {
-            return _context.Departments.Any(e => e.id == id);
+        { 
+            return _api.existAPI($"api/DepartmentsAPI/Exist/{id}").Result;
         }
     }
 }
