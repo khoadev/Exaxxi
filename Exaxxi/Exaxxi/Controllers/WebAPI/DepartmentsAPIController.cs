@@ -115,7 +115,7 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(departments);
         }
 
-        [HttpGet("Exist{id}")]
+        [HttpGet("{id}/Exist")]
         private bool DepartmentsExists(int id)
         {
             return _context.Departments.Any(e => e.id == id);

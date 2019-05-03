@@ -12,9 +12,12 @@ namespace Exaxxi.Models
         [Required]
         [MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
         public string name { get; set; }
-        [Display(Name ="Thông tin sản phẩm")]
+        [Display(Name ="Thông tin sản phẩm tiếng việt")]
         [DataType(DataType.Text)]
-        public string info { get; set; }
+        public string vi_info { get; set; }
+        [Display(Name = "Thông tin sản phẩm tiếng anh")]
+        [DataType(DataType.Text)]
+        public string en_info { get; set; }
         [Required]
         [Display(Name = "Hình")]
         [Url]

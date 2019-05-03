@@ -11,14 +11,22 @@ namespace Exaxxi.Models
     {
         [Key]
         public int id { get; set; }
-        [Display(Name = "Tiêu đề")]
+        [Display(Name = "Tiêu đề tiếng việt")]
         [MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
         [Required]
-        public string title { get; set; }
+        public string vi_title { get; set; }
+        [Display(Name = "Tiêu đề tiếng anh")]
+        [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
+        [Required]
+        public string en_title { get; set; }
         [DataType(DataType.Text)]
         [Required]
-        [Display(Name = "Nội dung")]
-        public string content { get; set; }
+        [Display(Name = "Nội dung tiếng việt")]
+        public string vi_content { get; set; }
+        [DataType(DataType.Text)]
+        [Required]
+        [Display(Name = "Nội dung tiếng anh")]
+        public string en_content { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Ngày đăng")]
         public DateTime date_create { get; set; }
