@@ -78,13 +78,17 @@ namespace Exaxxi.Migrations
 
                     b.Property<bool>("active");
 
-                    b.Property<int>("id_brand");
-
-                    b.Property<string>("name")
+                    b.Property<string>("en_name")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<int>("id_brand");
+
                     b.Property<int>("order");
+
+                    b.Property<string>("vi_name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("id");
 
@@ -101,11 +105,15 @@ namespace Exaxxi.Migrations
 
                     b.Property<bool>("active");
 
-                    b.Property<string>("name")
+                    b.Property<string>("en_name")
                         .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<int>("order");
+
+                    b.Property<string>("vi_name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("id");
 
@@ -160,14 +168,14 @@ namespace Exaxxi.Migrations
 
                     b.Property<bool>("active");
 
+                    b.Property<string>("en_info");
+
                     b.Property<int>("id_admin");
 
                     b.Property<int>("id_category");
 
                     b.Property<string>("img")
                         .IsRequired();
-
-                    b.Property<string>("info");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -176,6 +184,8 @@ namespace Exaxxi.Migrations
                     b.Property<double>("trade_max");
 
                     b.Property<double>("trade_min");
+
+                    b.Property<string>("vi_info");
 
                     b.Property<float>("volatility");
 
@@ -196,16 +206,23 @@ namespace Exaxxi.Migrations
 
                     b.Property<bool>("active");
 
-                    b.Property<string>("content")
+                    b.Property<DateTime>("date_create");
+
+                    b.Property<string>("en_content")
                         .IsRequired();
 
-                    b.Property<DateTime>("date_create");
+                    b.Property<string>("en_title")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<int>("id_admin");
 
                     b.Property<int>("id_department");
 
-                    b.Property<string>("title")
+                    b.Property<string>("vi_content")
+                        .IsRequired();
+
+                    b.Property<string>("vi_title")
                         .IsRequired()
                         .HasMaxLength(50);
 
