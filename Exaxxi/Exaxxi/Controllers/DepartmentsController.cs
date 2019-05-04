@@ -154,8 +154,9 @@ namespace Exaxxi.Controllers
         }
 
         private bool DepartmentsExists(int id)
-        { 
-            return _api.existAPI($"api/DepartmentsAPI/Exist/{id}").Result;
+        {
+
+            return _api.existAPI($"api/DepartmentsAPI/{id}/Exist").Result;
         }
     }
 }
