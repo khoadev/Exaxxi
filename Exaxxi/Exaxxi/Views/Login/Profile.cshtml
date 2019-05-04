@@ -1,0 +1,35 @@
+﻿@model Exaxxi.Models.Users
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Profile</h2>
+
+<div>
+    <h4>Users</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>               
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>        
+        <dt>
+            @Html.DisplayNameFor(model => model.score_buyer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.score_buyer)
+        </dd>               
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |*@
+</div>
