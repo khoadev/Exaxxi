@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Exaxxi.Common;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +42,7 @@ namespace Exaxxi.Controllers
                 //KT username/Pass có trong DB?
                 //KhachHang kh = ctx.KhachHang.SingleOrDefault(p => p.MaKh == model.Username 
                 //&& p.MatKhau == model.Password);
-                Users user = _exx.Users.SingleOrDefault(p => p.email == model.Email);
+                Users user = _exx.Users.SingleOrDefault(p => p.email == model.Username);
 
                 if (user != null)
                 {

@@ -45,7 +45,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         [HttpPost,AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = "")
         {
-            Admins ad = _context.Admins.SingleOrDefault(p => p.username == model.Username);
+            Admins ad = _context.Admins.SingleOrDefault(p => p.email == model.Username);
             if(ad != null)
             {
                 string passwordHash = model.Password;   
