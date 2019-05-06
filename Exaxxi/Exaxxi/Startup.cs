@@ -35,14 +35,10 @@ namespace Exaxxi
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.AddDbContext<ExaxxiDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Exaxxi")));
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
-                options.LoginPath = "/Admin/Login";
-                options.LogoutPath = "/Admin/Logout";
-                options.AccessDeniedPath = "/Admin/AccessDenied";
+            services.AddDbContext<ExaxxiDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Exaxxi"));
             });
-
 
             //Khai báo service authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
@@ -80,9 +76,7 @@ namespace Exaxxi
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
                 //template: "api/{controller=Departments}/{id?}");
-                routes.MapRoute(
-                    name: "DefaultAPI",
-                    template: "api/{controller=Home}/{action=Index}/{id?}");
+                
 
             });
             
