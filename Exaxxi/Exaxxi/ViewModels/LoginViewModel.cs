@@ -4,21 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Exaxxi.Models
+namespace Exaxxi.ViewModels
 {
     public class LoginViewModel
     {
-        [Display(Name = "Tên đăng nhập")]
+        [Display(Name = "Tên Đăng Nhập")]
         [Required(ErrorMessage = "*")]
-        [MaxLength(20)]
-        public string Email { get; set; }
-
+        [MaxLength(50)]
+        [DataType(DataType.EmailAddress)]
+        public string Username { get; set; }
         [Display(Name = "Mật Khẩu")]
         [Required(ErrorMessage = "*")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [Display(Name = "Ghi Nhớ")]
-        public bool RemeberMe { get; set; }
+        [Display(Name = "Nhớ Mật Khẩu")]
+        public bool RememberMe { get; set; }
     }
 }
