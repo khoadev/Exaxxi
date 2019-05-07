@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Exaxxi.Models.Users>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>
+               Tên tài khoản
+            </th>
+            <th>
+               Email
+            </th>
+            <th>
+                Cấp độ bán
+            </th>
+            <th>
+               Điểm người mua
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="content">
+        
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/api/UsersAPI",
+                method: "GET",
+                success: function (data) {
+                    $(data).each(function (index, value) {
+                        var del = $("<button />").attr("class", "btn btn-danger delUser").html("Xóa");
+                        var edit = $("<button />").attr("class", "btn btn-success editUser").html("Sửa");
+                        var tr = $("<tr/>");
+                        $("<td/>").html(value.id).appendTo(tr);
+                        $("<td/>").html(value.name).appendTo(tr);
+                        $("<td/>").html(value.email).appendTo(tr);
+                        $("<td/>").html(value.level_seller).appendTo(tr);
+                        $("<td/>").html(value.score_buyer).appendTo(tr);
+                        edit.attr("data-User", value.id);
+                        del.attr("data-User", value.id);
+                        $("<td/>").append(edit).append(del).appendTo(tr);
+                        $("#content").append(tr);
+                        
+                    });
+                    $(".editUser").click(function () {
+                        $.ajax({
+                            url: "/api/UsersAPI/" + $(this).attr("data-User"),
+                            type:"PUT",
+                        });
+                    });
+
+                    $(".delUser").click(function () {
+                        if (confirm("Xóa User: " + $(this).attr("data-User"))) {
+                            var tr = $(this).closest("tr");
+                            $.ajax({
+                                url: "/api/UsersAPI/" + $(this).attr("data-User"),
+                                type: "DELETE",
+                                success: function (data, status, xhr) {
+                                    if (status == "success") {
+                                        tr.remove();
+                                        alert("Thành công!");
+                                    }
+                                    else {
+                                        alert("Xóa không thành công!");
+                                    }
+                                },
+                                error: function (xhr, message, data) {
+                                    alert(xhr);
+                                }
+                                
+                            });
+                        }
+                    });
+                }
+            
+            });
+        });
+    </script>
+}
