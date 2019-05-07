@@ -1,0 +1,3 @@
+Exaxxi\.vs\config
+Exaxxi\Exaxxi\bin
+Exaxxi\Exaxxi\obj và packages n?u có 
