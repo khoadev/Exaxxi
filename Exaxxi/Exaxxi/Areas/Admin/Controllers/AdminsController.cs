@@ -6,89 +6,96 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.Helper;
+using Exaxxi.Controllers.WebAPI;
+using Newtonsoft.Json;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UsersController : Controller
+    public class AdminsController : Controller
     {
         private readonly ExaxxiDbContext _context;
+        private AdminsAPIController ad;
 
-        public UsersController(ExaxxiDbContext context)
+        CallAPI _api = new CallAPI();
+
+        public AdminsController(ExaxxiDbContext context)
         {
             _context = context;
+            ad = new AdminsAPIController(_context);
         }
 
-        // GET: Admin/Users
-        public async Task<IActionResult> Index()
+        // GET: Admin/Admins
+        public IActionResult Index()
         {
-            return View();
+            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
+            
+            return View(result);
         }
 
-        // GET: Admin/Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Admin/Admins/Details/5
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var users = await _context.Users
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (users == null)
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
+
+            if (admins == null)
             {
                 return NotFound();
             }
 
-            return View(users);
+            return View(admins);
         }
 
-        // GET: Admin/Users/Create
+        // GET: Admin/Admins/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Users/Create
+        // POST: Admin/Admins/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
+        //[ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("id,username,password,email,level,date_create,active")] Admins admins)
         {
-            if (ModelState.IsValid)
+            if (_api.postAPI(admins, "api/AdminsAPI").Result)
             {
-                _context.Add(users);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(admins);
         }
 
-        // GET: Admin/Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Admin/Admins/Edit/5
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var users = await _context.Users.FindAsync(id);
-            if (users == null)
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
+            if (admins == null)
             {
                 return NotFound();
             }
-            return View(users);
+            return View(admins);
         }
 
-        // POST: Admin/Users/Edit/5
+        // POST: Admin/Admins/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("id,username,password,email,level,date_create,active")] Admins admins)
         {
-            if (id != users.id)
+            if (id != admins.id)
             {
                 return NotFound();
             }
@@ -97,12 +104,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(users);
-                    await _context.SaveChangesAsync();
+                    var result = await _api.putAPI(admins, $"api/AdminsAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsersExists(users.id))
+                    if (!AdminsExists(admins.id))
                     {
                         return NotFound();
                     }
@@ -113,41 +119,40 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(admins);
         }
 
-        // GET: Admin/Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Admin/Admins/Delete/5
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var users = await _context.Users
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (users == null)
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
+            if (admins == null)
             {
                 return NotFound();
             }
 
-            return View(users);
+            return View(admins);
         }
 
-        // POST: Admin/Users/Delete/5
+        // POST: Admin/Admins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var users = await _context.Users.FindAsync(id);
-            _context.Users.Remove(users);
+            var admins = await _context.Admins.FindAsync(id);
+            _context.Admins.Remove(admins);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsersExists(int id)
+        private bool AdminsExists(int id)
         {
-            return _context.Users.Any(e => e.id == id);
+            return _context.Admins.Any(e => e.id == id);
         }
     }
 }

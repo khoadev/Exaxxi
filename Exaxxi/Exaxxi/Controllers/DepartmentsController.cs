@@ -33,7 +33,7 @@ namespace Exaxxi.Controllers
         public IActionResult Index()
         {
             IEnumerable<Departments> resuit = JsonConvert.DeserializeObject<List<Departments>>(_api.getAPI("api/DepartmentsAPI").Result);
-            ViewBag.test = DepartmentsExists(6);
+            
             return View(resuit);
         }
 
@@ -98,7 +98,7 @@ namespace Exaxxi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,active,order")] Departments departments)
+        public async Task<IActionResult> Edit(int id, [Bind("id,vi_name,en_name,active,order")] Departments departments)
         {
             if (id != departments.id)
             {
