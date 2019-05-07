@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Exaxxi.Models.Users>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.level_seller)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.score_buyer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date_registion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.active)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.level_seller)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.score_buyer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_registion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.active)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $(function () {
+            $.ajax({
+                url: "/api/DepartmentsAPI",
+                method: "GET",
+                success: function (data) {
+                    $(data).each(function (index, value) {
+                        var del = $("<button/>").attr("class", "btn btn-danger delloai").html("Xóa");
+                        var edit = $("<button/>").attr("class", "btn btn-success editloai").html("Sửa");
+                        var tr = $("<tr/>");
+                        $("<td/>").html(value.id).appendTo(tr);
+                        $("<td/>").html(value.vi_name).appendTo(tr);
+                        $("<td/>").html(value.en_name).appendTo(tr);
+                        $("<td/>").html(value.active).appendTo(tr);
+                        $("<td/>").html(value.orders).appendTo(tr);
+                        $("<td/>").html(value.brands).appendTo(tr);
+                        $("<td/>").html(value.news).appendTo(tr);
+                        del.attr("data-loai", value.id);
+                        edit.attr("data-loai", value.id);
+                        $("<td/>").append(del).append(edit)
+                            .appendTo(tr);
+                        $("#test").append(tr);
+                    });
+                }
+            });
+        });
+    </script>
+}
