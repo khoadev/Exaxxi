@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.Common;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -95,6 +96,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
+        
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
