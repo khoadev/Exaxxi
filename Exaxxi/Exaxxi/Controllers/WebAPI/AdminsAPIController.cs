@@ -162,8 +162,8 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(admins);
         }
-
-        private bool AdminsExists(int id)
+        [HttpGet("AdminsExists/{id}")]
+        public bool AdminsExists(int id)
         {
             return _context.Admins.Any(e => e.id == id);
         }

@@ -50,7 +50,7 @@ namespace Exaxxi
                     options.AccessDeniedPath = "/Login/AccessDenied";
 
                     //Admins
-                    options.AccessDeniedPath = "/Admin/LoginAdmin/AccessDenied";
+                    options.AccessDeniedPath = "/Admin";
                     options.LogoutPath = "/Admin/LoginAdmin/Logout";
                     options.LoginPath = "/Admin/LoginAdmin/Login";
                 }
@@ -77,10 +77,11 @@ namespace Exaxxi
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
-            {
-
-                routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+            { 
+                routes.MapAreaRoute(
+                   name: "Admin",
+                   areaName: "Admin",
+                   template: "Admin/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
