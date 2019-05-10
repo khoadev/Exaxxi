@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Exaxxi.Common;
@@ -10,7 +11,8 @@ using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace Exaxxi.Controllers
 {
@@ -41,8 +43,8 @@ namespace Exaxxi.Controllers
 
         public IActionResult Profile()
         {
-            Users users = _exx.Users.SingleOrDefault(p=>p.name == User.Identity.Name);
-            if(users != null)
+            Users users = _exx.Users.SingleOrDefault(p => p.name == User.Identity.Name);
+            if (users != null)
             {
                 return View(users);
             }
@@ -69,6 +71,22 @@ namespace Exaxxi.Controllers
 
             _exx.Add(account);
             _exx.SaveChanges();
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("EscanorDuyTran", "tdd3107973@gmail.com"));
+            message.To.Add(new MailboxAddress("Hihi", "tdd310797@gmail.com"));
+            message.Subject = "Register in Exaxxi";
+            message.Body = new TextPart("plain")
+            {
+                Text = "Ban da dang ky thanh cong"
+            };
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
+                client.Send(message);
+                client.Disconnect(true);
+            }
 
             return View("Login");
         }
