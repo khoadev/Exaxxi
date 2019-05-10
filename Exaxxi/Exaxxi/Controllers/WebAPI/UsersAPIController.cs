@@ -11,6 +11,7 @@ using Exaxxi.Common;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using MimeKit;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -101,7 +102,7 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [Authorize, AllowAnonymous, Route("PostUser")]
+        [Authorize, Route("PostUser")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -144,6 +145,40 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return RedirectToAction("Profile", "Login");//default
             }
+        }
+
+        [Authorize, AllowAnonymous ,Route("PostRegister")]
+        public IActionResult PostRegister([FromBody] RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            model.password = (model.password).ToSHA512();
+            Users account = model.toUsers();
+
+            _context.Add(account);
+            _context.SaveChanges();
+
+            //mailer
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Exaxxi Site", "tdd3107973@gmail.com"));
+            message.To.Add(new MailboxAddress("Hihi", model.email));
+            message.Subject = "Register in Exaxxi";
+            message.Body = new TextPart("plain")
+            {
+                Text = "Chúc mừng bạn đã đăng ký thành công!"
+            };
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+
+            return Ok(model);
         }
 
         // DELETE: api/Users/5
