@@ -62,33 +62,5 @@ namespace Exaxxi.Controllers
         {
             return View("Login");
         }
-
-        [HttpPost, AllowAnonymous]
-        public IActionResult Register(RegisterViewModel user)
-        {
-            user.password = (user.password).ToSHA512();
-            Users account = user.toUsers();
-
-            _exx.Add(account);
-            _exx.SaveChanges();
-
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("EscanorDuyTran", "tdd3107973@gmail.com"));
-            message.To.Add(new MailboxAddress("Hihi", "tdd310797@gmail.com"));
-            message.Subject = "Register in Exaxxi";
-            message.Body = new TextPart("plain")
-            {
-                Text = "<h3>Ban da dang ky thanh cong</h3>"
-            };
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
-                client.Send(message);
-                client.Disconnect(true);
-            }
-
-            return View("Login");
-        }
     }
 }
