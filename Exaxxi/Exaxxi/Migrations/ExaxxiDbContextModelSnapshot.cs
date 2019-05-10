@@ -34,13 +34,12 @@ namespace Exaxxi.Migrations
 
                     b.Property<int>("level");
 
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasMaxLength(30);
-
-                    b.Property<string>("username")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("password")
+                        .IsRequired();
 
                     b.HasKey("id");
 
@@ -106,13 +105,11 @@ namespace Exaxxi.Migrations
                     b.Property<bool>("active");
 
                     b.Property<string>("en_name")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<int>("order");
 
                     b.Property<string>("vi_name")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.HasKey("id");

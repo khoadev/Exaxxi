@@ -34,6 +34,31 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        
+                        <li>
+                            <a asp-controller="LoginAdmin" asp-action="Login">
+                                <span class="glyphicon glyphicon-log-in"></span> Login
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-controller="LoginAdmin" asp-action="Profile">
+                                Xin chào
+                                <b>@User.Identity.Name</b>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="LoginAdmin" asp-action="Logout">
+                                <span class="glyphicon glyphicon-log-in"></span> Logout
+                            </a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>

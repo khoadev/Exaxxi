@@ -41,9 +41,9 @@ namespace Exaxxi
             });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.LoginPath = "/Admin/Home/Login";
-                options.LogoutPath = "/Admin/Home/Logout";
-                options.AccessDeniedPath = "/Admin/AccessDenied";
+                options.LoginPath = "/Admin/LoginAdmin/Login";
+                options.LogoutPath = "/Admin/LoginAdmin/Logout";
+                options.AccessDeniedPath = "/Admin/LoginAdmin/AccessDenied";
             });
             //Khai báo service authentication
             //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
@@ -76,7 +76,7 @@ namespace Exaxxi
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("areaRoute", "{area:exists}/{controller}/{action}/{id?}");
+                routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                
                 routes.MapRoute(
                     name: "default",
