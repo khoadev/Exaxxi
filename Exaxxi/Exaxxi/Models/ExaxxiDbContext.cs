@@ -27,7 +27,7 @@ namespace Exaxxi.Models
         {
 
 
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-C9UR2EM\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
 
 
         }
@@ -572,7 +572,7 @@ namespace Exaxxi.Models
                 },
                 new Items
                 {
-                    id = 8,
+                    id = 16,
                     name = "Item X1",
                     vi_info = "Thông Tin của item X1 sẽ hiện ở đây",
                     en_info = "There are some infos about Item X1",
@@ -697,8 +697,224 @@ namespace Exaxxi.Models
 
                 }
             );
-
-
+            builder.Entity<ds_Size>().HasData(
+                new ds_Size
+                {
+                    id=1,
+                    VN=30,
+                    US=25,
+                    UK=20,
+                    Inch=13,
+                    Centimet=45
+                } ,
+                new ds_Size
+                {
+                    id=2,
+                    VN=35,
+                    US=30,
+                    UK=25,
+                    Inch=18,
+                    Centimet=50
+                },
+                new ds_Size
+                {
+                    id=3,
+                    VN=40,
+                    US=35,
+                    UK=30,
+                    Inch=21,
+                    Centimet=55
+                }    
+               
+            );
+            builder.Entity<Sizes>().HasData(
+                new Sizes
+                {
+                    id=1,
+                    lowest_ask=30,
+                    highest_bid=25,
+                    last_sale=24,
+                    id_ds_size=1,
+                    id_item=1
+                },
+                new Sizes
+                {
+                    id=2,
+                    lowest_ask=40,
+                    highest_bid=35,
+                    last_sale=29,
+                    id_ds_size=2,
+                    id_item=2
+                },
+                new Sizes
+                {
+                    id=3,
+                    lowest_ask=40,
+                    highest_bid=35,
+                    last_sale=29,
+                    id_ds_size=2,
+                    id_item=2
+                },
+                new Sizes
+                {
+                    id=4,
+                    lowest_ask=55,
+                    highest_bid=45,
+                    last_sale=40,
+                    id_ds_size=3,
+                    id_item=3
+                },
+                new Sizes
+                {
+                    id = 5,
+                    lowest_ask = 65,
+                    highest_bid = 55,
+                    last_sale = 45,
+                    id_ds_size = 1,
+                    id_item = 3
+                },
+                new Sizes
+                {
+                    id = 6,
+                    lowest_ask = 44,
+                    highest_bid = 33,
+                    last_sale = 22,
+                    id_ds_size = 2,
+                    id_item = 3
+                }
+            );
+            builder.Entity<News>().HasData(
+                new News
+                {
+                    id = 1,
+                    vi_title = "Tin tức về Giày",
+                    en_title = "News about shoes",
+                    vi_content = "Giày vừa được cho sản xuất thành 2 chiếc 1 đôi, đeo vô nhìn rắt là đẹp",
+                    en_content = "Shoe is producted in pair now, it look so beautyful",
+                    date_create = DateTime.Now,
+                    active=true,
+                    id_admin=1,
+                    id_department=1
+                },
+                new News
+                {
+                    id = 2,
+                    vi_title = "Giày đeo theo cặp",
+                    en_title = "Shoe is put on by pair",
+                    vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa",
+                    en_content = "Shoe must be wore by pair, it's so stupid ",
+                    date_create = DateTime.Now,
+                    active=true,
+                    id_admin=2,
+                    id_department=1
+                },
+                new News
+                {
+                    id = 4,
+                    vi_title = "Giày đeo theo cặp",
+                    en_title = "Shoe is put on by pair",
+                    vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa",
+                    en_content = "Shoe must be wore by pair, it's so stupid ",
+                    date_create = DateTime.Now,
+                    active=true,
+                    id_admin=2,
+                    id_department=1
+                },
+                new News
+                {
+                    id = 3,
+                    vi_title = "Quần Áo Hiệu Genos đọc chiếm thị trường Châu Á",
+                    en_title = "Clothes of Genos Brand is hold 100% marketplace of Asia",
+                    vi_content = "Genos đẹp trai nên nắm giữ toàn bộ thị trường đúng rồi khỏi thắc mắc gì thêm",
+                    en_content = "Genos is so handsome, he hold all marketplace is tangibility ",
+                    date_create = DateTime.Now,
+                    active=true,
+                    id_admin=3,
+                    id_department=2
+                }
+            );
+            builder.Entity<Posts>().HasData(
+                new Posts
+                {
+                    id=1,
+                    price=20,
+                    date_start= DateTime.Parse("2019-01-05"),
+                    date_end= DateTime.Parse("2019-12-12"),
+                    kind=1,
+                    id_size=1,
+                    id_user=1
+                },
+                new Posts
+                {
+                    id=2,
+                    price=30,
+                    date_start= DateTime.Parse("2019-01-05"),
+                    date_end= DateTime.Parse("2019-12-12"),
+                    kind=2,
+                    id_size=2,
+                    id_user=2
+                },
+                new Posts
+                {
+                    id=3,
+                    price=35,
+                    date_start= DateTime.Parse("2019-01-05"),
+                    date_end= DateTime.Parse("2019-12-12"),
+                    kind=2,
+                    id_size=5,
+                    id_user=3
+                },
+                new Posts
+                {
+                    id=4,
+                    price=35,
+                    date_start= DateTime.Parse("2019-01-05"),
+                    date_end= DateTime.Parse("2019-12-12"),
+                    kind=2,
+                    id_size=1,
+                    id_user=3
+                },
+                new Posts
+                {
+                    id=5,
+                    price=35,
+                    date_start= DateTime.Parse("2019-01-05"),
+                    date_end= DateTime.Parse("2019-12-12"),
+                    kind=1,
+                    id_size=4,
+                    id_user=4
+                },
+                new Posts
+                {
+                    id=6,
+                    price=35,
+                    date_start= DateTime.Parse("2019-01-05"),
+                    date_end= DateTime.Parse("2019-12-12"),
+                    kind=1,
+                    id_size=5,
+                    id_user=2
+                }
+            );
+            builder.Entity<Followings>().HasData(
+                new Followings
+                {
+                    id=1,
+                    id_size=2,
+                    id_user=1
+                },
+                new Followings
+                {
+                    id=2,
+                    id_size=1,
+                    id_user=1
+                },
+                new Followings
+                {
+                    id=3,
+                    id_size=1,
+                    id_user=2
+                }
+            );
         }
 
     }

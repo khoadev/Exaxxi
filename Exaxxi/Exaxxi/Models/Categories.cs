@@ -12,10 +12,7 @@ namespace Exaxxi.Models
         [Required]
         [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
         public string vi_name { get; set; }
-        [Display(Name = "Tên loại tiếng anh")]
-        [Required]
-        [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
-        public string en_name { get; set; }
+  
         public bool active { get; set; }
         [Display(Name = "Thứ tự sắp xếp")]
         public int order { get; set; }

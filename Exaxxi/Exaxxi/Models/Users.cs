@@ -16,7 +16,7 @@ namespace Exaxxi.Models
         public string name { get; set; }
         [Display(Name = "Mật khẩu")]
         [Required]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
         public string password { get; set; }
         [Display(Name = "Email")]
         [EmailAddress]
