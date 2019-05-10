@@ -100,16 +100,16 @@ namespace Exaxxi.Controllers.WebAPI
 
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
-        
-        [Authorize,AllowAnonymous,Route("PostUser")]
+
+        [Authorize, AllowAnonymous, Route("PostUser")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-     
-            Users user =  _context.Users.SingleOrDefault(p => p.email == model.Username);
+
+            Users user = _context.Users.SingleOrDefault(p => p.email == model.Username);
             if (user == null)
             {
                 return NotFound("khong tim thay du lieu");
@@ -121,12 +121,13 @@ namespace Exaxxi.Controllers.WebAPI
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
             }
+        
 
             //ghi nhận đăng nhập thành công
             var claims = new List<Claim> {
                         new Claim(ClaimTypes.Email, user.email),
-                        new Claim(ClaimTypes.Name, user.username),
-                    };
+                        new Claim(ClaimTypes.Name, user.name),
+            };
 
             // create identity
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
