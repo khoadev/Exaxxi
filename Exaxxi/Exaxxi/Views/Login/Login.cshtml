@@ -14,23 +14,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <input asp-for="Username" class="form-control" id="username" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" id="password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+                        <input asp-for="RememberMe" id="remember" /> @Html.DisplayNameFor(model => model.RememberMe)
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input id="submit" type="button" value="Create" class="btn btn-default" />            
             </div>
         </form>
     </div>
@@ -38,5 +38,30 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+    $(function () {
+        $("#submit").on("click", function () {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var login = {
+                "username": username,
+                "password": password,
+                "remember": null,
+            };
+            $.ajax({
+                url: "/api/UsersAPI/PostUser",
+                type: "POST",
+                data: JSON.stringify(login),
+                contentType: "application/json",
+                success: function () {
+                    window.location = "/Login/Profile";
+                },
+                error: function (notfound) {
+                    alert(notfound.responseText);
+                }
+            });
+        });
+    });
+    </script>
 }
