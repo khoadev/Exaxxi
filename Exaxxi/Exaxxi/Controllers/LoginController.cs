@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Exaxxi.Common;
@@ -10,7 +11,8 @@ using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace Exaxxi.Controllers
 {
@@ -41,8 +43,8 @@ namespace Exaxxi.Controllers
 
         public IActionResult Profile()
         {
-            Users users = _exx.Users.SingleOrDefault(p=>p.name == User.Identity.Name);
-            if(users != null)
+            Users users = _exx.Users.SingleOrDefault(p => p.name == User.Identity.Name);
+            if (users != null)
             {
                 return View(users);
             }
@@ -58,18 +60,6 @@ namespace Exaxxi.Controllers
         [HttpGet, AllowAnonymous]
         public IActionResult Register()
         {
-            return View("Login");
-        }
-
-        [HttpPost, AllowAnonymous]
-        public IActionResult Register(RegisterViewModel user)
-        {
-            user.password = (user.password).ToSHA512();
-            Users account = user.toUsers();
-
-            _exx.Add(account);
-            _exx.SaveChanges();
-
             return View("Login");
         }
     }
