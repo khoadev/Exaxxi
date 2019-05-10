@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
+using Exaxxi.Common;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -44,7 +49,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(users);
-        }
+        }        
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
@@ -95,6 +100,50 @@ namespace Exaxxi.Controllers.WebAPI
 
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
+        
+        [Authorize,AllowAnonymous,Route("PostUser")]
+        public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+     
+            Users user =  _context.Users.SingleOrDefault(p => p.email == model.Username);
+            if (user == null)
+            {
+                return NotFound("khong tim thay du lieu");
+            }
+
+            string matkhauHash = (model.Password).ToSHA512();
+            if (user.password != matkhauHash)
+            {
+                //ModelState.AddModelError();
+                return BadRequest("Sai mật khẩu");
+            }
+
+            //ghi nhận đăng nhập thành công
+            var claims = new List<Claim> {
+                        new Claim(ClaimTypes.Email, user.email),
+                        new Claim(ClaimTypes.Name, user.username),
+                    };
+
+            // create identity
+            ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
+            ClaimsPrincipal claimsPricipal = new ClaimsPrincipal(userIdentity);
+
+            await HttpContext.SignInAsync(claimsPricipal);
+
+            //Lấy lại trang yêu cầu (nếu có)
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Profile", "Login");//default
+            }
+        }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
@@ -115,7 +164,7 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return Ok(users);
-        }
+        }        
 
         private bool UsersExists(int id)
         {
