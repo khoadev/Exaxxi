@@ -101,7 +101,7 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="RememberMe" id="remember" /> @Html.DisplayNameFor(model => model.RememberMe)
+                        <input asp-for="RememberMe" id="remember" type="checkbox" /> @Html.DisplayNameFor(model => model.RememberMe)                        
                     </label>
                 </div>
             </div>
@@ -120,10 +120,11 @@
         $("#submit").on("click", function () {
             var username = $("#username").val();
             var password = $("#password").val();
+            var remember = $("#remember").val();
             var login = {
                 "username": username,
                 "password": password,
-                "remember": null,
+                "remember": remember,
             };
             $.ajax({
                 url: "/api/UsersAPI/PostUser",

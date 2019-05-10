@@ -106,13 +106,11 @@ namespace Exaxxi.Migrations
                     b.Property<bool>("active");
 
                     b.Property<string>("en_name")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<int>("order");
 
                     b.Property<string>("vi_name")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.HasKey("id");
