@@ -20,7 +20,7 @@ $(function () {
 
     $("#login-form-register-button").click(function () {
         $('#login-form-register-header').toggleClass("not-member welcome");
-        $("#login-form-register-button").toggleClass("register-now login")
+        $("#login-form-register-button").toggleClass("register-now login");
         $("#login-form").toggle(function () {
 
         });
