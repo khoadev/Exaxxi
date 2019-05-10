@@ -1,0 +1,63 @@
+﻿@model Exaxxi.Models.Users
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Users</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="level_seller" class="control-label"></label>
+                <input asp-for="level_seller" class="form-control" />
+                <span asp-validation-for="level_seller" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="score_buyer" class="control-label"></label>
+                <input asp-for="score_buyer" class="form-control" />
+                <span asp-validation-for="score_buyer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date_registion" class="control-label"></label>
+                <input asp-for="date_registion" class="form-control" />
+                <span asp-validation-for="date_registion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="active" /> @Html.DisplayNameFor(model => model.active)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

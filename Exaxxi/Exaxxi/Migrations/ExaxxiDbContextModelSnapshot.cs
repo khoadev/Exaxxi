@@ -299,10 +299,6 @@ namespace Exaxxi.Migrations
 
                     b.Property<bool>("active");
 
-                    b.Property<string>("confirm_password")
-                        .IsRequired()
-                        .HasMaxLength(30);
-
                     b.Property<DateTime>("date_registion");
 
                     b.Property<string>("email")
@@ -310,20 +306,16 @@ namespace Exaxxi.Migrations
 
                     b.Property<int>("level_seller");
 
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
                     b.Property<string>("password")
                         .IsRequired();
 
                     b.Property<int>("score_buyer");
 
-                    b.Property<int?>("shoe_sizeid");
-
-                    b.Property<string>("username")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
                     b.HasKey("id");
-
-                    b.HasIndex("shoe_sizeid");
 
                     b.ToTable("Users");
                 });
@@ -411,13 +403,6 @@ namespace Exaxxi.Migrations
                         .WithMany("sizes")
                         .HasForeignKey("id_item")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Exaxxi.Models.Users", b =>
-                {
-                    b.HasOne("Exaxxi.Models.ds_Size", "shoe_size")
-                        .WithMany()
-                        .HasForeignKey("shoe_sizeid");
                 });
 #pragma warning restore 612, 618
         }

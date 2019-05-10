@@ -17,7 +17,7 @@ namespace Exaxxi.Models
         [Display(Name = "Mật khẩu")]
         [MaxLength(30, ErrorMessage = "Tối đa 30 kí tự")]
         [Required]
-        [RegularExpression("^(?=.*[a - z])(?=.*[A - Z])(?=.*\\d)[a - zA - Z\\d]{8,}$")]
+        //[RegularExpression("^(?=.*[a - z])(?=.*[A - Z])(?=.*\\d)[a - zA - Z\\d]{8,}$")]
         public string password { get; set; }
         [Display(Name = "Nhập lại mật khẩu")]
         [MaxLength(30, ErrorMessage = "Tối đa 30 kí tự")]
