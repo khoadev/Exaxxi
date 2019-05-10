@@ -39,10 +39,7 @@ namespace Exaxxi
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Exaxxi"));
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                
-            });
+            
             //Khai báo service authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 options =>
