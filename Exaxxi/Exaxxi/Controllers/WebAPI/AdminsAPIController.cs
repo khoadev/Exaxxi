@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
+using Exaxxi.Common;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -86,14 +90,56 @@ namespace Exaxxi.Controllers.WebAPI
         public async Task<IActionResult> PostAdmins([FromBody] Admins admins)
         {
             if (!ModelState.IsValid)
-            {
+            { 
                 return BadRequest(ModelState);
             }
-
             _context.Admins.Add(admins);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAdmins", new { id = admins.id }, admins);
+        }
+        [HttpPost("PostAdminsEmail")]
+        public async Task<IActionResult> PostAdminByEmail([FromBody] LoginViewModel model, string returnUrl = "")
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Admins admin = _context.Admins.SingleOrDefault(p => p.email == model.Username);
+            if (admin == null)
+            {
+                return NotFound("khong tim thay du lieu");
+            }
+
+            string matkhauHash = (model.Password).ToSHA512();
+            if (admin.password != matkhauHash)
+            {
+                //ModelState.AddModelError();
+                return BadRequest("Sai mật khẩu");
+            }
+
+            //ghi nhận đăng nhập thành công
+            var claims = new List<Claim> {
+                        new Claim(ClaimTypes.Email, admin.email),
+                        new Claim(ClaimTypes.Name, admin.name),
+                    };
+
+            // create identity
+            ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
+            ClaimsPrincipal claimsPricipal = new ClaimsPrincipal(userIdentity);
+
+            await HttpContext.SignInAsync(claimsPricipal);
+
+            //Lấy lại trang yêu cầu (nếu có)
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");//default
+            }
         }
 
         // DELETE: api/Admins/5

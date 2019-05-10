@@ -13,10 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.password)
+                @Html.DisplayNameFor(model => model.name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.email)
@@ -34,32 +31,56 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.level)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.date_create)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.active)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.name
+                </td>
+                <td>
+                    @item.email
+                </td>
+                <td>
+                    @item.level
+                </td>
+                <td>
+                    @item.date_create
+                </td>
+                <td>
+                    @item.active
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                    <a style="cursor: pointer;" id="delete" class="delete" data-id="@item.id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(function () {
+            $(".delete").click(function () {
+                var id = $(this).attr("data-id");
+                if (confirm("ban có chắc muốn xóa")) {
+                    $.ajax({
+                        url: "/api/AdminsAPI/" + id,
+                        type: "DELETE",
+                        success: function () {
+                            alert("Thành công");
+                            window.location = "/Admin/Admins/Index";
+                        },
+                        error: function (res) {
+                            alert("Lỗi : " + res);
+                        }
+                    });
+
+                }
+
+            });
+        });
+    </script>
+
+
+}

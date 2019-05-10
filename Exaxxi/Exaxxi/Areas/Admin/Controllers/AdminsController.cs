@@ -9,9 +9,12 @@ using Exaxxi.Models;
 using Exaxxi.Helper;
 using Exaxxi.Controllers.WebAPI;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class AdminsController : Controller
     {
@@ -30,7 +33,6 @@ namespace Exaxxi.Areas.Admin.Controllers
         public IActionResult Index()
         {
             IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
-            
             return View(result);
         }
 
@@ -63,13 +65,19 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,username,password,email,level,date_create,active")] Admins admins)
+        public IActionResult Create([Bind("id,username,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
         {
             if (_api.postAPI(admins, "api/AdminsAPI").Result)
             {
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(admins);
+            else
+            {
+                ViewBag.Message = "mnsdjfhjdshf";
+                return View("Create");
+            }
+
         }
 
         // GET: Admin/Admins/Edit/5

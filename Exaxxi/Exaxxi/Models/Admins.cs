@@ -13,9 +13,8 @@ namespace Exaxxi.Models
         [Required]
         [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
         [Display(Name = "Tên tài khoản")]
-        public string username { get; set; }
+        public string name { get; set; }
         [Display(Name = "Mật khẩu")]
-        [MaxLength(30, ErrorMessage = "Tối đa 30 kí tự")]
         [Required]
         //[RegularExpression("^(?=.*[a - z])(?=.*[A - Z])(?=.*\\d)[a - zA - Z\\d]{8,}$")]
         public string password { get; set; }
