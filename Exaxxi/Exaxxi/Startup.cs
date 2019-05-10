@@ -51,7 +51,7 @@ namespace Exaxxi
 
                     //Admins
                     options.AccessDeniedPath = "/Admin";
-                    options.LogoutPath = "/Admin/LoginAdmin/Logout";
+                    options.LogoutPath = "/Admin";
                     options.LoginPath = "/Admin/LoginAdmin/Login";
                 }
             );

@@ -18,16 +18,11 @@ namespace Exaxxi.Areas.Admin.Controllers
     [Area("Admin")]
     public class AdminsController : Controller
     {
-        
-
         CallAPI _api = new CallAPI();
-
-        
 
         // GET: Admin/Admins
         public IActionResult Index()
         {
-            ViewBag.test = AdminsExists(3);
             IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
             return View(result);
         }
