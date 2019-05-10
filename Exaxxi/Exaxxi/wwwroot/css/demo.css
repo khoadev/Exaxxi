@@ -1,0 +1,864 @@
+/* change the background color */
+.navbar-custom {
+    background-color: transparent;
+    z-index: 98!important;
+}
+.navbar-custom-scrolled{
+    background-color: #272727;
+    transition: all 0.3s ;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: white;
+
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: white;
+    font-family: coolcond;
+    transition: all 0.3s;
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:focus .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    border-bottom: solid thin #ab1113;
+    color: #ab1113;
+}
+@font-face {
+    font-family: "coolrg";
+    src: url(../fonts/coolvetica-rg.ttf);
+}
+@font-face {
+    font-family: "coolcond";
+    src: url(../fonts/coolvetica-condensed-rg.ttf);
+}
+@font-face {
+    font-family: "ralemed";
+    src: url(../fonts/Raleway-Medium-vi.ttf);
+}
+#brand{
+    font-family: coolrg;
+}
+#title-background{
+    background: url(../images/person-t-shirt-wear-1770723.jpg) center;
+    height: 500px;
+    background-size: cover;
+    padding: 100px 0px;
+    text-align: center;
+}
+#title-text{
+    color: white;
+    font-family: coolrg;
+    text-transform: uppercase;
+    font-size: 80px;
+}
+#title-sub-text{
+    color: white;
+    text-transform: uppercase;
+    font-family: ralemed;
+    font-size: 40px;
+}
+.title-divider{
+    color: #ab1113;
+    text-transform: uppercase;
+    background-color: white;
+    font-family: coolrg;
+    font-size: 22px;
+    display: inline-block;
+}
+
+.mega-dropdown {
+    position: static !important;
+}
+.mega-dropdown-menu {
+    background-color: #ffffff;
+    padding: 20px 0px;
+    width: 100%;
+    position: absolute;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border-radius: 0px;
+    background-color: #ffffff;
+    transition: all 0.3s;
+}
+.mega-dropdown-menu > li > ul {
+    padding: 0;
+    margin: 0;
+}
+.mega-dropdown-menu > li > ul > li {
+    list-style: none;
+}
+.mega-dropdown-menu > li > ul > li > a {
+    display: block;
+    color: silver;
+    transition: 0.3s;
+    padding: 3px 5px;
+    line-height: 25px;
+    font-size: 15px;
+}
+.mega-dropdown-menu > li ul > li > a:hover,
+.mega-dropdown-menu > li ul > li > a:focus {
+    text-decoration: none;
+    background-color: #ffeab5;
+    color: black;
+}
+.mega-dropdown-menu .dropdown-header {
+    font-size: 18px;
+    color: #ab1113;
+    padding: 5px 60px 5px 5px;
+    line-height: 30px;
+}
+
+#search_input{
+    border: none;
+    font-size: 24px;
+    font-family: coolcond;
+}
+#search_input:focus{
+    box-shadow: none;
+}
+#search_button{
+    border: none;
+    font-size: 20px;
+    border-radius: 0px;
+    background-color: #ab1113;
+    width: 100px;
+    font-family: coolrg;
+    color: white;
+    text-transform: uppercase;
+}
+#search_button:hover{
+    background-color: #e03140;
+}
+#category-panel{
+    font-family: coolrg;
+    font-size: 25px;
+    text-transform: uppercase;
+    text-align: center;
+    overflow-x: auto;
+    width: 100%;
+    margin-top: 10px;
+    white-space: nowrap;
+
+}
+#category-panel a{
+    display: inline-flex;
+    margin-right: 10px;
+    margin-left: 10px;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: black;
+
+}
+
+#category-panel a:hover{
+    border-bottom: solid medium #ab1113;
+    color: #ab1113;
+}
+.category-panel-active{
+    border-bottom: solid medium #ab1113;
+    color: #ab1113;
+
+}
+.divider-wrapper{
+    text-align: center;
+    margin-top: -35px;
+}
+.divider-section{
+    margin-top: 30px;
+}
+.see-all{
+    text-align: right;
+    font-family: ralemed;
+}
+.see-all a{
+    color: black;
+    text-decoration: none;
+}
+.see-all a:hover{
+    color: #ab1113;
+}
+#brand-background-1 div{
+    height: 500px;
+    background-size: cover !important;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+#brand-background-1 div:hover{
+    opacity: 1;
+}
+.brand-title-1{
+    font-family: coolrg;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 250px 0px;
+}
+.brand-title-1 a{
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+#brand-background-1 div:hover > .brand-title-1 a{
+    color: #ab1113;
+    font-size: 40px;
+}
+
+#brand-background-2 div{
+    height: 350px;
+    background-size: cover !important;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+#brand-background-2 div:hover{
+    opacity: 1;
+}
+.brand-title-2{
+    font-family: coolrg;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 125px 0px;
+}
+.brand-title-2 a{
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+#brand-background-2 div:hover > .brand-title-2 a{
+    color: #ab1113;
+    font-size: 40px;
+}
+.card-block {
+    min-height: 220px;
+    border: none !important;
+}
+.product-img-wrapper{
+    width: 100%;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+.product-name a{
+    color: black;
+    text-decoration: none;
+    font-family: coolcond;
+    font-size: 20px;
+    line-height: 25px;
+    transition: all 0.3s;
+}
+.product-name a:hover{
+    color: #ab1113;
+}
+.product-price{
+    color: black;
+    font-family: coolcond;
+    font-size: 25px;
+    line-height: 25px;
+}
+.product-sub-title{
+    font-size: 15px;
+    color: #dbd9d9;
+    font-family: ralemed;
+}
+.product-img{
+    max-width: 100%;
+}
+#subs-wrapper{
+    min-height: 250px;
+    margin-top: 30px;
+}
+#subs-background{
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/attractive-battle-F974902.jpg) center;
+    background-size: cover;
+    padding: 30px 100px;
+    line-height: 45px;
+}
+#subs-title{
+    font-family: coolrg;
+    color: white;
+    font-size: 60px;
+    text-transform: uppercase;
+}
+#subs-sub-title{
+    font-family: coolcond;
+    color: white;
+    font-size: 40px;
+    text-transform: uppercase;
+}
+.btn-subs{
+    color: white;
+    border: solid thin white;
+    border-radius: 0;
+    font-size: 30px;
+    font-family: coolcond;
+    text-transform: uppercase;
+    min-width: 300px;
+}
+.btn-subs:hover{
+    background-color: #ab1113;
+    color: white;
+    border: none;
+}
+#subs-email-wrapper{
+    text-align: center;
+    background-color: #3c3c3c;
+    min-height: 250px;
+    padding: 50px 0px;
+
+}
+#subs-email-wrapper .btn-subs{
+    min-width: 90%;
+}
+#subs-input{
+    border-radius: 0;
+    font-size: 30px;
+    font-family: coolcond;
+    text-transform: uppercase;
+    min-width: 90%;
+}
+::placeholder { /* Firefox, Chrome, Opera */
+    color: #d3d3d3;
+
+}
+
+#news-background-1 div{
+    min-height: 400px;
+    background-size: cover !important;
+    padding: 20px 20px;
+}
+#news-background-2 div{
+    min-height: 400px;
+    background-size: cover !important;
+    padding: 20px 20px;
+}
+.news-category{
+    background-color: #ab1113;
+    color: white;
+    font-family: coolcond;
+    display: inline-block;
+    padding: 2px 20px 2px 5px;
+}
+.news-title{
+     font-family: coolcond;
+     font-size: 40px;
+     line-height: 25px;
+     color: black;
+     text-decoration: none !important;
+     transition: 0.3s;
+ }
+.news-title:hover{
+    color: #ab1113;
+}
+.news-detail{
+    color: #adadad;
+    font-family: ralemed;
+}
+.news-title-2{
+    font-family: coolcond;
+    font-size: 40px;
+    line-height: 25px;
+    color: white;
+    text-decoration: none !important;
+    transition: 0.3s;
+}
+.news-title-2:hover{
+    color: #ab1113;
+}
+.news-detail-2{
+    color: white;
+    font-family: ralemed;
+}
+#footer-wrapper{
+    background-color: #3d3d3d;
+    min-height: 250px;
+    padding: 20px 50px;
+}
+.footer-content{
+     background-color: transparent;
+    border: none;
+ }
+#footer-wrapper a{
+    color: #808080;
+    text-decoration: none;
+    font-family: ralemed;
+    transition: 0.3s;
+}
+#footer-wrapper a:hover{
+    color: #ab1113;
+}
+.footer-content-header{
+    color: white!important;
+    font-family: coolcond;
+    font-size: 24px;
+}
+#copyright{
+    background-color: #272727;
+    color: white;
+    font-family: coolcond;
+    padding: 10px 10px;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #272727;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 99;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: coolcond;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+#sidenav-sub-section{
+    color: white;
+    font-size: 10px;
+    background-color: #383838;
+}
+#sidenav-sub-section a{
+    padding: 8px 8px 8px 32px;
+    color: white;
+    font-size: 15px;
+    background-color: #383838;
+}
+#sidenav-logsign{
+    color: white;
+}
+#sidenav-logsign a{
+    display: inline-block;
+}
+#sidenav-logsign-login-text{
+    font-size: 15px;
+    padding: 8px 8px 8px 8px;
+}
+.sidenav-product{
+    padding-left: 15px;
+    border-left: solid thick #ffc300;
+}
+.sidenav-sub-link{
+    border-left: solid thick #ab1113 ;
+}
+#logreg-background{
+    background: url(../images/black-friday-fashion-friends-1345082.jpg) center no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 150px 20px;
+}
+#logreg-wrapper{
+    min-height: 350px;
+}
+#logreg-form-wrapper{
+    background-color: white;
+    padding: 20px 40px;
+
+}
+.login-form-text{
+    font-family: coolrg;
+    font-size: 30px;
+    text-transform: uppercase;
+
+}
+.login-form-label{
+    text-transform: uppercase;
+    font-family: ralemed;
+}
+.form-control-login{
+    border: solid thin black;
+    border-radius: 0px;
+    font-size: 20px;
+}
+.form-control-login:focus{
+    box-shadow: none;
+    border: solid thin #ab1113;
+}
+#pwd{
+    padding-left:40px;
+    background: url(../images/icons/iconfinder_lock_172497.png) no-repeat scroll;
+    background-size: 25px;
+    background-position: 5px center;
+}
+#usr{
+    padding-left:40px;
+    background: url(../images/icons/iconfinder_user_male3_172627.png) no-repeat scroll;
+    background-size: 25px;
+    background-position: 5px center;
+}
+.logreg-form-button{
+    background-color:#ab1113 ;
+    font-family: coolrg;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 0px;
+    min-width: 150px;
+    font-size: 20px;
+}
+#login-form-link{
+    vertical-align: bottom;
+    color: black;
+    text-decoration: none;
+    font-family: ralemed;
+}
+#login-form-link:hover{
+    color:#ab1113 ;
+}
+.form-check-login{
+    font-family: ralemed;
+    vertical-align: bottom;
+
+}
+.form-check-input-login {
+    width: 25px;
+    height: 25px;
+    border-radius: 0px;
+    background-color: white;
+}
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: ralemed;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #ab1113;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#login-form-register{
+    background-color: rgba(0,0,0,0.5);
+    padding: 20px 40px;
+}
+#login-form-register-header{
+    color: white;
+    text-transform: uppercase;
+    font-family: coolrg;
+    font-size: 30px;
+}
+#login-form-register-quote{
+    color: white;
+    font-family: ralemed;
+    font-size: 15px;
+}
+#login-form-register-quote span{
+    text-align: right;
+    font-weight: bold;
+}
+#login-form-register-button{
+    background-color: transparent;
+    border: solid thin white;
+    border-radius: 0px;
+    color: white;
+    font-family: coolrg;
+    font-size: 20px;
+    min-width: 100%;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+#login-form-register-button:hover{
+    background-color: #ab1113;
+    border: none;
+}
+.hidden{
+    display: none;
+}
+.visible{
+    display:block;
+}
+.not-member::before{
+    content: "Not a member yet?";
+}
+.welcome::before{
+    content: "Already have an account?";
+}
+.login::before{
+    content: "login";
+}
+.register-now::before{
+    content: "register now";
+}
+.top-wrapper {
+    padding: 100px 0 20px 0;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/attractive-battle-F974902.jpg) center;
+    background-size: cover;
+}
+
+.top-wrapper .top-title p {
+    color: white;
+    font-size: 20px;
+    font-family: segoe ui light;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.top-wrapper .top-title span {
+    color: red;
+}
+
+.top-wrapper .top-title h3 {
+    font-size: 41px;
+    line-height: 54px;
+    margin-bottom: 0;
+    color: white;
+    font-family: coolrg;
+}
+
+top-title-first-text{
+    font-family: coolcond;
+}
+/* End top-wrapper */
+
+
+/* Start content-wrapper */
+.content-wrapper .content-left {
+    font-family: segoe ui light;
+    line-height: 30px;
+    font-size: 17px;
+}
+
+.content-wrapper .content-left h3 {
+    font-weight: bold;
+    padding-top: 10px;
+    font-size: 24px;
+}
+
+
+.content-right .content-right-first {
+    padding-left: 40px;
+}
+
+.content-right .content-right-first h3 {
+    font-size: 28px;
+    font-family: fantasy;
+    color: brown;
+    padding-bottom: 8px;
+}
+
+.content-right .content-right-first p {
+    margin-left: -8px;
+    font-size: 18px;
+    line-height: 17px;
+}
+.content-right .content-right-first .content-right-first-price{
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
+.content-right .content-right-first .content-right-first-date {
+    display: block;
+    font-size: 12px;
+    padding-top: 6px;
+}
+
+
+.content-right .content-right-second {
+    margin-top: 20px;
+    background-color: #333;
+    padding: 15px 20px;
+    color: white;
+    font-family: coolcond;
+}
+
+.content-right .content-right-second h3 {
+    font-family: fantasy;
+    font-size: 27px;
+}
+
+.content-right .content-right-second .import {
+    border-radius: 0;
+    padding: 10px;
+}
+.content-right .content-right-second .send {
+    border-radius: 0;
+    font-size: 20px;
+    font-family: fantasy;
+}
+.content-right-first-news{
+    margin-bottom: 10px;
+    font-family: ralemed;
+}
+#content-left-second-sub-title{
+    font-family: coolcond;
+}
+.content-left-second-content{
+    font-family: ralemed;
+}
+/* End content-wrapper */
+
+/* END INDEX.HTML */
+
+
+/* ------------------------------------------------- */
+
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+@media only screen and (max-width: 576px) {
+
+    .top-wrapper .top-menu a.navbar-brand {
+        text-align: center;
+        transform: translateX(0)!important;
+        font-size: 35px;
+        margin-top: 0;
+    }
+
+    .top-wrapper .top-menu ul {
+        text-align: center;
+        border-bottom: 1px solid #342d2d54;
+    }
+
+    .top-wrapper .top-menu ul li.nav-item {
+        display: inline-block;
+        text-align: center;
+        padding-left: 30px!important;
+    }
+
+    .top-wrapper .top-menu ul li.repair {
+        padding-left: 30px!important;
+        padding-right: 0!important;
+        display: inline-block;
+    }
+
+    .top-wrapper .top-menu ul li a.nav-link {
+        font-size: 20px;
+        color: black!important;
+    }
+
+    .top-wrapper .top-menu ul li a.nav-link:hover{
+        color: white!important;
+    }
+
+    .top-wrapper .top-title p {
+        font-size: 20px;
+    }
+
+    .top-wrapper .top-title h3 {
+        font-size: 29px;
+        line-height: 49px;
+        color: white;
+        padding-bottom: 20px;
+    }
+    /* End top-wrapper */
+
+
+    /* Start content-wrapper */
+    .content-right .content-right-first {
+        padding-left: 0px;
+    }
+
+    .content-right .content-right-first h3{
+        text-align: center;
+    }
+    /* End content-wrapper */
+    #title-text{
+        font-size: 30px;
+    }
+    #title-sub-text{
+        font-size: 15px;
+    }
+    #title-background{
+        height: 300px;
+    }
+    #subs-background{
+        padding: 30px 30px;
+        text-align: center;
+    }
+    .btn-subs-explore{
+        min-width: 100%!important;
+    }
+    .btn-subs{
+        width: 100%;
+    }
+    #subs-input{
+        min-width: 100%;
+    }
+    #subs-email-wrapper{
+        padding: 50px 30px;
+    }
+    #logreg-background{
+        padding: 50px 20px;
+    }
+}
