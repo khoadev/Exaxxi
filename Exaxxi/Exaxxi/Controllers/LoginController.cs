@@ -60,7 +60,7 @@ namespace Exaxxi.Controllers
         [HttpGet, AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            return View("Login");
         }
 
         [HttpPost, AllowAnonymous]
@@ -78,7 +78,7 @@ namespace Exaxxi.Controllers
             message.Subject = "Register in Exaxxi";
             message.Body = new TextPart("plain")
             {
-                Text = "Ban da dang ky thanh cong"
+                Text = "<h3>Ban da dang ky thanh cong</h3>"
             };
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {

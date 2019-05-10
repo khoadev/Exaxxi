@@ -127,7 +127,7 @@ namespace Exaxxi.Controllers.WebAPI
             var claims = new List<Claim> {
                         new Claim(ClaimTypes.Email, user.email),
                         new Claim(ClaimTypes.Name, user.name),
-            };
+                    };
 
             // create identity
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
