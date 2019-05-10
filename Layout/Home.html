@@ -15,7 +15,7 @@
 <body>
 <div id="mySidenav" class="sidenav"> <!-- Start sidenav -->
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div id="sidenav-logsign"><a href="#">LOGIN</a>/<a href="#" id="sidenav-logsign-sign">sign up</a></div>
+    <div id="sidenav-logsign"><a href="#">SIGN UP</a>/<a href="#" id="sidenav-logsign-login-text">login</a></div>
     <a href="#">Exxaxxi</a>
     <div href="#" id="sidenav-sub-section"> <!-- Start sidenav-sub... -->
         <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#cate1">Cate's Name</a>
@@ -56,8 +56,14 @@
             <li class="nav-item d-none d-md-flex">
                 <a class="nav-link" href="#">FaQ</a>
             </li>
-            <li class="nav-item d-none d-md-flex" >
-                <a class="nav-link" href="#"><i class="far fa-user"></i></a>
+            <li class="nav-item dropdown d-none d-md-flex">
+                <a class="nav-link " href="#" id="navbardrop" data-toggle="dropdown">
+                    <i class="far fa-user"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Sign Up</a>
+                    <a class="dropdown-item" href="#">Login</a>
+                </div>
             </li>
             <li class="dropdown mega-dropdown nav-item"> <!-- Start Search Mega Dropdown -->
                 <a href="#" class="nav-link " data-toggle="dropdown" ><i class="fas fa-search"></i></a>

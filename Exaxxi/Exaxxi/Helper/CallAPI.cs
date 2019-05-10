@@ -54,7 +54,7 @@ namespace Exaxxi.Helper
         {
             HttpClient client = this.Initial();
             var stringContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
-            HttpResponseMessage res = await client.PostAsync(link, stringContent);
+            HttpResponseMessage res = await client.PutAsync(link, stringContent);
             if (res.IsSuccessStatusCode)
             {
                 return true;
