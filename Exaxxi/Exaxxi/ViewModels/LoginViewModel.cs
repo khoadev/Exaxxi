@@ -14,6 +14,7 @@ namespace Exaxxi.ViewModels
         [DataType(DataType.EmailAddress)]
         public string Username { get; set; }
 
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
         [Display(Name = "Mật Khẩu")]
         [Required(ErrorMessage = "*")]
         [DataType(DataType.Password)]
