@@ -39,20 +39,22 @@ namespace Exaxxi
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Exaxxi"));
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-            {
-                options.LoginPath = "/Admin/LoginAdmin/Login";
-                options.LogoutPath = "/Admin/LoginAdmin/Logout";
-                options.AccessDeniedPath = "/Admin/LoginAdmin/AccessDenied";
-            });
+
             //Khai báo service authentication
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
-            //    options => {
-            //        options.LoginPath = "/Login/Login";
-            //        options.LogoutPath = "/Login/Logout";
-            //        options.AccessDeniedPath = "/Login/AccessDenied";
-            //    }
-            //);
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    //Users
+                    options.LoginPath = "/Login/Login";
+                    options.LogoutPath = "/Login/Logout";
+                    options.AccessDeniedPath = "/Login/AccessDenied";
+
+                    //Admins
+                    options.AccessDeniedPath = "/Admin/LoginAdmin/AccessDenied";
+                    options.LogoutPath = "/Admin/LoginAdmin/Logout";
+                    options.LoginPath = "/Admin/LoginAdmin/Login";
+                }
+            );
 
         }
 
@@ -76,16 +78,17 @@ namespace Exaxxi
 
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-               
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
                 //template: "api/{controller=Departments}/{id?}");
-                
+
 
             });
-            
+
         }
     }
 }

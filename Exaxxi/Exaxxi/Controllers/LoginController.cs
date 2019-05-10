@@ -58,7 +58,7 @@ namespace Exaxxi.Controllers
         [HttpGet, AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            return View("Login");
         }
 
         [HttpPost, AllowAnonymous]

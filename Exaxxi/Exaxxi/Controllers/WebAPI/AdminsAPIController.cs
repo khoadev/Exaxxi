@@ -138,7 +138,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
             else
             {
-                return RedirectToAction("Profile", "Login");//default
+                return RedirectToAction("Index", "Login");//default
             }
         }
 
