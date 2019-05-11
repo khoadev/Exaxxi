@@ -18,6 +18,7 @@ namespace Exaxxi.Controllers.WebAPI
     public class AdminsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        BlowFish bf = new BlowFish(info.keyBF);
 
         public AdminsAPIController(ExaxxiDbContext context)
         {
@@ -112,8 +113,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return NotFound("khong tim thay du lieu");
             }
 
-            string passWordHash = (model.Password).ToSHA512();
-            if (admin.password != passWordHash)
+            if (bf.Decrypt_CBC(admin.password) != model.Password)
             {
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");

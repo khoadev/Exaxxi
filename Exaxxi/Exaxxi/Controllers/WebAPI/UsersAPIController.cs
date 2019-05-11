@@ -25,6 +25,7 @@ namespace Exaxxi.Controllers.WebAPI
     public class UsersAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        BlowFish bf = new BlowFish(info.keyBF);
 
         public UsersAPIController(ExaxxiDbContext context)
         {
@@ -134,9 +135,8 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return NotFound("khong tim thay du lieu");
             }
-
-            string matkhauHash = (model.Password).ToSHA512();
-            if (user.password != matkhauHash)
+            
+            if (bf.Decrypt_CBC(user.password) != model.Password)
             {
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
@@ -166,7 +166,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        [AllowAnonymous, Route("PostRegister")]
+        [AllowAnonymous ,Route("PostRegister")]
         public IActionResult PostRegister([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -180,7 +180,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest("Vui Lòng Nhập Captcha");
             }
 
-            model.password = (model.password).ToSHA512();
+            model.password = bf.Encrypt_CBC(model.password);
             Users account = model.toUsers();
 
             _context.Add(account);
