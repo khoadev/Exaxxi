@@ -590,14 +590,20 @@
         border: solid thin #ab1113;
     }
 
-#pwd {
+#pwd, #pwd_re, #pwd_re_conf {
     padding-left: 40px;
     background: url(../images/icons/iconfinder_lock_172497.png) no-repeat scroll;
     background-size: 25px;
     background-position: 5px center;
 }
 
-#usr {
+#usr, #email_re {
+    padding-left: 40px;
+    background: url(../images/icons/185078-64.png) no-repeat scroll;
+    background-size: 25px;
+    background-position: 5px center;
+}
+#name_re {
     padding-left: 40px;
     background: url(../images/icons/iconfinder_user_male3_172627.png) no-repeat scroll;
     background-size: 25px;

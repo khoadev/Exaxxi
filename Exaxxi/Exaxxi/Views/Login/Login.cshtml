@@ -23,7 +23,6 @@
     }
 }
 
-
 <div id="logreg-background">
 
     <div class="container">
@@ -52,21 +51,26 @@
                 <div id="register-form" class="@register">
                     <p class="login-form-text">Register</p>
                     <form>
-                        <div class="form-group">
-                            <label class="login-form-label">Name</label>
-                            <input type="text" class="form-control form-control-login" placeholder="Enter your name" id="name_re" required>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Name</label>
+                                <input type="text" class="form-control form-control-login" placeholder="Enter your name" id="name_re" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Email Address</label>
+                                <input type="email" class="form-control form-control-login" placeholder="Enter your email address" id="email_re" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Password</label>
+                                <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd_re" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Re-enter Password</label>
+                                <input type="password" class="form-control form-control-login" placeholder="Re-enter your password" id="pwd_re_conf" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="login-form-label">Email Address</label>
-                            <input type="email" class="form-control form-control-login" placeholder="Enter your email address" id="email_re" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="login-form-label">Password</label>
-                            <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd_re" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="login-form-label">Re-enter Password</label>
-                            <input type="password" class="form-control form-control-login" placeholder="Re-enter your password" id="pwd_re_conf" required>
+                        <div class="form-group" style="min-width:100%!important;">
+                            <div class="g-recaptcha" data-sitekey="6Lfwz6IUAAAAAGVKa7XbpkYbqDI9tRE62IUNUGha"></div>
                         </div>
                         <button type="button" id="sb_reg" class="btn logreg-form-button">Register</button>
                     </form>
@@ -95,15 +99,13 @@
             //Login
             $("#submit").on("click", function () {
                 var username = $("#usr").val();
-                var password = $("#pwd").val();
-                var remember = $("#rmb").val();
+                var password = $("#pwd").val();                
                 var login = {
                     "username": username,
-                    "password": password,
-                    "remember": remember,
+                    "password": password,                    
                 };
                 $.ajax({
-                    url: "/api/UsersAPI/PostUser",
+                    url: "/api/UsersAPI/PostUserLogin",
                     type: "POST",
                     data: JSON.stringify(login),
                     contentType: "application/json",
@@ -121,12 +123,14 @@
                 var name = $("#name_re").val();
                 var email = $("#email_re").val();
                 var password = $("#pwd_re").val();
-                var password_confirm = $("#pwd_re_conf").val();              
+                var password_confirm = $("#pwd_re_conf").val();
+                var captcha = grecaptcha.getResponse();
                 var register = {
                     "name": name,
                     "email": email,
                     "password": password,
                     "confirm_password": password_confirm,
+                    "captcha": captcha,
                 };
                 $.ajax({
                     url: "/api/UsersAPI/PostRegister",
@@ -142,7 +146,8 @@
                     }
                 });
             });
-
         });
     </script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 }
+

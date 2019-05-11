@@ -12,6 +12,10 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using MimeKit;
+using Newtonsoft;
+using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -104,7 +108,8 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [AllowAnonymous, Route("PostUser")]
+
+        [AllowAnonymous ,Route("PostUserLogin")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -155,7 +160,13 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return BadRequest(ModelState);
             }
-            
+                        
+            //Validate Google recaptcha below
+            if (!GoogleRecaptchaHelper.IsReCaptchaPassedAsync(model.captcha, "6Lfwz6IUAAAAAM_gyYa0tzAoeyVYKZ5rkOxT_d6h"))
+            {
+                return BadRequest("Vui Lòng Nhập Captcha");
+            }
+
             model.password = bf.Encrypt_CBC(model.password);
             Users account = model.toUsers();
 
@@ -207,5 +218,6 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Users.Any(e => e.id == id);
         }
+
     }
 }
