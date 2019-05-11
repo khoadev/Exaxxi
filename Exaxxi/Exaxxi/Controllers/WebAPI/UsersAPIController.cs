@@ -21,6 +21,7 @@ namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
@@ -54,6 +55,20 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(users);
+        }
+
+        [AllowAnonymous, Route("CheckExistMail")]
+        public IActionResult Check(string email)
+        {
+            Users user = _context.Users.SingleOrDefault(p => p.email == email);
+            if (user == null)
+            {
+                return Ok("Bạn có thể sử dụng email này");
+            }
+            else
+            {
+                return Ok("Email này đã tồn tại");
+            }
         }
 
         // PUT: api/Users/5
@@ -106,7 +121,7 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [Authorize, AllowAnonymous ,Route("PostUserLogin")]
+        [AllowAnonymous ,Route("PostUserLogin")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -151,7 +166,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        [Authorize, AllowAnonymous, Route("PostRegister")]
+        [AllowAnonymous, Route("PostRegister")]
         public IActionResult PostRegister([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
