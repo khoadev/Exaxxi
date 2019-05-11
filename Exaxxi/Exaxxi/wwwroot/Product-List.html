@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="lib/fontawesome-free-5.1.0-web/css/all.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+    <div id="product-list-background"><!--start product-list-background-->
+        <div class="container">
+            <div class="row">
+                <h1 id="product-list-cate">Shirt</h1>
+            </div>
+        </div>
+    </div> <!--end product-list-background-->
+
+    <div class="container"> 
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="filter-depart-wrapper">
+                    <!--start filter-depart-wrapper-->
+                    <a href="">Depart 1</a>
+                    <a href="">Depart 2</a>
+                    <a href="">Depart 3</a>
+                </div> <!--end filter-depart-wrapper-->
+                <div class="filter-brand-wrapper">
+                    <!--start filter-brand-wrapper-->
+                    <div class="filter-name-header">Brand's Name</div>
+                    <a class="filter-brand-item" href="#">Brand's Name 1</a>
+                    <a class="filter-brand-item" href="#">Brand's Name 2</a>
+                    <a class="filter-brand-item" href="#">Brand's Name 3</a>
+                    <a class="filter-brand-item" href="#">Brand's Name 4</a>
+                </div> <!--end filter-brand-wrapper-->
+                <div class="filter-category-wrapper">
+                    <!--start filter-category-wrapper-->
+                    <div class="filter-name-header">Category's Name</div>
+                    <div class="category-list-wrapper custom-scrollbar">
+                        <!--start category-list-wrapper-->
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                            Category's Name 1
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div> <!--end category-list-wrapper-->
+                </div> <!--end filter-category-wrapper-->
+                <div class="filter-size-wrapper">
+                    <!--start filter-size-wrapper-->
+                    <div class="filter-name-header">Size's Name</div>
+                    <label class="checkbox-container">
+                        XS
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        S
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        M
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        L
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        XL
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        XXL
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div><!--end filter-size-wrapper-->
+                <div class="filter-price-wrapper">
+                    <!--start filter-price-wrapper-->
+                    <p>
+                        <label for="amount" class="filter-name-header">Price range</label>
+                        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:100%;">
+                    </p>
+
+                    <div id="slider-range"></div>
+
+                </div><!--end filter-price-wrapper-->
+            </div>
+            <div class="col-lg-9">
+                <div class="sort-name-header">Sort by</div>
+                <div class="row" style="overflow-x: auto;">
+                    <!-- Start row -->
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;">
+                        <div class="card card-block">
+                            <!-- Start card -->
+                            <div class="product-img-wrapper">
+                                <img src="images/Layer%207.png" class="product-img">
+                            </div>
+                            <div class="product-title-wrapper">
+                                <!-- Start product-title-wrapper -->
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-6 product-name">
+                                        <a href="#">
+                                            Jordan 1 Retro High Black Crimson Tint (GS)
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                        <div class="product-price">
+                                            169.000.000<br>
+                                            <span style="color: #dbd9d9">VND</span><br>
+                                        </div>
+                                        <span class="product-sub-title">Lowest Ask</span>
+                                    </div>
+                                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                </div> <!-- End row -->
+                <div class="pagination-wrapper">
+                    <ul class="pagination pagination-md justify-content-end" id="pagination-custom">
+                        <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-left"></i></a></li>
+                        <li class="page-item"><a class="page-link page-link-custom pagination-active" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link page-link-custom" href="#">2</a></li>
+                        <li id="pagination-dots"> <i class="fas fa-ellipsis-h"> </i> </li>
+                        <li class="page-item"><a class="page-link page-link-custom" href="#">7</a></li>
+                        <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
