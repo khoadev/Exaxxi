@@ -17,9 +17,11 @@ namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        BlowFish bf = new BlowFish(info.keyBF);
 
         public UsersAPIController(ExaxxiDbContext context)
         {
@@ -102,7 +104,7 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [Authorize, Route("PostUser")]
+        [AllowAnonymous, Route("PostUser")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -115,9 +117,8 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return NotFound("khong tim thay du lieu");
             }
-
-            string matkhauHash = (model.Password).ToSHA512();
-            if (user.password != matkhauHash)
+            
+            if (bf.Decrypt_CBC(user.password) != model.Password)
             {
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
@@ -147,15 +148,15 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        [Authorize, AllowAnonymous ,Route("PostRegister")]
+        [AllowAnonymous ,Route("PostRegister")]
         public IActionResult PostRegister([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            model.password = (model.password).ToSHA512();
+            
+            model.password = bf.Encrypt_CBC(model.password);
             Users account = model.toUsers();
 
             _context.Add(account);
