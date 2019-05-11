@@ -51,23 +51,25 @@
                 <div id="register-form" class="@register">
                     <p class="login-form-text">Register</p>
                     <form>
-                        <div class="form-group">
-                            <label class="login-form-label">Name</label>
-                            <input type="text" class="form-control form-control-login" placeholder="Enter your name" id="name_re" required>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Name</label>
+                                <input type="text" class="form-control form-control-login" placeholder="Enter your name" id="name_re" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Email Address</label>
+                                <input type="email" class="form-control form-control-login" placeholder="Enter your email address" id="email_re" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Password</label>
+                                <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd_re" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="login-form-label">Re-enter Password</label>
+                                <input type="password" class="form-control form-control-login" placeholder="Re-enter your password" id="pwd_re_conf" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="login-form-label">Email Address</label>
-                            <input type="email" class="form-control form-control-login" placeholder="Enter your email address" id="email_re" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="login-form-label">Password</label>
-                            <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd_re" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="login-form-label">Re-enter Password</label>
-                            <input type="password" class="form-control form-control-login" placeholder="Re-enter your password" id="pwd_re_conf" required>
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group" style="min-width:100%!important;">
                             <div class="g-recaptcha" data-sitekey="6Lfwz6IUAAAAAGVKa7XbpkYbqDI9tRE62IUNUGha"></div>
                         </div>
                         <button type="button" id="sb_reg" class="btn logreg-form-button">Register</button>
