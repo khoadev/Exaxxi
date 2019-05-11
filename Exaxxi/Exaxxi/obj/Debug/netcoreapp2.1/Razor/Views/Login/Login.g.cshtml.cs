@@ -92,7 +92,7 @@ WriteAttributeValue("", 826, login, 826, 6, false);
             WriteLiteral(">\r\n                    <p class=\"login-form-text\">Login </p>\r\n                    ");
             EndContext();
             BeginContext(915, 1080, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "71859befdc584b399b08795bd237b09a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9ab6b448d2374166ac52701f7f59feac", async() => {
                 BeginContext(921, 1067, true);
                 WriteLiteral(@"
                         <div class=""form-group"">
@@ -139,7 +139,7 @@ WriteAttributeValue("", 2070, register, 2070, 9, false);
             WriteLiteral(">\r\n                    <p class=\"login-form-text\">Register</p>\r\n                    ");
             EndContext();
             BeginContext(2164, 1390, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "20cf99f5c66242c19a5f1628d802e491", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c42a958617af4c62bfebbf543edad4c4", async() => {
                 BeginContext(2170, 1377, true);
                 WriteLiteral(@"
                         <div class=""form-group"">

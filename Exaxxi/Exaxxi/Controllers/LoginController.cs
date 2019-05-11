@@ -43,8 +43,10 @@ namespace Exaxxi.Controllers
 
         public IActionResult Profile()
         {
+
             Users users = _exx.Users.SingleOrDefault(p => p.name == User.Identity.Name);
             if (users != null)
+
             {
                 return View(users);
             }

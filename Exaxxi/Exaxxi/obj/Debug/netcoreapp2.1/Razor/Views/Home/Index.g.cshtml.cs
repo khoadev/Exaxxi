@@ -387,7 +387,7 @@ using Exaxxi.Models;
             ");
             EndContext();
             BeginContext(14139, 313, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "43d656eb1e264dc282a88cb43aa523cb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "928d8095801d4c568114a8d1d348af74", async() => {
                 BeginContext(14145, 300, true);
                 WriteLiteral(@"
                 <p id=""subs-title"">
@@ -417,7 +417,7 @@ using Exaxxi.Models;
             WriteLiteral("\r\n        </div>\r\n        <div class=\"col-md-4\" id=\"subs-email-wrapper\">\r\n            ");
             EndContext();
             BeginContext(14538, 171, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "70109e94b785456ba66959008760343e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a0985813b5664d58bd70a1dc5b2127e7", async() => {
                 BeginContext(14544, 158, true);
                 WriteLiteral("\r\n                <input id=\"subs-input\" placeholder=\"Enter email address\"> <br><br>\r\n                <button class=\"btn btn-subs\">Send</button>\r\n            ");
                 EndContext();

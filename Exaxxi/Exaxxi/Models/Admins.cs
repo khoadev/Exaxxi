@@ -18,11 +18,7 @@ namespace Exaxxi.Models
         [Required]
         //[RegularExpression("^(?=.*[a - z])(?=.*[A - Z])(?=.*\\d)[a - zA - Z\\d]{8,}$")]
         public string password { get; set; }
-        [Display(Name = "Nhập lại mật khẩu")]
-        [MaxLength(30, ErrorMessage = "Tối đa 30 kí tự")]
-        [Required]
-        [Compare("password")]
-        private string confirm_password { get; set; }
+     
         [Display(Name = "Email")]
         [EmailAddress]
         [Required]

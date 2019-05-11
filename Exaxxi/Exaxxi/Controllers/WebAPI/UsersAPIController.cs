@@ -50,7 +50,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(users);
-        }        
+        }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
@@ -122,7 +122,7 @@ namespace Exaxxi.Controllers.WebAPI
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
             }
-        
+
 
             //ghi nhận đăng nhập thành công
             var claims = new List<Claim> {
@@ -200,7 +200,7 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return Ok(users);
-        }        
+        }
 
         private bool UsersExists(int id)
         {
