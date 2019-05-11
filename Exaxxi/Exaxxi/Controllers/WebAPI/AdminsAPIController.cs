@@ -90,7 +90,7 @@ namespace Exaxxi.Controllers.WebAPI
         public async Task<IActionResult> PostAdmins([FromBody] Admins admins)
         {
             if (!ModelState.IsValid)
-            { 
+            {
                 return BadRequest(ModelState);
             }
             _context.Admins.Add(admins);
@@ -112,8 +112,8 @@ namespace Exaxxi.Controllers.WebAPI
                 return NotFound("khong tim thay du lieu");
             }
 
-            string matkhauHash = (model.Password).ToSHA512();
-            if (admin.password != matkhauHash)
+            string passWordHash = (model.Password).ToSHA512();
+            if (admin.password != passWordHash)
             {
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
@@ -162,8 +162,8 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(admins);
         }
-
-        private bool AdminsExists(int id)
+        [HttpGet("AdminsExists/{id}")]
+        public bool AdminsExists(int id)
         {
             return _context.Admins.Any(e => e.id == id);
         }

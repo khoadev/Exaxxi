@@ -18,16 +18,7 @@ namespace Exaxxi.Areas.Admin.Controllers
     [Area("Admin")]
     public class AdminsController : Controller
     {
-        private readonly ExaxxiDbContext _context;
-        private AdminsAPIController ad;
-
         CallAPI _api = new CallAPI();
-
-        public AdminsController(ExaxxiDbContext context)
-        {
-            _context = context;
-            ad = new AdminsAPIController(_context);
-        }
 
         // GET: Admin/Admins
         public IActionResult Index()
@@ -65,7 +56,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,username,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
+        public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
         {
             if (_api.postAPI(admins, "api/AdminsAPI").Result)
             {
@@ -101,7 +92,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,username,password,email,level,date_create,active")] Admins admins)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level,date_create,active")] Admins admins)
         {
             if (id != admins.id)
             {
@@ -147,20 +138,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View(admins);
         }
 
-        // POST: Admin/Admins/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var admins = await _context.Admins.FindAsync(id);
-            _context.Admins.Remove(admins);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        
 
         private bool AdminsExists(int id)
         {
-            return _context.Admins.Any(e => e.id == id);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/AdminsAPI/AdminsExists/{id}").Result);
         }
     }
 }

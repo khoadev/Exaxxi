@@ -12,11 +12,11 @@ namespace Exaxxi.Models
         [Key]
         public int id { get; set; }
         [Display(Name = "Tiêu đề tiếng việt")]
-        [MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
+        //[MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
         [Required]
         public string vi_title { get; set; }
         [Display(Name = "Tiêu đề tiếng anh")]
-        [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
+        //[MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
         [Required]
         public string en_title { get; set; }
         [DataType(DataType.Text)]

@@ -44,6 +44,13 @@ namespace Exaxxi.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Admins");
+
+                    b.HasData(
+                        new { id = 1, active = true, date_create = new DateTime(1969, 4, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "genos@gmail.com", level = 1, name = "genos", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413" },
+                        new { id = 2, active = true, date_create = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "duytran@gmail.com", level = 1, name = "duytran", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413" },
+                        new { id = 3, active = true, date_create = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "khoado@gmail.com", level = 1, name = "khoado", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413" },
+                        new { id = 4, active = true, date_create = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "kietnguyen@gmail.com", level = 1, name = "kietnguyen", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413" }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Brands", b =>
@@ -67,6 +74,18 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_department");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new { id = 1, active = true, id_department = 1, name = "AdidasPho", order = 1 },
+                        new { id = 2, active = true, id_department = 1, name = "Nikes", order = 2 },
+                        new { id = 3, active = true, id_department = 1, name = "Bittis", order = 3 },
+                        new { id = 4, active = true, id_department = 2, name = "AoDaiViet", order = 4 },
+                        new { id = 5, active = true, id_department = 2, name = "QuanJeanGenos", order = 5 },
+                        new { id = 6, active = true, id_department = 2, name = "NonLa", order = 6 },
+                        new { id = 7, active = true, id_department = 3, name = "Citizen", order = 7 },
+                        new { id = 8, active = true, id_department = 3, name = "Omega", order = 8 },
+                        new { id = 9, active = true, id_department = 3, name = "Rolex", order = 9 }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Categories", b =>
@@ -76,10 +95,6 @@ namespace Exaxxi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("active");
-
-                    b.Property<string>("en_name")
-                        .IsRequired()
-                        .HasMaxLength(50);
 
                     b.Property<int>("id_brand");
 
@@ -94,6 +109,36 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_brand");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new { id = 1, active = true, id_brand = 1, order = 1, vi_name = "Yezzze" },
+                        new { id = 2, active = true, id_brand = 1, order = 2, vi_name = "Ultraboost" },
+                        new { id = 3, active = true, id_brand = 1, order = 3, vi_name = "NMD" },
+                        new { id = 4, active = true, id_brand = 2, order = 4, vi_name = "AirForce" },
+                        new { id = 5, active = true, id_brand = 2, order = 5, vi_name = "AirMax" },
+                        new { id = 6, active = true, id_brand = 2, order = 6, vi_name = "Kobe" },
+                        new { id = 7, active = true, id_brand = 3, order = 7, vi_name = "Hunter" },
+                        new { id = 8, active = true, id_brand = 3, order = 8, vi_name = "Hunter x Hunter" },
+                        new { id = 9, active = true, id_brand = 3, order = 9, vi_name = "Bitit x Hunter" },
+                        new { id = 10, active = true, id_brand = 4, order = 10, vi_name = "Áo Dài Hở Hang" },
+                        new { id = 11, active = true, id_brand = 4, order = 11, vi_name = "Áo Dài Kín Đáo" },
+                        new { id = 12, active = true, id_brand = 4, order = 12, vi_name = "Áo Dài Sexy" },
+                        new { id = 13, active = true, id_brand = 5, order = 13, vi_name = "Quần Jean Lửng" },
+                        new { id = 14, active = true, id_brand = 5, order = 14, vi_name = "Quần Jean Sexy" },
+                        new { id = 15, active = true, id_brand = 5, order = 15, vi_name = "Quần Jean Hở Hang" },
+                        new { id = 16, active = true, id_brand = 6, order = 16, vi_name = "Nón Lá làm từ lá" },
+                        new { id = 17, active = true, id_brand = 6, order = 17, vi_name = "Nón Lá Thép" },
+                        new { id = 18, active = true, id_brand = 6, order = 18, vi_name = "Nón Lá BêTong" },
+                        new { id = 19, active = true, id_brand = 7, order = 19, vi_name = "Citi W1" },
+                        new { id = 20, active = true, id_brand = 7, order = 20, vi_name = "Citi W2" },
+                        new { id = 21, active = true, id_brand = 7, order = 21, vi_name = "Citi W3" },
+                        new { id = 22, active = true, id_brand = 8, order = 22, vi_name = "Ome A" },
+                        new { id = 23, active = true, id_brand = 8, order = 23, vi_name = "Ome B" },
+                        new { id = 24, active = true, id_brand = 8, order = 24, vi_name = "Ome C" },
+                        new { id = 25, active = true, id_brand = 9, order = 25, vi_name = "Rolex I" },
+                        new { id = 26, active = true, id_brand = 9, order = 26, vi_name = "Rolex II" },
+                        new { id = 27, active = true, id_brand = 9, order = 27, vi_name = "Rolex III" }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Departments", b =>
@@ -115,6 +160,12 @@ namespace Exaxxi.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new { id = 1, active = true, en_name = "Sneaker", order = 1, vi_name = "Giày" },
+                        new { id = 2, active = true, en_name = "StreetWear", order = 2, vi_name = "Quần Áo" },
+                        new { id = 3, active = true, en_name = "Watch", order = 3, vi_name = "Đồng Hồ" }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.ds_Size", b =>
@@ -136,6 +187,12 @@ namespace Exaxxi.Migrations
                     b.HasKey("id");
 
                     b.ToTable("ds_Size");
+
+                    b.HasData(
+                        new { id = 1, Centimet = 45f, Inch = 13f, UK = 20f, US = 25f, VN = 30 },
+                        new { id = 2, Centimet = 50f, Inch = 18f, UK = 25f, US = 30f, VN = 35 },
+                        new { id = 3, Centimet = 55f, Inch = 21f, UK = 30f, US = 35f, VN = 40 }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Followings", b =>
@@ -155,6 +212,12 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_user");
 
                     b.ToTable("Followings");
+
+                    b.HasData(
+                        new { id = 1, id_size = 2, id_user = 1 },
+                        new { id = 2, id_size = 1, id_user = 1 },
+                        new { id = 3, id_size = 1, id_user = 2 }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Items", b =>
@@ -193,6 +256,25 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_category");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new { id = 1, active = false, en_info = "There are some infos about Item 1", id_admin = 1, id_category = 1, img = "item1.pnj", name = "Item 1", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item 1 sẽ hiện ở đây", volatility = 0f },
+                        new { id = 2, active = false, en_info = "There are some infos about Item 2", id_admin = 1, id_category = 1, img = "item2.pnj", name = "Item 2", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item 2 sẽ hiện ở đây", volatility = 0f },
+                        new { id = 3, active = false, en_info = "There are some infos about Item 3", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item 3", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item 3 sẽ hiện ở đây", volatility = 0f },
+                        new { id = 4, active = false, en_info = "There are some infos about Item I", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item I", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item I sẽ hiện ở đây", volatility = 0f },
+                        new { id = 5, active = false, en_info = "There are some infos about Item II", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item II", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item II sẽ hiện ở đây", volatility = 0f },
+                        new { id = 6, active = false, en_info = "There are some infos about Item III", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item III", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item III sẽ hiện ở đây", volatility = 0f },
+                        new { id = 7, active = false, en_info = "There are some infos about Item X", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item X", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item X sẽ hiện ở đây", volatility = 0f },
+                        new { id = 16, active = false, en_info = "There are some infos about Item X1", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item X1", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item X1 sẽ hiện ở đây", volatility = 0f },
+                        new { id = 8, active = false, en_info = "There are some infos about Item X12", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item X12", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item X12 sẽ hiện ở đây", volatility = 0f },
+                        new { id = 9, active = false, en_info = "There are some infos about Item X121", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item X121", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item X121 sẽ hiện ở đây", volatility = 0f },
+                        new { id = 10, active = false, en_info = "There are some infos about Item XEEeEEEEEEEeeeE", id_admin = 1, id_category = 1, img = "item3.pnj", name = "Item XEEEEEEE", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item XEEêEEêEE sẽ hiện ở đây", volatility = 0f },
+                        new { id = 11, active = false, en_info = "There are some infos about Item XEEeEEEEEEEeeeE", id_admin = 1, id_category = 2, img = "item3.pnj", name = "Item XEEEEEEE", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item XEEêEEêEE sẽ hiện ở đây", volatility = 0f },
+                        new { id = 12, active = false, en_info = "There are some infos about Item XEEEEádasdasfsafasE", id_admin = 1, id_category = 2, img = "item3.pnj", name = "Item XEEEEádasdasfsafasE ", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item XEEEEádasdasfsafasE sẽ hiện ở đây", volatility = 0f },
+                        new { id = 13, active = false, en_info = "There are some infos about Item qưtegdsdgegwggegw", id_admin = 1, id_category = 2, img = "item3.pnj", name = "Item qưtegdsdgegwggegw ", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item qưtegdsdgegwggegw sẽ hiện ở đây", volatility = 0f },
+                        new { id = 14, active = false, en_info = "There are some infos about Item fasfasfasfsafsafsaf", id_admin = 1, id_category = 2, img = "item3.pnj", name = "fasfasfasfsafsafsaf ", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item fasfasfasfsafsafsaf sẽ hiện ở đây", volatility = 0f },
+                        new { id = 15, active = false, en_info = "There are some infos about Item fasfasfasfsafsafsaf", id_admin = 1, id_category = 2, img = "item3.pnj", name = "fasfasfasfsafsafsaf ", trade_max = 200.0, trade_min = 100.0, vi_info = "Thông Tin của item fasfasfasfsafsafsaf sẽ hiện ở đây", volatility = 0f }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.News", b =>
@@ -209,8 +291,7 @@ namespace Exaxxi.Migrations
                         .IsRequired();
 
                     b.Property<string>("en_title")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                        .IsRequired();
 
                     b.Property<int>("id_admin");
 
@@ -220,8 +301,7 @@ namespace Exaxxi.Migrations
                         .IsRequired();
 
                     b.Property<string>("vi_title")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                        .IsRequired();
 
                     b.HasKey("id");
 
@@ -230,6 +310,13 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_department");
 
                     b.ToTable("News");
+
+                    b.HasData(
+                        new { id = 1, active = true, date_create = new DateTime(2019, 5, 11, 8, 48, 57, 72, DateTimeKind.Local), en_content = "Shoe is producted in pair now, it look so beautyful", en_title = "News about shoes", id_admin = 1, id_department = 1, vi_content = "Giày vừa được cho sản xuất thành 2 chiếc 1 đôi, đeo vô nhìn rắt là đẹp", vi_title = "Tin tức về Giày" },
+                        new { id = 2, active = true, date_create = new DateTime(2019, 5, 11, 8, 48, 57, 73, DateTimeKind.Local), en_content = "Shoe must be wore by pair, it's so stupid ", en_title = "Shoe is put on by pair", id_admin = 2, id_department = 1, vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", vi_title = "Giày đeo theo cặp" },
+                        new { id = 4, active = true, date_create = new DateTime(2019, 5, 11, 8, 48, 57, 73, DateTimeKind.Local), en_content = "Shoe must be wore by pair, it's so stupid ", en_title = "Shoe is put on by pair", id_admin = 2, id_department = 1, vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", vi_title = "Giày đeo theo cặp" },
+                        new { id = 3, active = true, date_create = new DateTime(2019, 5, 11, 8, 48, 57, 73, DateTimeKind.Local), en_content = "Genos is so handsome, he hold all marketplace is tangibility ", en_title = "Clothes of Genos Brand is hold 100% marketplace of Asia", id_admin = 3, id_department = 2, vi_content = "Genos đẹp trai nên nắm giữ toàn bộ thị trường đúng rồi khỏi thắc mắc gì thêm", vi_title = "Quần Áo Hiệu Genos đọc chiếm thị trường Châu Á" }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Posts", b =>
@@ -257,6 +344,15 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_user");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new { id = 1, date_end = new DateTime(2019, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), date_start = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), id_size = 1, id_user = 1, kind = 1, price = 20.0 },
+                        new { id = 2, date_end = new DateTime(2019, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), date_start = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), id_size = 2, id_user = 2, kind = 2, price = 30.0 },
+                        new { id = 3, date_end = new DateTime(2019, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), date_start = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), id_size = 5, id_user = 3, kind = 2, price = 35.0 },
+                        new { id = 4, date_end = new DateTime(2019, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), date_start = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), id_size = 1, id_user = 3, kind = 2, price = 35.0 },
+                        new { id = 5, date_end = new DateTime(2019, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), date_start = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), id_size = 4, id_user = 4, kind = 1, price = 35.0 },
+                        new { id = 6, date_end = new DateTime(2019, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), date_start = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), id_size = 5, id_user = 2, kind = 1, price = 35.0 }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Sizes", b =>
@@ -286,6 +382,15 @@ namespace Exaxxi.Migrations
                     b.HasIndex("id_item");
 
                     b.ToTable("Sizes");
+
+                    b.HasData(
+                        new { id = 1, highest_bid = 25.0, id_ds_size = 1, id_item = 1, last_sale = 24.0, lowest_ask = 30.0 },
+                        new { id = 2, highest_bid = 35.0, id_ds_size = 2, id_item = 2, last_sale = 29.0, lowest_ask = 40.0 },
+                        new { id = 3, highest_bid = 35.0, id_ds_size = 2, id_item = 2, last_sale = 29.0, lowest_ask = 40.0 },
+                        new { id = 4, highest_bid = 45.0, id_ds_size = 3, id_item = 3, last_sale = 40.0, lowest_ask = 55.0 },
+                        new { id = 5, highest_bid = 55.0, id_ds_size = 1, id_item = 3, last_sale = 45.0, lowest_ask = 65.0 },
+                        new { id = 6, highest_bid = 33.0, id_ds_size = 2, id_item = 3, last_sale = 22.0, lowest_ask = 44.0 }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Users", b =>
@@ -315,6 +420,13 @@ namespace Exaxxi.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { id = 1, active = true, date_registion = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "teo@gmail.com", level_seller = 1, name = "Lê văn tèo", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413", score_buyer = 1 },
+                        new { id = 2, active = true, date_registion = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "ty@gmail.com", level_seller = 2, name = "Lê văn tý", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413", score_buyer = 2 },
+                        new { id = 3, active = true, date_registion = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "tun@gmail.com", level_seller = 3, name = "Lê văn tun", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413", score_buyer = 3 },
+                        new { id = 4, active = true, date_registion = new DateTime(2019, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), email = "tet@gmail.com", level_seller = 4, name = "Lê văn tet", password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413", score_buyer = 4 }
+                    );
                 });
 
             modelBuilder.Entity("Exaxxi.Models.Brands", b =>
