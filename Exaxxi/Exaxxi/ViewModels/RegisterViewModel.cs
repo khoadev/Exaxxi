@@ -27,6 +27,8 @@ namespace Exaxxi.ViewModels
         [EmailAddress]
         [Required]
         public string email { get; set; }
+        
+        public string captcha { get; set; }
 
         public Users toUsers()
         {

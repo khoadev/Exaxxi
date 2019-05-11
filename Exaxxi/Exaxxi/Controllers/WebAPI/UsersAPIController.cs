@@ -12,6 +12,10 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using MimeKit;
+using Newtonsoft;
+using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -50,7 +54,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(users);
-        }        
+        }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
@@ -102,7 +106,7 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [Authorize, Route("PostUser")]
+        [Authorize, AllowAnonymous ,Route("PostUserLogin")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -122,7 +126,7 @@ namespace Exaxxi.Controllers.WebAPI
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
             }
-        
+
 
             //ghi nhận đăng nhập thành công
             var claims = new List<Claim> {
@@ -147,12 +151,18 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        [Authorize, AllowAnonymous ,Route("PostRegister")]
+        [Authorize, AllowAnonymous, Route("PostRegister")]
         public IActionResult PostRegister([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+                        
+            //Validate Google recaptcha below
+            if (!GoogleRecaptchaHelper.IsReCaptchaPassedAsync(model.captcha, "6Lfwz6IUAAAAAM_gyYa0tzAoeyVYKZ5rkOxT_d6h"))
+            {
+                return BadRequest("Vui Lòng Nhập Captcha");
             }
 
             model.password = (model.password).ToSHA512();
@@ -200,11 +210,12 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return Ok(users);
-        }        
+        }
 
         private bool UsersExists(int id)
         {
             return _context.Users.Any(e => e.id == id);
         }
+
     }
 }
