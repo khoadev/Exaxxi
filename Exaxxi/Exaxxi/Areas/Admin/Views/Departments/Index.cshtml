@@ -28,26 +28,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.vi_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.en_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.order)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.vi_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.en_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.active)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.order)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+        <a style="cursor: pointer;" id="delete" class="delete" data-id="@item.id">Delete</a>
+    </td>
+</tr>
 }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(function () {
+            $(".delete").click(function () {
+                var id = $(this).attr("data-id");
+                if (confirm("Bạn có chắc muốn xóa")) {
+                    $.ajax({
+                        url: "/api/DepartmentsAPI/" + id,
+                        type: "DELETE",
+                        success: function () {
+                            alert("Thành công");
+                            window.location = "/Admin/Departments/Index";
+                        },
+                        error: function (res) {
+                            alert("Lỗi : " + res);
+                        }
+                    });
+
+                }
+
+            });
+        });
+    </script>
+}

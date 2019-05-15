@@ -63,7 +63,7 @@
         $(function () {
             $(".delete").click(function () {
                 var id = $(this).attr("data-id");
-                if (confirm("ban có chắc muốn xóa")) {
+                if (confirm("Bạn có chắc muốn xóa")) {
                     $.ajax({
                         url: "/api/AdminsAPI/" + id,
                         type: "DELETE",
@@ -75,12 +75,8 @@
                             alert("Lỗi : " + res);
                         }
                     });
-
                 }
-
             });
         });
     </script>
-
-
 }

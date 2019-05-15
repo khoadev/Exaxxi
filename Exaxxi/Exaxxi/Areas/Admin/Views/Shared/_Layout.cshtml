@@ -25,31 +25,36 @@
                 <li class="nav-item d-none d-md-flex">
                     <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">Department</a>
                 </li>
-               
-                 @if (!User.Identity.IsAuthenticated)
-                   {
+                <li class="nav-item d-none d-md-flex">
+                    <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">Categorie</a>
+                </li>
+                <li class="nav-item d-none d-md-flex">
+                    <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">Brand</a>
+                </li>
+                @if (!User.Identity.IsAuthenticated)
+                {
 
-                  <li>
-                     <a class="nav-link" asp-controller="LoginAdmin" asp-action="Login">
-                         <span class="glyphicon glyphicon-log-in"></span> Login
-                      </a>
-                   </li>
-                 }
-                 else
-                 { 
-                        <li>
-                            <a class="nav-link" asp-controller="LoginAdmin" asp-action="Profile">
-                                Xin chào
-                                <b>@User.Identity.Name</b>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" asp-controller="LoginAdmin" asp-action="Logout">
-                                <span class="glyphicon glyphicon-log-in"></span> Logout
-                            </a>
-                        </li>
-                    }
-                
+                    <li>
+                        <a class="nav-link" asp-controller="LoginAdmin" asp-action="Login">
+                            <span class="glyphicon glyphicon-log-in"></span> Login
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="nav-link" asp-controller="LoginAdmin" asp-action="Profile">
+                            Xin chào
+                            <b>@User.Identity.Name</b>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" asp-controller="LoginAdmin" asp-action="Logout">
+                            <span class="glyphicon glyphicon-log-in"></span> Logout
+                        </a>
+                    </li>
+                }
+
                 <li class="dropdown mega-dropdown nav-item">
                     <!-- Start Search Mega Dropdown -->
                     <a href="#" class="nav-link " data-toggle="dropdown"><i class="fas fa-search"></i></a>
