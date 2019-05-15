@@ -18,7 +18,7 @@ namespace Exaxxi.Models
         public bool active { get; set; }
         public int order { get; set; }
 
-        public IEnumerable<Brands> brands { get; set; }
+       // public IEnumerable<Brands> brands { get; set; }
         public IEnumerable<News> news { get; set; }
     }
 }

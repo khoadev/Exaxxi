@@ -93,3 +93,115 @@ var options = {
 $("#chartContainer").CanvasJSChart(options);
 
 }
+function formatNumber(nStr, decSeperate, groupSeperate) {
+    nStr += '';
+    x = nStr.split(decSeperate);
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+    }
+    return x1 + x2;
+}
+$(function () {
+    $("#slider-range").slider({
+        range: true,
+        min: 0,
+        max: 2000000,
+        values: [200000, 1500000],
+        slide: function (event, ui) {
+            $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
+        }
+    });
+    $("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',')+
+        " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND");
+});
+
+$(function () {
+    $("#slider-range-min").slider({
+        range: "min",
+        value: 1,
+        min: 1,
+        max: 4,
+        slide: function (event, ui) {
+            $("#image-3d").val(ui.value);
+            $('#product-image-3d').attr('src', 'images/3dimage/' + ui.value + '.jpg');
+
+        }
+    });
+    $("#image-3d").val("$" + $("#slider-range-min").slider("value"));
+});
+
+$(function () {
+
+    var num = 18; // the total number of images 
+
+    // Preload all the images into hidden div
+    for (var i = 1; i <= num; i++) {
+        var img = document.createElement('img');
+        img.src = 'images/3dimage/' + i + '.jpg';
+        document.getElementById('preload-imgs').appendChild(img);
+    }
+
+    // Control swipes using jquery.touchSwipe.min.js
+   
+    var swipeOptions =
+    {
+        triggerOnTouchEnd: true,
+        swipeStatus: swipeStatus,
+        allowPageScroll: "vertical",
+        threshold: 1
+    }
+
+    $(function () {
+        imgs = $(".img-container"); // the element that will be swipeable
+        imgs.swipe(swipeOptions);
+    });
+
+    function swipeStatus(event, phase, direction, distance) {
+        var duration = 0;
+        if (direction == "left") {
+            changeImg(distance);
+        }
+        else if (direction == "right") {
+            changeImgR(-distance);
+        }
+    }
+
+    function changeImg(imgNum) {
+
+        // divide by 8 (or any number) to spread 
+        // it out so it doesn't load new img 
+        // every single px of swipe distance
+        imgNum = Math.floor(imgNum / 12);
+
+        if (imgNum < 1) {
+            imgNum += num;
+        }
+        if (imgNum > num) {
+            imgNum -= num;
+        }
+        // change the image src
+        document.getElementById("myImg").src = "images/3dimage/" + imgNum + ".jpg";
+    }
+
+    function changeImgR(imgNum) {
+
+        // divide by 8 (or any number) to spread 
+        // it out so it doesn't load new img 
+        // every single px of swipe distance
+        imgNum = Math.floor(imgNum / 12);
+
+        var num2 = -Math.abs(num);
+        if (imgNum > num2) {
+            imgNum += num;
+        }
+        if (imgNum <= num2) {
+            imgNum += num * 2;
+        }
+
+        // change the image src
+        document.getElementById("myImg").src = "images/3dimage/" + imgNum + ".jpg";
+    }
+})

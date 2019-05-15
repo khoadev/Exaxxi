@@ -24,8 +24,11 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Categories> GetCategories()
         {
-            return _context.Categories;
+            // return _context.Categories.Join(_context.Brands, c=>c.id_brand, b=>b.id, (c,b) => new { });
+            return _context.Categories.Include("brand");
+          
         }
+       
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
@@ -45,7 +48,25 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(categories);
         }
+        // GET: api/Categories/5
+        [HttpGet("GetCategoriesDetail/{id}")]
+        public async Task<IActionResult> GetCategoriesDetail([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var categories = await _context.Categories.Include(c => c.brand)
+                .FirstOrDefaultAsync(m => m.id == id);
+
+            if (categories == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(categories);
+        }
         // PUT: api/Categories/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategories([FromRoute] int id, [FromBody] Categories categories)
@@ -116,7 +137,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(categories);
         }
-
+        [HttpGet("CategoriesExists/{id}")]
         private bool CategoriesExists(int id)
         {
             return _context.Categories.Any(e => e.id == id);
