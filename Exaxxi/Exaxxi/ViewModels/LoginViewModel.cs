@@ -21,5 +21,10 @@ namespace Exaxxi.ViewModels
 
         [Display(Name = "Nhớ Mật Khẩu")]
         public bool RememberMe { get; set; }
+
+        //[Display(Name = "Nhập Lại Mật Khẩu")]
+        //public string RePassword { get; set; }
+
+        //public string Hash { get; set; }
     }
 }

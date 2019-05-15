@@ -16,6 +16,7 @@ using Newtonsoft;
 using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -72,6 +73,41 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
+        [AllowAnonymous, Route("GetForgetPassword")]
+        public IActionResult GetForgetPassword(string email)
+        {
+            Users user = _context.Users.SingleOrDefault(p => p.email == email);
+            if (ModelState.IsValid)
+            {
+                //mailer
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Exaxxi Site", "tdd3107973@gmail.com"));
+                message.To.Add(new MailboxAddress("Hihi", email));
+                message.Subject = "Forgot Password in Exaxxi";
+
+                //Mã hóa email
+                var hash = bf.Encrypt_CBC(email);
+
+                //Tạo Link
+                var link = $"http://localhost:51340/Login/RenewPassword?email={email}&hash={hash}";
+                message.Body = new TextPart("plain")
+                {
+                    Text = $"Vui lòng click vào link {link} để đổi mật khẩu"
+                };
+                using (var client = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+
+                return Ok("ok");
+            }
+
+            return Ok(user);
+        }
+
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsers([FromRoute] int id, [FromBody] Users users)
@@ -122,7 +158,7 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [AllowAnonymous ,Route("PostUserLogin")]
+        [AllowAnonymous, Route("PostUserLogin")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -135,7 +171,7 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return NotFound("khong tim thay du lieu");
             }
-            
+
             if (bf.Decrypt_CBC(user.password) != model.Password)
             {
                 //ModelState.AddModelError();
@@ -166,14 +202,14 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        [AllowAnonymous ,Route("PostRegister")]
+        [AllowAnonymous, Route("PostRegister")]
         public IActionResult PostRegister([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-                        
+
             //Validate Google recaptcha below
             if (!GoogleRecaptchaHelper.IsReCaptchaPassedAsync(model.captcha, "6Lfwz6IUAAAAAM_gyYa0tzAoeyVYKZ5rkOxT_d6h"))
             {
@@ -204,6 +240,49 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(model);
+        }
+
+        [AllowAnonymous, Route("RenewPassword")]
+        public IActionResult RenewPassword([FromBody] JObject json)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dynamic data = json;
+            string hash = data.hash;
+            string username = data.username;
+            string password = data.password;
+            string repass = data.repass;
+
+            //Check Hash                
+            if (bf.Decrypt_CBC(hash) == username)
+            {
+                if (password != repass)
+                {
+                    return BadRequest("Mật khẩu nhập lại không đúng");
+                }
+                if(password.Length < 8)
+                {
+                    return BadRequest("Mật khẩu tối thiểu 8 ký tự");
+                }
+                Regex rgx = new Regex(info.RegEx);
+                if(!rgx.IsMatch(password))
+                {
+                    return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường");
+                }
+
+                Users user = _context.Users.SingleOrDefault(p => p.email == username);
+                user.password = bf.Encrypt_CBC(password);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("Link sai!");
+            }
         }
 
         // DELETE: api/Users/5
