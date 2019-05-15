@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Exaxxi.Migrations
 {
-    public partial class NewDb : Migration
+    public partial class newdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -343,10 +343,10 @@ namespace Exaxxi.Migrations
                 columns: new[] { "id", "active", "date_create", "en_content", "en_title", "id_admin", "id_department", "vi_content", "vi_title" },
                 values: new object[,]
                 {
-                    { 1, true, new DateTime(2019, 5, 10, 21, 13, 26, 224, DateTimeKind.Local), "Shoe is producted in pair now, it look so beautyful", "News about shoes", 1, 1, "Giày vừa được cho sản xuất thành 2 chiếc 1 đôi, đeo vô nhìn rắt là đẹp", "Tin tức về Giày" },
-                    { 2, true, new DateTime(2019, 5, 10, 21, 13, 26, 225, DateTimeKind.Local), "Shoe must be wore by pair, it's so stupid ", "Shoe is put on by pair", 2, 1, "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", "Giày đeo theo cặp" },
-                    { 4, true, new DateTime(2019, 5, 10, 21, 13, 26, 225, DateTimeKind.Local), "Shoe must be wore by pair, it's so stupid ", "Shoe is put on by pair", 2, 1, "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", "Giày đeo theo cặp" },
-                    { 3, true, new DateTime(2019, 5, 10, 21, 13, 26, 225, DateTimeKind.Local), "Genos is so handsome, he hold all marketplace is tangibility ", "Clothes of Genos Brand is hold 100% marketplace of Asia", 3, 2, "Genos đẹp trai nên nắm giữ toàn bộ thị trường đúng rồi khỏi thắc mắc gì thêm", "Quần Áo Hiệu Genos đọc chiếm thị trường Châu Á" }
+                    { 1, true, new DateTime(2019, 5, 15, 12, 34, 33, 806, DateTimeKind.Local), "Shoe is producted in pair now, it look so beautyful", "News about shoes", 1, 1, "Giày vừa được cho sản xuất thành 2 chiếc 1 đôi, đeo vô nhìn rắt là đẹp", "Tin tức về Giày" },
+                    { 2, true, new DateTime(2019, 5, 15, 12, 34, 33, 808, DateTimeKind.Local), "Shoe must be wore by pair, it's so stupid ", "Shoe is put on by pair", 2, 1, "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", "Giày đeo theo cặp" },
+                    { 4, true, new DateTime(2019, 5, 15, 12, 34, 33, 808, DateTimeKind.Local), "Shoe must be wore by pair, it's so stupid ", "Shoe is put on by pair", 2, 1, "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", "Giày đeo theo cặp" },
+                    { 3, true, new DateTime(2019, 5, 15, 12, 34, 33, 808, DateTimeKind.Local), "Genos is so handsome, he hold all marketplace is tangibility ", "Clothes of Genos Brand is hold 100% marketplace of Asia", 3, 2, "Genos đẹp trai nên nắm giữ toàn bộ thị trường đúng rồi khỏi thắc mắc gì thêm", "Quần Áo Hiệu Genos đọc chiếm thị trường Châu Á" }
                 });
 
             migrationBuilder.InsertData(
