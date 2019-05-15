@@ -64,5 +64,19 @@ namespace Exaxxi.Controllers
         {
             return View("Login");
         }
+
+        [HttpGet, AllowAnonymous]
+        public IActionResult PasswordForget()
+        {
+            return View();
+        }
+
+        [HttpGet, AllowAnonymous]
+        public IActionResult RenewPassword (string email, string hash)
+        {
+            ViewBag.Email = email;
+            ViewBag.Hash = hash;
+            return View();
+        }
     }
 }

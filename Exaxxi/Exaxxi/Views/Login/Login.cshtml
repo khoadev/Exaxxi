@@ -44,7 +44,8 @@
                             <input type="checkbox" id="rmb">
                             <span class="checkmark"></span>
                         </label>
-                        <button type="button" class="btn logreg-form-button " id="submit">Login</button> <br><a href="#" id="login-form-link">Forget your password?</a>
+                        <button type="button" class="btn logreg-form-button " id="submit">Login</button> <br>
+                        <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
                     </form>
                 </div>
 
@@ -100,10 +101,10 @@
             //Login
             $("#submit").on("click", function () {
                 var username = $("#usr").val();
-                var password = $("#pwd").val();                
+                var password = $("#pwd").val();
                 var login = {
                     "username": username,
-                    "password": password,                    
+                    "password": password,
                 };
                 $.ajax({
                     url: "/api/UsersAPI/PostUserLogin",
@@ -146,20 +147,20 @@
                         alert(notfound.responseText);
                     }
                 });
-            });            
+            });           
         });
 
         function CheckExistMail() {
             var email = $("#email_re").val();
             $.ajax({
                 url: "/api/UsersAPI/CheckExistMail/?email=" + email,
-                type: 'GET',  
+                type: 'GET',
                 contentType: "application/json",
                 success: function (data) {
                     $('#loi').html(data);
                 },
                 error: function () {
-                    alert("aaa");
+                    alert(notfound.responseText);
                 }
             });
         }
