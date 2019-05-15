@@ -10,6 +10,10 @@ using Exaxxi.ViewModels;
 using Exaxxi.Common;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using MimeKit;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -50,7 +54,37 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(admins);
         }
+        [AllowAnonymous,HttpGet("GetForgetPassword")]
+        public IActionResult GetForgetPassword(string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           
+            //mailer
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Exaxxi Site", "tdd3107973@gmail.com"));
+            message.To.Add(new MailboxAddress("Hihi", email));
+            message.Subject = "Reset password";
+            var hash = bf.Encrypt_CBC(email);
+            var link = $"http://localhost:51340/Admin/Admins/ChangePassword?email={email}?hash={hash}";
+            message.Body = new TextPart("plain")
+            {
+                Text = $"click vào link {link}"
+            };
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+            return NoContent();
 
+           
+        }
+       
         // PUT: api/Admins/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAdmins([FromRoute] int id, [FromBody] Admins admins)
@@ -112,7 +146,7 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return NotFound("khong tim thay du lieu");
             }
-
+          
             if (bf.Decrypt_CBC(admin.password) != model.Password)
             {
                 //ModelState.AddModelError();
@@ -142,6 +176,49 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
+        [AllowAnonymous, HttpPost("RenewPassword")]
+        public IActionResult RenewPassword([FromBody] JObject json)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dynamic data = json;
+            string hash = data.hash;
+            string username = data.username;
+            string password = data.password;
+            string repass = data.repass;
+
+            //Check Hash                
+            if (bf.Decrypt_CBC(hash) == username)
+            {
+                if (password != repass)
+                {
+                    return BadRequest("Mật khẩu nhập lại không đúng");
+                }
+                if (password.Length < 8)
+                {
+                    return BadRequest("Mật khẩu tối thiểu 8 ký tự");
+                }
+
+                Regex rgx = new Regex(info.RegEx);
+                if (!rgx.IsMatch(password))
+                {
+                    return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường");
+                }
+
+                Admins ad = _context.Admins.SingleOrDefault(p => p.email == username);
+                ad.password = bf.Encrypt_CBC(password);
+                _context.SaveChanges();
+                return Ok("dm");
+            }
+            else
+            {
+                return BadRequest("sai link");
+            }
+        }
         // DELETE: api/Admins/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAdmins([FromRoute] int id)

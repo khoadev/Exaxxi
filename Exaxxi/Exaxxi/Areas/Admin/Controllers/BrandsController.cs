@@ -6,28 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
-using Exaxxi.Helper;
-using Exaxxi.Controllers.WebAPI;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
-using Exaxxi.ViewModels;
+using Exaxxi.Helper;
+using Newtonsoft.Json;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Authorize]
     [Area("Admin")]
-    public class AdminsController : Controller
+    public class BrandsController : Controller
     {
         CallAPI _api = new CallAPI();
 
-        // GET: Admin/Admins
+       
+
+        // GET: Admin/Brands
         public IActionResult Index()
         {
-            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
+            IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI").Result);
             return View(result);
         }
 
-        // GET: Admin/Admins/Details/5
+        // GET: Admin/Brands/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -35,43 +35,38 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
-
-            if (admins == null)
+            var brands = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/GetbrandsDetail/{id}").Result);
+            if (brands == null)
             {
                 return NotFound();
             }
 
-            return View(admins);
+            return View(brands);
         }
 
-        // GET: Admin/Admins/Create
+        // GET: Admin/Brands/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Admins/Create
+        // POST: Admin/Brands/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("id,name,active,order,id_department")] Brands brands)
         {
-            if (_api.postAPI(admins, "api/AdminsAPI").Result)
+            if (_api.postAPI(brands, "api/BrandsAPI").Result)
             {
-
+                IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI").Result);
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                ViewBag.Message = "mnsdjfhjdshf";
-                return View("Create");
-            }
-
+       
+            return View(brands);
         }
 
-        // GET: Admin/Admins/Edit/5
+        // GET: Admin/Brands/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,22 +74,22 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
-            if (admins == null)
+            var brands = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/{id}").Result);
+            if (brands == null)
             {
                 return NotFound();
             }
-            return View(admins);
+            return View(brands);
         }
 
-        // POST: Admin/Admins/Edit/5
+        // POST: Admin/Brands/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level,date_create,active")] Admins admins)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,active,order,id_department")] Brands brands)
         {
-            if (id != admins.id)
+            if (id != brands.id)
             {
                 return NotFound();
             }
@@ -103,11 +98,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(admins, $"api/AdminsAPI/{id}");
+                    var result = await _api.putAPI(brands, $"api/BrandsAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdminsExists(admins.id))
+                    if (!BrandsExists(brands.id))
                     {
                         return NotFound();
                     }
@@ -118,24 +113,14 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(admins);
+           
+            return View(brands);
         }
 
-        private bool AdminsExists(int id)
+        
+        private bool BrandsExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/AdminsAPI/AdminsExists/{id}").Result);
-        }
-        [AllowAnonymous]
-        public IActionResult ForgetPassword()
-        {
-            return View();
-        }
-        [AllowAnonymous]
-        public IActionResult ChangePassword(string email, string hash)
-        {
-            ViewBag.Email = email;
-            ViewBag.Hash = hash;
-            return View();
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/BrandsAPI/BrandsExists/{id}").Result);
         }
     }
 }

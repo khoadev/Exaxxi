@@ -1,0 +1,45 @@
+﻿@model Exaxxi.Models.Brands
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Brands</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.active)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.order)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.order)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.department)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.department.id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

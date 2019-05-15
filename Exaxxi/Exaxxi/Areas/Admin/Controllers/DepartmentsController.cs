@@ -72,7 +72,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var departments = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
             if (departments == null)
             {
                 return NotFound();
