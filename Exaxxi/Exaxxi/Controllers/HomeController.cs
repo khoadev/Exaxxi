@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Exaxxi.Models;
 using Exaxxi.Common;
+using Newtonsoft.Json;
+using Exaxxi.Helper;
 
 namespace Exaxxi.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        CallAPI _api = new CallAPI();
+        public IActionResult Index(int? id)
         {
+            if (id == null) ViewBag.Id_Depart = JsonConvert.DeserializeObject<Departments>(_api.getAPI("api/DepartmentsAPI/Take1ByOrder").Result).id; else ViewBag.Id_Depart = id;
             return View();
         }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -40,5 +43,6 @@ namespace Exaxxi.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+       
     }
 }

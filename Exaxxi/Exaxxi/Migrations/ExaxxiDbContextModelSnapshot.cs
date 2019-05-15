@@ -312,10 +312,10 @@ namespace Exaxxi.Migrations
                     b.ToTable("News");
 
                     b.HasData(
-                        new { id = 1, active = true, date_create = new DateTime(2019, 5, 11, 9, 0, 17, 458, DateTimeKind.Local), en_content = "Shoe is producted in pair now, it look so beautyful", en_title = "News about shoes", id_admin = 1, id_department = 1, vi_content = "Giày vừa được cho sản xuất thành 2 chiếc 1 đôi, đeo vô nhìn rắt là đẹp", vi_title = "Tin tức về Giày" },
-                        new { id = 2, active = true, date_create = new DateTime(2019, 5, 11, 9, 0, 17, 460, DateTimeKind.Local), en_content = "Shoe must be wore by pair, it's so stupid ", en_title = "Shoe is put on by pair", id_admin = 2, id_department = 1, vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", vi_title = "Giày đeo theo cặp" },
-                        new { id = 4, active = true, date_create = new DateTime(2019, 5, 11, 9, 0, 17, 460, DateTimeKind.Local), en_content = "Shoe must be wore by pair, it's so stupid ", en_title = "Shoe is put on by pair", id_admin = 2, id_department = 1, vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", vi_title = "Giày đeo theo cặp" },
-                        new { id = 3, active = true, date_create = new DateTime(2019, 5, 11, 9, 0, 17, 460, DateTimeKind.Local), en_content = "Genos is so handsome, he hold all marketplace is tangibility ", en_title = "Clothes of Genos Brand is hold 100% marketplace of Asia", id_admin = 3, id_department = 2, vi_content = "Genos đẹp trai nên nắm giữ toàn bộ thị trường đúng rồi khỏi thắc mắc gì thêm", vi_title = "Quần Áo Hiệu Genos đọc chiếm thị trường Châu Á" }
+                        new { id = 1, active = true, date_create = new DateTime(2019, 5, 15, 13, 55, 22, 271, DateTimeKind.Local), en_content = "Shoe is producted in pair now, it look so beautyful", en_title = "News about shoes", id_admin = 1, id_department = 1, vi_content = "Giày vừa được cho sản xuất thành 2 chiếc 1 đôi, đeo vô nhìn rắt là đẹp", vi_title = "Tin tức về Giày" },
+                        new { id = 2, active = true, date_create = new DateTime(2019, 5, 15, 13, 55, 22, 271, DateTimeKind.Local), en_content = "Shoe must be wore by pair, it's so stupid ", en_title = "Shoe is put on by pair", id_admin = 2, id_department = 1, vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", vi_title = "Giày đeo theo cặp" },
+                        new { id = 4, active = true, date_create = new DateTime(2019, 5, 15, 13, 55, 22, 271, DateTimeKind.Local), en_content = "Shoe must be wore by pair, it's so stupid ", en_title = "Shoe is put on by pair", id_admin = 2, id_department = 1, vi_content = "Người ta đã bắt đeo giày theo cặp không cho đeo theo chiếc nữa", vi_title = "Giày đeo theo cặp" },
+                        new { id = 3, active = true, date_create = new DateTime(2019, 5, 15, 13, 55, 22, 271, DateTimeKind.Local), en_content = "Genos is so handsome, he hold all marketplace is tangibility ", en_title = "Clothes of Genos Brand is hold 100% marketplace of Asia", id_admin = 3, id_department = 2, vi_content = "Genos đẹp trai nên nắm giữ toàn bộ thị trường đúng rồi khỏi thắc mắc gì thêm", vi_title = "Quần Áo Hiệu Genos đọc chiếm thị trường Châu Á" }
                     );
                 });
 
@@ -432,7 +432,7 @@ namespace Exaxxi.Migrations
             modelBuilder.Entity("Exaxxi.Models.Brands", b =>
                 {
                     b.HasOne("Exaxxi.Models.Departments", "department")
-                        .WithMany("brands")
+                        .WithMany()
                         .HasForeignKey("id_department")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -440,7 +440,7 @@ namespace Exaxxi.Migrations
             modelBuilder.Entity("Exaxxi.Models.Categories", b =>
                 {
                     b.HasOne("Exaxxi.Models.Brands", "brand")
-                        .WithMany("categories")
+                        .WithMany()
                         .HasForeignKey("id_brand")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

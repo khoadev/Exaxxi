@@ -26,7 +26,7 @@ namespace Exaxxi.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-EH88R88\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-NKES72FM;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {

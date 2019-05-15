@@ -26,6 +26,11 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Departments.ToList();
         }
+        [Route("Take1ByOrder")]
+        public Departments Get1Departments()
+        {
+            return _context.Departments.OrderBy(p => p.order).FirstOrDefault();
+        }
 
         // GET: api/Departments/5
         [HttpGet("{id}")]

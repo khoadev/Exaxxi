@@ -26,7 +26,11 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Brands.Include("department");
         }
-
+        [Route("Take5BrandByIdDepart/{Id_Depart}")]
+        public IEnumerable<Brands> GetBrandsByIdDep(int Id_Depart)
+        {
+            return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).Take(5);
+        }
         // GET: api/Brands/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBrands([FromRoute] int id)
