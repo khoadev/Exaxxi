@@ -12,14 +12,20 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using MimeKit;
+using Newtonsoft;
+using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        BlowFish bf = new BlowFish(info.keyBF);
 
         public UsersAPIController(ExaxxiDbContext context)
         {
@@ -50,6 +56,20 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(users);
+        }
+
+        [AllowAnonymous, Route("CheckExistMail")]
+        public IActionResult Check(string email)
+        {
+            Users user = _context.Users.SingleOrDefault(p => p.email == email);
+            if (user == null)
+            {
+                return Ok("Bạn có thể sử dụng email này");
+            }
+            else
+            {
+                return Ok("Email này đã tồn tại");
+            }
         }
 
         // PUT: api/Users/5
@@ -102,7 +122,7 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
-        [Authorize, Route("PostUser")]
+        [AllowAnonymous ,Route("PostUserLogin")]
         public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
@@ -115,9 +135,8 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return NotFound("khong tim thay du lieu");
             }
-
-            string matkhauHash = (model.Password).ToSHA512();
-            if (user.password != matkhauHash)
+            
+            if (bf.Decrypt_CBC(user.password) != model.Password)
             {
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
@@ -147,15 +166,21 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        [Authorize, AllowAnonymous ,Route("PostRegister")]
+        [AllowAnonymous ,Route("PostRegister")]
         public IActionResult PostRegister([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+                        
+            //Validate Google recaptcha below
+            if (!GoogleRecaptchaHelper.IsReCaptchaPassedAsync(model.captcha, "6Lfwz6IUAAAAAM_gyYa0tzAoeyVYKZ5rkOxT_d6h"))
+            {
+                return BadRequest("Vui Lòng Nhập Captcha");
+            }
 
-            model.password = (model.password).ToSHA512();
+            model.password = bf.Encrypt_CBC(model.password);
             Users account = model.toUsers();
 
             _context.Add(account);
@@ -206,5 +231,6 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Users.Any(e => e.id == id);
         }
+
     }
 }
