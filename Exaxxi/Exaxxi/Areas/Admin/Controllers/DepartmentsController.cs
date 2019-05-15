@@ -8,19 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class DepartmentsController : Controller
     {
-        private readonly ExaxxiDbContext _context;
+       
         CallAPI _api = new CallAPI();
-        public DepartmentsController(ExaxxiDbContext context)
-        {
-            _context = context;
-        }
-
+       
         // GET: Admin/Departments
         public IActionResult Index()
         {
@@ -29,15 +27,14 @@ namespace Exaxxi.Areas.Admin.Controllers
         }
 
         // GET: Admin/Departments/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var departments = await _context.Departments
-                .FirstOrDefaultAsync(m => m.id == id);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
             if (departments == null)
             {
                 return NotFound();
@@ -57,26 +54,25 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,vi_name,en_name,active,order")] Departments departments)
+        public IActionResult Create([Bind("id,vi_name,en_name,active,order")] Departments departments)
         {
-            if (ModelState.IsValid)
+            if (_api.postAPI(departments, "api/DepartmentsAPI").Result)
             {
-                _context.Add(departments);
-                await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
-            return View(departments);
+            return View("Create");
         }
 
         // GET: Admin/Departments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var departments = await _context.Departments.FindAsync(id);
+            var departments = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
             if (departments == null)
             {
                 return NotFound();
@@ -100,8 +96,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(departments);
-                    await _context.SaveChangesAsync();
+                    var result = await _api.putAPI(departments, $"api/DepartmentsApi/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,39 +113,9 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
             return View(departments);
         }
-
-        // GET: Admin/Departments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var departments = await _context.Departments
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (departments == null)
-            {
-                return NotFound();
-            }
-
-            return View(departments);
-        }
-
-        // POST: Admin/Departments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var departments = await _context.Departments.FindAsync(id);
-            _context.Departments.Remove(departments);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool DepartmentsExists(int id)
         {
-            return _context.Departments.Any(e => e.id == id);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/DepartmentsApi/DepartmentsExists/{id}").Result);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,5 +23,10 @@ namespace Exaxxi.Models
         public Brands brand { get; set; }
 
         public IEnumerable<Items> items { get; set; }
+
+        internal object Include(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/GetCategoriesDetail/{id}").Result);
 
             if (admins == null)
             {
@@ -120,25 +120,6 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
             return View(admins);
         }
-
-        // GET: Admin/Admins/Delete/5
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
-            if (admins == null)
-            {
-                return NotFound();
-            }
-
-            return View(admins);
-        }
-
-        
 
         private bool AdminsExists(int id)
         {

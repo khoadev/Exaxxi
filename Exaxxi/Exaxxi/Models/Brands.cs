@@ -22,6 +22,6 @@ namespace Exaxxi.Models
         [ForeignKey("id_department")]
         public Departments department { get; set; }
 
-        public IEnumerable<Categories> categories { get; set; }
+        //public IEnumerable<Categories> categories { get; set; }
     }
 }
