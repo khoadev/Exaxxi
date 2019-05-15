@@ -6,72 +6,70 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
-using Exaxxi.Helper;
-using Exaxxi.Controllers.WebAPI;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
-using Exaxxi.ViewModels;
+using Exaxxi.Helper;
+using Newtonsoft.Json;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Authorize]
     [Area("Admin")]
-    public class AdminsController : Controller
+    public class CategoriesController : Controller
     {
+        
         CallAPI _api = new CallAPI();
+        
 
-        // GET: Admin/Admins
+        // GET: Admin/Categories
         public IActionResult Index()
         {
-            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
+            IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI").Result);
             return View(result);
         }
 
-        // GET: Admin/Admins/Details/5
+        // GET: Admin/Categories/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
-
-            if (admins == null)
+            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/GetCategoriesDetail/{id}").Result);
+            
+            if (categories == null)
             {
                 return NotFound();
             }
 
-            return View(admins);
+            return View(categories);
         }
 
-        // GET: Admin/Admins/Create
+        // GET: Admin/Categories/Create
         public IActionResult Create()
         {
+            
             return View();
         }
 
-        // POST: Admin/Admins/Create
+        // POST: Admin/Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("id,vi_name,active,order,id_brand")] Categories categories)
         {
-            if (_api.postAPI(admins, "api/AdminsAPI").Result)
+            if (_api.postAPI(categories, "api/CategoriesAPI").Result)
             {
-
+                IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI").Result);
+                ViewData["id_brand"] = result;
                 return RedirectToAction(nameof(Index));
+                
             }
-            else
-            {
-                ViewBag.Message = "mnsdjfhjdshf";
-                return View("Create");
-            }
-
+            
+            return View(categories);
         }
 
-        // GET: Admin/Admins/Edit/5
+        // GET: Admin/Categories/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,22 +77,24 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
-            if (admins == null)
+            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/{id}").Result);
+            if (categories == null)
             {
                 return NotFound();
             }
-            return View(admins);
+
+                
+            return View(categories);
         }
 
-        // POST: Admin/Admins/Edit/5
+        // POST: Admin/Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level,date_create,active")] Admins admins)
+        public async Task<IActionResult> Edit(int id, [Bind("id,vi_name,active,order,id_brand")] Categories categories)
         {
-            if (id != admins.id)
+            if (id != categories.id)
             {
                 return NotFound();
             }
@@ -103,11 +103,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(admins, $"api/AdminsAPI/{id}");
+                    var result = await _api.putAPI(categories, $"api/CategoriesAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdminsExists(admins.id))
+                    if (!CategoriesExists(categories.id))
                     {
                         return NotFound();
                     }
@@ -118,24 +118,13 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(admins);
+           
+            return View(categories);
         }
 
-        private bool AdminsExists(int id)
+        private bool CategoriesExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/AdminsAPI/AdminsExists/{id}").Result);
-        }
-        [AllowAnonymous]
-        public IActionResult ForgetPassword()
-        {
-            return View();
-        }
-        [AllowAnonymous]
-        public IActionResult ChangePassword(string email, string hash)
-        {
-            ViewBag.Email = email;
-            ViewBag.Hash = hash;
-            return View();
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/CategoriesAPI/CategoriesExists/{id}").Result);
         }
     }
 }
