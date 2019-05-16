@@ -27,6 +27,7 @@ namespace Exaxxi.Controllers.WebAPI
     {
         private readonly ExaxxiDbContext _context;
         BlowFish bf = new BlowFish(info.keyBF);
+        Mailer ml =new Mailer();
 
         public UsersAPIController(ExaxxiDbContext context)
         {
@@ -79,28 +80,12 @@ namespace Exaxxi.Controllers.WebAPI
             Users user = _context.Users.SingleOrDefault(p => p.email == email);
             if (ModelState.IsValid)
             {
-                //mailer
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Exaxxi Site", "tdd3107973@gmail.com"));
-                message.To.Add(new MailboxAddress("Hihi", email));
-                message.Subject = "Forgot Password in Exaxxi";
-
                 //Mã hóa email
                 var hash = bf.Encrypt_CBC(email);
-
-                //Tạo Link
                 var link = $"http://localhost:51340/Login/RenewPassword?email={email}&hash={hash}";
-                message.Body = new TextPart("plain")
-                {
-                    Text = $"Vui lòng click vào link {link} để đổi mật khẩu"
-                };
-                using (var client = new MailKit.Net.Smtp.SmtpClient())
-                {
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
+
+                //mailer
+                ml.SendMail("Exaxxi Site", email, "Forgot Password in Exaxxi", $"Vui lòng click vào link {link} để đổi mật khẩu");
 
                 return Ok("ok");
             }
@@ -223,21 +208,7 @@ namespace Exaxxi.Controllers.WebAPI
             _context.SaveChanges();
 
             //mailer
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Exaxxi Site", "tdd3107973@gmail.com"));
-            message.To.Add(new MailboxAddress("Hihi", model.email));
-            message.Subject = "Register in Exaxxi";
-            message.Body = new TextPart("plain")
-            {
-                Text = "Chúc mừng bạn đã đăng ký thành công!"
-            };
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("tdd3107973@gmail.com", "serqltuuwlbddnhb");
-                client.Send(message);
-                client.Disconnect(true);
-            }
+            ml.SendMail("Exaxxi Site", model.email, "Register in Exaxxi", "Chúc mừng bạn đã đăng ký thành công!");            
 
             return Ok(model);
         }
