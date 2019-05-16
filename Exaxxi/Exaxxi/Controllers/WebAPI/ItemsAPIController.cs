@@ -46,6 +46,24 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(items);
         }
 
+        [Route("ProductDetail")]
+        public IActionResult ProductDetail()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = _context.Items;
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
+
         // PUT: api/Items/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItems([FromRoute] int id, [FromBody] Items items)
