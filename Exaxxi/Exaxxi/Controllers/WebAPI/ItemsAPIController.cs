@@ -63,7 +63,23 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
+        [Route("Search")]
+        public IEnumerable<SearchIteamModel> search()
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a,b})
+                .Join(_context.Brands,c=>c.b.id_brand,d=>d.id,(c,d)=>new { c,d})
+                .Select(p => new SearchIteamModel
+                {
+                    id=p.c.a.id,
+                    name= p.c.a.name,
+                    name_brand=p.d.name,
+                    name_cate=p.c.b.vi_name,
+                    img=p.c.a.img
 
+                }
+                );
+        }
         // PUT: api/Items/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItems([FromRoute] int id, [FromBody] Items items)
