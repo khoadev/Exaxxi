@@ -53,11 +53,5 @@ namespace Exaxxi.Areas.Admin.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
-
-        [HttpGet, AllowAnonymous]
-        public IActionResult Register()
-        {
-            return View();
-        }
     }
 }
