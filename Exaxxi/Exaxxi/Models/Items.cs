@@ -20,7 +20,6 @@ namespace Exaxxi.Models
         public string en_info { get; set; }
         [Required]
         [Display(Name = "Hình")]
-        [Url]
         public string img { get; set; }
         [Display(Name = "Biến động giá")]
         public float volatility { get; set; }
@@ -29,6 +28,9 @@ namespace Exaxxi.Models
         [Display(Name = "Giá giao dịch cao nhất")]
         public double trade_max { get; set; }
         public bool active { get; set; }
+        // lowest and highest from all sizes this item
+        public double lowest_ask { get; set; }
+        public double highest_bid { get; set; }
 
         public int id_admin { get; set; }
         [ForeignKey("id_admin")]
@@ -37,7 +39,7 @@ namespace Exaxxi.Models
         [ForeignKey("id_category")]
         public Categories category { get; set; }
 
-        public IEnumerable<Sizes> sizes { get; set; }
+        //public IEnumerable<Sizes> sizes { get; set; }
 
     }
 }

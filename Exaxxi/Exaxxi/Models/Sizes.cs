@@ -8,6 +8,7 @@ namespace Exaxxi.Models
     {
         [Key]
         public int id { get; set; }
+        // lowest and highest from all posts of this size
         public double lowest_ask { get; set; }
         public double highest_bid { get; set; }
         public double last_sale {get;set; }
@@ -20,7 +21,7 @@ namespace Exaxxi.Models
         [ForeignKey("id_item")]
         public Items item { get; set; }
 
-        public IEnumerable<Posts> posts { get; set; }
-        public IEnumerable<Followings> followings { get; set; }
+        //public IEnumerable<Posts> posts { get; set; }
+        //public IEnumerable<Followings> followings { get; set; }
     }
 }

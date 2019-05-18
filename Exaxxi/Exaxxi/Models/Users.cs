@@ -38,7 +38,7 @@ namespace Exaxxi.Models
         public DateTime date_registion { get; set; }
         public bool active { get; set; }
 
-        public IEnumerable<Followings> followings { get; set; }
-        public IEnumerable<Posts> posts { get; set; }
+        //public IEnumerable<Followings> followings { get; set; }
+        //public IEnumerable<Posts> posts { get; set; }
     }
 }
