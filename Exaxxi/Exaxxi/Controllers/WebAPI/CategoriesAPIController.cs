@@ -23,12 +23,15 @@ namespace Exaxxi.Controllers.WebAPI
         // GET: api/Categories
         [HttpGet]
         public IEnumerable<Categories> GetCategories()
-        {
-            // return _context.Categories.Join(_context.Brands, c=>c.id_brand, b=>b.id, (c,b) => new { });
-            return _context.Categories.Include("brand");
-          
+        {            
+            return _context.Categories.Include("brand");          
         }
-       
+
+        [Route("TakeAllCateByIdBrand/{Id_Brand}")]
+        public IEnumerable<Categories> GetAllCate(int Id_Brand)
+        {            
+            return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+        }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
