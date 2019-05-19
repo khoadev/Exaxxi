@@ -35,6 +35,7 @@ namespace Exaxxi
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddHttpContextAccessor();
             services.AddDbContext<ExaxxiDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Exaxxi"));
@@ -45,21 +46,30 @@ namespace Exaxxi
                 options =>
                 {
                     //Users
-                    options.LoginPath = "/Login/Login";
-                    options.LogoutPath = "/Login/Logout";
-                    options.AccessDeniedPath = "/Login/AccessDenied";
+                    //options.LoginPath = "/Login/Login";
+                    //options.LogoutPath = "/Login/Logout";
+                    //options.AccessDeniedPath = "/Login/AccessDenied";
 
                     //Admins
-                    options.AccessDeniedPath = "/Admin";
+                    options.AccessDeniedPath = "/Admin/AccessDenied";
                     options.LogoutPath = "/Admin";
-                    options.LoginPath = "/Admin/LoginAdmin/Login";
+                    options.LoginPath = "/Admin/Login/Login";
                 }
             );
-
             services.AddMemoryCache();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
+            });
+
+
+            services.AddDistributedMemoryCache();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
         }
 
@@ -75,14 +85,14 @@ namespace Exaxxi
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();            
+            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
-            { 
+            {
                 routes.MapAreaRoute(
                    name: "Admin",
                    areaName: "Admin",

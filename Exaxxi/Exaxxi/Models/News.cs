@@ -19,6 +19,9 @@ namespace Exaxxi.Models
         //[MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
         [Required]
         public string en_title { get; set; }
+        [Display(Name = "Hình")]
+        [MaxLength(150, ErrorMessage = "Tối đa 150 kí tự")]
+        public string image { get; set; }
         [DataType(DataType.Text)]
         [Required]
         [Display(Name = "Nội dung tiếng việt")]

@@ -1,0 +1,66 @@
+﻿@model Exaxxi.Models.News
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>News</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.vi_title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.vi_title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.en_title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.en_title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.vi_content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.vi_content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.en_content)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.en_content)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.date_create)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.date_create)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.active)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.admin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.admin.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.department)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.department.vi_name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

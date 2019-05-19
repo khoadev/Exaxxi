@@ -11,6 +11,8 @@ using Exaxxi.Controllers.WebAPI;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.ViewModels;
+using Exaxxi.Common;
+
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -19,11 +21,12 @@ namespace Exaxxi.Areas.Admin.Controllers
     public class AdminsController : Controller
     {
         CallAPI _api = new CallAPI();
-
+        BlowFish bf = new BlowFish(info.keyBF);
         // GET: Admin/Admins
         public IActionResult Index()
         {
             IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
+            
             return View(result);
         }
 
@@ -36,7 +39,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
 
             var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
-
+            ViewBag.Password = bf.Decrypt_CBC(admins.password);
             if (admins == null)
             {
                 return NotFound();

@@ -29,8 +29,8 @@ namespace Exaxxi.Models
         public DateTime date_create { get; set; }
         public bool active { get; set; }
 
-        public IEnumerable<Sizes> sizes { get; set; }
-        public IEnumerable<Items> items { get; set; }
-        public IEnumerable<News> news { get; set; }
+        //public IEnumerable<Sizes> sizes { get; set; }
+        //public IEnumerable<Items> items { get; set; }
+        //public IEnumerable<News> news { get; set; }
     }
 }

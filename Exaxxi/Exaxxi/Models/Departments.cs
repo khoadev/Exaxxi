@@ -19,6 +19,6 @@ namespace Exaxxi.Models
         public int order { get; set; }
 
        // public IEnumerable<Brands> brands { get; set; }
-        public IEnumerable<News> news { get; set; }
+        //public IEnumerable<News> news { get; set; }
     }
 }

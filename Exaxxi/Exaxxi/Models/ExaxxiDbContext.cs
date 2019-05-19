@@ -68,8 +68,8 @@ namespace Exaxxi.Models
                 {
                     id = 4,
                     name = "kietnguyen",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
-                    email = "kietnguyen@gmail.com",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
+                    email = "kietnguyen161@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
                     active = true,
@@ -913,5 +913,9 @@ namespace Exaxxi.Models
             );
         }
 
+        internal Task FindByIdAsync(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
