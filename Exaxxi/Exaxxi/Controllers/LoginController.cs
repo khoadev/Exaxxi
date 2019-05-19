@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Controllers
 {
@@ -43,8 +44,10 @@ namespace Exaxxi.Controllers
 
         public IActionResult Profile()
         {
+            //Lấy IdUser đăng nhập
+            int? idUser = HttpContext.Session.GetInt32("idUser");
 
-            Users users = _exx.Users.SingleOrDefault(p => p.name == User.Identity.Name);
+            Users users = _exx.Users.SingleOrDefault(p => p.id == idUser);
             if (users != null)
 
             {

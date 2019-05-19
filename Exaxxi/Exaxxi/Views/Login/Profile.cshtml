@@ -1,10 +1,13 @@
 ﻿@model Exaxxi.Models.Users
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
 
 @{
     ViewData["Title"] = "Profile";
 }
 
-<h2>Profile</h2>
+<h2 style="margin-top:90px">Profile</h2>
 
 <div>
     <h4>Users</h4>
@@ -15,19 +18,19 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.name)
-        </dd>               
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.email)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.email)
-        </dd>        
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.score_buyer)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.score_buyer)
-        </dd>               
+        </dd>
     </dl>
 </div>
 <div>
