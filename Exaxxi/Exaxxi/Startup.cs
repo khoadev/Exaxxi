@@ -61,14 +61,14 @@ namespace Exaxxi
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
             });
-
-
             services.AddDistributedMemoryCache();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>
             {
+
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
+
                 options.Cookie.IsEssential = true;
             });
         }

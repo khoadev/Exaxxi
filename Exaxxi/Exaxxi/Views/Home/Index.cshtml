@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div ng-app="myApp">
+
     <div id="title-background">
         <!-- Start title-background -->
         <div id="title-text">"Some quote goes here"</div>
@@ -28,35 +28,25 @@
         </div> <!-- End divider-section -->
     </div>
 
-    <div class="container-fluid">
-        <div class="row" id="brand-background-1" ng-controller="brandsbyidCtrl">
+    <div class="container-fluid" ng-controller="brandsbyidCtrl">
+        <div class="row" id="brand-background-1">
             <!-- Start brand-background-1 -->
-            <div ng-repeat="x in names" class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(images/adult-afro-cool-991509.jpg) center;">
+            <div class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/{{mot.img}}) center;">
                 <div class="brand-title-1">
-                    <a href="#">{{x.name}}</a>
+                    <a href="#">{{mot.name}}</a>
                 </div>
             </div>
-            <div class="col-md-8" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(images/casual-cute-elegant-428338.jpg) center;">
+            <div class="col-md-8" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/{{hai.img}}) center;">
                 <div class="brand-title-1">
-                    <a href="#">Brand's Name</a>
+                    <a href="#">{{hai.name}}</a>
                 </div>
             </div>
         </div> <!-- End brand-bacground-1 -->
         <div class="row" id="brand-background-2">
             <!-- Start brand-bacground-1 -->
-            <div class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(images/adult-art-black-t-shirt-1656684.jpg) center;">
+            <div ng-repeat="x in names | limitTo : 3:2" class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/{{x.img}}) center;">
                 <div class="brand-title-2">
-                    <a href="#">Brand's Name</a>
-                </div>
-            </div>
-            <div class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(images/adult-asphalt-black-shirt-2061881.jpg) center;">
-                <div class="brand-title-2">
-                    <a href="#">Brand's Name</a>
-                </div>
-            </div>
-            <div class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(images/architecture-boy-bridge-1261422.jpg) center;">
-                <div class="brand-title-2">
-                    <a href="#">Brand's Name</a>
+                    <a href="#">{{x.name}}</a>
                 </div>
             </div>
         </div> <!-- End brand-bacground-1 -->
@@ -79,25 +69,25 @@
 
     <div class="container">
         <!-- Start pupular products container -->
-        <div class="row flex-row flex-nowrap" style="overflow-x: auto">
+        <div class="row flex-row flex-nowrap" style="overflow-x: auto" ng-controller="itemPopularCtrl">
             <!-- Start row -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="x in items">
                 <div class="card card-block">
                     <!-- Start card -->
                     <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
+                        <img src="../images/{{x.img}}" class="product-img">
                     </div>
                     <div class="product-title-wrapper">
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
                                 <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
+                                    {{x.name}}
                                 </a>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 " align="right">
                                 <div class="product-price">
-                                    169.000.000<br>
+                                    {{x.lowest_ask}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
                                 <span class="product-sub-title">Lowest Ask</span>
@@ -106,81 +96,7 @@
                     </div> <!-- End product-title-wrapper -->
                 </div> <!-- End card -->
             </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-block">
-                    <!-- Start card -->
-                    <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
-                    </div>
-                    <div class="product-title-wrapper">
-                        <!-- Start product-title-wrapper -->
-                        <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
-                                </a>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                <div class="product-price">
-                                    169.000.000<br>
-                                    <span style="color: #dbd9d9">VND</span><br>
-                                </div>
-                                <span class="product-sub-title">Lowest Ask</span>
-                            </div>
-                        </div>
-                    </div> <!-- End product-title-wrapper -->
-                </div> <!-- End card -->
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-block">
-                    <!-- Start card -->
-                    <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
-                    </div>
-                    <div class="product-title-wrapper">
-                        <!-- Start product-title-wrapper -->
-                        <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
-                                </a>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                <div class="product-price">
-                                    169.000.000<br>
-                                    <span style="color: #dbd9d9">VND</span><br>
-                                </div>
-                                <span class="product-sub-title">Lowest Ask</span>
-                            </div>
-                        </div>
-                    </div> <!-- End product-title-wrapper -->
-                </div> <!-- End card -->
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-block">
-                    <!-- Start card -->
-                    <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
-                    </div>
-                    <div class="product-title-wrapper">
-                        <!-- Start product-title-wrapper -->
-                        <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
-                                </a>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                <div class="product-price">
-                                    169.000.000<br>
-                                    <span style="color: #dbd9d9">VND</span><br>
-                                </div>
-                                <span class="product-sub-title">Lowest Ask</span>
-                            </div>
-                        </div>
-                    </div> <!-- End product-title-wrapper -->
-                </div> <!-- End card -->
-            </div>
+
         </div> <!-- End row -->
     </div> <!-- End popular products container -->
 
@@ -432,21 +348,22 @@
             </div>
         </div> <!-- End news-background-2 -->
     </div> <!-- End News container -->
-</div>
 
-@section Scripts{ 
+@section Scripts{
     <script>
-        var app = angular.module('myApp', []);
-        app.controller('departmentCtrl', function ($scope, $http) {
+        exaxxiApp.controller('departmentCtrl', function ($scope, $http) {
             $http.get("/api/DepartmentsAPI")
                 .then(function (response) { $scope.names = response.data; });
         });
-        app.controller('brandsbyidCtrl', function ($scope, $http) {
+        exaxxiApp.controller('brandsbyidCtrl', function ($scope, $http) {
             $http.get("/api/BrandsAPI/Take5BrandByIdDepart/" + @ViewBag.Id_Depart)
-                .then(function (response) { $scope.names = response.data; });
-
+                .then(function (response) {
+                    $scope.names = response.data;
+                    $scope.mot = response.data[0];
+                    $scope.hai = response.data[1];
+                });
         });
 
     </script>
 
-}
+},

@@ -9,10 +9,10 @@ namespace Exaxxi.Models
     {
         [Key]
         public int id { get; set; }
-        [Display(Name = "Tên loại tiếng việt")]
+        [Display(Name = "Tên loại")]
         [Required]
         [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
-        public string vi_name { get; set; }
+        public string name { get; set; }
   
         public bool active { get; set; }
         [Display(Name = "Thứ tự sắp xếp")]
@@ -22,7 +22,7 @@ namespace Exaxxi.Models
         [ForeignKey("id_brand")]
         public Brands brand { get; set; }
 
-        public IEnumerable<Items> items { get; set; }
+        //public IEnumerable<Items> items { get; set; }
 
         internal object Include(Func<object, object> p)
         {

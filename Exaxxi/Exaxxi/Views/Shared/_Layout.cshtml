@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     </environment>
 </head>
-<body>
+<body ng-app="exaxxiApp">
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -66,31 +66,38 @@
                     <a href="#" class="nav-link " data-toggle="dropdown"><i class="fas fa-search"></i></a>
                     <ul class="dropdown-menu mega-dropdown-menu" id="avoid">
                         <!-- Start Mega Menu -->
-                        <div class="container">
+                        <div class="container" ng-controller="searchCtrl">
                             <li class="col-xs-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <input type="text" class="form-control" placeholder="Search" id="search_input">
+                                        <input type="text" name="key" ng-model="key" class="form-control" placeholder="Search" id="search_input">
                                     </div>
                                 </div>
+                                
+                                
+                            </li>
+                            <li class="col-xs-12 custom-scrollbar" id="search-result-wrapper" ng-if="key">
+                                <div class="dropdown-divider"></div>
                                 <div class="row">
                                     <div class="col-12 search-result-text">
                                         Search Result:
                                     </div>
                                 </div>
-                                <div class="dropdown-divider"></div>
-                            </li>
-                            <li class="col-xs-12 custom-scrollbar" id="search-result-wrapper">
-                                <div class="row search-result-product-wrapper">
+                                <div class="row search-result-product-wrapper" ng-repeat="x in names  | filter:key">
                                     <div class="col-3 col-md-2" align="center">
-                                        <img src="~/images/Layer 7.png" class="search-img" />
+                                        <img src="~/images/{{x.img}}" class="search-img" />
                                     </div>
                                     <div class="col-9 col-md-10 search-name-wrapper">
-                                        <div><span class="search-brand-name">Nike</span>/<span class="search-category-name">Shoe</span></div>
+
+                                        <div><span class="search-brand-name">{{x.name_brand}}</span>/<span class="search-category-name">{{x.name_cate}}</span></div>
+
                                         <a href="#" class="search-product-name">
-                                            Jordan 1 Retro High Travis Scott
+                                            {{x.name}}
                                         </a>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 search-empty-result-text" ng-show="(names | filter:key).length == 0">Nothing here</div>
                                 </div>
                                 <div class="dropdown-divider"></div>
                             </li>
@@ -182,17 +189,25 @@
             </div>
         </div>
     </footer>
+    <script>
+    var exaxxiApp = angular.module('exaxxiApp', []);
+    exaxxiApp.controller('searchCtrl', function ($scope, $http) {
+            $http.get("/api/ItemsAPI/Search")
+                .then(function (response) { $scope.names = response.data; });
+     });
+    $('#avoid').click(function (e) {
+        e.stopPropagation();
+    });
+    </script>
     <environment include="Development">
         <script src="~/js/jquery-3.4.1.js"></script>
         <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/demo.js" asp-append-version="true"></script>
+        <script src="~/js/angularCtrl.js" asp-append-version="true"></script>
     </environment>
+
     @RenderSection("Scripts", required: false)
-    <script>
-        $('#avoid').click(function (e) {
-            e.stopPropagation();
-        });
-    </script>
+
 
 </body>
 </html>

@@ -12,11 +12,12 @@ namespace Exaxxi.Models
         public int id { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
-        [Display(Name = "Tên tài khoản")]
+        [Display(Name = "Tên")]
         public string name { get; set; }
         [Display(Name = "Mật khẩu")]
         [Required]
-        //[RegularExpression("^(?=.*[a - z])(?=.*[A - Z])(?=.*\\d)[a - zA - Z\\d]{8,}$")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$",
+        ErrorMessage = "Tối thiểu 8 kí tự, có ít nhất 1 chữ thường, 1 chữ in hoa và 1 kí tự số")]
         public string password { get; set; }
      
         [Display(Name = "Email")]
