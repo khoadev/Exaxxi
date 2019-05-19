@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -26,6 +27,28 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Items;
         }
+        [Route("Popular/{id_depart}")]
+        public IEnumerable<Items> GetItemsPopular(int id_depart)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Join(_context.Departments, e => e.d.id_department, f => f.id, (e, f) => new { e, f })
+                .Where(g => g.e.c.a.active == true && g.f.id == id_depart)
+                .OrderBy(h => h.e.c.a.sold)
+                .Take(10)
+                .Select(m => new Items
+                    {
+                        id = m.e.c.a.id,
+                        name = m.e.c.a.name,
+                        vi_info = m.e.c.a.vi_info,
+                        en_info = m.e.c.a.en_info,
+                        img = m.e.c.a.img,
+                        sold = m.e.c.a.sold,
+                        id_category = m.e.c.a.id_category,
+                        lowest_ask= m.e.c.a.lowest_ask
+                    });
+        }
 
         // GET: api/Items/5
         [HttpGet("{id}")]
@@ -37,24 +60,6 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             var items = await _context.Items.FindAsync(id);
-
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(items);
-        }
-
-        [Route("ProductDetail")]
-        public IActionResult ProductDetail()
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var items = _context.Items;
 
             if (items == null)
             {

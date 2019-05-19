@@ -24,7 +24,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Departments> GetDepartments()
         {
-            return _context.Departments.ToList();
+            return _context.Departments.OrderBy(p=>p.order).ToList();
         }
         [Route("Take1ByOrder")]
         public Departments Get1Departments()

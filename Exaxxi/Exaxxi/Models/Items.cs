@@ -31,6 +31,7 @@ namespace Exaxxi.Models
         // lowest and highest from all sizes this item
         public double lowest_ask { get; set; }
         public double highest_bid { get; set; }
+        public int sold { get; set; }
 
         public int id_admin { get; set; }
         [ForeignKey("id_admin")]
