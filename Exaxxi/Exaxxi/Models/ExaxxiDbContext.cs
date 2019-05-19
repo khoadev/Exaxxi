@@ -26,6 +26,7 @@ namespace Exaxxi.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-NKES72FM;Initial Catalog=Exaxxi;Integrated Security=True");
+
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -225,7 +226,7 @@ namespace Exaxxi.Models
             builder.Entity<Categories>().HasData(
                 new Categories
                 {
-                    vi_name = "Yezzze",
+                    name = "Yezzze",
                     active = true,
                     order = 1,
                     id = 1,
@@ -234,7 +235,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Ultraboost",
+                    name = "Ultraboost",
                     active = true,
                     order = 2,
                     id = 2,
@@ -243,7 +244,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "NMD",
+                    name = "NMD",
                     active = true,
                     order = 3,
                     id = 3,
@@ -252,7 +253,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "AirForce",
+                    name = "AirForce",
                     active = true,
                     order = 4,
                     id = 4,
@@ -261,7 +262,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "AirMax",
+                    name = "AirMax",
                     active = true,
                     order = 5,
                     id = 5,
@@ -270,7 +271,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Kobe",
+                    name = "Kobe",
                     active = true,
                     order = 6,
                     id = 6,
@@ -279,7 +280,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Hunter",
+                    name = "Hunter",
                     active = true,
                     order = 7,
                     id = 7,
@@ -288,7 +289,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Hunter x Hunter",
+                    name = "Hunter x Hunter",
                     active = true,
                     order = 8,
                     id = 8,
@@ -297,7 +298,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Bitit x Hunter",
+                    name = "Bitit x Hunter",
                     active = true,
                     order = 9,
                     id = 9,
@@ -306,7 +307,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Áo Dài Hở Hang",
+                    name = "Áo Dài Hở Hang",
                     active = true,
                     order = 10,
                     id = 10,
@@ -315,7 +316,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Áo Dài Kín Đáo",
+                    name = "Áo Dài Kín Đáo",
                     active = true,
                     order = 11,
                     id = 11,
@@ -324,7 +325,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Áo Dài Sexy",
+                    name = "Áo Dài Sexy",
                     active = true,
                     order = 12,
                     id = 12,
@@ -333,7 +334,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Quần Jean Lửng",
+                    name = "Quần Jean Lửng",
                     active = true,
                     order = 13,
                     id = 13,
@@ -342,7 +343,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Quần Jean Sexy",
+                    name = "Quần Jean Sexy",
                     active = true,
                     order = 14,
                     id = 14,
@@ -351,7 +352,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Quần Jean Hở Hang",
+                    name = "Quần Jean Hở Hang",
                     active = true,
                     order = 15,
                     id = 15,
@@ -360,7 +361,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Nón Lá làm từ lá",
+                    name = "Nón Lá làm từ lá",
                     active = true,
                     order = 16,
                     id = 16,
@@ -369,7 +370,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Nón Lá Thép",
+                    name = "Nón Lá Thép",
                     active = true,
                     order = 17,
                     id = 17,
@@ -378,7 +379,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Nón Lá BêTong",
+                    name = "Nón Lá BêTong",
                     active = true,
                     order = 18,
                     id = 18,
@@ -387,7 +388,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Citi W1",
+                    name = "Citi W1",
                     active = true,
                     order = 19,
                     id = 19,
@@ -396,7 +397,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Citi W2",
+                    name = "Citi W2",
                     active = true,
                     order = 20,
                     id = 20,
@@ -405,7 +406,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Citi W3",
+                    name = "Citi W3",
                     active = true,
                     order = 21,
                     id = 21,
@@ -414,7 +415,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Ome A",
+                    name = "Ome A",
                     active = true,
                     order = 22,
                     id = 22,
@@ -423,7 +424,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Ome B",
+                    name = "Ome B",
                     active = true,
                     order = 23,
                     id = 23,
@@ -432,7 +433,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Ome C",
+                    name = "Ome C",
                     active = true,
                     order = 24,
                     id = 24,
@@ -441,7 +442,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Rolex I",
+                    name = "Rolex I",
                     active = true,
                     order = 25,
                     id = 25,
@@ -450,7 +451,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Rolex II",
+                    name = "Rolex II",
                     active = true,
                     order = 26,
                     id = 26,
@@ -459,7 +460,7 @@ namespace Exaxxi.Models
                 },
                 new Categories
                 {
-                    vi_name = "Rolex III",
+                    name = "Rolex III",
                     active = true,
                     order = 27,
                     id = 27,

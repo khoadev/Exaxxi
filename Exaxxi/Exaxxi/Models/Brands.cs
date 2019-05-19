@@ -15,6 +15,9 @@ namespace Exaxxi.Models
         [Required]
         [MaxLength(50, ErrorMessage = "tối đa 50 kí tự")]
         public string name { get; set; }
+        [Required]
+        [Display(Name = "Hình")]
+        public string img { get; set; }
         public bool active { get; set; }
         public int order { get; set; }
 

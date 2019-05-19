@@ -27,6 +27,8 @@ namespace Exaxxi.Models
         [Required]
         [Display(Name = "Nội dung tiếng anh")]
         public string en_content { get; set; }
+        [Display(Name = "Hình")]
+        public string img { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Ngày đăng")]
         public DateTime date_create { get; set; }

@@ -74,7 +74,7 @@ namespace Exaxxi.Controllers.WebAPI
                     id=p.c.a.id,
                     name= p.c.a.name,
                     name_brand=p.d.name,
-                    name_cate=p.c.b.vi_name,
+                    //name_cate=p.c.b.vi_name,
                     img=p.c.a.img
 
                 }
