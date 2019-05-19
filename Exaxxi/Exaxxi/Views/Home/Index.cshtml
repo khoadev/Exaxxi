@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div ng-app="myApp">
+
     <div id="title-background">
         <!-- Start title-background -->
         <div id="title-text">"Some quote goes here"</div>
@@ -348,27 +348,19 @@
             </div>
         </div> <!-- End news-background-2 -->
     </div> <!-- End News container -->
-</div>
 
 @section Scripts{
     <script>
-        var app = angular.module('myApp', []);
-        app.controller('departmentCtrl', function ($scope, $http) {
+        exaxxiApp.controller('departmentCtrl', function ($scope, $http) {
             $http.get("/api/DepartmentsAPI")
                 .then(function (response) { $scope.names = response.data; });
         });
-        app.controller('brandsbyidCtrl', function ($scope, $http) {
+        exaxxiApp.controller('brandsbyidCtrl', function ($scope, $http) {
             $http.get("/api/BrandsAPI/Take5BrandByIdDepart/" + @ViewBag.Id_Depart)
                 .then(function (response) {
                     $scope.names = response.data;
                     $scope.mot = response.data[0];
                     $scope.hai = response.data[1];
-                });
-        });
-        app.controller('itemPopularCtrl', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/Popular/"+ @ViewBag.Id_Depart)
-                .then(function (response) {
-                    $scope.items = response.data;
                 });
         });
 

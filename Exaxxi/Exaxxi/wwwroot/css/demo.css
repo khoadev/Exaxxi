@@ -173,7 +173,14 @@
 }
 .search-result-product-wrapper {
     line-height: 20px;
+    margin-bottom:20px;
     
+}
+.search-empty-result-text{
+    font-family:coolrg;
+    text-transform:uppercase;
+    font-size:20px;
+    margin-left:10px;
 }
 .search-name-wrapper {
     transition: 0.3s;
@@ -209,7 +216,7 @@
     margin-left:10px;
 }
 .search-img{
-    height:100px;
+    width:100px
 }
 
 #category-panel {
@@ -602,6 +609,9 @@
 #logreg-wrapper {
     min-height: 350px;
 }
+#logreg-pass-recovery-wrapper{
+    min-height:220px;
+}
 
 #logreg-form-wrapper {
     background-color: white;
@@ -659,7 +669,9 @@
     min-width: 150px;
     font-size: 20px;
 }
-
+.logreg-back-button {
+    background-color: #d7d7d7!important;
+}
 #login-form-link {
     vertical-align: bottom;
     color: black;
@@ -1237,8 +1249,62 @@ top-title-first-text {
     margin-bottom: 100px;
 }
 /* End content-statistical-wrapper */
-/* End product-detail css */
+.password-recovery{
+    font-family:coolrg;
+    text-transform:uppercase;
+    font-size:30px;
+}
+.browse-radio-wrapper {
+    
+    display: flex;
+    width:100%!important;
+    overflow-x: auto;
+}
+.browse-radio-wrapper label {
+    margin: 0px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 15px;
+    border: solid medium #ab1113;
+    border-radius: 20px;
+    padding: 2px;
+    min-width: 150px;
+    text-align: center;
+    font-family: coolrg;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
 
+.browse-radio input[type="radio"]:checked + label {
+    background-color:#ab1113;
+    color:white;
+}
+.card-columns {
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+}
+.browse-brand-wrapper{
+    margin-top:20px;
+    max-height:500px;
+    overflow-y:auto;
+}
+.brand-name-wrapper {
+    border: none !important;
+    border-top: solid thin #d7d7d7 !important;
+}
+.brand-name{
+    font-family:coolcond;
+    font-size:25px;
+
+}
+.brand-name-wrapper a {
+    display: block;
+    text-decoration: none;
+    color: #b9b9b9;
+    font-family:ralemed;
+}
+/* End product-detail css */
 /* ------------------------------------------------- */
 @media screen and (max-height: 450px) {
     .sidenav {
@@ -1277,6 +1343,9 @@ img {
     .search-img {
         height: auto;
         width:100%;
+    }
+    .btn-fullwidth{
+        width:100%!important;
     }
     .g-recaptcha {
         transform: scale(0.77);
