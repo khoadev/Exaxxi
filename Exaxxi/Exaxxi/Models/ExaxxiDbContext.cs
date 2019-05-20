@@ -69,14 +69,8 @@ namespace Exaxxi.Models
                 new Admins
                 {
                     id = 4,
-                    name = "kietnguyen",
-<<<<<<< HEAD
                     password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     email = "kietnguyen161@gmail.com",
-=======
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
-                    email = "kietnguyen@gmail.com",
->>>>>>> 527bf370f6996490db0c1e1ae46eeb6b7930fc44
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
                     active = true,
