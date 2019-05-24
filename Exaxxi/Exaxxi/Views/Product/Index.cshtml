@@ -1,0 +1,216 @@
+﻿<div id="product-list-background">
+    <!--start product-list-background-->
+    <div class="container">
+        <div class="row">
+            <h1 id="product-list-cate">Shirt</h1>
+        </div>
+    </div>
+</div> <!--end product-list-background-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+
+            <div>
+                <div class="filter-depart-wrapper" ng-controller="ShowDepartment">
+                    <!--start filter-depart-wrapper-->
+                    <a ng-repeat="x in name" href="/Product/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'category-panel-active' : ''}}">{{x.vi_name}}</a>
+                </div> <!--end filter-depart-wrapper-->
+            </div>
+
+            <div class="filter-brand-wrapper" ng-controller="ShowBrand">
+                <!--start filter-brand-wrapper-->
+                <div class="filter-name-header">Brand's Name</div>
+
+                <a class="filter-brand-item {{ x.id == @ViewBag.Id_Brand ? 'category-panel-active' : ''}}" href="/Product/Index?id=@ViewBag.Id_Depart&idBrand={{x.id}}" ng-repeat="x in name">{{x.name}}</a>
+
+            </div> <!--end filter-brand-wrapper-->
+            <div class="filter-category-wrapper">
+                <!--start filter-category-wrapper-->
+                <div class="filter-name-header">Category's Name</div>
+                <div class="category-list-wrapper custom-scrollbar" ng-controller="ShowCate">
+                    <!--start category-list-wrapper-->
+                    <label class="checkbox-container" ng-repeat="x in name">
+                        {{x.name}}
+                        <input type="checkbox" ng-model="cateModel[x.id]" ng-change="save()" ng-init="cateModel[x.id] = $first">
+                        <span class="checkmark"></span>
+                    </label>
+                </div> <!--end category-list-wrapper-->
+            </div> <!--end filter-category-wrapper-->
+            <div class="filter-size-wrapper" ng-controller="ShowSize">
+                <!--start filter-size-wrapper-->
+                <div class="filter-name-header">Size's Name</div>
+                <label class="checkbox-container" ng-repeat="x in name">
+                    {{x.centimet}} cm
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div><!--end filter-size-wrapper-->
+            <div class="filter-price-wrapper">
+                <!--start filter-price-wrapper-->
+                <p>
+                    <label for="amount" class="filter-name-header">Price range</label>
+                    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:100%;">
+                </p>
+
+                <div id="slider-range"></div>
+
+            </div><!--end filter-price-wrapper-->
+        </div>
+        <div ng-controller="ShowCate" class="md-padding checkboxdemoSyncing" ng-cloak="" style="min-height:270px" ng-app="MyApp">
+            <div layout="row" layout-wrap="">
+
+                <div flex="100" flex-gt-sm="50" layout="column">
+                    <div>
+                        <fieldset class="standard">
+                            <legend>Using ˂md-checkbox˃ with ˂ng-checked˃ </legend>
+                            <div layout="row" layout-wrap="" flex="">
+                                <div flex="50" ng-repeat="item in items">
+                                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                                        {{ item }} <span ng-if="exists(item, selected)">selected</span>
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+
+                <div flex="100">
+                    <h2 class="md-title">Selected Items</h2>
+                    <code style="display: block; padding: 8px;">{{selected | json}}</code>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-9">
+            <div class="sort-name-header">Sort by</div>
+            <div class="row" style="overflow-x: auto;" ng-controller="ShowCate">
+                <!-- Start row -->
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in posts" ng-init="$last && finished()">
+                    <div class="card card-block">
+                        <!-- Start card -->
+                        <div class="product-img-wrapper">
+                            <img src="images/Layer%207.png" class="product-img">
+                        </div>
+                        <div class="product-title-wrapper">
+                            <!-- Start product-title-wrapper -->
+                            <div class="row">
+                                <div class="col-6 col-sm-6 col-md-6 product-name">
+                                    <a href="#">
+                                        {{x.name}}
+                                    </a>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                    <div class="product-price">
+                                        169.000.000<br>
+                                        <span style="color: #dbd9d9">VND</span><br>
+                                    </div>
+                                    <span class="product-sub-title">Lowest Ask</span>
+                                </div>
+                            </div>
+                        </div> <!-- End product-title-wrapper -->
+                    </div> <!-- End card -->
+                </div>
+            </div> <!-- End row -->
+            <div class="pagination-wrapper">
+                <ul class="pagination pagination-md justify-content-end" id="pagination-custom">
+                    <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-left"></i></a></li>
+                    <li class="page-item"><a class="page-link page-link-custom pagination-active" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link page-link-custom" href="#">2</a></li>
+                    <li id="pagination-dots"> <i class="fas fa-ellipsis-h"> </i> </li>
+                    <li class="page-item"><a class="page-link page-link-custom" href="#">7</a></li>
+                    <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        //Show Department
+        exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
+            $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.name = response.data; });
+        });
+
+        //Show Brand
+        exaxxiApp.controller('ShowBrand', function ($scope, $http) {
+
+            $http.get("/api/BrandsAPI/TakeAllBrandByIdDepart/" + @ViewBag.Id_Depart)
+                .then(function (response) { $scope.name = response.data; });
+        });
+
+        //Show Category
+        exaxxiApp.controller('ShowCate', function ($scope, $http) {
+            $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
+                .then(function (response) {
+                    $scope.name = response.data;
+                    
+                });
+            $scope.items =
+                $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
+                .then(function (response) {
+                    return response.data;
+                });
+            $scope.selected = [];
+
+            $scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+                list.splice(idx, 1);
+            }
+            else {
+                list.push(item);
+            }
+            };
+
+            $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+            };
+            //Temp Code
+            var checkCate = [];
+            for (var k in $scope.cateModel) {
+                if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
+                    checkCate.push(k);
+                }   
+            }
+
+            $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
+                then(function (data, status, headers, config) {
+                    $scope.posts = data.data;
+                }); 
+           
+            //Wating for SOLVE
+            //$scope.cateModel = {};                
+            //$scope.save = function () {      
+            //    var checkCate = [];
+            //    for (var k in $scope.cateModel) {
+            //        if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
+            //            checkCate.push(k);
+            //        }
+            //    }                                               
+                
+            //    $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
+            //        then(function (data, status, headers, config) {
+            //            $scope.posts = data.data;
+            //        });                    
+            //}                                       
+        });
+        
+        //Show Size
+        exaxxiApp.controller('ShowSize', function ($scope, $http) {
+            $http.get("/api/ds_SizeAPI")
+                .then(function (response) { $scope.name = response.data; });
+        });
+
+        //Show Product
+        exaxxiApp.controller('ShowProduct', function ($scope, $http) {
+            $http.get("/api/ItemsAPI/TakeAllItemByIdCate/" + @ViewBag.Id_Cate)
+                .then(function (response) { $scope.name = response.data; });
+        });
+    </script>
+}

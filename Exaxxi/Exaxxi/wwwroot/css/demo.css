@@ -1275,9 +1275,9 @@ top-title-first-text {
     transition: all 0.3s;
 }
 
-.browse-radio input[type="radio"]:checked + label {
-    background-color:#ab1113;
-    color:white;
+.label-checked {
+    background-color: #ab1113;
+    color: white;
 }
 .card-columns {
     -webkit-column-count: 4;
