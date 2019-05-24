@@ -52,7 +52,29 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-
+        [Route("Popular/{id_depart}")]
+        public IEnumerable<Items> GetItemsPopular(int id_depart)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Join(_context.Departments, e => e.d.id_department, f => f.id, (e, f) => new { e, f })
+                .Where(g => g.e.c.a.active == true && g.f.id == id_depart)
+                .OrderBy(h => h.e.c.a.sold)
+                .Take(10)
+                .Select(m => new Items
+                {
+                    id = m.e.c.a.id,
+                    name = m.e.c.a.name,
+                    vi_info = m.e.c.a.vi_info,
+                    en_info = m.e.c.a.en_info,
+                    img = m.e.c.a.img,
+                    sold = m.e.c.a.sold,
+                    id_category = m.e.c.a.id_category,
+                    lowest_ask = m.e.c.a.lowest_ask
+                });
+        }
+        
         [Route("ProductDetail")]
         public IActionResult ProductDetail()
         {

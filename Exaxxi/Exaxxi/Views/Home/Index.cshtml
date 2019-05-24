@@ -261,92 +261,45 @@
         </div> <!-- End divider-section -->
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="getnewsCtrl">
         <!-- Start News container -->
-        <div class="row" id="news-background-1">
+        <div class="row" id="news-background-1" >
             <!-- Start news-background-1 -->
-            <div class="col-sm-6 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(images/beautiful-woman-black-t-shirt-blonde-2124679.jpg) center;">
+            <div class="row col-lg-8" style="margin:0px!important; padding:0px!important;">
 
+                <div class="col-sm-6 col-lg-6" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{news1.img}}) center;">
+
+                </div>
+                <div class="col-sm-6 col-lg-6" style="background: #f2f2f2">
+                    <p class="news-category">
+                        Category
+                    </p><br>
+                    <a class="news-title" href="#">
+                       
+                        {{news1.vi_title}}
+                    </a><br>
+                        <p class="news-detail">
+                            {{news1.date_create}}<br>
+                            {{news1.vi_content}}
+                        </p>
+                </div>
             </div>
-            <div class="col-sm-6 col-lg-4" style="background: #f2f2f2">
-                <p class="news-category">
-                    Category
-                </p><br>
-                <a class="news-title" href="#">
-                    News’s article goes here and it should be two lines long
-                </a><br>
-                <p class="news-detail">
-                    10/5/2502<br>
-                    Short description about the news, if possible,
-                    the description would be ideal if it’s around
-                    3 lines long or at least fit the wrapper like
-                    this.
-                </p>
-            </div>
-            <div class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(images/casual-cute-elegant-428338.jpg) center;">
+            <div ng-repeat="x in news | limitTo : 5:1 " class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{x.img}}) center;">
                 <p class="news-category">
                     Category
                 </p><br>
                 <a class="news-title-2" href="#">
-                    News’s article goes here and it should be two lines long
+                    {{x.vi_title}}
                 </a><br>
                 <p class="news-detail-2">
-                    10/5/2502<br>
-                    Short description about the news, if possible,
-                    the description would be ideal if it’s around
-                    3 lines long or at least fit the wrapper like
-                    this.
+                    {{x.date_create}}<br>
+                   {{x.vi_content}}
                 </p>
             </div>
+          
         </div> <!-- End news-background-1 -->
-        <div class="row" id="news-background-2">
             <!-- Start news-background-2 -->
-            <div class="col-md-6 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(images/adult-art-black-t-shirt-1656684.jpg) center;">
-                <p class="news-category">
-                    Category
-                </p><br>
-                <a class="news-title-2" href="#">
-                    News’s article goes here and it should be two lines long
-                </a><br>
-                <p class="news-detail-2">
-                    10/5/2502<br>
-                    Short description about the news, if possible,
-                    the description would be ideal if it’s around
-                    3 lines long or at least fit the wrapper like
-                    this.
-                </p>
-            </div>
-            <div class="col-md-6 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(images/adult-asphalt-black-shirt-2061881.jpg) center;">
-                <p class="news-category">
-                    Category
-                </p><br>
-                <a class="news-title-2" href="#">
-                    News’s article goes here and it should be two lines long
-                </a><br>
-                <p class="news-detail-2">
-                    10/5/2502<br>
-                    Short description about the news, if possible,
-                    the description would be ideal if it’s around
-                    3 lines long or at least fit the wrapper like
-                    this.
-                </p>
-            </div>
-            <div class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(images/architecture-boy-bridge-1261422.jpg) center;">
-                <p class="news-category">
-                    Category
-                </p><br>
-                <a class="news-title-2" href="#">
-                    News’s article goes here and it should be two lines long
-                </a><br>
-                <p class="news-detail-2">
-                    10/5/2502<br>
-                    Short description about the news, if possible,
-                    the description would be ideal if it’s around
-                    3 lines long or at least fit the wrapper like
-                    this.
-                </p>
-            </div>
-        </div> <!-- End news-background-2 -->
+          
     </div> <!-- End News container -->
 
 @section Scripts{
@@ -363,6 +316,19 @@
                     $scope.hai = response.data[1];
                 });
         });
-
+        exaxxiApp.controller('itemPopularCtrl', function ($scope, $http) {
+            $http.get("/api/ItemsAPI/Popular/"+ @ViewBag.Id_Depart)
+                .then(function (response) {
+                    $scope.items = response.data;
+                });
+        });
+        exaxxiApp.controller('getnewsCtrl', function ($scope, $http) {
+            $http.get("/api/NewsAPI/GetNewsByDepart/"+ @ViewBag.Id_Depart)
+                .then(function (response) {
+                    $scope.news = response.data;
+                    $scope.news1 = response.data[0];
+                    
+                });
+        });
     </script>
 }
