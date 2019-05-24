@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Exaxxi.ViewModels;
+
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -32,6 +35,12 @@ namespace Exaxxi.Controllers.WebAPI
         public IEnumerable<Categories> GetAllCate(int Id_Brand)
         {            
             return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+        }
+
+        [Route("Take1CateByIdBrand/{Id_Brand}")]
+        public Categories Get1Cate(int Id_Brand)
+        {
+            return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order).FirstOrDefault();
         }
 
         // GET: api/Categories/5
@@ -138,7 +147,7 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategories", new { id = categories.id }, categories);
-        }
+        }        
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
