@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -23,12 +24,15 @@ namespace Exaxxi.Controllers.WebAPI
         // GET: api/Categories
         [HttpGet]
         public IEnumerable<Categories> GetCategories()
-        {
-            // return _context.Categories.Join(_context.Brands, c=>c.id_brand, b=>b.id, (c,b) => new { });
-            return _context.Categories.Include("brand");
-          
+        {            
+            return _context.Categories.Include("brand");          
         }
-       
+
+        [Route("TakeAllCateByIdBrand/{Id_Brand}")]
+        public IEnumerable<Categories> GetAllCate(int Id_Brand)
+        {            
+            return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+        }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
@@ -66,6 +70,25 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(categories);
+        }
+        [HttpGet("BrowserData")]
+        public IEnumerable<BrowserData>  GetDataBrowser()
+        {
+            return _context.Categories
+                    .Join(_context.Brands, a => a.id_brand, b => b.id, (a, b) => new { a, b })
+                    .Join(_context.Departments, c => c.b.id_department, d => d.id, (c, d) => new { c, d })
+                    .Select(p => new BrowserData
+                    {
+                        id_brand= p.c.b.id,
+                        name_brand=p.c.b.name,
+                        id_dep=p.d.id,
+                        viname_dep=p.d.vi_name,
+                        enname_dep=p.d.en_name,
+                        id_cate=p.c.a.id,
+                        name_cate=p.c.a.name
+
+                    }
+                );
         }
         // PUT: api/Categories/5
         [HttpPut("{id}")]

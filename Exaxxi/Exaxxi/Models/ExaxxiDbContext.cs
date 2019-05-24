@@ -25,8 +25,8 @@ namespace Exaxxi.Models
         //Server Name - Kiet: DESKTOP-262PU69\SQLEXPRESS
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-C9UR2EM\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
 
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-EH88R88\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
 
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
@@ -40,7 +40,7 @@ namespace Exaxxi.Models
                 {
                     id = 1,
                     name = "genos",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     email = "genos@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("1969-04-05"),
@@ -50,7 +50,7 @@ namespace Exaxxi.Models
                 {
                     id = 2,
                     name = "duytran",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     email = "duytran@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
@@ -60,7 +60,7 @@ namespace Exaxxi.Models
                 {
                     id = 3,
                     name = "khoado",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     email = "khoado@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
@@ -70,7 +70,7 @@ namespace Exaxxi.Models
                 {
                     id = 4,
                     name = "kietnguyen",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     email = "kietnguyen@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
@@ -83,7 +83,7 @@ namespace Exaxxi.Models
                     id = 1,
                     name = "Lê văn tèo",
                     email = "teo@gmail.com",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     level_seller = 1,
                     score_buyer = 1,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -94,7 +94,7 @@ namespace Exaxxi.Models
                     id = 2,
                     name = "Lê văn tý",
                     email = "ty@gmail.com",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     level_seller = 2,
                     score_buyer = 2,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -105,7 +105,7 @@ namespace Exaxxi.Models
                     id = 3,
                     name = "Lê văn tun",
                     email = "tun@gmail.com",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     level_seller = 3,
                     score_buyer = 3,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -116,7 +116,7 @@ namespace Exaxxi.Models
                     id = 4,
                     name = "Lê văn tet",
                     email = "tet@gmail.com",
-                    password = "BA3253876AED6BC22D4A6FF53D8406C6AD864195ED144AB5C87621B6C233B548BAEAE6956DF346EC8C17F5EA10F35EE3CBC514797ED7DDD3145464E2A0BAB413",
+                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
                     level_seller = 4,
                     score_buyer = 4,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -157,6 +157,7 @@ namespace Exaxxi.Models
                     active = true,
                     order = 1,
                     id_department = 1,
+                    img="puma.jpg"
                 },
                 new Brands
                 {
@@ -165,6 +166,7 @@ namespace Exaxxi.Models
                     active = true,
                     order = 2,
                     id_department = 1,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -173,6 +175,7 @@ namespace Exaxxi.Models
                     active = true,
                     order = 3,
                     id_department = 1,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -181,6 +184,7 @@ namespace Exaxxi.Models
                     active = true,
                     order = 4,
                     id_department = 2,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -190,6 +194,7 @@ namespace Exaxxi.Models
                     order = 5,
                     id = 5,
                     id_department = 2,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -198,6 +203,7 @@ namespace Exaxxi.Models
                     order = 6,
                     id = 6,
                     id_department = 2,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -206,6 +212,7 @@ namespace Exaxxi.Models
                     order = 7,
                     id = 7,
                     id_department = 3,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -214,6 +221,7 @@ namespace Exaxxi.Models
                     order = 8,
                     id = 8,
                     id_department = 3,
+                    img = "puma.jpg"
                 },
                 new Brands
                 {
@@ -222,6 +230,7 @@ namespace Exaxxi.Models
                     order = 9,
                     id = 9,
                     id_department = 3,
+                    img = "puma.jpg"
                 }
             );
             builder.Entity<Categories>().HasData(

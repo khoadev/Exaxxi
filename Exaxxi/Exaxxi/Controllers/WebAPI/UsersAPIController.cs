@@ -154,7 +154,7 @@ namespace Exaxxi.Controllers.WebAPI
             Users user = _context.Users.SingleOrDefault(p => p.email == model.Username);
             if (user == null)
             {
-                return NotFound("khong tim thay du lieu");
+                return NotFound("Không tìm thấy dữ liệu");
             }
 
             if (bf.Decrypt_CBC(user.password) != model.Password)
@@ -163,14 +163,17 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest("Sai mật khẩu");
             }
 
+            //Lưu Session
+            HttpContext.Session.SetInt32("idUser", user.id);
+            HttpContext.Session.SetString("nameUser", user.name);
 
-            //ghi nhận đăng nhập thành công
+            //Ghi nhận đăng nhập thành công
             var claims = new List<Claim> {
                         new Claim(ClaimTypes.Email, user.email),
                         new Claim(ClaimTypes.Name, user.name),
                     };
 
-            // create identity
+            //Create identity
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
             ClaimsPrincipal claimsPricipal = new ClaimsPrincipal(userIdentity);
 
