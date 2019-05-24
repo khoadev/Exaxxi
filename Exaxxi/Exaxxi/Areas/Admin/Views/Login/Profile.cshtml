@@ -1,11 +1,10 @@
 ﻿@model Exaxxi.Models.Admins
 
 @{
-    ViewData["Title"] = "Details";
-   
+    ViewData["Title"] = "Profile";
 }
 
-<h2>Details</h2>
+<h2>Profile</h2>
 
 <div>
     <h4>Admins</h4>
@@ -20,7 +19,9 @@
         <dt>
             @Html.DisplayNameFor(model => model.password)
         </dt>
-        <dd>@ViewBag.Password</dd>
+        <dd>
+            @ViewBag.Password
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.email)
         </dt>
@@ -48,6 +49,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

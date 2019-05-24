@@ -1,0 +1,109 @@
+﻿@model Exaxxi.Models.News
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>News</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="vi_title" class="control-label"></label>
+                <input asp-for="vi_title" class="form-control" />
+                <span asp-validation-for="vi_title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="en_title" class="control-label"></label>
+                <input asp-for="en_title" class="form-control" />
+                <span asp-validation-for="en_title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="vi_content" class="control-label"></label>
+                <input asp-for="vi_content" class="form-control" />
+                <span asp-validation-for="vi_content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="en_content" class="control-label"></label>
+                <input asp-for="en_content" class="form-control" />
+                <span asp-validation-for="en_content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date_create" class="control-label"></label>
+                <input asp-for="date_create" class="form-control" />
+                <span asp-validation-for="date_create" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="active" /> @Html.DisplayNameFor(model => model.active)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_admin" class="control-label"></label>
+                <select asp-for="id_admin" class="form-control" id="adminname"></select>
+                <span asp-validation-for="id_admin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_department" class="control-label"></label>
+                <select asp-for="id_department" class="form-control" id="departmentname"></select>
+                <span asp-validation-for="id_department" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts{
+    <script>
+            $(function () {
+
+                $.ajax({
+                    url: "/api/DepartmentsAPI",
+                    method: "GET",
+                    success: function (data) {
+                        $(data).each(function (index, value) {
+                            var idbrand = @Model.id_department;
+                            if (idbrand == value.id) {
+                                var option = $("<option/>").attr("value", value.id).attr("selected", "selected").html(value.vi_name);
+
+
+                            } else {
+                                var option = $("<option/>").attr("value", value.id).html(value.vi_name);
+                            }
+                            $("#departmentname").append(option)
+                        });
+                    }
+                });
+                $.ajax({
+                    url: "/api/AdminsAPI",
+                    method: "GET",
+                    success: function (data) {
+                        $(data).each(function (index, value) {
+                            var idbrand = @Model.id_department;
+                            if (idbrand == value.id) {
+                                var option = $("<option/>").attr("value", value.id).attr("selected", "selected").html(value.name);
+
+
+                            } else {
+                                var option = $("<option/>").attr("value", value.id).html(value.name);
+                            }
+                            $("#adminname").append(option)
+                        });
+                    }
+                });
+            });
+    </script>
+}
+

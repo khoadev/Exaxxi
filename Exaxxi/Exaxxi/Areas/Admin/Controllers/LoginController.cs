@@ -7,24 +7,18 @@ using Exaxxi.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Exaxxi.Common;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Authorize]
     [Area("Admin")]
-    
-    public class LoginAdminController : Controller
+    public class LoginController : Controller
     {
-        private readonly ExaxxiDbContext _exx;
-
         //helper
         CallAPI _api = new CallAPI();
-
-        public LoginAdminController(ExaxxiDbContext ex)
-        {
-            _exx = ex;
-        }
-   
+        BlowFish bf = new BlowFish(info.keyBF);
         public IActionResult Index()
         {
             return View("Login");
@@ -34,18 +28,26 @@ namespace Exaxxi.Areas.Admin.Controllers
         [Route("Admin")]
         public IActionResult Login(string returnUrl = "")
         {
+            
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-        public IActionResult Profile()
+        public IActionResult Profile(int? id)
         {
-            Users users = _exx.Users.SingleOrDefault(p => p.name == User.Identity.Name);
-            if (users != null)
+            if (id == null)
             {
-                return View(users);
+                return NotFound();
             }
-            return RedirectToAction("Login");
+
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/GetDetailAdmins/{id}").Result);
+            ViewBag.Password = bf.Decrypt_CBC(admins.password);
+            if (admins == null)
+            {
+                return NotFound();
+            }
+
+            return View(admins);
         }
 
         public async Task<IActionResult> Logout()

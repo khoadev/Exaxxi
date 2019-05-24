@@ -1,14 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Exaxxi</title>
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-    
-    
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/demo.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    </environment>
+
 </head>
-<body>
+<body ng-app="exaxxiApp">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Start nav -->
         <!-- Brand -->
@@ -19,18 +25,7 @@
             </button>
             <!-- Links -->
             <ul class="navbar-nav">
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">Admin</a>
-                </li>
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">Department</a>
-                </li>
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">Categorie</a>
-                </li>
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">Brand</a>
-                </li>
+
                 @if (!User.Identity.IsAuthenticated)
                 {
 
@@ -42,14 +37,29 @@
                 }
                 else
                 {
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">Admin</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">Department</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">Categorie</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">Brand</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">News</a>
+                    </li>
                     <li>
-                        <a class="nav-link" asp-controller="LoginAdmin" asp-action="Profile">
+                        <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">
                             Xin chào
                             <b>@User.Identity.Name</b>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" asp-controller="LoginAdmin" asp-action="Logout">
+                        <a class="nav-link" asp-controller="Login" asp-action="Logout">
                             <span class="glyphicon glyphicon-log-in"></span> Logout
                         </a>
                     </li>
@@ -77,7 +87,7 @@
             </ul>
         </div>
     </nav> <!-- End nav -->
-    
+
 
     <div class="container body-content">
         @RenderBody()
