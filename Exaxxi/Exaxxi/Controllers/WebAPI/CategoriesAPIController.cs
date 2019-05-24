@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Exaxxi.ViewModels;
+
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -31,6 +35,12 @@ namespace Exaxxi.Controllers.WebAPI
         public IEnumerable<Categories> GetAllCate(int Id_Brand)
         {            
             return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+        }
+
+        [Route("Take1CateByIdBrand/{Id_Brand}")]
+        public Categories Get1Cate(int Id_Brand)
+        {
+            return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order).FirstOrDefault();
         }
 
         // GET: api/Categories/5
@@ -69,6 +79,25 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(categories);
+        }
+        [HttpGet("BrowserData")]
+        public IEnumerable<BrowserData>  GetDataBrowser()
+        {
+            return _context.Categories
+                    .Join(_context.Brands, a => a.id_brand, b => b.id, (a, b) => new { a, b })
+                    .Join(_context.Departments, c => c.b.id_department, d => d.id, (c, d) => new { c, d })
+                    .Select(p => new BrowserData
+                    {
+                        id_brand= p.c.b.id,
+                        name_brand=p.c.b.name,
+                        id_dep=p.d.id,
+                        viname_dep=p.d.vi_name,
+                        enname_dep=p.d.en_name,
+                        id_cate=p.c.a.id,
+                        name_cate=p.c.a.name
+
+                    }
+                );
         }
         // PUT: api/Categories/5
         [HttpPut("{id}")]
@@ -118,7 +147,7 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategories", new { id = categories.id }, categories);
-        }
+        }        
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
