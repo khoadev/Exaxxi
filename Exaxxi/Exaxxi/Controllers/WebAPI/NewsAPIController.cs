@@ -45,7 +45,11 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(news);
         }
-
+        [Route("GetNewsByDepart/{id_depart}")]
+        public IEnumerable<News> getnewsbydepart(int id_depart)
+        {
+            return _context.News.Where(p => p.id_department == id_depart).OrderBy(p=>p.date_create);
+        }
         // PUT: api/News/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutNews([FromRoute] int id, [FromBody] News news)
