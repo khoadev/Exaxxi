@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using System.IO;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -24,7 +25,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<News> GetNews()
         {
-            return _context.News;
+            return _context.News.Include("department").Include("admin");
         }
 
         // GET: api/News/5
@@ -45,10 +46,31 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(news);
         }
+
         [Route("GetNewsByDepart/{id_depart}")]
         public IEnumerable<News> getnewsbydepart(int id_depart)
         {
             return _context.News.Where(p => p.id_department == id_depart).OrderBy(p=>p.date_create);
+
+        // GET: api/News/GetNewsDetail/5
+        [HttpGet("GetNewsDetail/{id}")]
+        public async Task<IActionResult> GetNewsDetail([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var news = await _context.News.Include(c => c.department).Include(p => p.admin)
+                .FirstOrDefaultAsync(m => m.id == id);
+
+            if (news == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(news);
+
         }
         // PUT: api/News/5
         [HttpPut("{id}")]
@@ -89,13 +111,42 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpPost]
         public async Task<IActionResult> PostNews([FromBody] News news)
         {
+
             if (!ModelState.IsValid)
             {
+
                 return BadRequest(ModelState);
             }
 
             _context.News.Add(news);
             await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetNews", new { id = news.id }, news);
+        }
+        // POST: api/News/PostCreateNews
+        [HttpPost("PostCreateNews")]
+        public async Task<IActionResult> PostCreateNews([FromBody] News news, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                
+                if (file != null)
+                {
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "news", file.FileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        news.img = file.FileName;
+                    }
+                   
+                }
+                _context.News.Add(news);
+                await _context.SaveChangesAsync();
+
+
+            }
+
 
             return CreatedAtAction("GetNews", new { id = news.id }, news);
         }
@@ -120,7 +171,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(news);
         }
-
+        [HttpGet("NewsExists/{id}")]
         private bool NewsExists(int id)
         {
             return _context.News.Any(e => e.id == id);

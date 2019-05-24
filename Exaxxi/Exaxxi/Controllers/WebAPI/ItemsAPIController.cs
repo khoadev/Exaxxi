@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -25,6 +26,12 @@ namespace Exaxxi.Controllers.WebAPI
         public IEnumerable<Items> GetItems()
         {
             return _context.Items;
+        }
+
+        [Route("TakeAllItemByIdCate/{Id_Cate}")]
+        public IEnumerable<Items> GetAllItem(int Id_Cate)
+        {
+            return _context.Items.Where(p => p.id_category == Id_Cate);
         }
 
         // GET: api/Items/5
@@ -150,6 +157,15 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetItems", new { id = items.id }, items);
+        }
+
+        [Route("TakeIdCategory_Checkbox")]
+        public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JArray json)
+        {
+            List<int> value = json.ToObject<List<int>>();
+
+            return _context.Items.Where(x => value.Contains(x.id_category))
+                .OrderBy(x => x.name).ToList();           
         }
 
         // DELETE: api/Items/5

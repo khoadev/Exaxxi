@@ -197,7 +197,9 @@
                                         <img src="~/images/{{x.img}}" class="search-img" />
                                     </div>
                                     <div class="col-9 col-md-10 search-name-wrapper">
+
                                         <div><span class="search-brand-name">{{x.name_brand}}</span>/<span class="search-category-name">{{x.name_cate}}</span></div>
+
                                         <a href="#" class="search-product-name">
                                             {{x.name}}
                                         </a>
@@ -211,14 +213,32 @@
                         </div>
                     </ul><!-- End Mega Menu -->
                 </li> <!-- End Search Mega Dropdown -->
+                @if (!User.Identity.IsAuthenticated)
+                {
 
-                <li class="nav-item d-none d-md-flex btn-signup-wrapper">
-                    <a class="nav-link btn btn-signup" asp-controller="Login" asp-action="Register">Sign Up</a>
-                </li>
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link link-login" asp-controller="Login" asp-action="Login"><i class="fas fa-sign-in-alt fa-fw"></i> Login</a>
-                </li>
+                    <li class="nav-item d-none d-md-flex btn-signup-wrapper">
+                        <a class="nav-link btn btn-signup" asp-controller="Login" asp-action="Register">Sign Up</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link link-login" asp-controller="Login" asp-action="Login"><i class="fas fa-sign-in-alt fa-fw"></i> Login</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="nav-link" asp-controller="Login" asp-action="Profile">
+                            Xin chào
+                            <b>@User.Identity.Name</b>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" asp-controller="Login" asp-action="Logout">
+                            <span class="glyphicon glyphicon-log-in"></span> Logout
+                        </a>
+                    </li>
+                }
             </ul>
+              
         </div>
     </nav> <!-- End nav -->
 

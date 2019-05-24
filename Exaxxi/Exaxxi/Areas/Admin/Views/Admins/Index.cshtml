@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Exaxxi.Models.Admins>
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Index  @HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin"); ád</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> @ViewBag.Userid
 </p>
 <table class="table">
     <thead>
