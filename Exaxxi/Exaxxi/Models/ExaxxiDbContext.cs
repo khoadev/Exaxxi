@@ -25,7 +25,7 @@ namespace Exaxxi.Models
         //Server Name - Kiet: DESKTOP-262PU69\SQLEXPRESS
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-C9UR2EM\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-NKES72FM;Initial Catalog=Exaxxi;Integrated Security=True");
 
 
         }

@@ -57,102 +57,25 @@
                             <li class="col-12">
                                 <div class="row ">
                                     <div class="col-12 flex-nowrap browse-radio-wrapper custom-scrollbar" style="{{takedivCount<6 ? 'justify-content: center;' : ''}}" id="browse-radio-wrapper">
-                                        <div class="browse-radio">
-                                            <input class="d-none" type="radio" name="department" id="giay" checked="checked" value="giay" />
-                                            <label for="giay">
-                                                Giày
+
+                                        <div class="browse-radio" ng-repeat="x in deps">
+                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" checked="checked" ng-model="$parent.selectedObj" ng-value="x" />
+                                            <label for="{{x.id}}">
+                                                {{x.vi_name}}
                                             </label>
                                         </div>
-                                        <div class="browse-radio">
-                                            <input class="d-none" type="radio" name="department" id="quanao" value="quanao" />
-                                            <label for="quanao">
-                                                Quần Áo
-                                            </label>
-                                        </div>
-                                        <div class="browse-radio">
-                                            <input class="d-none" type="radio" name="department" id="dongho" value="dongho" />
-                                            <label for="dongho">
-                                                Đồng Hồ
-                                            </label>
-                                        </div>
+
                                     </div>
+                                    dep: {{selectedObj.id}}
                                 </div>
                             </li>
                             <li class="col-12">
                                 <div class="row browse-brand-wrapper custom-scrollbar">
                                     <div class="card-columns">
-                                        <div class="card brand-name-wrapper ">
+                                        <div class="card brand-name-wrapper " ng-repeat="x in brandcates">
                                             <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
+                                                <div class="brand-name">{{x.name_brand}}</div>
+                                                @*<a href="#" ng-repeat="x in brandcates | filter:selectedObj.id">{{x.name_cate}}</a>*@
                                             </div>
                                         </div>
                                     </div>
@@ -291,11 +214,16 @@
             $http.get("/api/ItemsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
         });
-        exaxxiApp.controller("browseCtrl", function($scope) {
+        exaxxiApp.controller("browseCtrl", function($scope, $http) {
              var div = document.querySelector('#browse-radio-wrapper');
             var divCount = div.querySelectorAll('div').length;
+             $scope.selectedObj = {};
             $scope.takedivCount = divCount;
-         });
+             $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.deps = response.data; });
+             $http.get("/api/CategoriesAPI/BrowserData")
+                .then(function (response) { $scope.brandcates = response.data; });
+        });
         $('.avoid').click(function (e) {
             e.stopPropagation();
         });
