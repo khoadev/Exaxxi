@@ -102,25 +102,44 @@ namespace Exaxxi.Controllers.WebAPI
 
         // POST: api/News
         [HttpPost]
-        public async Task<IActionResult> PostNews([FromBody] News news, IFormFile image)
+        public async Task<IActionResult> PostNews([FromBody] News news)
         {
 
             if (!ModelState.IsValid)
             {
-                if ( image != null)
-                {
-                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "news", image.FileName);
-                    using (var file = new FileStream(fullPath, FileMode.Create))
-                    {
-                        image.CopyTo(file);
-                        news.image = image.FileName;
-                    }
-                }
+
                 return BadRequest(ModelState);
             }
 
             _context.News.Add(news);
             await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetNews", new { id = news.id }, news);
+        }
+        // POST: api/News/PostCreateNews
+        [HttpPost("PostCreateNews")]
+        public async Task<IActionResult> PostCreateNews([FromBody] News news, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                
+                if (file != null)
+                {
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "news", file.FileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                        news.img = file.FileName;
+                    }
+                   
+                }
+                _context.News.Add(news);
+                await _context.SaveChangesAsync();
+
+
+            }
+
 
             return CreatedAtAction("GetNews", new { id = news.id }, news);
         }

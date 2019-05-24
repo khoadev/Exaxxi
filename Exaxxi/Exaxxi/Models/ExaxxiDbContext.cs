@@ -69,6 +69,7 @@ namespace Exaxxi.Models
                 new Admins
                 {
                     id = 4,
+                    name = "kietnguyen",
                     password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     email = "kietnguyen161@gmail.com",
                     level = 1,

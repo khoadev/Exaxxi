@@ -8,57 +8,57 @@
 
 <h4>News</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form ng-controller="myCtrl">
+<div class="row" ng-app="exaxxiApp">
+    <div class="col-md-4" ng-controller="test">
+        <form enctype="multipart/form-data" name="newFileForm" ng-submit="addFile()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="vi_title" class="control-label"></label>
-                <input class="form-control" id="vi_title_cre" />
+                <input class="form-control" ng-model="vi_title" id="vi_title" />
                 <span asp-validation-for="vi_title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="en_title" class="control-label"></label>
-                <input class="form-control" id="en_title_cre" />
+                <input class="form-control" ng-model="en_title" id="en_title" />
                 <span asp-validation-for="en_title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="image" class="control-label"></label>
-                <input class="form-control" id="image_cre" type="file" file-model="myFile" />
-                <span asp-validation-for="image" class="text-danger"></span>
+                <label asp-for="img" class="control-label"></label>
+                <input type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
+                <span asp-validation-for="img" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="vi_content" class="control-label"></label>
-                <input class="form-control" id="vi_content_cre" />
+                <input class="form-control" ng-model="vi_content" id="vi_content" />
                 <span asp-validation-for="vi_content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="en_content" class="control-label"></label>
-                <input class="form-control" id="en_content_cre" />
+                <input class="form-control" ng-model="en_content" id="en_content" />
                 <span asp-validation-for="en_content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="date_create" class="control-label"></label>
-                <input asp-for="date_create" class="form-control" id="date_create_cre" />
+                <input asp-for="date_create" class="form-control" ng-model="date_create" id="date_create" />
                 <span asp-validation-for="date_create" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="active" id="active_cre" /> @Html.DisplayNameFor(model => model.active)
+                        <input asp-for="active" ng-model="active" id="active" /> @Html.DisplayNameFor(model => model.active)
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="id_admin" class="control-label"></label>
-                <select asp-for="id_admin" class="form-control" id="adminname_cre"></select>
+                <select asp-for="id_admin" class="form-control" ng-model="adminname" id="adminname"></select>
             </div>
             <div class="form-group">
                 <label asp-for="id_department" class="control-label"></label>
-                <select asp-for="id_department" class="form-control" id="departmentname_cre"></select>
+                <select asp-for="id_department" class="form-control" ng-model="departmentname" id="departmentname"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" id="sub_create" ng-click="uploadFile()" />
+                <input type="submit" value="Create" class="btn btn-default" id="submit" ng-click="sendData()" />
             </div>
         </form>
     </div>
@@ -79,7 +79,7 @@
 
                         var option = $("<option/>").attr("value", value.id).html(value.vi_name);
 
-                        $("#departmentname_cre").append(option)
+                        $("#departmentname").append(option)
                     });
                 }
             });
@@ -91,94 +91,154 @@
 
                         var option = $("<option/>").attr("value", value.id).html(value.name);
 
-                        $("#adminname_cre").append(option)
+                        $("#adminname").append(option)
                     });
                 }
             });
         });
-            
-        //    $("#sub_create").on("click", function () {
-        //        var vi_title = $("#vi_title_cre").val();
-        //        var en_title = $("#en_title_cre").val();
-        //        var image = $("#image_cre").get(0).files;
-        //        var vi_content = $("#vi_content_cre").val();
-        //        var en_content = $("#en_content_cre").val();
-        //        var date_create = $("#date_create_cre").val();
-        //        var active = $("#active_cre").val();
-        //        var adminname = $("#adminname_cre").val();
-        //        var departmentname = $("#departmentname_cre").val();
 
-        //        var create = {
+
+    </script>
+
+    <script>
+        //$(document).ready(function () {
+
+        //    $("#submit").on("click", function () {
+        //var vi_title = $("#vi_title").val();
+        //var en_title = $("#en_title").val();
+        //var vi_content = $("#vi_content").val();
+        //var en_content = $("#en_content").val();
+        //var date_create = $("#date_create").val();
+        //var active = $("#active").val();
+        //var adminname = $("#adminname").val();
+        //var departmentname = $("#departmentname").val();
+        //        var login = {
         //            "vi_title": vi_title,
         //            "en_title": en_title,
-        //            "image": image,
-        //            "vi_content": vi_content,
+        //            "en_content": en_content,
         //            "date_create": date_create,
         //            "active": active,
         //            "adminname": adminname,
         //            "departmentname": departmentname,
-
         //        };
-
         //        $.ajax({
-        //            url: "/api/NewsAPI/PostNews",
+        //            url: "/api/NewsAPI/PostCreateNews",
         //            type: "POST",
-        //            data: JSON.stringify(create),
-        //            contentType: "application/json",
+        //            dataType: 'json',
+        //            data: login,
+        //           // data: JSON.stringify(login),
         //            success: function () {
-        //                alert(" thành công!");
-        //                window.location = "/news/index";
+        //                alert("thanh cong");
+        //                window.location = "/Admin/News/Index";
         //            },
         //            error: function (notfound) {
-        //                alert("that bai");
+        //                alert(notfound.responseText);
         //            }
         //        });
         //    });
+
         //});
-    </script>
-    <script>
-        var myApp = angular.module('exaxxiApp', []);
 
-        myApp.directive('fileModel', ['$parse', function ($parse) {
-            return {
-                restrict: 'A',
-                link: function (scope, element, attrs) {
-                    var model = $parse(attrs.fileModel);
-                    var modelSetter = model.assign;
+        //var app = angular.module('exaxxiApp', []);
+        //app.directive('uploadFiles', function () {
+        //    return {
+        //        scope: true,        //create a new scope
+        //        link: function (scope, el, attrs) {
+        //            el.bind('change', function (event) {
+        //                var files = event.target.files;
+        //                //iterate files since 'multiple' may be specified on the element
+        //                for (var i = 0; i < files.length; i++) {
+        //                    //emit event upward
+        //                    scope.$emit("seletedFile", { file: files[i] });
+        //                }
+        //            });
+        //        }
+        //    };
+        //});
 
-                    element.bind('change', function () {
-                        scope.$apply(function () {
-                            modelSetter(scope, element[0].files[0]);
-                        });
-                    });
+        var app = angular.module('exaxxiApp', []);
+        app.controller('test', function ($scope, $http) {
+
+
+            //DUY POST HINH
+            app.addFile = function () {
+                var fileUpload = $("#file").get(0);
+                var files = fileUpload.files;
+                var data = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    data.append(files[i].name, files[i]);
                 }
-            };
-        }]);
-        myApp.service('fileUpload', ['$https:', function ($https:) {
-            this.uploadFileToUrl = function (file, uploadUrl) {
-                var fd = new FormData();
-                fd.append('file', file);
 
-                $https:.post(uploadUrl, fd, {
-                    transformRequest: angular.identity,
-                    headers: { 'Content-Type': undefined }
-                })
-                    .success(function () {
-                    })
-                    .error(function () {
-                    });
+
+                $http.post("/api/NewsAPI/PostCreateNews", data, {
+                    headers: { 'Content-Type': undefined },
+                    //transformRequest: angular.identity
+                }).success(function (data, status, headers, config) {
+                    alert("OK");
+                }).error(function (data, status, headers, config) {
+
+                });
             }
-        }]);
-        myApp.controller('myCtrl', ['$scope', 'fileUpload', function ($scope, fileUpload) {
-            $scope.uploadFile = function () {
 
-                var file = $scope.myFile;
-                console.log('file is ');
-                console.dir(file);
-                var uploadUrl = "/fileUpload";
-                fileUpload.uploadFileToUrl(file, uploadUrl);
-            };
-        }]);
+
+
+
+            //Kiet
+            $scope.files = [];
+
+            $scope.sendData = function () {
+                var login = {
+
+                    "en_title": $("#en_title").val(),
+                    "vi_title": $("#vi_title").val(),
+                    "vi_content": $("#vi_content").val(),
+                    "en_content": $("#en_content").val(),
+                    "img": $("#img").val(),
+                    "date_create": $("#date_create").val(),
+                    "active": $("#active").val(),
+                    "id_admin": $("#adminname").val(),
+                    "id_department": $("#departmentname").val()
+                };
+                $http.post("/api/NewsAPI/PostCreateNews", JSON.stringify(login)).
+                    then(function (data, status, headers, config) {
+                        //window.location = "/Admin/News/Index";
+                    });
+
+            }
+        });
+
+
+
+
+
+
+                //code chay
+
+                //var app = angular.module('exaxxiApp', []);
+                //app.controller('test', function ($scope, $http) {
+
+                //    $scope.sendData = function () {
+                //        var login = {
+
+                //            "en_title": $("#en_title").val(),
+                //            "vi_title": $("#vi_title").val(),
+                //            "vi_content": $("#vi_content").val(),
+                //            "en_content": $("#en_content").val(),
+                //            "img": $("#img").val(),
+                //            "date_create": $("#date_create").val(),
+                //            "active": $("#active").val(),
+                //            "id_admin": $("#adminname").val(),
+                //            "id_department": $("#departmentname").val()
+                //        };
+                //        $http.post("/api/NewsAPI/PostCreateNews", JSON.stringify(login)).
+                //            then(function (data, status, headers, config) {
+                //                window.location = "/Admin/News/Index";
+                //            });
+
+                //    }
+                //});
+
     </script>
+
 }
 
