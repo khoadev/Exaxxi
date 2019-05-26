@@ -57,6 +57,33 @@
 
             </div><!--end filter-price-wrapper-->
         </div>
+        <div ng-controller="ShowCate" class="md-padding checkboxdemoSyncing" ng-cloak="" style="min-height:270px" ng-app="MyApp">
+            <div layout="row" layout-wrap="">
+
+                <div flex="100" flex-gt-sm="50" layout="column">
+                    <div>
+                        <fieldset class="standard">
+                            <legend>Using ˂md-checkbox˃ with ˂ng-checked˃ </legend>
+                            <div layout="row" layout-wrap="" flex="">
+                                <div flex="50" ng-repeat="item in items">
+                                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                                        {{ item }} <span ng-if="exists(item, selected)">selected</span>
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+
+                <div flex="100">
+                    <h2 class="md-title">Selected Items</h2>
+                    <code style="display: block; padding: 8px;">{{selected | json}}</code>
+                </div>
+            </div>
+
+
+        </div>
         <div class="col-lg-9">
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;" ng-controller="ShowCate">
@@ -120,10 +147,32 @@
         //Show Category
         exaxxiApp.controller('ShowCate', function ($scope, $http) {
             $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
-                .then(function (response) { $scope.name = response.data; });
+                .then(function (response) {
+                    $scope.name = response.data;
+                    
+                });
+            $scope.items =
+                $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
+                .then(function (response) {
+                    return response.data;
+                });
+            $scope.selected = [];
 
+            $scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+                list.splice(idx, 1);
+            }
+            else {
+                list.push(item);
+            }
+            };
+
+            $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+            };
             //Temp Code
-            var checkCate = ["1","2","3"];
+            var checkCate = [];
             for (var k in $scope.cateModel) {
                 if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
                     checkCate.push(k);
@@ -134,7 +183,7 @@
                 then(function (data, status, headers, config) {
                     $scope.posts = data.data;
                 }); 
-
+           
             //Wating for SOLVE
             //$scope.cateModel = {};                
             //$scope.save = function () {      
