@@ -26,7 +26,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Sizes;
         }
-
+        
         // GET: api/Sizes/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSizes([FromRoute] int id)

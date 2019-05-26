@@ -31,19 +31,20 @@
     <div class="container-fluid" ng-controller="brandsbyidCtrl">
         <div class="row" id="brand-background-1">
             <!-- Start brand-background-1 -->
+            
+        </div> <!-- End brand-bacground-1 -->
+        <div class="row" id="brand-background-2">
+            <!-- Start brand-bacground-1 -->
             <div class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/{{mot.img}}) center;">
-                <div class="brand-title-1">
+                <div class="brand-title-2">
                     <a href="#">{{mot.name}}</a>
                 </div>
             </div>
             <div class="col-md-8" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/{{hai.img}}) center;">
-                <div class="brand-title-1">
+                <div class="brand-title-2">
                     <a href="#">{{hai.name}}</a>
                 </div>
             </div>
-        </div> <!-- End brand-bacground-1 -->
-        <div class="row" id="brand-background-2">
-            <!-- Start brand-bacground-1 -->
             <div ng-repeat="x in names | limitTo : 3:2" class="col-md-4" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/{{x.img}}) center;">
                 <div class="brand-title-2">
                     <a href="#">{{x.name}}</a>

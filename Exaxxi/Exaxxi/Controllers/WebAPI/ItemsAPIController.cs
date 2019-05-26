@@ -33,7 +33,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Items.Where(p => p.id_category == Id_Cate);
         }
-
+        
         // GET: api/Items/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItems([FromRoute] int id)
@@ -83,7 +83,6 @@ namespace Exaxxi.Controllers.WebAPI
                     name_brand=p.d.name,
                     name_cate=p.c.b.name,
                     img=p.c.a.img
-
                 }
                 );
         }
@@ -145,7 +144,7 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Items.Where(x => value.Contains(x.id_category))
                 .OrderBy(x => x.name).ToList();           
         }
-
+        
         // DELETE: api/Items/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItems([FromRoute] int id)
