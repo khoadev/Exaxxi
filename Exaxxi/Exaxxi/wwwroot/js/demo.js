@@ -205,3 +205,28 @@ $(function () {
         document.getElementById("myImg").src = "images/3dimage/" + imgNum + ".jpg";
     }
 })
+
+$(document).ready(function () {
+
+    var unit = $(".xx-content").outerWidth();
+
+    var totalWidth = 0;
+    $('.xx-content').each(function () {
+        totalWidth += $(this).outerWidth(true);
+    });
+    console.log(totalWidth);
+    $('.horizon-prev').click(function () {
+        event.preventDefault();
+        $('.scroll-content').animate({
+            scrollLeft: "-=" + unit + "px"
+        }, "fast");
+    });
+
+    $('.horizon-next').click(function () {
+        event.preventDefault();
+        $('.scroll-content').animate({
+            scrollLeft: "+="+unit+"px"
+        }, "fast");
+    });
+});
+
