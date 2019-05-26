@@ -24,7 +24,13 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Brands> GetBrands()
         {
-            return _context.Brands.Include("department");
+            return _context.Brands.Where(p=> p.active==true).Select
+            (p => new Brands
+            {
+                id = p.id,
+                id_department = p.id_department,
+                name = p.name,
+            });
         }
 
         [Route("Take1BrandByIdDepart/{Id_Depart}")]
@@ -32,7 +38,6 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).FirstOrDefault();
         }
-        
         [Route("Take5BrandByIdDepart/{Id_Depart}")]
         public IEnumerable<Brands> GetBrandsByIdDep(int Id_Depart)
         {

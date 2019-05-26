@@ -57,11 +57,12 @@
 
             </div><!--end filter-price-wrapper-->
         </div>
+        
         <div class="col-lg-9">
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in posts">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -120,15 +121,18 @@
         //Show Category
         exaxxiApp.controller('ShowCate', function ($scope, $http) {
             $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
-                .then(function (response) { $scope.name = response.data; });
+                .then(function (response) {
+                    $scope.name = response.data;
+                    
+                });
 
-            $http.get("/api/ItemsAPI").
+            $http.get("/api/ItemsAPI/TakeAllItemByIdCate/" + @ViewBag.Id_Cate).
                 then(function (data) {
-                    $scope.posts = data.data;
+                    $scope.item = data.data;
                 });
 
             
-            //Wating for SOLVE
+            //Show Product by Category
             $scope.cateModel = {};                
             $scope.save = function () {      
                 var checkCate = [];
@@ -140,7 +144,7 @@
 
                 $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
                     then(function (data) {
-                        $scope.posts = data.data;                                                   
+                        $scope.item = data.data;                                                   
                     });                    
             }       
         });
@@ -148,12 +152,6 @@
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
             $http.get("/api/ds_SizeAPI")
-                .then(function (response) { $scope.name = response.data; });
-        });
-
-        //Show Product
-        exaxxiApp.controller('ShowProduct', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/TakeAllItemByIdCate/" + @ViewBag.Id_Cate)
                 .then(function (response) { $scope.name = response.data; });
         });
     </script>
