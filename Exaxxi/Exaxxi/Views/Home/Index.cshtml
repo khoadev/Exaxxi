@@ -53,8 +53,8 @@
         </div> <!-- End brand-bacground-1 -->
     </div>
 
-    <div class="container">
-        <div class="divider-section">
+    <div class="container" ng-controller="itemPopularCtrl">
+        <div class="divider-section" ng-if="items.length != 0">
             <!-- Start divider-section -->
             <div class="see-all">
                 <a href="#">
@@ -76,22 +76,22 @@
                 <div class="card card-block">
                     <!-- Start card -->
                     <div class="product-img-wrapper">
-                        <img src="../images/{{x.img}}" class="product-img">
+                        <img src="../images/{{x.item.img}}" class="product-img">
                     </div>
                     <div class="product-title-wrapper">
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
                                 <a href="#">
-                                    {{x.name}}
+                                    {{x.item.name}}
                                 </a>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 " align="right">
                                 <div class="product-price">
-                                    {{x.lowest_ask}}<br>
+                                    {{x.item.lowest_ask}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Lowest Ask</span>
+                                <span class="product-sub-title">Lowest Ask|sold{{x.item.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -273,28 +273,28 @@
                 </div>
                 <div class="col-sm-6 col-lg-6" style="background: #f2f2f2">
                     <p class="news-category">
-                        Category
+                        {{news1.vi_name_depart}}
                     </p><br>
                     <a class="news-title" href="#">
                        
-                        {{news1.vi_title}}
+                        {{news1.news.vi_title}}
                     </a><br>
                         <p class="news-detail">
-                            {{news1.date_create}}<br>
-                            {{news1.vi_content}}
+                            {{news1.news.date_create}}<br>
+                            {{news1.news.vi_content}}
                         </p>
                 </div>
             </div>
             <div ng-repeat="x in news | limitTo : 5:1 " class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{x.img}}) center;">
                 <p class="news-category">
-                    Category
+                    {{x.vi_name_depart}}
                 </p><br>
                 <a class="news-title-2" href="#">
-                    {{x.vi_title}}
+                    {{x.news.vi_title}}
                 </a><br>
                 <p class="news-detail-2">
-                    {{x.date_create}}<br>
-                   {{x.vi_content}}
+                    {{x.news.date_create}}<br>
+                   {{x.news.vi_content}}
                 </p>
             </div>
           

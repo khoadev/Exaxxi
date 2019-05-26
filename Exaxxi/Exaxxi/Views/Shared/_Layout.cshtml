@@ -122,14 +122,14 @@
                                 </div>
                                 <div class="row search-result-product-wrapper" ng-repeat="x in names  | filter:key">
                                     <div class="col-3 col-md-2" align="center">
-                                        <img src="~/images/{{x.img}}" class="search-img" />
+                                        <img src="~/images/{{x.item.img}}" class="search-img" />
                                     </div>
                                     <div class="col-9 col-md-10 search-name-wrapper">
 
-                                        <div><span class="search-brand-name">{{x.name_brand}}</span>/<span class="search-category-name">{{x.name_cate}}</span></div>
+                                        <div><span class="search-brand-name">{{x.brand_name}}</span>/<span class="search-category-name">{{x.cate_name}}</span></div>
 
                                         <a href="#" class="search-product-name">
-                                            {{x.name}}
+                                            {{x.item.name}}
                                         </a>
                                     </div>
                                 </div>

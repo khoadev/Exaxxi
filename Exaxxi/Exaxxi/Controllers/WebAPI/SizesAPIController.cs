@@ -45,7 +45,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(sizes);
         }
-
+        
         // PUT: api/Sizes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSizes([FromRoute] int id, [FromBody] Sizes sizes)
