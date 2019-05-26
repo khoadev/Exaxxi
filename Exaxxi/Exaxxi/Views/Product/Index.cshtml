@@ -7,7 +7,7 @@
     </div>
 </div> <!--end product-list-background-->
 
-<div class="container">
+<div class="container" ng-controller="ShowCate">
     <div class="row">
         <div class="col-lg-3">
 
@@ -28,11 +28,11 @@
             <div class="filter-category-wrapper">
                 <!--start filter-category-wrapper-->
                 <div class="filter-name-header">Category's Name</div>
-                <div class="category-list-wrapper custom-scrollbar" ng-controller="ShowCate">
+                <div class="category-list-wrapper custom-scrollbar">
                     <!--start category-list-wrapper-->
                     <label class="checkbox-container" ng-repeat="x in name">
                         {{x.name}}
-                        <input type="checkbox" ng-model="cateModel[x.id]" ng-change="save()" ng-init="cateModel[x.id] = $first">
+                        <input type="checkbox" ng-model="cateModel[x.id]" ng-change="save()">
                         <span class="checkmark"></span>
                     </label>
                 </div> <!--end category-list-wrapper-->
@@ -57,38 +57,12 @@
 
             </div><!--end filter-price-wrapper-->
         </div>
-        <div ng-controller="ShowCate" class="md-padding checkboxdemoSyncing" ng-cloak="" style="min-height:270px" ng-app="MyApp">
-            <div layout="row" layout-wrap="">
-
-                <div flex="100" flex-gt-sm="50" layout="column">
-                    <div>
-                        <fieldset class="standard">
-                            <legend>Using ˂md-checkbox˃ with ˂ng-checked˃ </legend>
-                            <div layout="row" layout-wrap="" flex="">
-                                <div flex="50" ng-repeat="item in items">
-                                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
-                                        {{ item }} <span ng-if="exists(item, selected)">selected</span>
-                                    </md-checkbox>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-
-
-                <div flex="100">
-                    <h2 class="md-title">Selected Items</h2>
-                    <code style="display: block; padding: 8px;">{{selected | json}}</code>
-                </div>
-            </div>
-
-
-        </div>
+        
         <div class="col-lg-9">
             <div class="sort-name-header">Sort by</div>
-            <div class="row" style="overflow-x: auto;" ng-controller="ShowCate">
+            <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in posts" ng-init="$last && finished()">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -151,65 +125,33 @@
                     $scope.name = response.data;
                     
                 });
-            $scope.items =
-                $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
-                .then(function (response) {
-                    return response.data;
+
+            $http.get("/api/ItemsAPI/TakeAllItemByIdCate/" + @ViewBag.Id_Cate).
+                then(function (data) {
+                    $scope.item = data.data;
                 });
-            $scope.selected = [];
 
-            $scope.toggle = function (item, list) {
-            var idx = list.indexOf(item);
-            if (idx > -1) {
-                list.splice(idx, 1);
-            }
-            else {
-                list.push(item);
-            }
-            };
+            
+            //Show Product by Category
+            $scope.cateModel = {};                
+            $scope.save = function () {      
+                var checkCate = [];
+                for (var k in $scope.cateModel) {
+                    if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
+                        checkCate.push(k);
+                    }
+                }
 
-            $scope.exists = function (item, list) {
-            return list.indexOf(item) > -1;
-            };
-            //Temp Code
-            var checkCate = [];
-            for (var k in $scope.cateModel) {
-                if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
-                    checkCate.push(k);
-                }   
-            }
-
-            $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
-                then(function (data, status, headers, config) {
-                    $scope.posts = data.data;
-                }); 
-           
-            //Wating for SOLVE
-            //$scope.cateModel = {};                
-            //$scope.save = function () {      
-            //    var checkCate = [];
-            //    for (var k in $scope.cateModel) {
-            //        if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
-            //            checkCate.push(k);
-            //        }
-            //    }                                               
-                
-            //    $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
-            //        then(function (data, status, headers, config) {
-            //            $scope.posts = data.data;
-            //        });                    
-            //}                                       
+                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
+                    then(function (data) {
+                        $scope.item = data.data;                                                   
+                    });                    
+            }       
         });
-        
+
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
             $http.get("/api/ds_SizeAPI")
-                .then(function (response) { $scope.name = response.data; });
-        });
-
-        //Show Product
-        exaxxiApp.controller('ShowProduct', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/TakeAllItemByIdCate/" + @ViewBag.Id_Cate)
                 .then(function (response) { $scope.name = response.data; });
         });
     </script>
