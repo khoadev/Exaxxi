@@ -1342,17 +1342,15 @@ img {
 }
 .news-content-wrapper{
     height:100vh;
-    padding:50px 20px 0px 20px;
+    
     overflow-y:auto;
 }
-.news-recent-news{
-    font-family:coolrg;
-    font-size:24px;
-    text-transform:uppercase;
-    
+.news-recent-news {
+    font-family: coolrg;
+    font-size: 24px;
+    text-transform: uppercase;
 }
 .scroll-content::-webkit-scrollbar {
-    
     display: none;
 }
 .horizon-prev {
