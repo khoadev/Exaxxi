@@ -100,7 +100,8 @@ namespace Exaxxi.Controllers.WebAPI
                     cate_name = p.c.b.name
                 }
                 );
-        }
+        }        
+
         // PUT: api/Items/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItems([FromRoute] int id, [FromBody] Items items)
@@ -156,8 +157,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             List<int> value = json.ToObject<List<int>>();
 
-            return _context.Items.Where(x => value.Contains(x.id_category))
-                .OrderBy(x => x.name).ToList();           
+            return _context.Items.Where(x => value.Contains(x.id_category)).OrderBy(x => x.name).ToList();          
         }
         
         // DELETE: api/Items/5
