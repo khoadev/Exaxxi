@@ -66,7 +66,7 @@
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
-                            <img src="images/Layer%207.png" class="product-img">
+                            <img src="images/{{x.img}}" class="product-img">
                         </div>
                         <div class="product-title-wrapper">
                             <!-- Start product-title-wrapper -->
@@ -78,10 +78,10 @@
                                 </div>
                                 <div class="col-6 col-sm-6 col-md-6 " align="right">
                                     <div class="product-price">
-                                        169.000.000<br>
+                                        {{x.trade_min}}<br>
                                         <span style="color: #dbd9d9">VND</span><br>
                                     </div>
-                                    <span class="product-sub-title">Lowest Ask</span>
+                                    <span class="product-sub-title">{{x.lowest_ask}}</span>
                                 </div>
                             </div>
                         </div> <!-- End product-title-wrapper -->
@@ -122,11 +122,10 @@
         exaxxiApp.controller('ShowCate', function ($scope, $http) {
             $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
                 .then(function (response) {
-                    $scope.name = response.data;
-                    
+                    $scope.name = response.data;                    
                 });
 
-            $http.get("/api/ItemsAPI/TakeAllItemByIdCate/" + @ViewBag.Id_Cate).
+            $http.get("/api/ItemsAPI/TakeAllItemByIdBrand/" + @ViewBag.Id_Brand).
                 then(function (data) {
                     $scope.item = data.data;
                 });
