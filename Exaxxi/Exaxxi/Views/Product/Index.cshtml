@@ -7,7 +7,7 @@
     </div>
 </div> <!--end product-list-background-->
 
-<div class="container">
+<div class="container" ng-controller="ShowCate">
     <div class="row">
         <div class="col-lg-3">
 
@@ -28,11 +28,11 @@
             <div class="filter-category-wrapper">
                 <!--start filter-category-wrapper-->
                 <div class="filter-name-header">Category's Name</div>
-                <div class="category-list-wrapper custom-scrollbar" ng-controller="ShowCate">
+                <div class="category-list-wrapper custom-scrollbar">
                     <!--start category-list-wrapper-->
                     <label class="checkbox-container" ng-repeat="x in name">
                         {{x.name}}
-                        <input type="checkbox" ng-model="cateModel[x.id]" ng-change="save()" ng-init="cateModel[x.id] = $first">
+                        <input type="checkbox" ng-model="cateModel[x.id]" ng-change="save()">
                         <span class="checkmark"></span>
                     </label>
                 </div> <!--end category-list-wrapper-->
@@ -59,9 +59,9 @@
         </div>
         <div class="col-lg-9">
             <div class="sort-name-header">Sort by</div>
-            <div class="row" style="overflow-x: auto;" ng-controller="ShowCate">
+            <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in posts" ng-init="$last && finished()">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in posts">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -122,36 +122,29 @@
             $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
                 .then(function (response) { $scope.name = response.data; });
 
-            //Temp Code
-            var checkCate = ["1","2","3"];
-            for (var k in $scope.cateModel) {
-                if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
-                    checkCate.push(k);
-                }   
-            }
-
-            $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
-                then(function (data, status, headers, config) {
+            $http.get("/api/ItemsAPI").
+                then(function (data) {
                     $scope.posts = data.data;
-                }); 
+                });
 
+            
             //Wating for SOLVE
-            //$scope.cateModel = {};                
-            //$scope.save = function () {      
-            //    var checkCate = [];
-            //    for (var k in $scope.cateModel) {
-            //        if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
-            //            checkCate.push(k);
-            //        }
-            //    }                                               
-                
-            //    $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
-            //        then(function (data, status, headers, config) {
-            //            $scope.posts = data.data;
-            //        });                    
-            //}                                       
+            $scope.cateModel = {};                
+            $scope.save = function () {      
+                var checkCate = [];
+                for (var k in $scope.cateModel) {
+                    if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
+                        checkCate.push(k);
+                    }
+                }
+
+                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
+                    then(function (data) {
+                        $scope.posts = data.data;                                                   
+                    });                    
+            }       
         });
-        
+
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
             $http.get("/api/ds_SizeAPI")
