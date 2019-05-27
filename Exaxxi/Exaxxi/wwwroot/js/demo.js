@@ -205,3 +205,24 @@ $(function () {
         document.getElementById("myImg").src = "images/3dimage/" + imgNum + ".jpg";
     }
 })
+
+$(document).ready(function () {
+
+    var unit = $(".xx-content").outerWidth();
+    //var numItems = $('.xx-content').length;
+    //console.log(numItems);
+    $('.horizon-prev').click(function () {
+        event.preventDefault();
+        $('.scroll-content').animate({
+            scrollLeft: "-=" + unit + "px"
+        }, "fast");
+    });
+
+    $('.horizon-next').click(function () {
+        event.preventDefault();
+        $('.scroll-content').animate({
+            scrollLeft: "+="+unit+"px"
+        }, "fast");
+    });
+});
+

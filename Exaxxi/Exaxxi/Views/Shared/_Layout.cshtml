@@ -9,11 +9,12 @@
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
         <link rel="stylesheet" href="~/lib/fontawesome-free-5.1.0-web/css/all.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
     </environment>
 </head>
-<body ng-app="exaxxiApp">
+<body ng-app="exaxxiApp" >
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -57,102 +58,25 @@
                             <li class="col-12">
                                 <div class="row ">
                                     <div class="col-12 flex-nowrap browse-radio-wrapper custom-scrollbar" style="{{takedivCount<6 ? 'justify-content: center;' : ''}}" id="browse-radio-wrapper">
-                                        <div class="browse-radio">
-                                            <input class="d-none" type="radio" name="department" id="giay" checked="checked" value="giay" />
-                                            <label for="giay">
-                                                Giày
+
+                                        <div class="browse-radio" ng-repeat="x in deps">
+                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''"/>
+                                            
+                                            <label for="{{x.id}}" class="{{x.id==selectedObj.id?'label-checked':''}}">
+                                                {{x.vi_name}}
                                             </label>
                                         </div>
-                                        <div class="browse-radio">
-                                            <input class="d-none" type="radio" name="department" id="quanao" value="quanao" />
-                                            <label for="quanao">
-                                                Quần Áo
-                                            </label>
-                                        </div>
-                                        <div class="browse-radio">
-                                            <input class="d-none" type="radio" name="department" id="dongho" value="dongho" />
-                                            <label for="dongho">
-                                                Đồng Hồ
-                                            </label>
-                                        </div>
+
                                     </div>
                                 </div>
                             </li>
                             <li class="col-12">
                                 <div class="row browse-brand-wrapper custom-scrollbar">
                                     <div class="card-columns">
-                                        <div class="card brand-name-wrapper ">
+                                        <div class="card brand-name-wrapper " ng-repeat="x in brandcates | filter: {'id_department' : selectedObj.id}">
                                             <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                            </div>
-                                        </div>
-                                        <div class="card brand-name-wrapper ">
-                                            <div class="card-body">
-                                                <div class="brand-name">Brand's Name</div>
-                                                <a href="#">Category asd asda</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
-                                                <a href="#">Category</a>
+                                                <div class="brand-name">{{x.name}}</div>
+                                                <a href="#" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -194,14 +118,14 @@
                                 </div>
                                 <div class="row search-result-product-wrapper" ng-repeat="x in names  | filter:key">
                                     <div class="col-3 col-md-2" align="center">
-                                        <img src="~/images/{{x.img}}" class="search-img" />
+                                        <img src="~/images/{{x.item.img}}" class="search-img" />
                                     </div>
                                     <div class="col-9 col-md-10 search-name-wrapper">
 
-                                        <div><span class="search-brand-name">{{x.name_brand}}</span>/<span class="search-category-name">{{x.name_cate}}</span></div>
+                                        <div><span class="search-brand-name">{{x.brand_name}}</span>/<span class="search-category-name">{{x.cate_name}}</span></div>
 
                                         <a href="#" class="search-product-name">
-                                            {{x.name}}
+                                            {{x.item.name}}
                                         </a>
                                     </div>
                                 </div>
@@ -242,8 +166,10 @@
         </div>
     </nav> <!-- End nav -->
 
+    <div style="background:white!important">
 
-    @RenderBody()
+        @RenderBody()
+    </div>
 
     <footer>
         <div class="container-fluid" id="footer-wrapper">
@@ -304,21 +230,35 @@
         <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/demo.js" asp-append-version="true"></script>
         <script src="~/js/angularCtrl.js" asp-append-version="true"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </environment>
     <script>
-        var exaxxiApp = angular.module('exaxxiApp', []);
+    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $http.get("/api/ItemsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
         });
-        exaxxiApp.controller("browseCtrl", function($scope) {
+        exaxxiApp.controller("browseCtrl", function($scope, $http) {
              var div = document.querySelector('#browse-radio-wrapper');
             var divCount = div.querySelectorAll('div').length;
+             $scope.selectedObj = {};
             $scope.takedivCount = divCount;
-         });
+             $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.deps = response.data; });
+           
+            $http.get("/api/BrandsAPI")
+                .then(function (response) { $scope.brandcates = response.data; });
+             $http.get("/api/CategoriesAPI")
+                .then(function (response) { $scope.cates = response.data; });
+        });
         $('.avoid').click(function (e) {
             e.stopPropagation();
-        });
+        });        
     </script>
 
     @RenderSection("Scripts", required: false)

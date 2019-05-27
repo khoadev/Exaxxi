@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using System.IO;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -46,6 +47,18 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(news);
         }
+
+        [Route("GetNewsByDepart/{id_depart}")]
+        public IEnumerable<NewsViewModel> GetNewsByDepart(int id_depart)
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department).Where(p => p.id_department == id_depart).OrderBy(p => p.date_create)
+                .Select(n => new NewsViewModel {
+                    news = n,
+                    name_admin = n.admin.name,
+                    en_name_depart = n.department.en_name,
+                    vi_name_depart = n.department.vi_name
+            });
+        }
         // GET: api/News/GetNewsDetail/5
         [HttpGet("GetNewsDetail/{id}")]
         public async Task<IActionResult> GetNewsDetail([FromRoute] int id)
@@ -64,6 +77,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(news);
+
         }
         // PUT: api/News/5
         [HttpPut("{id}")]
