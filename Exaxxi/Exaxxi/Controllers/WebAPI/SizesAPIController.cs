@@ -24,7 +24,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Sizes> GetSizes()
         {
-            return _context.Sizes;
+            return _context.Sizes.Include("item").Include("size");
         }
 
         // GET: api/Sizes/5
@@ -45,7 +45,25 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(sizes);
         }
+        // GET: api/Brands/GetbrandsDetail/5
+        [HttpGet("GetSizesDetail/{id}")]
+        public async Task<IActionResult> GetSizesDetail([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var size = await _context.Sizes.Include(c => c.item).Include(p => p.size)
+                .FirstOrDefaultAsync(m => m.id == id);
+
+            if (size == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(size);
+        }
         // PUT: api/Sizes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSizes([FromRoute] int id, [FromBody] Sizes sizes)
@@ -116,7 +134,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(sizes);
         }
-
+        [HttpGet("SizesExists/{id}")]
         private bool SizesExists(int id)
         {
             return _context.Sizes.Any(e => e.id == id);

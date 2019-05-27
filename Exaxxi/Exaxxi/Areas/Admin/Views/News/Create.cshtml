@@ -10,7 +10,7 @@
 <hr />
 <div class="row" ng-app="exaxxiApp">
     <div class="col-md-4" ng-controller="test">
-        <form enctype="multipart/form-data" name="newFileForm" ng-submit="addFile()">
+        <form asp-action="Create" asp-controller="News" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="vi_title" class="control-label"></label>
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="img" class="control-label"></label>
-                <input type="file" id="file1" name="file" multiple ng-files="getTheFiles($files)" />
+                <input type="file" id="img" name="file" ng-model="img" upload-files>
                 <span asp-validation-for="img" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -58,7 +58,7 @@
                 <select asp-for="id_department" class="form-control" ng-model="departmentname" id="departmentname"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" id="submit" ng-click="sendData()" />
+                <input type="submit" value="Create" class="btn btn-default" id="submit" />
             </div>
         </form>
     </div>
@@ -69,6 +69,7 @@
 </div>
 @section Scripts{
     <script>
+
         $(function () {
 
             $.ajax({
@@ -101,44 +102,6 @@
     </script>
 
     <script>
-        //$(document).ready(function () {
-
-        //    $("#submit").on("click", function () {
-        //var vi_title = $("#vi_title").val();
-        //var en_title = $("#en_title").val();
-        //var vi_content = $("#vi_content").val();
-        //var en_content = $("#en_content").val();
-        //var date_create = $("#date_create").val();
-        //var active = $("#active").val();
-        //var adminname = $("#adminname").val();
-        //var departmentname = $("#departmentname").val();
-        //        var login = {
-        //            "vi_title": vi_title,
-        //            "en_title": en_title,
-        //            "en_content": en_content,
-        //            "date_create": date_create,
-        //            "active": active,
-        //            "adminname": adminname,
-        //            "departmentname": departmentname,
-        //        };
-        //        $.ajax({
-        //            url: "/api/NewsAPI/PostCreateNews",
-        //            type: "POST",
-        //            dataType: 'json',
-        //            data: login,
-        //           // data: JSON.stringify(login),
-        //            success: function () {
-        //                alert("thanh cong");
-        //                window.location = "/Admin/News/Index";
-        //            },
-        //            error: function (notfound) {
-        //                alert(notfound.responseText);
-        //            }
-        //        });
-        //    });
-
-        //});
-
         //var app = angular.module('exaxxiApp', []);
         //app.directive('uploadFiles', function () {
         //    return {
@@ -155,88 +118,80 @@
         //        }
         //    };
         //});
+        //app.controller('test', function ($scope, $http) {
+        //    $scope.files = [];
 
-        var app = angular.module('exaxxiApp', []);
-        app.controller('test', function ($scope, $http) {
+        //    //3. listen for the file selected event which is raised from directive
+        //    $scope.$on("seletedFile", function (event, args) {
+        //        $scope.$apply(function () {
+        //            //add the file object to the scope's files collection
+        //            $scope.files.push(args.file);
+        //        });
+        //    });
+        //    $scope.sendData = function () {
+        //        var jsonData = {
+        //            "en_title": $("#en_title").val(),
+        //            "vi_title": $("#vi_title").val(),
+        //            "vi_content": $("#vi_content").val(),
+        //            "en_content": $("#en_content").val(),
+        //            "img": document.getElementById('img').files[0].name,
+        //            "date_create": $("#date_create").val(),
+        //            "active": $("#active").val(),
+        //            "id_admin": $("#adminname").val(),
+        //            "id_department": $("#departmentname").val()
+        //        };
+        //        $http({
+        //            method: 'POST',
+        //            url: "/api/NewsAPI/PostCreateNews",
+        //            headers: { 'Content-Type': undefined },
 
+        //            transformRequest: function (data) {
+        //                var formData = new FormData();
+        //                formData.append("model", angular.toJson(data.model));
+        //                for (var i = 0; i < data.files.length; i++) {
+        //                    formData.append("file" + i, data.files[i]);
+        //                }
+        //                return formData;
+        //            },
+        //            data: { model: $scope.jsonData, files: $scope.files }
+        //        }).then(function (data, status, headers, config) {
 
-            //DUY POST HINH
-            app.addFile = function () {
-                var fileUpload = $("#file").get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
-                }
-
-
-                $http.post("/api/NewsAPI/PostCreateNews", data, {
-                    headers: { 'Content-Type': undefined },
-                    //transformRequest: angular.identity
-                }).success(function (data, status, headers, config) {
-                    alert("OK");
-                }).error(function (data, status, headers, config) {
-
-                });
-            }
-
-
-
-
-            //Kiet
-            $scope.files = [];
-
-            $scope.sendData = function () {
-                var login = {
-
-                    "en_title": $("#en_title").val(),
-                    "vi_title": $("#vi_title").val(),
-                    "vi_content": $("#vi_content").val(),
-                    "en_content": $("#en_content").val(),
-                    "img": $("#img").val(),
-                    "date_create": $("#date_create").val(),
-                    "active": $("#active").val(),
-                    "id_admin": $("#adminname").val(),
-                    "id_department": $("#departmentname").val()
-                };
-                $http.post("/api/NewsAPI/PostCreateNews", JSON.stringify(login)).
-                    then(function (data, status, headers, config) {
-                        //window.location = "/Admin/News/Index";
-                    });
-
-            }
-        });
+        //            window.location = "/Admin/News/Index";
+        //        });
 
 
 
+        //    }
+        //});
 
 
+                    //code chay
 
-                //code chay
+            //var app = angular.module('exaxxiApp', []);
+            //app.controller('test', function ($scope, $http) {
 
-                //var app = angular.module('exaxxiApp', []);
-                //app.controller('test', function ($scope, $http) {
+            //    $scope.sendData = function () {
 
-                //    $scope.sendData = function () {
-                //        var login = {
+            //                var login = {
 
-                //            "en_title": $("#en_title").val(),
-                //            "vi_title": $("#vi_title").val(),
-                //            "vi_content": $("#vi_content").val(),
-                //            "en_content": $("#en_content").val(),
-                //            "img": $("#img").val(),
-                //            "date_create": $("#date_create").val(),
-                //            "active": $("#active").val(),
-                //            "id_admin": $("#adminname").val(),
-                //            "id_department": $("#departmentname").val()
-                //        };
-                //        $http.post("/api/NewsAPI/PostCreateNews", JSON.stringify(login)).
-                //            then(function (data, status, headers, config) {
-                //                window.location = "/Admin/News/Index";
-                //            });
+            //                    "en_title": $("#en_title").val(),
+            //                    "vi_title": $("#vi_title").val(),
+            //                    "vi_content": $("#vi_content").val(),
+            //                    "en_content": $("#en_content").val(),
+            //                    "img": document.getElementById('img').files[0].name,
+            //                    "date_create": $("#date_create").val(),
+            //                    "active": $("#active").val(),
+            //                    "id_admin": $("#adminname").val(),
+            //                    "id_department": $("#departmentname").val()
+            //                };
+            //                $http.post("/api/NewsAPI/PostCreateNews", JSON.stringify(login)).
+            //                    then(function (data, status, headers, config) {
 
-                //    }
-                //});
+            //                        window.location = "/Admin/News/Index";
+            //                    });
+
+            //            }
+            //        });
 
     </script>
 

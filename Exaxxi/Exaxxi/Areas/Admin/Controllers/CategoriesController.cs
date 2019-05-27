@@ -56,7 +56,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,vi_name,active,order,id_brand")] Categories categories)
+        public IActionResult Create([Bind("id,name,active,order,id_brand")] Categories categories)
         {
             if (_api.postAPI(categories, "api/CategoriesAPI").Result)
             {
@@ -92,7 +92,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,vi_name,active,order,id_brand")] Categories categories)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,active,order,id_brand")] Categories categories)
         {
             if (id != categories.id)
             {

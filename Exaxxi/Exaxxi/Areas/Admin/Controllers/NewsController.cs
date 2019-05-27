@@ -9,6 +9,8 @@ using Exaxxi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -56,12 +58,19 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,vi_title,en_title,vi_content,en_content,date_create,active,id_admin,id_department")] News news)
+        public IActionResult Create([Bind("img")] News news, IFormFile img)
         {
-            if (_api.postAPI(news, "api/NewsAPI").Result)
+            if (ModelState.IsValid)
             {
-                IEnumerable<News> result = JsonConvert.DeserializeObject<List<News>>(_api.getAPI("api/NewsAPI").Result);
-                return RedirectToAction(nameof(Index));
+                if (img != null)
+                {
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "news", img.FileName);
+                    using (var file = new FileStream(fullPath, FileMode.Create))
+                    {
+                        img.CopyTo(file);
+                       
+                    }
+                }
             }
            
             return View(news);
