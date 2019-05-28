@@ -130,8 +130,9 @@ namespace Exaxxi.Controllers.WebAPI
 
             return CreatedAtAction("GetNews", new { id = news.id }, news);
         }
+
         // POST: api/News/PostCreateNews
-        [HttpPost("PostCreateNews")]
+        [Route("PostCreateNews")]
         public async Task<IActionResult> PostCreateNews([FromBody] News news)
         {
 
@@ -143,7 +144,7 @@ namespace Exaxxi.Controllers.WebAPI
             _context.News.Add(news);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNews", new { id = news.id }, news);
+            return Ok();
         }
 
         // DELETE: api/News/5

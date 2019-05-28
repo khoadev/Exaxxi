@@ -21,6 +21,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="wwwroot\images\news\" />
+    <Folder Include="wwwroot\MyFiles\" />
   </ItemGroup>
 
 </Project>

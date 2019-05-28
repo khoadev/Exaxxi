@@ -126,6 +126,35 @@ namespace Exaxxi.Areas.Admin.Controllers
            
             return View(news);
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadFileAsync(IFormFile img, [Bind("vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news)
+        {            
+            //Nhận file POST qua
+            if (img == null || img.Length == 0)
+                return Content("Không File nào được chọn!");
+
+            //Save File da upload vao thu muc MyFiles
+            string fullname = Path.Combine
+                (Directory.GetCurrentDirectory(), "wwwroot", "MyFiles", img.FileName);
+
+            using (var myfile = new FileStream(fullname, FileMode.Create))
+            {
+                await img.CopyToAsync(myfile);
+            }
+
+            //Gán tên file vào img để lưu vào DB
+            news.img = img.FileName;
+
+            //Post sang API xử lý
+            if (_api.postAPI(news, "api/NewsAPI/PostCreateNews").Result)
+            {                
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("Index");
+        }
 
         private bool NewsExists(int id)
         {
