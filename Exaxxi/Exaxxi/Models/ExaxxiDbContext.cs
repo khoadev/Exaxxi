@@ -25,7 +25,7 @@ namespace Exaxxi.Models
         //Server Name - Kiet: DESKTOP-262PU69\SQLEXPRESS
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-EH88R88\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
 
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
@@ -39,7 +39,7 @@ namespace Exaxxi.Models
                 {
                     id = 1,
                     name = "genos",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     email = "genos@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("1969-04-05"),
@@ -49,7 +49,7 @@ namespace Exaxxi.Models
                 {
                     id = 2,
                     name = "duytran",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     email = "duytran@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
@@ -59,7 +59,7 @@ namespace Exaxxi.Models
                 {
                     id = 3,
                     name = "khoado",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     email = "khoado@gmail.com",
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
@@ -82,7 +82,7 @@ namespace Exaxxi.Models
                     id = 1,
                     name = "Lê văn tèo",
                     email = "teo@gmail.com",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     level_seller = 1,
                     score_buyer = 1,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -93,7 +93,7 @@ namespace Exaxxi.Models
                     id = 2,
                     name = "Lê văn tý",
                     email = "ty@gmail.com",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     level_seller = 2,
                     score_buyer = 2,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -104,7 +104,7 @@ namespace Exaxxi.Models
                     id = 3,
                     name = "Lê văn tun",
                     email = "tun@gmail.com",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     level_seller = 3,
                     score_buyer = 3,
                     date_registion = DateTime.Parse("2019-01-05"),
@@ -115,7 +115,7 @@ namespace Exaxxi.Models
                     id = 4,
                     name = "Lê văn tet",
                     email = "tet@gmail.com",
-                    password = "ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
                     level_seller = 4,
                     score_buyer = 4,
                     date_registion = DateTime.Parse("2019-01-05"),

@@ -209,12 +209,8 @@ $(function () {
 $(document).ready(function () {
 
     var unit = $(".xx-content").outerWidth();
-
-    var totalWidth = 0;
-    $('.xx-content').each(function () {
-        totalWidth += $(this).outerWidth(true);
-    });
-    console.log(totalWidth);
+    //var numItems = $('.xx-content').length;
+    //console.log(numItems);
     $('.horizon-prev').click(function () {
         event.preventDefault();
         $('.scroll-content').animate({

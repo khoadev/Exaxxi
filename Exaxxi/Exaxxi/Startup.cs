@@ -46,14 +46,14 @@ namespace Exaxxi
                 options =>
                 {
                     //Users
-                    //options.LoginPath = "/Login/Login";
-                    //options.LogoutPath = "/Login/Logout";
-                    //options.AccessDeniedPath = "/Login/AccessDenied";
+                    options.LoginPath = "/login/login";
+                    options.LogoutPath = "/login/logout";
+                    options.AccessDeniedPath = "/login/accessdenied";
 
                     //Admins
-                    options.AccessDeniedPath = "/Admin/AccessDenied";
-                    options.LogoutPath = "/Admin";
-                    options.LoginPath = "/Admin/Login/Login";
+                    options.AccessDeniedPath = "/Areas/Admin/AccessDenied";
+                    options.LogoutPath = "/Areas/Admin";
+                    options.LoginPath = "/Areas/Admin/Login/Login";
                 }
             );
             services.AddMemoryCache();

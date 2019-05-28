@@ -14,62 +14,59 @@ namespace Exaxxi.Areas.Admin.Controllers
 {
     [Authorize]
     [Area("Admin")]
-    public class CategoriesController : Controller
+    public class SizesController : Controller
     {
-        
         CallAPI _api = new CallAPI();
         
-
-        // GET: Admin/Categories
+        // GET: Admin/Sizes
         public IActionResult Index()
         {
-            IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI").Result);
+            IEnumerable<Sizes> result = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("api/SizesAPI").Result);
             return View(result);
         }
 
-        // GET: Admin/Categories/Details/5
+        // GET: Admin/Sizes/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/GetCategoriesDetail/{id}").Result);
-            
-            if (categories == null)
+
+            var sizes = JsonConvert.DeserializeObject<Sizes>(_api.getAPI($"api/SizesAPI/GetSizesDetail/{id}").Result);
+            if (sizes == null)
             {
                 return NotFound();
             }
 
-            return View(categories);
+            return View(sizes);
         }
 
-        // GET: Admin/Categories/Create
+        // GET: Admin/Sizes/Create
         public IActionResult Create()
         {
             
             return View();
         }
 
-        // POST: Admin/Categories/Create
+        // POST: Admin/Sizes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,active,order,id_brand")] Categories categories)
+        public IActionResult Create([Bind("id,lowest_ask,highest_bid,last_sale,id_ds_size,id_item")] Sizes sizes)
         {
-            if (_api.postAPI(categories, "api/CategoriesAPI").Result)
+            if (_api.postAPI(sizes, "api/SizesAPI").Result)
             {
-                IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI").Result);
-                ViewData["id_brand"] = result;
+                IEnumerable<Sizes> result = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("api/SizesAPI").Result);
                 return RedirectToAction(nameof(Index));
-                
             }
-            
-            return View(categories);
+
+         
+            return View(sizes);
         }
 
-        // GET: Admin/Categories/Edit/5
+        // GET: Admin/Sizes/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,24 +74,22 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/{id}").Result);
-            if (categories == null)
+            var sizes = JsonConvert.DeserializeObject<Sizes>(_api.getAPI($"api/SizesAPI/{id}").Result);
+            if (sizes == null)
             {
                 return NotFound();
             }
-
-                
-            return View(categories);
+            return View(sizes);
         }
 
-        // POST: Admin/Categories/Edit/5
+        // POST: Admin/Sizes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,active,order,id_brand")] Categories categories)
+        public async Task<IActionResult> Edit(int id, [Bind("id,lowest_ask,highest_bid,last_sale,id_ds_size,id_item")] Sizes sizes)
         {
-            if (id != categories.id)
+            if (id != sizes.id)
             {
                 return NotFound();
             }
@@ -103,11 +98,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(categories, $"api/CategoriesAPI/{id}");
+                    var result = await _api.putAPI(sizes, $"api/SizesAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoriesExists(categories.id))
+                    if (!SizesExists(sizes.id))
                     {
                         return NotFound();
                     }
@@ -118,13 +113,14 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           
-            return View(categories);
+            
+            return View(sizes);
         }
 
-        private bool CategoriesExists(int id)
+        
+        private bool SizesExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/CategoriesAPI/CategoriesExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/SizesAPI/SizesExists/{id}").Result);
         }
     }
 }

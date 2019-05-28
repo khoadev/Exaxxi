@@ -1,6 +1,5 @@
-﻿@model IEnumerable<Exaxxi.Models.Admins>
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@model IEnumerable<Exaxxi.Models.Sizes>
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,25 +7,25 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a> @ViewBag.Userid
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                @Html.DisplayNameFor(model => model.lowest_ask)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.email)
+                @Html.DisplayNameFor(model => model.highest_bid)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.level)
+                @Html.DisplayNameFor(model => model.last_sale)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.date_create)
+                @Html.DisplayNameFor(model => model.size)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.active)
+                @Html.DisplayNameFor(model => model.item)
             </th>
             <th></th>
         </tr>
@@ -36,19 +35,19 @@
         {
             <tr>
                 <td>
-                    @item.name
+                    @Html.DisplayFor(modelItem => item.lowest_ask)
                 </td>
                 <td>
-                    @item.email
+                    @Html.DisplayFor(modelItem => item.highest_bid)
                 </td>
                 <td>
-                    @item.level
+                    @Html.DisplayFor(modelItem => item.last_sale)
                 </td>
                 <td>
-                    @item.date_create
+                    @Html.DisplayFor(modelItem => item.size.id)
                 </td>
                 <td>
-                    @item.active
+                    @Html.DisplayFor(modelItem => item.item.name)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
@@ -66,11 +65,11 @@
                 var id = $(this).attr("data-id");
                 if (confirm("Bạn có chắc muốn xóa")) {
                     $.ajax({
-                        url: "/api/AdminsAPI/" + id,
+                        url: "/api/SizesAPI/" + id,
                         type: "DELETE",
                         success: function () {
                             alert("Thành công");
-                            window.location = "/Admin/Admins/Index";
+                            window.location = "/Admin/Sizes/Index";
                         },
                         error: function (res) {
                             alert("Lỗi : " + res);
