@@ -52,24 +52,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-        [Route("Popular/{id_depart}")]
-        public IEnumerable<ItemViewModel> GetItemsPopular(int id_depart)
-        {
-            return _context.Posts
-                .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
-                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
-                .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id == id_depart)
-                .OrderBy(h => h.c.a.f.sold)
-                .Take(10)
-                .Select(m => new ItemViewModel
-                {
-                    item = m.c.a.f,
-                    id_post = m.c.a.e.g.id,
-                    create_at = m.c.a.e.g.date_start
-                });
-        }
+        
         [Route("ProductDetail")]
         public IActionResult ProductDetail()
         {
@@ -87,20 +70,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-        [Route("Search")]
-        public IEnumerable<ItemViewModel> search()
-        {
-            return _context.Items
-                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Select(p => new ItemViewModel
-                {
-                    item = p.c.a,
-                    brand_name = p.d.name,
-                    cate_name = p.c.b.name
-                }
-                );
-        }        
+           
 
         // PUT: api/Items/5
         [HttpPut("{id}")]
