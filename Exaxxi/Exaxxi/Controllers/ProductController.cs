@@ -33,6 +33,12 @@ namespace Exaxxi.Controllers
             //Get Category
             if (idCate == null) ViewBag.Id_Cate = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/Take1CateByIdBrand/{ViewBag.Id_Brand}").Result).id; else ViewBag.Id_Cate = idCate;
 
+            //Get Trade_Min
+            ViewBag.Trade_Min_Min = _api.getAPI("api/ItemsAPI/TakeTradeMinMin").Result;
+
+            //Get Trade_Max
+            ViewBag.Trade_Min_Max = _api.getAPI("api/ItemsAPI/TakeTradeMinMax").Result;
+
             return View();
         }
 

@@ -20,7 +20,7 @@ namespace Exaxxi.Models
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Sizes> Sizes { get; set; }
 
-        //Server Name - Escanor: DESKTOP-9LUKN91\\SQLEXPRESS
+        //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
         //Server Name - Kiet: DESKTOP-262PU69\SQLEXPRESS
         // genos - C9UR2EM
