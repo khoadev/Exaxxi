@@ -68,7 +68,7 @@
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item | filter:byRange('trade_min', slider.minValue , slider.maxValue)">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -169,31 +169,25 @@
                     });  
             }  
             $scope.slider = {
-                minValue: 10000,
-                maxValue: 90000,
+                minValue: 0,
+                maxValue: 200,
                 options: {
                     floor: 0,
-                    ceil: 100000,
+                    ceil: 200,
                     step: 1,
                     translate: function(value) {
                           return formatNumber(value, '.', ',') + " VND"
                         },
                 }
             };
-            //$("#slider-range").slider({
-            //    range: true,
-            //    min: 0,
-            //    max: 1500000,
-            //    values: [0, 1500000],
-            //    slide: function (event, ui) {
-            //        $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
+            $scope.byRange = function (fieldName, minValue, maxValue) {
+                if (minValue === undefined) minValue = Number.MIN_VALUE;
+                if (maxValue === undefined) maxValue = Number.MAX_VALUE;
 
-
-
-            //    }
-            //});
-            //$("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',') +
-            //    " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND"); 
+                return function predicateFunc(item) {
+                return minValue <= item[fieldName] && item[fieldName] <= maxValue;
+                };
+            };
 
         });
 
