@@ -1367,6 +1367,13 @@ img {
     text-decoration:none!important;
 
 }
+.news-content-wrapper {
+    padding: 20px 20px 30px 20px;
+}
+.news-content-main {
+    font-family: coolrg;
+    font-size: 40px;
+}
 .scroll-content::-webkit-scrollbar {
     display: none;
 }
