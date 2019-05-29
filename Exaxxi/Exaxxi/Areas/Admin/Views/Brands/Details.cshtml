@@ -17,6 +17,12 @@
             @Html.DisplayFor(model => model.name)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.img)
+        </dt>
+        <dd>
+            <img src="~/images/brand/@Html.DisplayFor(model => model.img)" />
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.active)
         </dt>
         <dd>

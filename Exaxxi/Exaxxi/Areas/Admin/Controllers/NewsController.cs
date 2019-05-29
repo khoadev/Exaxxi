@@ -97,7 +97,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,vi_title,en_title,vi_content,en_content,date_create,active,id_admin,id_department")] News news)
+        public async Task<IActionResult> Edit(int id, [Bind("id,vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news, IFormFile img)
         {
             if (id != news.id)
             {
@@ -108,6 +108,23 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
+                    //Nhận file POST qua
+                    if (img == null || img.Length == 0)
+                    {
+                        return Content("Không File nào được chọn!");
+
+                    }
+                        
+
+                    //Save File da upload vao thu muc MyFiles
+                    string fullname = Path.Combine
+                        (Directory.GetCurrentDirectory(), "wwwroot", "images", "news", img.FileName);
+
+                    using (var myfile = new FileStream(fullname, FileMode.Create))
+                    {
+                        await img.CopyToAsync(myfile);
+                    }
+                    news.img = img.FileName;
                     var result = await _api.putAPI(news, $"api/NewsAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
@@ -137,7 +154,7 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             //Save File da upload vao thu muc MyFiles
             string fullname = Path.Combine
-                (Directory.GetCurrentDirectory(), "wwwroot", "MyFiles", img.FileName);
+                (Directory.GetCurrentDirectory(), "wwwroot", "images","news", img.FileName);
 
             using (var myfile = new FileStream(fullname, FileMode.Create))
             {
