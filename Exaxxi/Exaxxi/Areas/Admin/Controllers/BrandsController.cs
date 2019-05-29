@@ -9,6 +9,8 @@ using Exaxxi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -55,8 +57,24 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,active,order,id_department")] Brands brands)
+        public IActionResult Create(IFormFile img, [Bind("id,name,img,active,order,id_department")] Brands brands)
         {
+            //Nhận file POST qua
+            if (img == null || img.Length == 0)
+                return Content("Không File nào được chọn!");
+
+            //Save File da upload vao thu muc MyFiles
+            string fullname = Path.Combine
+                (Directory.GetCurrentDirectory(), "wwwroot", "images", "brand", img.FileName);
+
+            using (var myfile = new FileStream(fullname, FileMode.Create))
+            {
+                img.CopyTo(myfile);
+            }
+
+            //Gán tên file vào img để lưu vào DB
+            brands.img = img.FileName;
+
             if (_api.postAPI(brands, "api/BrandsAPI").Result)
             {
                 IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI").Result);
@@ -87,7 +105,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,active,order,id_department")] Brands brands)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,img,active,order,id_department")] Brands brands, IFormFile img)
         {
             if (id != brands.id)
             {
@@ -98,6 +116,23 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
+                    //Nhận file POST qua
+                    if (img == null || img.Length == 0)
+                    {
+                        return Content("Không File nào được chọn!");
+
+                    }
+
+
+                    //Save File da upload vao thu muc MyFiles
+                    string fullname = Path.Combine
+                        (Directory.GetCurrentDirectory(), "wwwroot", "images", "brand", img.FileName);
+
+                    using (var myfile = new FileStream(fullname, FileMode.Create))
+                    {
+                        await img.CopyToAsync(myfile);
+                    }
+                    brands.img = img.FileName;
                     var result = await _api.putAPI(brands, $"api/BrandsAPI/{id}");
                 }
                 catch (DbUpdateConcurrencyException)
