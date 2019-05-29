@@ -30,7 +30,7 @@
                 {
 
                     <li>
-                        <a class="nav-link" asp-controller="LoginAdmin" asp-action="Login">
+                        <a class="nav-link" asp-controller="Login" asp-action="Login">
                             <span class="glyphicon glyphicon-log-in"></span> Login
                         </a>
                     </li>
@@ -51,6 +51,9 @@
                     </li>
                     <li class="nav-item d-none d-md-flex">
                         <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">News</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">Sizes</a>
                     </li>
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">

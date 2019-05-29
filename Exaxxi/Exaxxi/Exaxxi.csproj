@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="angular-file-upload" Version="12.2.13" />
     <PackageReference Include="MailKit" Version="2.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -19,7 +20,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\images\brand\" />
     <Folder Include="wwwroot\images\news\" />
+    <Folder Include="wwwroot\MyFiles\" />
   </ItemGroup>
 
 </Project>

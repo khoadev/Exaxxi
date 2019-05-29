@@ -45,7 +45,58 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(posts);
         }
-        
+        //[Route("Search")]
+        //public IEnumerable<PostViewModel> search()
+        //{
+        //    return _context.Items
+        //        .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+        //        .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+        //        .Select(p => new PostViewModel
+        //        {
+        //            item = p.c.a,
+        //            brand_name = p.d.name,
+        //            cate_name = p.c.b.name
+        //        }
+        //        );
+        //}
+        //[Route("Popular/{id_depart}")]
+        //public IEnumerable<PostViewModel> GetItemsPopular(int id_depart)
+        //{
+        //    return _context.Posts
+        //        .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
+        //        .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
+        //        .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
+        //        .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+        //        .Where(k => k.c.a.f.active == true && k.d.id == id_depart)
+        //        .OrderBy(h => h.c.a.f.sold)
+        //        .Take(10)
+        //        .Select(m => new PostViewModel
+        //        {
+        //            item = m.c.a.f,
+        //            id_post = m.c.a.e.g.id,
+        //            create_at = m.c.a.e.g.date_start
+        //        });
+        //}
+        //[Route("LowestAskNew/{id_depart}")]
+        //public IEnumerable<PostViewModel> GetItemsLowestAsk(int id_depart)
+        //{
+        //    return _context.Posts
+        //        .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
+        //        .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
+        //        .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
+        //        .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+        //        .Where(k => k.c.a.f.active == true && k.d.id == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask)
+        //        .OrderByDescending(h => h.c.a.e.g.date_start)
+        //        .Take(10)
+        //        .Select(m => new PostViewModel
+        //        {
+        //            item = m.c.a.f,
+        //            id_post = m.c.a.e.g.id,
+        //            create_at = m.c.a.e.g.date_start,
+        //            price = m.c.a.e.g.price,
+        //            kind = m.c.a.e.g.kind
+        //        });
+        //}
         // PUT: api/Posts/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPosts([FromRoute] int id, [FromBody] Posts posts)

@@ -240,7 +240,7 @@
     <script>
     var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/Search")
+            $http.get("/api/PostsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
         });
         exaxxiApp.controller("browseCtrl", function($scope, $http) {

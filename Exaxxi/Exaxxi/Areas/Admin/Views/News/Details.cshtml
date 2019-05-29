@@ -23,6 +23,14 @@
             @Html.DisplayFor(model => model.en_title)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.img)
+        </dt>
+        <dd>
+            <img src="~/images/news/@Html.DisplayFor(model => model.img)"/>
+           
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.vi_content)
         </dt>
         <dd>

@@ -8,57 +8,57 @@
 
 <h4>News</h4>
 <hr />
-<div class="row" ng-app="exaxxiApp">
-    <div class="col-md-4" ng-controller="test">
-        <form enctype="multipart/form-data" name="newFileForm" ng-submit="addFile()">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UploadFileAsync" asp-controller="News" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="vi_title" class="control-label"></label>
-                <input class="form-control" ng-model="vi_title" id="vi_title" />
+                <input class="form-control" id="vi_title" name="vi_title" />
                 <span asp-validation-for="vi_title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="en_title" class="control-label"></label>
-                <input class="form-control" ng-model="en_title" id="en_title" />
+                <input class="form-control" id="en_title" name="en_title" />
                 <span asp-validation-for="en_title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="img" class="control-label"></label>
-                <input type="file" id="file1" name="file" />
+                <input type="file" id="img" name="img">
                 <span asp-validation-for="img" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="vi_content" class="control-label"></label>
-                <input class="form-control" ng-model="vi_content" id="vi_content" />
+                <input class="form-control" id="vi_content" name="vi_content" />
                 <span asp-validation-for="vi_content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="en_content" class="control-label"></label>
-                <input class="form-control" ng-model="en_content" id="en_content" />
+                <input class="form-control" id="en_content" name="en_content" />
                 <span asp-validation-for="en_content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="date_create" class="control-label"></label>
-                <input asp-for="date_create" class="form-control" ng-model="date_create" id="date_create" />
+                <input asp-for="date_create" class="form-control" id="date_create" name="date_create" />
                 <span asp-validation-for="date_create" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="active" ng-model="active" id="active" /> @Html.DisplayNameFor(model => model.active)
+                        <input asp-for="active" id="active" name="active" /> @Html.DisplayNameFor(model => model.active)
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="id_admin" class="control-label"></label>
-                <select asp-for="id_admin" class="form-control" ng-model="adminname" id="adminname"></select>
+                <select asp-for="id_admin" class="form-control" id="adminname" name="id_admin"></select>
             </div>
             <div class="form-group">
                 <label asp-for="id_department" class="control-label"></label>
-                <select asp-for="id_department" class="form-control" ng-model="departmentname" id="departmentname"></select>
+                <select asp-for="id_department" class="form-control" id="departmentname" name="id_department"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" id="submit" ng-click="sendData()" />
+                <input type="submit" value="Create" class="btn btn-default"/>
             </div>
         </form>
     </div>
@@ -96,40 +96,6 @@
                 }
             });
         });
-
-
-    </script>
-
-    <script>
-       
-
-                //code chay
-
-                var app = angular.module('exaxxiApp', []);
-                app.controller('test', function ($scope, $http) {
-
-                    $scope.sendData = function () {
-                        var login = {
-
-                            "en_title": $("#en_title").val(),
-                            "vi_title": $("#vi_title").val(),
-                            "vi_content": $("#vi_content").val(),
-                            "en_content": $("#en_content").val(),
-                           
-                            "date_create": $("#date_create").val(),
-                            "active": $("#active").val(),
-                            "id_admin": $("#adminname").val(),
-                            "id_department": $("#departmentname").val()
-                        };
-                        $http.post("/api/NewsAPI/PostCreateNews", JSON.stringify(login)).
-                            then(function (data, status, headers, config) {
-                                window.location = "/Admin/News/Index";
-                            });
-
-                    }
-                });
-
-    </script>
-
+    </script>    
 }
 

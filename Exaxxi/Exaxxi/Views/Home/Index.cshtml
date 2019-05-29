@@ -117,107 +117,32 @@
             </div>
             <hr>
             <div class="divider-wrapper">
-                <p class="title-divider">Best Seller</p>
+                <p class="title-divider">Lowest Asks New</p>
             </div>
         </div> <!-- End divider-section -->
     </div>
 
     <div class="container">
         <!-- Start best seller container -->
-        <div class="row flex-row flex-nowrap" style="overflow-x: auto">
+        <div class="row flex-row flex-nowrap" style="overflow-x: auto" ng-controller="itemLowestAskCtrl">
             <!-- Start row -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="x in items">
                 <div class="card card-block">
                     <!-- Start card -->
                     <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
+                        <img src="images/{{x.item.img}}" class="product-img">
                     </div>
                     <div class="product-title-wrapper">
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
                                 <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
+                                    {{x.item.name}}
                                 </a>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 " align="right">
                                 <div class="product-price">
-                                    169.000.000<br>
-                                    <span style="color: #dbd9d9">VND</span><br>
-                                </div>
-                                <span class="product-sub-title">Lowest Ask</span>
-                            </div>
-                        </div>
-                    </div> <!-- End product-title-wrapper -->
-                </div> <!-- End card -->
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-block">
-                    <!-- Start card -->
-                    <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
-                    </div>
-                    <div class="product-title-wrapper">
-                        <!-- Start product-title-wrapper -->
-                        <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
-                                </a>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                <div class="product-price">
-                                    169.000.000<br>
-                                    <span style="color: #dbd9d9">VND</span><br>
-                                </div>
-                                <span class="product-sub-title">Lowest Ask</span>
-                            </div>
-                        </div>
-                    </div> <!-- End product-title-wrapper -->
-                </div> <!-- End card -->
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-block">
-                    <!-- Start card -->
-                    <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
-                    </div>
-                    <div class="product-title-wrapper">
-                        <!-- Start product-title-wrapper -->
-                        <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
-                                </a>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                <div class="product-price">
-                                    169.000.000<br>
-                                    <span style="color: #dbd9d9">VND</span><br>
-                                </div>
-                                <span class="product-sub-title">Lowest Ask</span>
-                            </div>
-                        </div>
-                    </div> <!-- End product-title-wrapper -->
-                </div> <!-- End card -->
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card card-block">
-                    <!-- Start card -->
-                    <div class="product-img-wrapper">
-                        <img src="images/Layer%207.png" class="product-img">
-                    </div>
-                    <div class="product-title-wrapper">
-                        <!-- Start product-title-wrapper -->
-                        <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
-                                    Jordan 1 Retro High Black Crimson Tint (GS)
-                                </a>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                <div class="product-price">
-                                    169.000.000<br>
+                                    {{x.price}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
                                 <span class="product-sub-title">Lowest Ask</span>
@@ -324,7 +249,13 @@
                 });
         });
         exaxxiApp.controller('itemPopularCtrl', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/Popular/"+ @ViewBag.Id_Depart)
+            $http.get("/api/PostsAPI/Popular/"+ @ViewBag.Id_Depart)
+                .then(function (response) {
+                    $scope.items = response.data;
+                });
+        });
+        exaxxiApp.controller('itemLowestAskCtrl', function ($scope, $http) {
+            $http.get("/api/PostsAPI/LowestAskNew/"+ @ViewBag.Id_Depart)
                 .then(function (response) {
                     $scope.items = response.data;
                 });
