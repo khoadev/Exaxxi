@@ -127,11 +127,32 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         [Route("TakeIdCategory_Checkbox")]
-        public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JArray json)
+        public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
         {
-            List<int> value = json.ToObject<List<int>>();
+            dynamic data = json;
+            JArray cate = data.cate;
+            JArray size = data.size;
 
-            return _context.Items.Where(x => value.Contains(x.id_category)).OrderBy(x => x.name).ToList();          
+            List<int> value_cate = cate.ToObject<List<int>>();
+            List<int> value_size = size.ToObject<List<int>>();
+
+            //Mới vào xổ ra hết Items
+            var result = _context.Items.AsQueryable();
+
+            if(value_cate.Count != 0)
+            {
+                result = result.Where(x => value_cate.Contains(x.id_category)).OrderBy(x => x.name);
+            }
+
+            if(value_size.Count != 0)
+            {
+                result = result.Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
+                    .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                    .Where(x => value_size.Contains(x.d.id))
+                    .Select(p => p.c.a);
+            }
+
+            return result.ToList();
         }
         
         // DELETE: api/Items/5

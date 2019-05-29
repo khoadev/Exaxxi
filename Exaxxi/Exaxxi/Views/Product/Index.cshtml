@@ -42,7 +42,7 @@
                 <div class="filter-name-header">Size's Name</div>
                 <label class="checkbox-container" ng-repeat="x in name">
                     {{x.centimet}} cm
-                    <input type="checkbox">
+                    <input type="checkbox" ng-model="sizeModel[x.id]" ng-change="save()">
                     <span class="checkmark"></span>
                 </label>
             </div><!--end filter-size-wrapper-->
@@ -132,8 +132,9 @@
 
             
             //Show Product by Category
-            $scope.cateModel = {};                
-            $scope.save = function () {      
+            $scope.cateModel = {};
+            $scope.sizeModel = {};
+            $scope.save = function () {
                 var checkCate = [];
                 for (var k in $scope.cateModel) {
                     if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
@@ -141,10 +142,22 @@
                     }
                 }
 
-                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
+                var checkSize = [];
+                for (var j in $scope.sizeModel) {
+                    if ($scope.sizeModel.hasOwnProperty(j) && $scope.sizeModel[j]) {
+                        checkSize.push(j);
+                    }
+                }
+
+                var Array = {
+                    cate: checkCate,
+                    size: checkSize
+                }
+
+                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(Array)).
                     then(function (data) {
                         $scope.item = data.data;                                                   
-                    });                    
+                    });  
             }       
         });
 
