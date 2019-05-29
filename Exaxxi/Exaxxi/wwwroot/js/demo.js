@@ -211,17 +211,28 @@ $(document).ready(function () {
     var unit = $(".xx-content").outerWidth();
     //var numItems = $('.xx-content').length;
     //console.log(numItems);
-    $('.horizon-prev').click(function () {
+    $('#popular-prev').click(function () {
         event.preventDefault();
-        $('.scroll-content').animate({
+        $('#popular-scroll-content').animate({
             scrollLeft: "-=" + unit + "px"
         }, "fast");
     });
-
-    $('.horizon-next').click(function () {
+    $('#lowest-prev').click(function () {
         event.preventDefault();
-        $('.scroll-content').animate({
+        $('#lowest-scroll-content').animate({
+            scrollLeft: "-=" + unit + "px"
+        }, "fast");
+    });
+    $('#popular-next').click(function () {
+        event.preventDefault();
+        $('#popular-scroll-content').animate({
             scrollLeft: "+="+unit+"px"
+        }, "fast");
+    });
+    $('#lowest-next').click(function () {
+        event.preventDefault();
+        $('#lowest-scroll-content').animate({
+            scrollLeft: "+=" + unit + "px"
         }, "fast");
     });
 });
