@@ -42,18 +42,24 @@
                 <div class="filter-name-header">Size's Name</div>
                 <label class="checkbox-container" ng-repeat="x in name">
                     {{x.centimet}} cm
-                    <input type="checkbox">
+                    <input type="checkbox" ng-model="sizeModel[x.id]" ng-change="save()">
                     <span class="checkmark"></span>
                 </label>
             </div><!--end filter-size-wrapper-->
             <div class="filter-price-wrapper">
                 <!--start filter-price-wrapper-->
-                <p>
+                <div ng-controller="test">
+                    <div class="filter-name-header">Price range</div>
+                    <rzslider rz-slider-model="slider.minValue"
+                              rz-slider-high="slider.maxValue"
+                              rz-slider-options="slider.options"></rzslider>
+                </div>
+                @*<p>
                     <label for="amount" class="filter-name-header">Price range</label>
                     <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:100%;">
                 </p>
 
-                <div id="slider-range"></div>
+                <div id="slider-range"></div>*@
 
             </div><!--end filter-price-wrapper-->
         </div>
@@ -105,6 +111,20 @@
 
 @section Scripts{
     <script>
+        exaxxiApp.controller('test', function ($scope, $http) {
+            $scope.slider = {
+                minValue: 10000,
+                maxValue: 90000,
+                options: {
+                    floor: 0,
+                    ceil: 100000,
+                    step: 1,
+                    translate: function(value) {
+                          return formatNumber(value, '.', ',') + " VND"
+                        },
+                }
+            };
+        });
         //Show Department
         exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
             $http.get("/api/DepartmentsAPI")
@@ -132,8 +152,9 @@
 
             
             //Show Product by Category
-            $scope.cateModel = {};                
-            $scope.save = function () {      
+            $scope.cateModel = {};
+            $scope.sizeModel = {};
+            $scope.save = function () {
                 var checkCate = [];
                 for (var k in $scope.cateModel) {
                     if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
@@ -141,17 +162,45 @@
                     }
                 }
 
-                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(checkCate)).
+                var checkSize = [];
+                for (var j in $scope.sizeModel) {
+                    if ($scope.sizeModel.hasOwnProperty(j) && $scope.sizeModel[j]) {
+                        checkSize.push(j);
+                    }
+                }
+
+                var Array = {
+                    cate: checkCate,
+                    size: checkSize
+                }
+
+                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(Array)).
                     then(function (data) {
                         $scope.item = data.data;                                                   
-                    });                    
-            }       
+                    });  
+            }  
+
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 1500000,
+                values: [0, 1500000],
+                slide: function (event, ui) {
+                    $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
+
+
+
+                }
+            });
+            $("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',') +
+                " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND"); 
+
         });
 
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
             $http.get("/api/ds_SizeAPI")
                 .then(function (response) { $scope.name = response.data; });
-        });
+        });                             
     </script>
 }

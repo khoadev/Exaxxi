@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+        <link rel="stylesheet" href="~/css/rzslider.min.css">
     </environment>
 </head>
 <body ng-app="exaxxiApp" >
@@ -236,9 +237,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="~/js/rzslider.min.js"></script>
     </environment>
     <script>
-    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages']);
+    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages','rzSlider']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $http.get("/api/PostsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
