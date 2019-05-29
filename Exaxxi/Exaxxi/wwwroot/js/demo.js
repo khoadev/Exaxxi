@@ -104,19 +104,7 @@ function formatNumber(nStr, decSeperate, groupSeperate) {
     }
     return x1 + x2;
 }
-$(function () {
-    $("#slider-range").slider({
-        range: true,
-        min: 0,
-        max: 2000000,
-        values: [200000, 1500000],
-        slide: function (event, ui) {
-            $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
-        }
-    });
-    $("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',')+
-        " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND");
-});
+
 
 $(function () {
     $("#slider-range-min").slider({

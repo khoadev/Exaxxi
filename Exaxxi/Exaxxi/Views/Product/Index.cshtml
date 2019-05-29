@@ -158,13 +158,29 @@
                     then(function (data) {
                         $scope.item = data.data;                                                   
                     });  
-            }       
+            }  
+
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 1500000,
+                values: [0, 1500000],
+                slide: function (event, ui) {
+                    $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
+
+
+
+                }
+            });
+            $("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',') +
+                " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND"); 
+
         });
 
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
             $http.get("/api/ds_SizeAPI")
                 .then(function (response) { $scope.name = response.data; });
-        });
+        });                             
     </script>
 }
