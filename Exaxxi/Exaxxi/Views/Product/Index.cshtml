@@ -48,12 +48,18 @@
             </div><!--end filter-size-wrapper-->
             <div class="filter-price-wrapper">
                 <!--start filter-price-wrapper-->
-                <p>
+                <div>
+                    <div class="filter-name-header">Price range</div>
+                    <rzslider rz-slider-model="slider.minValue"
+                              rz-slider-high="slider.maxValue"
+                              rz-slider-options="slider.options"></rzslider>
+                </div>
+                @*<p>
                     <label for="amount" class="filter-name-header">Price range</label>
                     <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:100%;">
                 </p>
 
-                <div id="slider-range"></div>
+                <div id="slider-range"></div>*@
 
             </div><!--end filter-price-wrapper-->
         </div>
@@ -62,7 +68,7 @@
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item | filter:byRange('trade_min', slider.minValue , slider.maxValue)">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -105,6 +111,9 @@
 
 @section Scripts{
     <script>
+        exaxxiApp.controller('test', function ($scope, $http) {
+            
+        });
         //Show Department
         exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
             $http.get("/api/DepartmentsAPI")
@@ -158,13 +167,31 @@
                     then(function (data) {
                         $scope.item = data.data;                                                   
                     });  
-            }       
+            }  
+            $scope.slider = {
+                minValue: 0,
+                maxValue: 200,
+                options: {
+                    floor: 0,
+                    ceil: 200,
+                    step: 1,
+                    translate: function(value) {
+                          return formatNumber(value, '.', ',') + " VND"
+                        },
+                }
+            };
+            $scope.byRange = function (fieldName, minValue, maxValue) {
+                return function predicateFunc(item) {
+                return minValue <= item[fieldName] && item[fieldName] <= maxValue;
+                };
+            };
+
         });
 
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
             $http.get("/api/ds_SizeAPI")
                 .then(function (response) { $scope.name = response.data; });
-        });
+        });                             
     </script>
 }
