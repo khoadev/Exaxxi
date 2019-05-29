@@ -1343,13 +1343,29 @@ img {
 }
 .news-content-wrapper{
     height:100vh;
-    
     overflow-y:auto;
 }
 .news-recent-news {
     font-family: coolrg;
     font-size: 24px;
     text-transform: uppercase;
+    color:#ab1113;
+    padding:40px 20px 40px 20px;
+}
+.news-recent-news-wrapper{
+    padding:20px 20px 30px 20px;
+}
+.news-recent-date {
+    font-family: coolrg;
+    font-size: 20px;
+    color: #ab1113;
+}
+.news-recent-article{
+    font-family:ralemed;
+    font-size:15px;
+    color:black;
+    text-decoration:none!important;
+
 }
 .scroll-content::-webkit-scrollbar {
     display: none;

@@ -107,7 +107,7 @@
         </div> <!-- End row -->
     </div> <!-- End popular products container -->
 
-    <div class="container">
+    <div class="container" >
         <div class="divider-section">
             <!-- Start divider-section -->
             <div class="see-all">
@@ -122,11 +122,17 @@
         </div> <!-- End divider-section -->
     </div>
 
-    <div class="container">
+    <div class="container" style="position:relative">
         <!-- Start best seller container -->
-        <div class="row flex-row flex-nowrap" style="overflow-x: auto" ng-controller="itemLowestAskCtrl">
+        <div class="horizon-prev">
+            <i class="fas fa-angle-left fa-2x"></i>
+        </div>
+        <div class="horizon-next">
+            <i class="fas fa-angle-right fa-2x"></i>
+        </div>
+        <div class="row flex-row flex-nowrap scroll-content" style="overflow-x: auto" ng-controller="itemLowestAskCtrl">
             <!-- Start row -->
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="x in items">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 xx-content" ng-repeat="x in items">
                 <div class="card card-block">
                     <!-- Start card -->
                     <div class="product-img-wrapper">
