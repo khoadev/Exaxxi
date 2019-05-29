@@ -74,7 +74,42 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-           
+
+        [Route("TakeTradeMinMin")]
+        public IActionResult TakeTradeMinMin()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var trade_min = _context.Items.Select(p => p.trade_min).Min();
+
+            if (trade_min == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(trade_min);
+        }
+
+        [Route("TakeTradeMinMax")]
+        public IActionResult TakeTradeMinMax()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var trade_min = _context.Items.Select(p => p.trade_min).Max();
+
+            if (trade_min == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(trade_min);
+        }
 
         // PUT: api/Items/5
         [HttpPut("{id}")]
