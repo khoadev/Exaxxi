@@ -48,7 +48,7 @@
             </div><!--end filter-size-wrapper-->
             <div class="filter-price-wrapper">
                 <!--start filter-price-wrapper-->
-                <div ng-controller="test">
+                <div>
                     <div class="filter-name-header">Price range</div>
                     <rzslider rz-slider-model="slider.minValue"
                               rz-slider-high="slider.maxValue"
@@ -112,18 +112,7 @@
 @section Scripts{
     <script>
         exaxxiApp.controller('test', function ($scope, $http) {
-            $scope.slider = {
-                minValue: 10000,
-                maxValue: 90000,
-                options: {
-                    floor: 0,
-                    ceil: 100000,
-                    step: 1,
-                    translate: function(value) {
-                          return formatNumber(value, '.', ',') + " VND"
-                        },
-                }
-            };
+            
         });
         //Show Department
         exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
@@ -179,21 +168,32 @@
                         $scope.item = data.data;                                                   
                     });  
             }  
-
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 1500000,
-                values: [0, 1500000],
-                slide: function (event, ui) {
-                    $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
-
-
-
+            $scope.slider = {
+                minValue: 10000,
+                maxValue: 90000,
+                options: {
+                    floor: 0,
+                    ceil: 100000,
+                    step: 1,
+                    translate: function(value) {
+                          return formatNumber(value, '.', ',') + " VND"
+                        },
                 }
-            });
-            $("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',') +
-                " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND"); 
+            };
+            //$("#slider-range").slider({
+            //    range: true,
+            //    min: 0,
+            //    max: 1500000,
+            //    values: [0, 1500000],
+            //    slide: function (event, ui) {
+            //        $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
+
+
+
+            //    }
+            //});
+            //$("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',') +
+            //    " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND"); 
 
         });
 
