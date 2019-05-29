@@ -181,9 +181,6 @@
                 }
             };
             $scope.byRange = function (fieldName, minValue, maxValue) {
-                if (minValue === undefined) minValue = Number.MIN_VALUE;
-                if (maxValue === undefined) maxValue = Number.MAX_VALUE;
-
                 return function predicateFunc(item) {
                 return minValue <= item[fieldName] && item[fieldName] <= maxValue;
                 };
