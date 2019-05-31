@@ -13,7 +13,7 @@
             <div>
                 <div class="filter-depart-wrapper" ng-controller="ShowDepartment">
                     <!--start filter-depart-wrapper-->
-                    <a ng-repeat="x in name" href="/Product/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'category-panel-active' : ''}}">{{x.vi_name}}</a>
+                    <a ng-repeat="x in name" href="/Product/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'filter-depart-active' : ''}}">{{x.vi_name}}</a>
                 </div> <!--end filter-depart-wrapper-->
             </div>
 
@@ -21,7 +21,7 @@
                 <!--start filter-brand-wrapper-->
                 <div class="filter-name-header">Brand's Name</div>
 
-                <a class="filter-brand-item {{ x.id == @ViewBag.Id_Brand ? 'category-panel-active' : ''}}" href="/Product/Index?id=@ViewBag.Id_Depart&idBrand={{x.id}}" ng-repeat="x in name">{{x.name}}</a>
+                <a class="filter-brand-item {{ x.id == @ViewBag.Id_Brand ? 'filter-depart-active' : ''}}" href="/Product/Index?id=@ViewBag.Id_Depart&idBrand={{x.id}}" ng-repeat="x in name">{{x.name}}</a>
 
             </div> <!--end filter-brand-wrapper-->
             <div class="filter-category-wrapper">
@@ -49,7 +49,7 @@
                 <!--start filter-price-wrapper-->
                 <div>
                     <div class="filter-name-header">Price range</div>
-                    <rzslider rz-slider-model="slider.minValue"
+                    <rzslider class="custom-slider" rz-slider-model="slider.minValue"
                               rz-slider-high="slider.maxValue"
                               rz-slider-options="slider.options"></rzslider>
                 </div>
@@ -67,7 +67,8 @@
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" dir-paginate="x in item | filter:byRange('trade_min', slider.minValue , slider.maxValue) | itemsPerPage: 2">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" dir-paginate="x in item | filter:byRange('lowest_ask', slider.minValue , slider.maxValue) | itemsPerPage: 9">
+
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -83,37 +84,24 @@
                                 </div>
                                 <div class="col-6 col-sm-6 col-md-6 " align="right">
                                     <div class="product-price">
-                                        {{x.trade_min}}<br>
-                                        <span style="color: #dbd9d9">VND</span><br>
+                                        <p>{{x.lowest_ask}}</p>
+                                        <span class="product-sub-title"></span>
                                     </div>
-                                    <span class="product-sub-title">{{x.lowest_ask}}</span>
                                 </div>
-                            </div>
-                        </div> <!-- End product-title-wrapper -->
-                    </div> <!-- End card -->
-                </div>
+                            </div> <!-- End product-title-wrapper -->
+                        </div> <!-- End card -->
+                    </div>
+                </div> <!-- End col -->
             </div> <!-- End row -->
-            <dir-pagination-controls></dir-pagination-controls>
-            <div class="pagination-wrapper">
-                <ul class="pagination pagination-md justify-content-end" id="pagination-custom">
-                    <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a class="page-link page-link-custom pagination-active" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link page-link-custom" href="#">2</a></li>
-                    <li id="pagination-dots"> <i class="fas fa-ellipsis-h"> </i> </li>
-                    <li class="page-item"><a class="page-link page-link-custom" href="#">7</a></li>
-                    <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                </ul>
+            <div class="pagination-wrapper row">
+                <dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>
             </div>
         </div>
-    </div>
 </div>
 
 
 @section Scripts{
     <script>
-        exaxxiApp.controller('test', function ($scope, $http) {
-            
-        });
         //Show Department
         exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
             $http.get("/api/DepartmentsAPI")
@@ -169,11 +157,11 @@
                     });  
             }  
             $scope.slider = {
-                minValue: @ViewBag.Trade_Min_Min,
-                maxValue: @ViewBag.Trade_Min_Max,
+                minValue: @ViewBag.LA_Min_Min,
+                maxValue: @ViewBag.LA_Min_Max,
                 options: {
-                    floor: @ViewBag.Trade_Min_Min,
-                    ceil: @ViewBag.Trade_Min_Max,
+                    floor: @ViewBag.LA_Min_Min,
+                    ceil: @ViewBag.LA_Min_Max,
                     step: 1,
                     translate: function(value) {
                           return formatNumber(value, '.', ',') + " VND"
