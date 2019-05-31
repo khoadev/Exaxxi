@@ -68,6 +68,62 @@
         </div> <!-- End row -->
     </div> <!-- End popular products container -->
 </div>
+<div ng-controller="itemPopularCtrl">
+    <div class="container" ng-show="items.length != 0">
+        <div class="divider-section">
+            <!-- Start divider-section -->
+            <div class="see-all">
+                <a href="#">
+                    See All
+                </a>
+            </div>
+            <hr>
+            <div class="divider-wrapper">
+                <p class="title-divider">Highest Bid</p>
+            </div>
+        </div> <!-- End divider-section -->
+    </div>
+
+    <div class="container" style="position:relative" ng-show="items.length != 0">
+
+        <!-- Start highest bid container -->
+        <div class="horizon-prev" id="highest-prev">
+            <i class="fas fa-angle-left fa-2x"></i>
+        </div>
+        <div class="horizon-next" id="highest-next">
+            <i class="fas fa-angle-right fa-2x"></i>
+        </div>
+        <div class="row flex-row flex-nowrap scroll-content " id="highest-scroll-content" style="overflow-x: auto">
+            <!-- Start row -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 xx-content" ng-repeat="x in items">
+                <div class="card card-block">
+                    <!-- Start card -->
+                    <div class="product-img-wrapper">
+                        <img src="../images/{{x.item.img}}" class="product-img">
+                    </div>
+                    <div class="product-title-wrapper">
+                        <!-- Start product-title-wrapper -->
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-6 product-name">
+                                <a href="#">
+                                    {{x.item.name}}
+                                </a>
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                <div class="product-price">
+                                    {{x.item.lowest_ask}}<br>
+                                    <span style="color: #dbd9d9">VND</span><br>
+                                </div>
+                                <span class="product-sub-title">Lowest Ask|sold{{x.item.sold}}</span>
+                            </div>
+                        </div>
+                    </div> <!-- End product-title-wrapper -->
+                </div> <!-- End card -->
+            </div>
+
+        </div> <!-- End row -->
+    </div> <!-- End highest bid container -->
+</div>
 <div ng-controller="itemLowestAskCtrl">
     <div class="container" ng-show="items.length != 0">
         <div class="divider-section">

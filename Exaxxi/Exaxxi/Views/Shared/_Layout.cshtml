@@ -1,10 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
+@{
+    var scroll = "";
+    string actionName = ViewContext.RouteData.Values["action"].ToString();
+    if (actionName == "Register")
+    {
+        scroll = "navbar-custom-scrolled";
+    }
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Exaxxi</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
@@ -14,8 +21,10 @@
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
         <link rel="stylesheet" href="~/css/rzslider.min.css">
     </environment>
+
 </head>
-<body ng-app="exaxxiApp" >
+
+<body ng-app="exaxxiApp">
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -41,18 +50,20 @@
         <a href="#">FaQ</a>
     </div> <!-- End sidenav -->
 
-    <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top" id="fixed-top">
+    <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top @scroll" id="fixed-top">
         <!-- Start nav -->
         <!-- Brand -->
         <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="brand">Exxaxxi</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="brand">
+                Exxaxxi 
+            </a>
             <button class="navbar-toggler order-first d-flex d-sm-none" type="button" onclick="openNav()">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Links -->
             <ul class="navbar-nav">
                 <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" href="#"  data-toggle="dropdown">Browse</a>
+                    <a class="nav-link" href="#" data-toggle="dropdown">Browse</a>
                     <ul class="dropdown-menu mega-dropdown-menu avoid" ng-controller="browseCtrl">
                         <!-- Start Mega Menu -->
                         <div class="container">
@@ -61,8 +72,8 @@
                                     <div class="col-12 flex-nowrap browse-radio-wrapper custom-scrollbar" style="{{takedivCount<6 ? 'justify-content: center;' : ''}}" id="browse-radio-wrapper">
 
                                         <div class="browse-radio" ng-repeat="x in deps">
-                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''"/>
-                                            
+                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''" />
+
                                             <label for="{{x.id}}" class="{{x.id==selectedObj.id?'label-checked':''}}">
                                                 {{x.vi_name}}
                                             </label>
@@ -163,7 +174,7 @@
                     </li>
                 }
             </ul>
-              
+
         </div>
     </nav> <!-- End nav -->
 
@@ -240,27 +251,27 @@
         <script src="~/js/rzslider.min.js"></script>
     </environment>
     <script>
-    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages','rzSlider']);
+        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $http.get("/api/PostsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
         });
-        exaxxiApp.controller("browseCtrl", function($scope, $http) {
-             var div = document.querySelector('#browse-radio-wrapper');
+        exaxxiApp.controller("browseCtrl", function ($scope, $http) {
+            var div = document.querySelector('#browse-radio-wrapper');
             var divCount = div.querySelectorAll('div').length;
-             $scope.selectedObj = {};
+            $scope.selectedObj = {};
             $scope.takedivCount = divCount;
-             $http.get("/api/DepartmentsAPI")
+            $http.get("/api/DepartmentsAPI")
                 .then(function (response) { $scope.deps = response.data; });
-           
+
             $http.get("/api/BrandsAPI")
                 .then(function (response) { $scope.brandcates = response.data; });
-             $http.get("/api/CategoriesAPI")
+            $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.cates = response.data; });
         });
         $('.avoid').click(function (e) {
             e.stopPropagation();
-        });        
+        });
     </script>
 
     @RenderSection("Scripts", required: false)

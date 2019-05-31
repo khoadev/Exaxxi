@@ -211,6 +211,12 @@ $(document).ready(function () {
             scrollLeft: "-=" + unit + "px"
         }, "fast");
     });
+    $('#highest-prev').click(function () {
+        event.preventDefault();
+        $('#highest-scroll-content').animate({
+            scrollLeft: "-=" + unit + "px"
+        }, "fast");
+    });
     $('#popular-next').click(function () {
         event.preventDefault();
         $('#popular-scroll-content').animate({
@@ -220,6 +226,12 @@ $(document).ready(function () {
     $('#lowest-next').click(function () {
         event.preventDefault();
         $('#lowest-scroll-content').animate({
+            scrollLeft: "+=" + unit + "px"
+        }, "fast");
+    });
+    $('#highest-next').click(function () {
+        event.preventDefault();
+        $('#highest-scroll-content').animate({
             scrollLeft: "+=" + unit + "px"
         }, "fast");
     });
