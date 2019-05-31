@@ -31,10 +31,17 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Categories;          
         }
 
-        [Route("TakeAllCateByIdBrand/{Id_Brand}")]
-        public IEnumerable<Categories> GetAllCate(int Id_Brand)
-        {            
-            return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+        [Route("TakeCateByIdBrand/{Id_Brand}/{Qty}")]
+        public IEnumerable<Categories> GetAllCate(int Id_Brand, string Qty)
+        {
+            if (Qty == "all")
+            {
+                return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+            }     
+            else
+            {
+                return null;
+            }
         }
 
         [Route("Take1CateByIdBrand/{Id_Brand}")]

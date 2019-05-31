@@ -308,7 +308,7 @@
                 .then(function (response) { $scope.names = response.data; });
         });
         exaxxiApp.controller('brandsbyidCtrl', function ($scope, $http) {
-            $http.get("/api/BrandsAPI/Take5BrandByIdDepart/" + @ViewBag.Id_Depart)
+            $http.get("/api/BrandsAPI/TakeBrandByIdDepart/" + @ViewBag.Id_Depart + "/5")
                 .then(function (response) {
                     $scope.names = response.data;
                     $scope.mot = response.data[0];

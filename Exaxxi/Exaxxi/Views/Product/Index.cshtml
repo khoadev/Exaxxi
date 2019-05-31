@@ -111,18 +111,18 @@
         //Show Brand
         exaxxiApp.controller('ShowBrand', function ($scope, $http) {
 
-            $http.get("/api/BrandsAPI/TakeAllBrandByIdDepart/" + @ViewBag.Id_Depart)
+            $http.get("/api/BrandsAPI/TakeBrandByIdDepart/" + @ViewBag.Id_Depart + "/all")
                 .then(function (response) { $scope.name = response.data; });
         });
 
         //Show Category
         exaxxiApp.controller('ShowCate', function ($scope, $http) {
-            $http.get("/api/CategoriesAPI/TakeAllCateByIdBrand/" + @ViewBag.Id_Brand)
+            $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/all")
                 .then(function (response) {
                     $scope.name = response.data;                    
                 });
 
-            $http.get("/api/ItemsAPI/TakeAllItemByIdBrand/" + @ViewBag.Id_Brand).
+            $http.get("/api/ItemsAPI/TakeItemByIdBrand/" + @ViewBag.Id_Brand + "/all").
                 then(function (data) {
                     $scope.item = data.data;
                 });

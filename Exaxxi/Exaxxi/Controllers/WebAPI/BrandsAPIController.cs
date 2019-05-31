@@ -34,20 +34,26 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         [Route("Take1BrandByIdDepart/{Id_Depart}")]
-        public Brands Get1Brands(int Id_Depart)
+        public Brands Take1BrandByIdDepart(int Id_Depart)
         {
             return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).FirstOrDefault();
         }
-        [Route("Take5BrandByIdDepart/{Id_Depart}")]
-        public IEnumerable<Brands> GetBrandsByIdDep(int Id_Depart)
-        {
-            return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).Take(5);
-        }
         
-        [Route("TakeAllBrandByIdDepart/{Id_Depart}")]
-        public IEnumerable<Brands> GetAllBrand(int Id_Depart)
+        [Route("TakeBrandByIdDepart/{Id_Depart}/{Qty}")]
+        public IEnumerable<Brands> TakeBrandByIdDepart(int Id_Depart, string Qty)
         {
-            return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order);
+            if(Qty == "all")
+            {
+                return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order);
+            }
+            if(Qty == "5")
+            {
+                return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).Take(5);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // GET: api/Brands/5
