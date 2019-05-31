@@ -67,7 +67,7 @@
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item | filter:byRange('trade_min', slider.minValue , slider.maxValue)">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item | filter:byRange('lowest_ask', slider.minValue , slider.maxValue)">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -81,11 +81,7 @@
                                         {{x.name}}
                                     </a>
                                 </div>
-                                <div class="col-6 col-sm-6 col-md-6 " align="right">
-                                    <div class="product-price">
-                                        {{x.trade_min}}<br>
-                                        <span style="color: #dbd9d9">VND</span><br>
-                                    </div>
+                                <div class="col-6 col-sm-6 col-md-6 " align="right">                                    
                                     <span class="product-sub-title">{{x.lowest_ask}}</span>
                                 </div>
                             </div>
@@ -110,9 +106,6 @@
 
 @section Scripts{
     <script>
-        exaxxiApp.controller('test', function ($scope, $http) {
-            
-        });
         //Show Department
         exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
             $http.get("/api/DepartmentsAPI")
@@ -168,11 +161,11 @@
                     });  
             }  
             $scope.slider = {
-                minValue: @ViewBag.Trade_Min_Min,
-                maxValue: @ViewBag.Trade_Min_Max,
+                minValue: @ViewBag.LA_Min_Min,
+                maxValue: @ViewBag.LA_Min_Max,
                 options: {
-                    floor: @ViewBag.Trade_Min_Min,
-                    ceil: @ViewBag.Trade_Min_Max,
+                    floor: @ViewBag.LA_Min_Min,
+                    ceil: @ViewBag.LA_Min_Max,
                     step: 1,
                     translate: function(value) {
                           return formatNumber(value, '.', ',') + " VND"

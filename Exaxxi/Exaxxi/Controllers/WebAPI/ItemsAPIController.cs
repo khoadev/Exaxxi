@@ -75,40 +75,30 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(items);
         }
 
-        [Route("TakeTradeMinMin")]
-        public IActionResult TakeTradeMinMin()
+        [Route("TakeLowestAskMinMin")]
+        public IActionResult TakeLowestAskMinMin()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var trade_min = _context.Items.Select(p => p.trade_min).Min();
+            var lowest_ask_min = _context.Items.Select(p => p.lowest_ask).Min();
 
-            if (trade_min == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(trade_min);
+            return Ok(lowest_ask_min);
         }
 
-        [Route("TakeTradeMinMax")]
-        public IActionResult TakeTradeMinMax()
+        [Route("TakeLowestAskMinMax")]
+        public IActionResult TakeLowestAskMinMax()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var trade_min = _context.Items.Select(p => p.trade_min).Max();
+            var lowest_ask_max = _context.Items.Select(p => p.lowest_ask).Max();
 
-            if (trade_min == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(trade_min);
+            return Ok(lowest_ask_max);
         }
 
         // PUT: api/Items/5
