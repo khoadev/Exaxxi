@@ -29,7 +29,7 @@
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div id="sidenav-logsign"><a asp-controller="Login" asp-action="Register">SIGN UP</a>/<a asp-controller="Login" asp-action="Login" id="sidenav-logsign-login-text">login</a></div>
-        <a asp-controller="Home" asp-action="Index">Exxaxxi</a>
+        <a asp-controller="Home" asp-action="Index">Exaxxi</a>
         <div id="sidenav-sub-section">
             <!-- Start sidenav-sub... -->
             <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#cate1">Cate's Name</a>
@@ -248,10 +248,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="~/js/dirPagination.js"></script>
         <script src="~/js/rzslider.min.js"></script>
     </environment>
     <script>
-        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider']);
+        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider','angularUtils.directives.dirPagination']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $http.get("/api/PostsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });

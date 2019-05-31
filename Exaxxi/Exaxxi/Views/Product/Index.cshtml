@@ -67,7 +67,7 @@
             <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" ng-repeat="x in item | filter:byRange('trade_min', slider.minValue , slider.maxValue)">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" dir-paginate="x in item | filter:byRange('trade_min', slider.minValue , slider.maxValue) | itemsPerPage: 2">
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -93,6 +93,7 @@
                     </div> <!-- End card -->
                 </div>
             </div> <!-- End row -->
+            <dir-pagination-controls></dir-pagination-controls>
             <div class="pagination-wrapper">
                 <ul class="pagination pagination-md justify-content-end" id="pagination-custom">
                     <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-left"></i></a></li>
