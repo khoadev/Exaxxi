@@ -965,13 +965,17 @@ top-title-first-text {
     color: black;
     display: block;
     text-decoration: none;
+    opacity:0.5;
     transition: 0.3s;
 }
 
 .filter-depart-wrapper a:hover {
     color: #ab1113;
 }
-
+.filter-depart-active {
+    opacity:1!important;
+    color: #ab1113!important;
+}
 .filter-name-header {
     font-family: coolcond;
     text-transform: uppercase;
@@ -986,6 +990,7 @@ top-title-first-text {
     color: black;
     text-decoration: none !important;
     transition-duration: 0.3s;
+    opacity:0.5;
 }
 
 .filter-brand-item:hover {
@@ -1020,26 +1025,56 @@ top-title-first-text {
     padding-right: 5px;
 }
 
-.ui-slider-horizontal .ui-slider-range {
-    height: 5px !important;
-    background-color: black;
+.custom-slider.rzslider .rz-bar {
+    background: #ffe4d1;
+    height: 2px;
 }
 
-.ui-slider-horizontal {
-    height: 5px !important;
+.custom-slider.rzslider .rz-selection {
+    background: black;
 }
 
-.ui-slider-handle {
-    height: 15px !important;
-    width: 15px !important;
-    background-color: black !important;
-    border-radius: 50% !important;
+.custom-slider.rzslider .rz-pointer {
+    width: 8px;
+    height: 16px;
+    top: auto; 
+    bottom: 0;
+    background-color: #ab1113;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
-.ui-slider-handle:focus {
-    outline: none;
+.custom-slider.rzslider .rz-pointer:after {
+    display: none;
 }
 
+.custom-slider.rzslider .rz-bubble {
+    bottom: 14px;
+}
+
+.custom-slider.rzslider .rz-limit {
+    font-weight: bold;
+    color: #ab1113;
+}
+
+.custom-slider.rzslider .rz-tick {
+    width: 1px;
+    height: 10px;
+    margin-left: 4px;
+    border-radius: 0;
+    background: #ffe4d1;
+    top: -1px;
+}
+
+.custom-slider.rzslider .rz-tick.rz-selected {
+    background: #ab1113;
+}
+.custom-slider.rzslider .rz-bubble{
+    font-family:coolcond;
+}
+.rzslider .rz-bubble.rz-limit{
+    opacity:0.3;
+}
 #amount {
     color: black !important;
     font-weight: normal !important;
@@ -1074,13 +1109,16 @@ top-title-first-text {
 
 .pagination-wrapper {
     margin-top: 20px;
+    display:block;
 }
 
 .pagination-active {
     background-color: #ab1113;
     color: white !important;
 }
-
+.pagination-disable{
+    opacity:0.3;
+}
 .page-link-custom {
     color: black;
     transition-duration: 0.3s;
