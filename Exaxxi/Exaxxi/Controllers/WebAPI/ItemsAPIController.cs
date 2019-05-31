@@ -101,56 +101,8 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(lowest_ask_max);
         }
 
-        // PUT: api/Items/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutItems([FromRoute] int id, [FromBody] Items items)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != items.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(items).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ItemsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Items
         [HttpPost]
-        public async Task<IActionResult> PostItems([FromBody] Items items)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Items.Add(items);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetItems", new { id = items.id }, items);
-        }
-
         [Route("TakeIdCategory_Checkbox")]
         public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
         {
@@ -180,30 +132,6 @@ namespace Exaxxi.Controllers.WebAPI
             return result.ToList();
         }
         
-        // DELETE: api/Items/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItems([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var items = await _context.Items.FindAsync(id);
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            _context.Items.Remove(items);
-            await _context.SaveChangesAsync();
-
-            return Ok(items);
-        }
-
-        private bool ItemsExists(int id)
-        {
-            return _context.Items.Any(e => e.id == id);
-        }
+        
     }
 }
