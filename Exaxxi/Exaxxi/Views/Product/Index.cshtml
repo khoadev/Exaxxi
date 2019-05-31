@@ -168,11 +168,11 @@
                     });  
             }  
             $scope.slider = {
-                minValue: 0,
-                maxValue: 200,
+                minValue: @ViewBag.Trade_Min_Min,
+                maxValue: @ViewBag.Trade_Min_Max,
                 options: {
-                    floor: 0,
-                    ceil: 200,
+                    floor: @ViewBag.Trade_Min_Min,
+                    ceil: @ViewBag.Trade_Min_Max,
                     step: 1,
                     translate: function(value) {
                           return formatNumber(value, '.', ',') + " VND"
