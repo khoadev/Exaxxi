@@ -260,17 +260,18 @@
 
 .see-all {
     text-align: right;
-    font-family: ralemed;
+    font-family: ralemed!important;
+    font-size:15px!important;
 }
 
-    .see-all a {
-        color: black;
-        text-decoration: none;
-    }
+.see-all a {
+    color: black;
+    text-decoration: none;
+}
 
-        .see-all a:hover {
-            color: #ab1113;
-        }
+.see-all a:hover {
+    color: #ab1113;
+}
 
 #brand-background-1 div {
     height: 500px;
@@ -1379,9 +1380,59 @@ img {
 #preload-imgs {
     display: none;
 }
-.news-content-wrapper{
-    height:100vh;
-    overflow-y:auto;
+.news-content-department{
+    font-family:coolcond;
+    font-size:20px;
+}
+.news-content-title {
+    font-family: coolrg;
+    font-size: 30px;
+}
+.news-content-title a {
+    color:black;
+    text-decoration:none!important;
+    transition:0.3s;
+}
+.news-content-title a:hover{
+    color:#ab1113;
+}
+.news-content-sub {
+    font-family: coolcond;
+    font-size: 20px;
+    color: #777;
+}
+.news-content-sub-content .card {
+    border: none !important;
+    border-right: solid thin #efefef!important;
+    padding-right:5px
+}
+.news-content-sub-content .card-body {
+    padding:0px;
+}
+.news-department-list {
+    border-top: solid thin #efefef;
+    border-bottom: solid thin #efefef;
+    padding: 10px 0px 10px 0px;
+    font-family: coolcond;
+    font-size: 20px;
+}
+.news-department-list a{
+    color:black;
+    opacity:0.4;
+    text-decoration:none!important;
+    transition:0.3s;
+    padding: 0px 5px 0px 5px;
+}
+    .news-department-list a:hover {
+        opacity: 1;
+        border-left: solid thin #efefef;
+        border-right: solid thin #efefef;
+
+    }
+.news-content-wrapper {
+    height: 100vh;
+    padding: 20px 50px 50px 50px;
+    overflow-y: auto;
 }
 .news-recent-news {
     font-family: coolrg;
@@ -1390,8 +1441,9 @@ img {
     color:#ab1113;
     padding:40px 20px 40px 20px;
 }
-.news-recent-news-wrapper{
-    padding:20px 20px 30px 20px;
+.news-recent-news-wrapper {
+    padding: 20px 20px 30px 20px;
+    border-bottom: solid medium #f4f4f4;
 }
 .news-recent-date {
     font-family: coolrg;
@@ -1405,12 +1457,37 @@ img {
     text-decoration:none!important;
 
 }
-.news-content-wrapper {
-    padding: 20px 20px 30px 20px;
-}
+
 .news-content-main {
     font-family: coolrg;
     font-size: 50px;
+}
+.news-department-title{
+    font-family:coolrg;
+    font-size:35px;
+}
+.news-wrapper {
+    height: 300px;
+    padding: 15px 15px;
+}
+.news-content {
+    height: 100%;
+    border-radius: 15px;
+    background-size:cover!important;
+}
+.news-title-wrapper{
+    padding:120px 30px 20px 30px;
+    margin-bottom:10px;
+}
+.news-title-wrapper a{
+    color:white;
+    font-family:coolcond;
+    font-size:25px;
+    text-decoration:none!important;
+}
+.news-title-wrapper div {
+    font-family: coolrg;
+    color: #e5e5e5;
 }
 .scroll-content::-webkit-scrollbar {
     display: none;
@@ -1440,76 +1517,96 @@ img {
     border-radius:5px;
 
 }
-@media only screen and (max-width: 576px) {
-    .search-img {
-        height: auto;
-        width:100%;
-    }
-    .btn-fullwidth{
-        width:100%!important;
-    }
-    .g-recaptcha {
-        transform: scale(0.77);
-        transform-origin: 0 0;
-    }
-    .detail-row-first p {
-        text-align: center;
-        transform: translateY(43px);
-        background-color: brown;
-        color: white;
+@media only screen and (max-width: 1024px) {
+    .news-content-wrapper {
+        padding: 20px;
+        height:auto;
     }
 
-    .row.detail-row-first {
-        border: none;
-    }
-
-    img.img-fluid {
-        width: 100%;
-    }
-
-    /* Start content-wrapper */
-    .content-right .content-right-first {
-        padding-left: 0px;
-    }
-
-    .content-right .content-right-first h3 {
-        text-align: center;
-    }
-    /* End content-wrapper */
-    #title-text {
-        font-size: 30px;
-    }
-
-    #title-sub-text {
-        font-size: 15px;
-    }
-
-    #title-background {
-        height: 300px;
-    }
-
-    #subs-background {
-        padding: 30px 30px;
-        text-align: center;
-    }
-
-    .btn-subs-explore {
-        min-width: 100% !important;
-    }
-
-    .btn-subs {
-        width: 100%;
-    }
-
-    #subs-input {
-        min-width: 100%;
-    }
-
-    #subs-email-wrapper {
-        padding: 50px 30px;
-    }
-
-    #logreg-background {
-        padding: 50px 20px;
+    .news-title-wrapper {
+        padding: 120px 10px 20px 10px;
     }
 }
+    @media only screen and (max-width: 576px) {
+        .news-content-wrapper {
+            padding: 20px;
+            height: auto;
+        }
+        .search-img {
+            height: auto;
+            width: 100%;
+        }
+
+        .btn-fullwidth {
+            width: 100% !important;
+        }
+
+        .g-recaptcha {
+            transform: scale(0.77);
+            transform-origin: 0 0;
+        }
+
+        .detail-row-first p {
+            text-align: center;
+            transform: translateY(43px);
+            background-color: brown;
+            color: white;
+        }
+
+        .row.detail-row-first {
+            border: none;
+        }
+
+        img.img-fluid {
+            width: 100%;
+        }
+
+        /* Start content-wrapper */
+        .content-right .content-right-first {
+            padding-left: 0px;
+        }
+
+            .content-right .content-right-first h3 {
+                text-align: center;
+            }
+        /* End content-wrapper */
+        #title-text {
+            font-size: 30px;
+        }
+
+        #title-sub-text {
+            font-size: 15px;
+        }
+
+        #title-background {
+            height: 300px;
+        }
+
+        #subs-background {
+            padding: 30px 30px;
+            text-align: center;
+        }
+
+        .btn-subs-explore {
+            min-width: 100% !important;
+        }
+
+        .btn-subs {
+            width: 100%;
+        }
+
+        #subs-input {
+            min-width: 100%;
+        }
+
+        #subs-email-wrapper {
+            padding: 50px 30px;
+        }
+
+        #logreg-background {
+            padding: 50px 20px;
+        }
+        .news-content-sub-content .card {
+            border-top: solid thin #efefef !important;
+        }
+    }
