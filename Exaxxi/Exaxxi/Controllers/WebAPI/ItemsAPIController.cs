@@ -28,14 +28,21 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Items;
         }
 
-        [Route("TakeAllItemByIdBrand/{Id_Brand}")]
-        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand)
+        [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
+        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, string Qty)
         {
-            return _context.Items
-                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(g => g.d.id ==  Id_Brand)
-                .Select(p => p.c.a);
+            if (Qty == "all")
+            {
+                return _context.Items
+                    .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                    .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                    .Where(g => g.d.id == Id_Brand)
+                    .Select(p => p.c.a);
+            }
+            else
+            {
+                return null;
+            }
         }
         
         // GET: api/Items/5
