@@ -96,7 +96,7 @@ namespace Exaxxi.Controllers.WebAPI
         
 
         [AllowAnonymous, Route("PostUserLogin")]
-        public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
+        public IActionResult PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
             {
@@ -120,26 +120,7 @@ namespace Exaxxi.Controllers.WebAPI
             HttpContext.Session.SetString("nameUser", user.name);
 
             //Ghi nhận đăng nhập thành công
-            var claims = new List<Claim> {
-                        new Claim(ClaimTypes.Email, user.email),
-                        new Claim(ClaimTypes.Name, user.name),
-                    };
-
-            //Create identity
-            ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
-            ClaimsPrincipal claimsPricipal = new ClaimsPrincipal(userIdentity);
-
-            await HttpContext.SignInAsync(claimsPricipal);
-
-            //Lấy lại trang yêu cầu (nếu có)
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Profile", "Login");//default
-            }
+            return Ok();
         }
 
         [AllowAnonymous, Route("PostRegister")]

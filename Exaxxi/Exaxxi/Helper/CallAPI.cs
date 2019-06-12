@@ -14,8 +14,8 @@ namespace Exaxxi.Helper
         {
             var Client = new HttpClient();
 
-            //Uri - Escanor: <!--http://localhost:51340 -->
             //Client.BaseAddress = new Uri("http://localhost:51341");
+            Client.BaseAddress = new Uri("http://localhost:51340");
             return Client;
         }
         public async Task<bool> postAPI(object obj, string link)

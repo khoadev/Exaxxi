@@ -151,7 +151,9 @@
                         </div>
                     </ul><!-- End Mega Menu -->
                 </li> <!-- End Search Mega Dropdown -->
-                @if (!User.Identity.IsAuthenticated)
+                @using Microsoft.AspNetCore.Http
+                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idUser").ToString()))
                 {
 
                     <li class="nav-item d-none d-md-flex btn-signup-wrapper">
@@ -166,7 +168,7 @@
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Profile">
                             Xin chào
-                            <b>@User.Identity.Name</b>
+                            <b>@HttpContextAccessor.HttpContext.Session.GetString("nameUser")</b>
                         </a>
                     </li>
                     <li>

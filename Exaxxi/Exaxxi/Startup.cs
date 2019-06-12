@@ -40,6 +40,7 @@ namespace Exaxxi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<ExaxxiDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Exaxxi"));
@@ -59,11 +60,7 @@ namespace Exaxxi
                 };
             });
             
-            services.AddMemoryCache();
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
-            });
+            services.AddMemoryCache();            
             services.AddDistributedMemoryCache();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>
@@ -71,7 +68,6 @@ namespace Exaxxi
 
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
-
                 options.Cookie.IsEssential = true;
             });
         }
@@ -104,8 +100,6 @@ namespace Exaxxi
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
                 //template: "api/{controller=Departments}/{id?}");
-
-
             });
 
         }
