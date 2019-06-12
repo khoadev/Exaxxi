@@ -43,23 +43,18 @@ namespace Exaxxi.Controllers
         }
 
         // GET: Product/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}").Result);
 
-            var items = await _context.Items
-                .Include(i => i.admin)
-                .Include(i => i.category)
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (items == null)
-            {
-                return NotFound();
-            }
+            //if (items == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(items);
+            ViewBag.IdItem = id;
+
+            return View(/*items*/);
         }
 
         // GET: Product/Create

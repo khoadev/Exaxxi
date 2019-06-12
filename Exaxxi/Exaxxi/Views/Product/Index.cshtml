@@ -78,7 +78,7 @@
                             <!-- Start product-title-wrapper -->
                             <div class="row">
                                 <div class="col-6 col-sm-6 col-md-6 product-name">
-                                    <a href="#">
+                                    <a href="/Product/Details?id={{x.id}}">
                                         {{x.name}}
                                     </a>
                                 </div>
@@ -148,7 +148,8 @@
 
                 var Array = {
                     cate: checkCate,
-                    size: checkSize
+                    size: checkSize,
+                    id_dep: @ViewBag.Id_Depart
                 }
 
                 $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(Array)).
