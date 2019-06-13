@@ -130,7 +130,7 @@ namespace Exaxxi.Controllers.WebAPI
             dynamic data = json;
             JArray cate = data.cate;
             JArray size = data.size;
-            int value_dep = data.id_dep;
+            int value_brand = data.id_brand;
 
             List<int> value_cate = cate.ToObject<List<int>>();
             List<int> value_size = size.ToObject<List<int>>();            
@@ -138,13 +138,12 @@ namespace Exaxxi.Controllers.WebAPI
             //Mới vào xổ ra hết Items
             var result = _context.Items.AsQueryable();
 
-            if(value_dep != 0)
+            if(value_brand != 0)
             {
                 result = result.Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Join(_context.Departments, e => e.d.id_department, f => f.id, (e, f) => new { e, f })
-                .Where(x => x.f.id == value_dep)
-                .Select(p => p.e.c.a);
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })                
+                .Where(x => x.d.id == value_brand)
+                .Select(p => p.c.a);
             }
 
             if(value_cate.Count != 0)
