@@ -28,6 +28,19 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.News.Include("department").Include("admin");
         }
+        [HttpGet("GetAll")]
+        public IEnumerable<NewsViewModel> GetAll()
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department)
+              .Select(n => new NewsViewModel
+              {
+                  news = n,
+                  name_admin = n.admin.name,
+                  en_name_depart = n.department.en_name,
+                  vi_name_depart = n.department.vi_name,
+                   id_depart=n.id_department
+              });
+        }
 
         // GET: api/News/5
         [HttpGet("{id}")]
@@ -46,6 +59,30 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(news);
+        }
+        [HttpGet("GetNewsOrderByTime")]
+        public IEnumerable<NewsViewModel> GetNewsOrderByTime()
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.date_create).Take(4)
+               .Select(n => new NewsViewModel
+               {
+                   news = n,
+                   name_admin = n.admin.name,
+                   en_name_depart = n.department.en_name,
+                   vi_name_depart = n.department.vi_name
+               });
+        }
+        [HttpGet("GetNewsOrderByView")]
+        public IEnumerable<NewsViewModel> GetNewsOrderByView()
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.view).Take(4)
+               .Select(n => new NewsViewModel
+               {
+                   news = n,
+                   name_admin = n.admin.name,
+                   en_name_depart = n.department.en_name,
+                   vi_name_depart = n.department.vi_name
+               });
         }
 
         [Route("GetNewsByDepart/{id_depart}")]
