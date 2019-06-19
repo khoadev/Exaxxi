@@ -26,7 +26,7 @@ namespace Exaxxi.Models
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-EH88R88\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -489,8 +489,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
-
+                    id_category = 1,
+                    active = true
                 },
                 new Items
                 {
@@ -503,7 +503,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -517,7 +518,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -531,7 +533,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -545,7 +548,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -559,7 +563,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -573,7 +578,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -587,7 +593,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -601,7 +608,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -615,7 +623,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -629,7 +638,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -643,7 +653,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 2
+                    id_category = 2,
+                    active = true
 
                 },
                 new Items
@@ -657,7 +668,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 2
+                    id_category = 2,
+                    active = true
 
                 },
                 new Items
@@ -671,7 +683,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 2
+                    id_category = 2,
+                    active = true
 
                 },
                 new Items
@@ -685,7 +698,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 2
+                    id_category = 2,
+                    active = true
 
                 },
                 new Items
@@ -699,7 +713,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 2
+                    id_category = 2,
+                    active = true
 
                 }
             );
