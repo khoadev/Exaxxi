@@ -41,7 +41,19 @@ namespace Exaxxi.Controllers.WebAPI
                    id_depart=n.id_department
               });
         }
-
+        [HttpGet("GetById/{id}")]
+        public NewsViewModel GetById(int id)
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department).Where(p=>p.id==id)
+              .Select(n => new NewsViewModel
+              {
+                  news = n,
+                  name_admin = n.admin.name,
+                  en_name_depart = n.department.en_name,
+                  vi_name_depart = n.department.vi_name,
+                  id_depart = n.id_department
+              }).FirstOrDefault();
+        }
         // GET: api/News/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNews([FromRoute] int id)
@@ -85,10 +97,10 @@ namespace Exaxxi.Controllers.WebAPI
                });
         }
 
-        [Route("GetNewsByDepart/{id_depart}")]
-        public IEnumerable<NewsViewModel> GetNewsByDepart(int id_depart)
+        [Route("GetNewsByDepart/{id_depart}/{id}")]
+        public IEnumerable<NewsViewModel> GetNewsByDepart(int id_depart,int id)
         {
-            return _context.News.Include(n => n.admin).Include(n => n.department).Where(p => p.id_department == id_depart).OrderBy(p => p.date_create)
+            return _context.News.Include(n => n.admin).Include(n => n.department).Where(p => p.id_department == id_depart && p.id!=id).OrderBy(p => p.date_create)
                 .Select(n => new NewsViewModel {
                     news = n,
                     name_admin = n.admin.name,
@@ -96,6 +108,7 @@ namespace Exaxxi.Controllers.WebAPI
                     vi_name_depart = n.department.vi_name
             });
         }
+
         // GET: api/News/GetNewsDetail/5
         [HttpGet("GetNewsDetail/{id}")]
         public async Task<IActionResult> GetNewsDetail([FromRoute] int id)
