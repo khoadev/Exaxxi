@@ -25,28 +25,30 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Items> GetItems()
         {
-            return _context.Items.Include("admin").Include("category");
+            return _context.Items;
         }
 
-        [Route("TakeAllItemByIdBrand/{Id_Brand}")]
-        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand)
+        [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
+        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, string Qty)
         {
-            return _context.Items
-                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(g => g.d.id ==  Id_Brand)
-                .Select(p => p.c.a);
+            if (Qty == "all")
+            {
+                return _context.Items
+                    .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                    .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                    .Where(g => g.d.id == Id_Brand)
+                    .Select(p => p.c.a);
+            }
+            else
+            {
+                return null;
+            }
         }
-        
+
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetItems([FromRoute] int id)
+        public async Task<ActionResult<Items>> GetItems(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var items = await _context.Items.FindAsync(id);
 
             if (items == null)
@@ -54,9 +56,28 @@ namespace Exaxxi.Controllers.WebAPI
                 return NotFound();
             }
 
-            return Ok(items);
+            return items;
         }
-        
+
+        [HttpGet("TakeAttributeItem/{idItem}")]
+        public IEnumerable<PostViewModel> TakeAttributeItem(int idItem)
+        {
+            var items = _context.Items
+                    .Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
+                    .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                    .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
+                    .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
+                    .Where(g => g.h.e.c.a.id == idItem)
+                    .Select(p => new PostViewModel
+                    {
+                        item = p.h.e.c.a,
+                        size = p.h.e.d.VN,
+                        brand_name = p.i.name
+                    }).ToList();
+
+            return items;
+        }
+
         [Route("ProductDetail")]
         public IActionResult ProductDetail()
         {
@@ -74,107 +95,82 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-        [HttpGet("GetItemsDetail/{id}")]
-        public async Task<IActionResult> GetItemDetail([FromRoute] int id)
+
+        [Route("TakeLowestAskMinMin")]
+        public IActionResult TakeLowestAskMinMin()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var items = await _context.Items.Include(c => c.admin).Include(p => p.category)
-                .FirstOrDefaultAsync(m => m.id == id);
+            var lowest_ask_min = _context.Items.Select(p => p.lowest_ask).Min();
 
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(items);
+            return Ok(lowest_ask_min);
         }
 
-        // PUT: api/Items/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutItems([FromRoute] int id, [FromBody] Items items)
+        [Route("TakeLowestAskMinMax")]
+        public IActionResult TakeLowestAskMinMax()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != items.id)
-            {
-                return BadRequest();
-            }
+            var lowest_ask_max = _context.Items.Select(p => p.lowest_ask).Max();
 
-            _context.Entry(items).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ItemsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(lowest_ask_max);
+        }
+        [Route("GetItemByIdDepart/{id}")]
+        public IEnumerable<Items> GetItemByIdDepart(int id)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(p => p.d.id_department == id)
+                .Select(p => p.c.a);
         }
 
-        // POST: api/Items
+
         [HttpPost]
-        public async Task<IActionResult> PostItems([FromBody] Items items)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Items.Add(items);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetItems", new { id = items.id }, items);
-        }
-
         [Route("TakeIdCategory_Checkbox")]
-        public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JArray json)
+        public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
         {
-            List<int> value = json.ToObject<List<int>>();
+            dynamic data = json;
+            JArray cate = data.cate;
+            JArray size = data.size;
+            int value_brand = data.id_brand;
 
-            return _context.Items.Where(x => value.Contains(x.id_category)).OrderBy(x => x.name).ToList();          
-        }
-        
-        // DELETE: api/Items/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteItems([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
+            List<int> value_cate = cate.ToObject<List<int>>();
+            List<int> value_size = size.ToObject<List<int>>();
+
+            //Mới vào xổ ra hết Items
+            var result = _context.Items.AsQueryable();
+
+            if (value_brand != 0)
             {
-                return BadRequest(ModelState);
+                result = result.Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(x => x.d.id == value_brand)
+                .Select(p => p.c.a);
             }
 
-            var items = await _context.Items.FindAsync(id);
-            if (items == null)
+            if (value_cate.Count != 0)
             {
-                return NotFound();
+                result = result.Where(x => value_cate.Contains(x.id_category)).OrderBy(x => x.name);
             }
 
-            _context.Items.Remove(items);
-            await _context.SaveChangesAsync();
+            if (value_size.Count != 0)
+            {
+                result = result.Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
+                    .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                    .Where(x => value_size.Contains(x.d.id))
+                    .Select(p => p.c.a);
+            }
 
-            return Ok(items);
+            return result.ToList();
         }
-        [HttpGet("ItemsExists/{id}")]
-        private bool ItemsExists(int id)
-        {
-            return _context.Items.Any(e => e.id == id);
-        }
+
+
     }
 }

@@ -104,19 +104,7 @@ function formatNumber(nStr, decSeperate, groupSeperate) {
     }
     return x1 + x2;
 }
-$(function () {
-    $("#slider-range").slider({
-        range: true,
-        min: 0,
-        max: 2000000,
-        values: [200000, 1500000],
-        slide: function (event, ui) {
-            $("#amount").val(formatNumber(ui.values[0], '.', ',') + " VND" + " - " + formatNumber(ui.values[1], '.', ',') + " VND");
-        }
-    });
-    $("#amount").val(formatNumber($("#slider-range").slider("values", 0), '.', ',')+
-        " VND - " + formatNumber($("#slider-range").slider("values", 1), '.', ',') + " VND");
-});
+
 
 $(function () {
     $("#slider-range-min").slider({
@@ -211,17 +199,40 @@ $(document).ready(function () {
     var unit = $(".xx-content").outerWidth();
     //var numItems = $('.xx-content').length;
     //console.log(numItems);
-    $('.horizon-prev').click(function () {
+    $('#popular-prev').click(function () {
         event.preventDefault();
-        $('.scroll-content').animate({
+        $('#popular-scroll-content').animate({
             scrollLeft: "-=" + unit + "px"
         }, "fast");
     });
-
-    $('.horizon-next').click(function () {
+    $('#lowest-prev').click(function () {
         event.preventDefault();
-        $('.scroll-content').animate({
+        $('#lowest-scroll-content').animate({
+            scrollLeft: "-=" + unit + "px"
+        }, "fast");
+    });
+    $('#highest-prev').click(function () {
+        event.preventDefault();
+        $('#highest-scroll-content').animate({
+            scrollLeft: "-=" + unit + "px"
+        }, "fast");
+    });
+    $('#popular-next').click(function () {
+        event.preventDefault();
+        $('#popular-scroll-content').animate({
             scrollLeft: "+="+unit+"px"
+        }, "fast");
+    });
+    $('#lowest-next').click(function () {
+        event.preventDefault();
+        $('#lowest-scroll-content').animate({
+            scrollLeft: "+=" + unit + "px"
+        }, "fast");
+    });
+    $('#highest-next').click(function () {
+        event.preventDefault();
+        $('#highest-scroll-content').animate({
+            scrollLeft: "+=" + unit + "px"
         }, "fast");
     });
 });

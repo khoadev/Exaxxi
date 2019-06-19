@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Controllers
 {
-    [Authorize]
+    
     public class LoginController : Controller
     {
         private readonly ExaxxiDbContext _exx;
@@ -35,7 +35,7 @@ namespace Exaxxi.Controllers
             return View("Login");
         }
 
-        [HttpGet, AllowAnonymous]
+       
         public IActionResult Login(string returnUrl = "")
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -55,26 +55,24 @@ namespace Exaxxi.Controllers
             }
             return RedirectToAction("Login");
         }
-
-        public async Task<IActionResult> Logout()
+       
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync();
+            HttpContext.Session.Remove("idUser");
+            HttpContext.Session.Remove("nameUser");
             return RedirectToAction("Index");
         }
 
-        [HttpGet, AllowAnonymous]
         public IActionResult Register()
         {
             return View("Login");
         }
 
-        [HttpGet, AllowAnonymous]
         public IActionResult PasswordForget()
         {
             return View();
         }
 
-        [HttpGet, AllowAnonymous]
         public IActionResult RenewPassword (string email, string hash)
         {
             ViewBag.Email = email;

@@ -34,6 +34,8 @@ namespace Exaxxi.Models
         public DateTime date_create { get; set; }
         public bool active { get; set; }
         public int id_admin { get; set; }
+        [Display(Name = "Lượt xem")]
+        public int view { get; set; }
         [ForeignKey("id_admin")]
         public Admins admin { get; set; }
         public int id_department { get; set; }

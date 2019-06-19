@@ -33,27 +33,28 @@ namespace Exaxxi.Controllers
             //Get Category
             if (idCate == null) ViewBag.Id_Cate = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/Take1CateByIdBrand/{ViewBag.Id_Brand}").Result).id; else ViewBag.Id_Cate = idCate;
 
+            //Get Trade_Min
+            ViewBag.LA_Min_Min = _api.getAPI("api/ItemsAPI/TakeLowestAskMinMin").Result;
+
+            //Get Trade_Max
+            ViewBag.LA_Min_Max = _api.getAPI("api/ItemsAPI/TakeLowestAskMinMax").Result;
+
             return View();
         }
 
         // GET: Product/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}").Result);
 
-            var items = await _context.Items
-                .Include(i => i.admin)
-                .Include(i => i.category)
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (items == null)
-            {
-                return NotFound();
-            }
+            //if (items == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(items);
+            ViewBag.IdItem = id;
+
+            return View(/*items*/);
         }
 
         // GET: Product/Create

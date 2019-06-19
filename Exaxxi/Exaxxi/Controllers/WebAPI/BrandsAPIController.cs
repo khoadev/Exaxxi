@@ -39,20 +39,26 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         [Route("Take1BrandByIdDepart/{Id_Depart}")]
-        public Brands Get1Brands(int Id_Depart)
+        public Brands Take1BrandByIdDepart(int Id_Depart)
         {
             return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).FirstOrDefault();
         }
-        [Route("Take5BrandByIdDepart/{Id_Depart}")]
-        public IEnumerable<Brands> GetBrandsByIdDep(int Id_Depart)
-        {
-            return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).Take(5);
-        }
         
-        [Route("TakeAllBrandByIdDepart/{Id_Depart}")]
-        public IEnumerable<Brands> GetAllBrand(int Id_Depart)
+        [Route("TakeBrandByIdDepart/{Id_Depart}/{Qty}")]
+        public IEnumerable<Brands> TakeBrandByIdDepart(int Id_Depart, string Qty)
         {
-            return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order);
+            if(Qty == "all")
+            {
+                return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order);
+            }
+            if(Qty == "5")
+            {
+                return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).Take(5);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // GET: api/Brands/5
@@ -92,80 +98,6 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(categories);
         }
-        // PUT: api/Brands/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBrands([FromRoute] int id, [FromBody] Brands brands)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != brands.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(brands).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BrandsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Brands
-        [HttpPost]
-        public async Task<IActionResult> PostBrands([FromBody] Brands brands)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Brands.Add(brands);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBrands", new { id = brands.id }, brands);
-        }
-
-        // DELETE: api/Brands/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBrands([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var brands = await _context.Brands.FindAsync(id);
-            if (brands == null)
-            {
-                return NotFound();
-            }
-
-            _context.Brands.Remove(brands);
-            await _context.SaveChangesAsync();
-
-            return Ok(brands);
-        }
-        [HttpGet("BrandsExists/{id}")]
-        private bool BrandsExists(int id)
-        {
-            return _context.Brands.Any(e => e.id == id);
-        }
+        
     }
 }

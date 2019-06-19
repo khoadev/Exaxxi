@@ -12,5 +12,6 @@ namespace Exaxxi.ViewModels
         public string vi_name_depart { get; set; }
         public string en_name_depart { get; set; }
         public string name_admin { get; set; }
+        public int id_depart { get; set; }
     }
 }

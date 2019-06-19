@@ -93,58 +93,10 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(user);
         }
 
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsers([FromRoute] int id, [FromBody] Users users)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != users.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(users).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Users
-        [HttpPost]
-        public async Task<IActionResult> PostUsers([FromBody] Users users)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Users.Add(users);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsers", new { id = users.id }, users);
-        }
+        
 
         [AllowAnonymous, Route("PostUserLogin")]
-        public async Task<IActionResult> PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
+        public IActionResult PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
             {
@@ -168,26 +120,7 @@ namespace Exaxxi.Controllers.WebAPI
             HttpContext.Session.SetString("nameUser", user.name);
 
             //Ghi nhận đăng nhập thành công
-            var claims = new List<Claim> {
-                        new Claim(ClaimTypes.Email, user.email),
-                        new Claim(ClaimTypes.Name, user.name),
-                    };
-
-            //Create identity
-            ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
-            ClaimsPrincipal claimsPricipal = new ClaimsPrincipal(userIdentity);
-
-            await HttpContext.SignInAsync(claimsPricipal);
-
-            //Lấy lại trang yêu cầu (nếu có)
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Profile", "Login");//default
-            }
+            return Ok();
         }
 
         [AllowAnonymous, Route("PostRegister")]
@@ -259,31 +192,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsers([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var users = await _context.Users.FindAsync(id);
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(users);
-            await _context.SaveChangesAsync();
-
-            return Ok(users);
-        }
-
-        private bool UsersExists(int id)
-        {
-            return _context.Users.Any(e => e.id == id);
-        }
+       
 
     }
 }

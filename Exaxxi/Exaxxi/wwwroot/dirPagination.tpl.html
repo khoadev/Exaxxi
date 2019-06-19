@@ -1,0 +1,26 @@
+<ul class="pagination pagination-md justify-content-end" id="pagination-custom" ng-if="1 < pages.length">
+    <li ng-if="boundaryLinks"  class="page-item  {{ pagination.current == 1 ? 'disabled pagination-disable' : ''}}">
+        <a class="page-link page-link-custom" href="" ng-click="setCurrent(1)"><i class="fas fa-angle-double-left"></i></a>
+    </li>
+    <li ng-if="directionLinks" class="page-item ng-scope {{ pagination.current == 1 ? 'disabled pagination-disable' : ''}}">
+        <a href="" ng-click="setCurrent(pagination.current - 1)" class="ng-binding page-link page-link-custom"><i class="fas fa-angle-left"></i></a>
+    </li>
+    <li class="page-item " ng-repeat="pageNumber in pages track by $index">
+        <a class="page-link page-link-custom {{ pagination.current == pageNumber ? 'pagination-active' : ''}}" href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a>
+    </li>
+
+    <li ng-if="directionLinks" class="page-item ng-scope {{ pagination.current == pagination.last ? 'disabled pagination-disable' : ''}}">
+        <a href="" ng-click="setCurrent(pagination.current + 1)" class="ng-binding page-link page-link-custom"><i class="fas fa-angle-right"></i></a>
+    </li>
+    <li ng-if="boundaryLinks" class="page-item {{ pagination.current == pagination.last ? 'disabled pagination-disable' : ''}}">
+        <a class="page-link page-link-custom" href="" ng-click="setCurrent(pagination.last)"><i class="fas fa-angle-double-right"></i></a>
+    </li>
+</ul>
+<!--<ul class="pagination pagination-md justify-content-end" id="pagination-custom">
+    <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-left"></i></a></li>
+    <li class="page-item"><a class="page-link page-link-custom pagination-active" href="#">1</a></li>
+    <li class="page-item"><a class="page-link page-link-custom" href="#">2</a></li>
+    <li id="pagination-dots"> <i class="fas fa-ellipsis-h"> </i> </li>
+    <li class="page-item"><a class="page-link page-link-custom" href="#">7</a></li>
+    <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+</ul>-->

@@ -1,10 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
+@{
+    var scroll = "";
+    string actionName = ViewContext.RouteData.Values["action"].ToString();
+    if (actionName == "Register")
+    {
+        scroll = "navbar-custom-scrolled";
+    }
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Exaxxi</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
@@ -12,14 +19,19 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+        <link rel="stylesheet" href="~/css/rzslider.min.css">
+        <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js"></script>
     </environment>
+
 </head>
-<body ng-app="exaxxiApp" >
+
+<body ng-app="exaxxiApp">
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div id="sidenav-logsign"><a asp-controller="Login" asp-action="Register">SIGN UP</a>/<a asp-controller="Login" asp-action="Login" id="sidenav-logsign-login-text">login</a></div>
-        <a asp-controller="Home" asp-action="Index">Exxaxxi</a>
+        <a asp-controller="Home" asp-action="Index">Exaxxi</a>
         <div id="sidenav-sub-section">
             <!-- Start sidenav-sub... -->
             <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#cate1">Cate's Name</a>
@@ -40,18 +52,20 @@
         <a href="#">FaQ</a>
     </div> <!-- End sidenav -->
 
-    <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top" id="fixed-top">
+    <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top @scroll" id="fixed-top">
         <!-- Start nav -->
         <!-- Brand -->
         <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="brand">Exxaxxi</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="brand">
+                Exxaxxi 
+            </a>
             <button class="navbar-toggler order-first d-flex d-sm-none" type="button" onclick="openNav()">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Links -->
             <ul class="navbar-nav">
                 <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" href="#"  data-toggle="dropdown">Browse</a>
+                    <a class="nav-link" href="#" data-toggle="dropdown">Browse</a>
                     <ul class="dropdown-menu mega-dropdown-menu avoid" ng-controller="browseCtrl">
                         <!-- Start Mega Menu -->
                         <div class="container">
@@ -60,8 +74,8 @@
                                     <div class="col-12 flex-nowrap browse-radio-wrapper custom-scrollbar" style="{{takedivCount<6 ? 'justify-content: center;' : ''}}" id="browse-radio-wrapper">
 
                                         <div class="browse-radio" ng-repeat="x in deps">
-                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''"/>
-                                            
+                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''" />
+
                                             <label for="{{x.id}}" class="{{x.id==selectedObj.id?'label-checked':''}}">
                                                 {{x.vi_name}}
                                             </label>
@@ -137,7 +151,9 @@
                         </div>
                     </ul><!-- End Mega Menu -->
                 </li> <!-- End Search Mega Dropdown -->
-                @if (!User.Identity.IsAuthenticated)
+                @using Microsoft.AspNetCore.Http
+                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idUser").ToString()))
                 {
 
                     <li class="nav-item d-none d-md-flex btn-signup-wrapper">
@@ -152,7 +168,7 @@
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Profile">
                             Xin chào
-                            <b>@User.Identity.Name</b>
+                            <b>@HttpContextAccessor.HttpContext.Session.GetString("nameUser")</b>
                         </a>
                     </li>
                     <li>
@@ -162,7 +178,7 @@
                     </li>
                 }
             </ul>
-              
+
         </div>
     </nav> <!-- End nav -->
 
@@ -229,39 +245,41 @@
         <script src="~/js/jquery-3.4.1.js"></script>
         <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/demo.js" asp-append-version="true"></script>
-        <script src="~/js/angularCtrl.js" asp-append-version="true"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="~/js/dirPagination.js"></script>
+        <script src="~/js/rzslider.min.js"></script>
     </environment>
     <script>
-    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages']);
+        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider','angularUtils.directives.dirPagination']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $http.get("/api/PostsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
         });
-        exaxxiApp.controller("browseCtrl", function($scope, $http) {
-             var div = document.querySelector('#browse-radio-wrapper');
+        exaxxiApp.controller("browseCtrl", function ($scope, $http) {
+            var div = document.querySelector('#browse-radio-wrapper');
             var divCount = div.querySelectorAll('div').length;
-             $scope.selectedObj = {};
+            $scope.selectedObj = {};
             $scope.takedivCount = divCount;
-             $http.get("/api/DepartmentsAPI")
+            $http.get("/api/DepartmentsAPI")
                 .then(function (response) { $scope.deps = response.data; });
-           
+
             $http.get("/api/BrandsAPI")
                 .then(function (response) { $scope.brandcates = response.data; });
-             $http.get("/api/CategoriesAPI")
+            $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.cates = response.data; });
         });
         $('.avoid').click(function (e) {
             e.stopPropagation();
-        });        
+        });
     </script>
 
     @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts2", required: false)
 
 
 </body>

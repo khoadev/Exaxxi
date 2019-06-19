@@ -28,6 +28,19 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.News.Include("department").Include("admin");
         }
+        [HttpGet("GetAll")]
+        public IEnumerable<NewsViewModel> GetAll()
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department)
+              .Select(n => new NewsViewModel
+              {
+                  news = n,
+                  name_admin = n.admin.name,
+                  en_name_depart = n.department.en_name,
+                  vi_name_depart = n.department.vi_name,
+                   id_depart=n.id_department
+              });
+        }
 
         // GET: api/News/5
         [HttpGet("{id}")]
@@ -46,6 +59,30 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(news);
+        }
+        [HttpGet("GetNewsOrderByTime")]
+        public IEnumerable<NewsViewModel> GetNewsOrderByTime()
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.date_create).Take(4)
+               .Select(n => new NewsViewModel
+               {
+                   news = n,
+                   name_admin = n.admin.name,
+                   en_name_depart = n.department.en_name,
+                   vi_name_depart = n.department.vi_name
+               });
+        }
+        [HttpGet("GetNewsOrderByView")]
+        public IEnumerable<NewsViewModel> GetNewsOrderByView()
+        {
+            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.view).Take(4)
+               .Select(n => new NewsViewModel
+               {
+                   news = n,
+                   name_admin = n.admin.name,
+                   en_name_depart = n.department.en_name,
+                   vi_name_depart = n.department.vi_name
+               });
         }
 
         [Route("GetNewsByDepart/{id_depart}")]
@@ -79,58 +116,8 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(news);
 
         }
-        // PUT: api/News/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutNews([FromRoute] int id, [FromBody] News news)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != news.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(news).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NewsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/News
+        
         [HttpPost]
-        public async Task<IActionResult> PostNews([FromBody] News news)
-        {
-
-            if (!ModelState.IsValid)
-            {
-
-                return BadRequest(ModelState);
-            }
-
-            _context.News.Add(news);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNews", new { id = news.id }, news);
-        }
-
         // POST: api/News/PostCreateNews
         [Route("PostCreateNews")]
         public async Task<IActionResult> PostCreateNews([FromBody] News news)
@@ -147,30 +134,6 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok();
         }
 
-        // DELETE: api/News/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNews([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var news = await _context.News.FindAsync(id);
-            if (news == null)
-            {
-                return NotFound();
-            }
-
-            _context.News.Remove(news);
-            await _context.SaveChangesAsync();
-
-            return Ok(news);
-        }
-        [HttpGet("NewsExists/{id}")]
-        private bool NewsExists(int id)
-        {
-            return _context.News.Any(e => e.id == id);
-        }
+       
     }
 }
