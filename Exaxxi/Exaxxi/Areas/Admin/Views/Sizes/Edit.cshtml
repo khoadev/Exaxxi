@@ -60,11 +60,11 @@
                         $(data).each(function (index, value) {
                             var idsize = @Model.id_ds_size;
                             if (idsize == value.id) {
-                                var option = $("<option/>").attr("value", value.id).attr("selected", "selected").html(value.id);
+                                var option = $("<option/>").attr("value", value.id).attr("selected", "selected").html(value.vn);
 
 
                             } else {
-                                var option = $("<option/>").attr("value", value.id).html(value.id);
+                                var option = $("<option/>").attr("value", value.id).html(value.vn);
                             }
                             $("#size").append(option)
                         });

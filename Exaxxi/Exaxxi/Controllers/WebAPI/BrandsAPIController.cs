@@ -19,7 +19,12 @@ namespace Exaxxi.Controllers.WebAPI
         {
             _context = context;
         }
-
+        //GET: api/BrandsDefault
+        [HttpGet("BrandsDefault")]
+        public IEnumerable<Brands> BrandsDefault()
+        {
+            return _context.Brands.Include("department");
+        }
         // GET: api/Brands
         [HttpGet]
         public IEnumerable<Brands> GetBrands()

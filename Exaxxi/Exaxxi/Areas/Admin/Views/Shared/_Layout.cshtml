@@ -9,13 +9,21 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     </environment>
 
 </head>
-<body ng-app="exaxxiApp">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+@{
+    var display = "";
+    string actionName = ViewContext.RouteData.Values["action"].ToString();
+    if(actionName == "FileBrowse")
+    {
+        display = "d-none";
+    }
+    }
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark @display">
         <!-- Start nav -->
         <!-- Brand -->
         <div class="container">
@@ -55,6 +63,12 @@
                     <li class="nav-item d-none d-md-flex">
                         <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">Sizes</a>
                     </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">Item</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">Danh sách size</a>
+                    </li>
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">
                             Xin chào
@@ -92,15 +106,17 @@
     </nav> <!-- End nav -->
 
 
-    <div class="container body-content">
+    <div class="container body-content ">
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="@display">
+
             <p>&copy; 2019 - Exaxxi</p>
         </footer>
     </div>
     <script src="~/js/jquery-3.4.1.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

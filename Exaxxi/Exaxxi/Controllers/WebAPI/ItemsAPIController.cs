@@ -44,7 +44,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return null;
             }
         }
-        
+
         // GET: api/Items/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Items>> GetItems(int id)
@@ -121,7 +121,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(lowest_ask_max);
         }
-       [Route("GetItemByIdDepart/{id}")]
+        [Route("GetItemByIdDepart/{id}")]
         public IEnumerable<Items> GetItemByIdDepart(int id)
         {
             return _context.Items
@@ -130,7 +130,6 @@ namespace Exaxxi.Controllers.WebAPI
                 .Where(p => p.d.id_department == id)
                 .Select(p => p.c.a);
         }
-      
 
         [HttpPost]
         [Route("TakeIdCategory_Checkbox")]
@@ -142,25 +141,25 @@ namespace Exaxxi.Controllers.WebAPI
             int value_brand = data.id_brand;
 
             List<int> value_cate = cate.ToObject<List<int>>();
-            List<int> value_size = size.ToObject<List<int>>();            
+            List<int> value_size = size.ToObject<List<int>>();
 
             //Mới vào xổ ra hết Items
             var result = _context.Items.AsQueryable();
 
-            if(value_brand != 0)
+            if (value_brand != 0)
             {
                 result = result.Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })                
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
                 .Where(x => x.d.id == value_brand)
                 .Select(p => p.c.a);
             }
 
-            if(value_cate.Count != 0)
+            if (value_cate.Count != 0)
             {
                 result = result.Where(x => value_cate.Contains(x.id_category)).OrderBy(x => x.name);
             }
 
-            if(value_size.Count != 0)
+            if (value_size.Count != 0)
             {
                 result = result.Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
                     .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
@@ -170,7 +169,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return result.ToList();
         }
-        
-        
+
+
     }
 }

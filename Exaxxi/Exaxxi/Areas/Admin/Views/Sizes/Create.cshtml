@@ -56,7 +56,7 @@
                 success: function (data) {
                     $(data).each(function (index, value) {
 
-                        var option = $("<option/>").attr("value", value.id).html(value.id);
+                        var option = $("<option/>").attr("value", value.id).html(value.vn);
 
                         $("#size").append(option)
                     });

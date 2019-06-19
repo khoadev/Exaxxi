@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\MyFiles\**" />
+    <Content Remove="wwwroot\MyFiles\**" />
+    <EmbeddedResource Remove="wwwroot\MyFiles\**" />
+    <None Remove="wwwroot\MyFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="angular-file-upload" Version="12.2.13" />
     <PackageReference Include="MailKit" Version="2.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -20,9 +27,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\images\item\" />
     <Folder Include="wwwroot\images\brand\" />
     <Folder Include="wwwroot\images\news\" />
-    <Folder Include="wwwroot\MyFiles\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
