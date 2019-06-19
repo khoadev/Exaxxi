@@ -14,7 +14,6 @@ namespace Exaxxi.Helper
         {
             var Client = new HttpClient();
 
-            //Client.BaseAddress = new Uri("http://localhost:51341");
             Client.BaseAddress = new Uri("http://localhost:51340");
             return Client;
         }
