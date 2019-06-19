@@ -121,7 +121,16 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(lowest_ask_max);
         }
-
+       [Route("GetItemByIdDepart/{id}")]
+        public IEnumerable<Items> GetItemByIdDepart(int id)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(p => p.d.id_department == id)
+                .Select(p => p.c.a);
+        }
+      
 
         [HttpPost]
         [Route("TakeIdCategory_Checkbox")]
