@@ -28,6 +28,7 @@ namespace Exaxxi.Models
         {
             optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-262PU69\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
 
+
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {

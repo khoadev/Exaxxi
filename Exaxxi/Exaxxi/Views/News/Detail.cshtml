@@ -1,0 +1,112 @@
+﻿
+@model Exaxxi.ViewModels.NewsViewModel
+
+@{
+    ViewData["Title"] = "News";
+
+}
+
+<div class="top-wrapper" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/@Model.news.img) center;" ng-controller="Show">
+    <!-- Start top-wrapper -->
+    <div class="container">
+        <!-- Start Container -->
+        <div class="top-title">
+            <!-- Start top-title -->
+            <p class="top-title-first-text"> <span>@Model.name_admin</span> - @Model.news.date_create</p>
+            <h3>@Model.news.vi_title</h3>
+        </div> <!-- End top-title -->
+    </div> <!-- End container -->
+</div> <!-- End top-wrapper -->
+
+
+
+<section class="content-wrapper" ng-controller="Show">
+    <!-- Start content-Wrapper -->
+    <div class="container">
+        <!-- Start container -->
+        <div class="row">
+            <!-- Start row -->
+            <div class="col-sm-8 content-left">
+               @Model.news.vi_content
+            </div> <!-- End content-left -->
+
+            <div class="col-sm-4 push-sm-0 mt-2 content-right">
+                <!-- Start content-right -->
+                <h3>Related News</h3>
+                <div class="content-right-first" ng-repeat="x in news | limitTo:4">
+                    <!-- Start content-right-first 1-->
+
+                    <div class="row content-right-first-news">
+                        <div class="col-4">
+                            <img src="../images/{{x.news.img}}" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-8 pl-0">
+                            <p>{{x.news.vi_title}}<span class="content-right-first-date">{{timeDiff(x.news.date_create)}}</span></p>
+                        </div>
+                    </div>
+
+                </div> <!-- End content-right-first 1-->
+                <h3>Related Products</h3>
+                <div class="content-right-first mt-2" ng-repeat="x in items | limitTo:4">
+                    <!-- Start content-right-first 2-->
+
+                    <div class="row content-right-first-news">
+                        <div class="col-4">
+                            <img src="../images/{{x.img}}" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-8 pl-0">
+                            <p>{{x.name}}<span class="content-right-first-price">{{x.lowest_ask}}</span></p>
+                        </div>
+                    </div>
+                    
+                </div> <!-- End content-right-first 2-->
+
+
+                <div class="text-xs-center content-right-second">
+                    <h3 align="center">Subscribe Now</h3>
+                    <div class="form-group">
+                        <input type="text" class="form-control import" placeholder="Email Address">
+                    </div>
+                    <button type="submit" class="btn btn-warning form-control send">Subscribe</button>
+                </div>
+
+            </div> <!-- End content-right -->
+
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section> <!-- End content-wrapper -->
+@section Scripts{ 
+    <script>
+        exaxxiApp.controller('Show', function ($scope,$http) {
+            $scope.timeDiff = function (time) {
+                var now = Date.now();
+                var teo = new Date(time).getTime();
+                var milisecondsDiff = now - teo;
+                var qd = Math.round(milisecondsDiff / (1000 * 60));
+                if (qd < 10) {
+                    return "Just Now";
+                }
+                if (qd < 60 && qd > 10) {
+                    return qd + " minutes ago";
+                }
+                if (qd > 60) {
+                    var day = new Date(time);
+                    return day.toDateString();
+                }
+
+            };
+           
+
+            $http.get("/api/NewsAPI/GetNewsByDepart/" +@Model.id_depart+"/"+@Model.news.id)
+                .then(function (response) {
+                    $scope.news = response.data;
+                });
+            $http.get("/api/ItemsAPI/GetItemByIdDepart/" +@Model.id_depart)
+                .then(function (rs) {
+                    $scope.items = rs.data;
+
+                });
+        });
+       
+    </script>
+}

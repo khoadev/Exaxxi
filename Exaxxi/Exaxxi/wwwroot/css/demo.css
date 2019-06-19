@@ -831,8 +831,8 @@
 
 .top-wrapper {
     padding: 100px 0 20px 0;
-    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/attractive-battle-F974902.jpg) center;
-    background-size: cover;
+    
+    background-size: cover!important;
 }
 
 .top-wrapper .top-title p {
@@ -1345,6 +1345,9 @@ top-title-first-text {
     color: #b9b9b9;
     font-family:ralemed;
 }
+.size-label div{
+    display:inline;
+}
 /* End product-detail css */
 /* ------------------------------------------------- */
 @media screen and (max-height: 450px) {
@@ -1420,8 +1423,8 @@ img {
     color:black;
     opacity:0.4;
     text-decoration:none!important;
-    transition:0.3s;
-    padding: 0px 5px 0px 5px;
+    transition:0.5s;
+    padding: 0px 20px 0px 20px;
 }
     .news-department-list a:hover {
         opacity: 1;

@@ -131,7 +131,6 @@ namespace Exaxxi.Controllers.WebAPI
                 .Select(p => p.c.a);
         }
 
-
         [HttpPost]
         [Route("TakeIdCategory_Checkbox")]
         public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
