@@ -25,7 +25,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Items> GetItems()
         {
-            return _context.Items;
+            return _context.Items.Include("admin").Include("category");
         }
 
         [Route("TakeAllItemByIdBrand/{Id_Brand}")]
@@ -74,7 +74,24 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-           
+        [HttpGet("GetItemsDetail/{id}")]
+        public async Task<IActionResult> GetItemDetail([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = await _context.Items.Include(c => c.admin).Include(p => p.category)
+                .FirstOrDefaultAsync(m => m.id == id);
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
 
         // PUT: api/Items/5
         [HttpPut("{id}")]
@@ -154,7 +171,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-
+        [HttpGet("ItemsExists/{id}")]
         private bool ItemsExists(int id)
         {
             return _context.Items.Any(e => e.id == id);

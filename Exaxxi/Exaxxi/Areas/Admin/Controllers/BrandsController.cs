@@ -25,7 +25,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Brands
         public IActionResult Index()
         {
-            IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI").Result);
+            IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI/BrandsDefault").Result);
             return View(result);
         }
 

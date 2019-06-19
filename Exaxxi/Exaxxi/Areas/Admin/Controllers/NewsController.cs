@@ -11,6 +11,7 @@ using Exaxxi.Helper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -19,16 +20,15 @@ namespace Exaxxi.Areas.Admin.Controllers
     public class NewsController : Controller
     {
         CallAPI _api = new CallAPI();
-       
-
         // GET: Admin/News
-
+       
         public IActionResult Index()
         {
             IEnumerable<News> result = JsonConvert.DeserializeObject<List<News>>(_api.getAPI("api/NewsAPI").Result);
             return View(result);
         }
 
+       
         // GET: Admin/News/Details/5
         public IActionResult Details(int? id)
         {
@@ -177,5 +177,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         {
             return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/NewsAPI/NewsExists/{id}").Result);
         }
+
+       
     }
 }

@@ -45,7 +45,23 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(ds_Size);
         }
+        [HttpGet("Getds_SizeDetail/{id}")]
+        public async Task<IActionResult> Getds_SizeDetail([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var ds_size = await _context.ds_Size.FirstOrDefaultAsync(m => m.id == id);
+
+            if (ds_size == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(ds_size);
+        }
         // PUT: api/ds_Size/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Putds_Size([FromRoute] int id, [FromBody] ds_Size ds_Size)
@@ -116,7 +132,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(ds_Size);
         }
-
+        [HttpGet("ds_SizeExists/{id}")]
         private bool ds_SizeExists(int id)
         {
             return _context.ds_Size.Any(e => e.id == id);
