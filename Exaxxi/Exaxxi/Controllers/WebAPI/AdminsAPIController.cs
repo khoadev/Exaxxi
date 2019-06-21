@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace Exaxxi.Controllers.WebAPI
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminsAPIController : ControllerBase

@@ -13,6 +13,7 @@ using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesAPIController : ControllerBase

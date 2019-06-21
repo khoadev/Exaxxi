@@ -26,7 +26,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<News> GetNews()
         {
-            return _context.News.Include("department").Include("admin");
+            return _context.News.Include("department");
         }
         [HttpGet("GetAll")]
         public IEnumerable<NewsViewModel> GetAll()
@@ -38,7 +38,7 @@ namespace Exaxxi.Controllers.WebAPI
                   name_admin = n.admin.name,
                   en_name_depart = n.department.en_name,
                   vi_name_depart = n.department.vi_name,
-                   id_depart=n.id_department
+                  id_depart=n.id_department
               });
         }
         [HttpGet("GetById/{id}")]
