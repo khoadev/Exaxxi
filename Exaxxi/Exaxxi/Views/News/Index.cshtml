@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<div class="container-fluid" ng-controller="NewsTimeCtrl">
+    <div class="row" ng-controller="DepartCtrl">
+        <div class="col-lg-3">
+            <div class="row ">
+                <div class="col-12 news-recent-news">
+                    recent news
+                </div>
+            </div>
+            <div class="row" ng-repeat="x in news">
+                <div class="col-12 news-recent-news-wrapper" style="background-color:#fcfcfc">
+                    <div class="news-recent-date">{{timeDiff(x.news.date_create)}}</div>
+                    <a class="news-recent-article" href="#">{{x.news.vi_title}}</a>
+                </div>
+               
+            </div>
+        </div>
+        <div class="col-lg-9 order-first order-lg-last news-content-wrapper">
+            <div class="row">
+                <div class="col-12" >
+                    <ul class="list-unstyled news-department-list" >
+                        <li class="d-inline-block" ng-repeat="x in departs"><a href="#depart{{x.id}}">{{x.vi_name}}</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="row mb-5" ng-controller="NewsViewCtrl">
+                <div class="col-12 news-content-main">
+                    <span style="color:#ab1113">Main</span> News
+                </div>
+                <div class="col-md-8 ">
+                    <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/{{new1.news.img}}) center; height:400px;"></div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="news-content-department">{{new1.vi_name_depart}}</div>
+                    <div class="news-content-title">
+                        <a href="#">{{new1.news.vi_title}}</a>
+                    </div>
+                    <div class="news-content-sub"><span style="color:black">{{new1.name_admin}}</span> - {{timeDiff(new1.news.date_create)}}</div>
+                </div>
+                <div class="col-12 mt-3">
+                    <div class="card-deck news-content-sub-content">
+                        <div class="card" ng-repeat="x in newsbyview | limitTo : 3:1">
+                            <div class="card-body">
+                                <div class="news-content-department">{{x.vi_name_depart}}</div>
+                                <div class="news-content-title" style="font-size:20px">
+                                    <a href="#">{{x.news.vi_title}}</a>
+                                </div>
+                                <div class="news-content-sub"><span style="color:black">{{x.name_admin}}</span> - {{timeDiff(x.news.date_create)}}</div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5" ng-repeat="z in departs">
+                <div class="col-12 news-department-title">
+                    {{z.vi_name}}
+                    <hr />
+                    <span class="see-all" style="float:right"><a href="#">See All</a></span>
+                </div>
+                <div class="col-md-4 news-wrapper" ng-repeat="y in allnews | filter : {'id_depart' :z.id}">
+                    <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/{{y.news.img}}) center">
+                        <div class="news-title-wrapper">
+                            <a href="#">{{y.news.vi_title}}</a>
+                            <div><span style="color:white">{{y.name_admin}}</span> - {{timeDiff(y.news.date_create)}}</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+           
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        
+        exaxxiApp.controller('NewsTimeCtrl', function ($scope, $http) {
+            $scope.timeDiff = function (time) {
+                var now = Date.now();
+                var teo = new Date(time).getTime();
+                var milisecondsDiff = now - teo;
+                var qd = Math.round(milisecondsDiff / (1000 * 60));
+                if (qd < 10) {
+                    return "Just Now" ;
+                }
+                if(qd < 60 && qd>10){
+                    return qd+" minutes ago";
+                }
+                if (qd > 60) {
+                    var day = new Date(time);
+                    return day.toDateString();
+                }
+              
+            };
+            
+            $http.get("/api/NewsAPI/GetNewsOrderByTime")
+                .then(function (response) {
+                    $scope.news = response.data;
+                    
+               
+                });
+        });
+        exaxxiApp.controller('DepartCtrl', function ($scope, $http) {
+            $http.get("/api/DepartmentsAPI/DepartHasNews").then(function (res) {
+                $scope.departs = res.data;
+            });
+            $http.get("/api/NewsAPI/GetAll").then(function (data) {
+                $scope.allnews = data.data;
+                console.log($scope.allnews);
+            });
+        });
+        exaxxiApp.controller('NewsViewCtrl', function ($scope, $http) {
+
+            $http.get("api/NewsAPI/GetNewsOrderByView").then(function (res) {
+                $scope.newsbyview = res.data;
+                $scope.new1 = res.data[0];
+            });
+        });
+
+    </script>
+    
+    }

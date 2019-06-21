@@ -15,7 +15,6 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
-        <link rel="stylesheet" href="~/lib/fontawesome-free-5.1.0-web/css/all.css" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
@@ -188,49 +187,11 @@
     </div>
 
     <footer>
-        <div class="container-fluid" id="footer-wrapper">
+        <div class="container-fluid" id="footer-wrapper" ng-controller="footerCtrl">
             <div class="row">
-                <div class="col-md-4 col-lg-2">
-                    <p class="footer-content-header">Brand's name</p>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <p class="footer-content-header">Brand's name</p>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                </div>
-                <div class=" col-md-4 col-lg-2">
-                    <p class="footer-content-header">Brand's name</p>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <p class="footer-content-header">Brand's name</p>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <p class="footer-content-header">Brand's name</p>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                </div>
-                <div class="col-md-4 col-lg-2">
-                    <p class="footer-content-header">Brand's name</p>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
-                    <a href="#">Product's name</a> <br>
+                <div class="col-md-4 col-lg-2" ng-repeat="x in brands">
+                    <p class="footer-content-header">{{x.name}}</p>
+                    <a href="#" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a> 
                 </div>
             </div>
         </div>
@@ -245,7 +206,6 @@
         <script src="~/js/jquery-3.4.1.js"></script>
         <script src="~/js/bootstrap.min.js"></script>
         <script src="~/js/demo.js" asp-append-version="true"></script>
-        <script src="~/js/angularCtrl.js" asp-append-version="true"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
@@ -273,6 +233,12 @@
                 .then(function (response) { $scope.brandcates = response.data; });
             $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.cates = response.data; });
+        });
+        exaxxiApp.controller("footerCtrl", function ($scope, $http) {
+                 $http.get("/api/CategoriesAPI")
+                .then(function (response) { $scope.cates = response.data; });
+                $http.get("/api/BrandsAPI")
+                    .then(function (response) { $scope.brands = response.data; });
         });
         $('.avoid').click(function (e) {
             e.stopPropagation();

@@ -20,7 +20,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         }
 
         // GET: Admin/Users
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
