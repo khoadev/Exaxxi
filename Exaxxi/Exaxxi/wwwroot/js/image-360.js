@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var num = 18; // the total number of images 
+    var num = 64; // the total number of images 
 
     // Preload all the images into hidden div
     for (var i = 1; i <= num; i++) {
@@ -39,7 +39,7 @@
         // divide by 8 (or any number) to spread 
         // it out so it doesn't load new img 
         // every single px of swipe distance
-        imgNum = Math.floor(imgNum / 12);
+        imgNum = Math.floor(imgNum / 18);
 
         if (imgNum < 1) {
             imgNum += num;
@@ -56,7 +56,7 @@
         // divide by 8 (or any number) to spread 
         // it out so it doesn't load new img 
         // every single px of swipe distance
-        imgNum = Math.floor(imgNum / 12);
+        imgNum = Math.floor(imgNum / 18);
 
         var num2 = -Math.abs(num);
         if (imgNum > num2) {

@@ -33,26 +33,46 @@
 
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
-                        <div class="size">
+                        <div class="size" data-toggle="modal" data-target="#myModal">
                             Size
                         </div>
-                        <div class="detail-second-left">
-                            <!-- Start second-left -->
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size" name="size" type="radio" />
-                                <label for="size" class="size-label">
-                                    <div class="size-left">
-                                        {{name[0].size}}
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Chose Size</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
-                                    <div class="size-right">
-                                        {{name[0].item.lowest_ask}} VND
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="detail-second-left">
+                                            <!-- Start second-left -->
+                                            <div class="size-wrapper">
+                                                <input class="d-none" id="size" name="size" type="radio" />
+                                                <label for="size" class="size-label">
+                                                    <div class="size-left">
+                                                        {{name[0].size}}
+                                                    </div>
+                                                    <div class="size-right">
+                                                        {{name[0].item.lowest_ask}} VND
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div> <!-- End second-left -->
                                     </div>
-                                </label>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
                             </div>
-                            @*<div>
-                                    <p>{{name[0].size}}<br> <h3>ALL</h3> </p>
-                                </div>*@
-                        </div> <!-- End second-left -->
+                        </div>
+                        
 
                         <div class="detail-second-right" style="display: flex;">
                             <!-- Start second-right -->
