@@ -55,7 +55,7 @@
         <!-- Brand -->
         <div class="container-fluid">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="brand">
-                Exxaxxi 
+                Exxaxxi
             </a>
             <button class="navbar-toggler order-first d-flex d-sm-none" type="button" onclick="openNav()">
                 <span class="navbar-toggler-icon"></span>
@@ -190,7 +190,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-2" ng-repeat="x in brands">
                     <p class="footer-content-header">{{x.name}}</p>
-                    <a href="#" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a> 
+                    <a href="#" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
                 </div>
             </div>
         </div>
@@ -215,7 +215,7 @@
         <script src="~/js/rzslider.min.js"></script>
     </environment>
     <script>
-        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider','angularUtils.directives.dirPagination']);
+        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider', 'angularUtils.directives.dirPagination']);
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $http.get("/api/PostsAPI/Search")
                 .then(function (response) { $scope.names = response.data; });
@@ -234,10 +234,10 @@
                 .then(function (response) { $scope.cates = response.data; });
         });
         exaxxiApp.controller("footerCtrl", function ($scope, $http) {
-                 $http.get("/api/CategoriesAPI")
+            $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.cates = response.data; });
-                $http.get("/api/BrandsAPI")
-                    .then(function (response) { $scope.brands = response.data; });
+            $http.get("/api/BrandsAPI")
+                .then(function (response) { $scope.brands = response.data; });
         });
         $('.avoid').click(function (e) {
             e.stopPropagation();

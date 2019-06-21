@@ -62,7 +62,7 @@
                 <div class="col-12 news-department-title">
                     {{z.vi_name}}
                     <hr />
-                    <span class="see-all" style="float:right"><a href="#">See All</a></span>
+                    <span class="see-all" style="float:right"><a href="/News/NewsDep?loai={{z.id}}">See All</a></span>
                 </div>
                 <div class="col-md-4 news-wrapper" ng-repeat="y in allnews | filter : {'id_depart' :z.id}">
                     <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/{{y.news.img}}) center">

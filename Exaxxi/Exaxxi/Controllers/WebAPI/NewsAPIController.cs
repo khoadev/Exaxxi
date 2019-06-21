@@ -38,7 +38,7 @@ namespace Exaxxi.Controllers.WebAPI
                   name_admin = n.admin.name,
                   en_name_depart = n.department.en_name,
                   vi_name_depart = n.department.vi_name,
-                   id_depart=n.id_department
+                  id_depart=n.id_department
               });
         }
         [HttpGet("GetById/{id}")]
