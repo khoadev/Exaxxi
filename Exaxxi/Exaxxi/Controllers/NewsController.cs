@@ -30,8 +30,7 @@ namespace Exaxxi.Controllers
 
         public IActionResult Detail(int id)
         {
-            NewsViewModel rs = JsonConvert.DeserializeObject<NewsViewModel>(_api.getAPI("api/NewsAPI/GetById/" + id).Result);
-
+            NewsViewModel rs = JsonConvert.DeserializeObject<NewsViewModel>(_api.getAPI("api/NewsAPI/GetById/" + id).Result);            
            
             ViewBag.Id_new = id;
             return View(rs);
