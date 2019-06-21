@@ -26,7 +26,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<News> GetNews()
         {
-            return _context.News.Include("department").Include("admin");
+            return _context.News.Include("department");
         }
         [HttpGet("GetAll")]
         public IEnumerable<NewsViewModel> GetAll()
