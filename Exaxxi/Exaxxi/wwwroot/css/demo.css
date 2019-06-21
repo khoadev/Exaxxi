@@ -1458,14 +1458,16 @@ top-title-first-text {
     font-family: coolrg;
     font-size: 50px;
     opacity:0.3;
+
 }
+
 .checkout-input{
     background-color:transparent;
     border:none!important;
     border-radius:0px;
     border-bottom:solid thin black!important;
     transition:0.3s;
-    font-size:25px;
+    font-size:30px;
     font-family:coolrg;
 }
 .checkout-input::placeholder {
@@ -1480,7 +1482,7 @@ top-title-first-text {
     box-shadow: none;
 }
 .checkout-curency {
-    font-size: 25px;
+    font-size: 30px;
     font-family: coolrg;
 }
 .checkout-suggestion {
@@ -1488,22 +1490,74 @@ top-title-first-text {
     font-family:coolcond;
     font-size:20px
 }
+.checkout-estimated-wrapper .checkout-estimated:not(:last-child) {
+    border-bottom: dashed medium #d7d7d7;
+   
+}
+.checkout-estimated {
+    font-family: ralemed;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+.checkout-btn{
+    color:white;
+    font-family:coolrg;
+    opacity:0.8;
+    transition:0.3s;
+    vertical-align:bottom;
+
+}.isbuy{
+     background-color:#0E5396
+ }
+.checkout-btn:hover {
+    opacity:1;
+    color:white
+}
+.checkout-payment-radio{
+    
+}
+.checkout-payment {
+}
+.checkout-payment-wrapper {
+    opacity: 0.2;
+    border: solid thin black;
+    font-family: coolrg;
+    font-size: 25px;
+    padding: 15px 5px 10px 30px;
+    width: 100%;
+    transition: 0.3s;
+}
+.checkout-payment input[type=radio]:checked + label {
+    opacity: 1 !important;
+    border: solid thin #ab1113;
+    background-color: #fce0e1;
+}
+.checkout-payment input[type=radio]:checked + label .checkout-payment-desc {
+    display:block
+}
+.checkout-payment-desc{
+    font-family:ralemed;
+    transition:0.3s;
+    display:none;
+    font-size:15px;
+}
 /* ------------------------------------------------- */
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
     }
 
-    .sidenav a {
-        font-size: 18px;
-    }
+.sidenav a {
+    font-size: 18px;
 }
+    }
+
 .img-container {
-    width: 100%;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0;
-    cursor: ew-resize;
+width: 100%;
+max-width: 640px;
+margin: 0 auto;
+padding: 0;
+cursor: ew-resize;
 }
 
 .img360 {
