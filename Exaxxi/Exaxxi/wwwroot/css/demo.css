@@ -1188,12 +1188,9 @@ top-title-first-text {
     margin-top: 7px;
 }
 
-.btn-size {
-    border: none;
-    background-color: transparent;
-    color: black;
-    font-size: 33px;
-    transform: translateY(-13px) translateX(0px);
+.size {
+    font-family: coolrg;
+    color: #777777;
 }
 
 
@@ -1206,14 +1203,14 @@ top-title-first-text {
     border-radius:5px;
 }
 
-    .detail-content-right-final .detail-right {
-        width: 60%;
-        padding-left: 10px;
-        padding-top: 5px;
-        padding-right: 10px;
-        display: block;
-        line-height: 20px;
-    }
+.detail-content-right-final .detail-right {
+    width: 60%;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    display: block;
+    line-height: 20px;
+}
 
 .detail-content-right-final .detail-left {
     width: 40%;
@@ -1226,9 +1223,42 @@ top-title-first-text {
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
 }
+.size-wrapper{
+   display:inline-block;
+   margin-right:5px;
+   margin-bottom:15px;
+   cursor:pointer!important;
+}
+.size-label {
+    opacity: 0.5;
+    transition: 0.3s;
+    display: inline;
+}
+.size-label div {
+    display: inline;
+    cursor: pointer;
+    font-size:20px;
+}
+.size-left {
+    border: solid thin #ab1113;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    color: white;
+    background-color: #ab1113;
+    font-weight: bold;
+    padding: 5px;
+    font-family:coolrg;
+}
+.size-right {
+    padding: 5px;
+    border: solid thin #ab1113;
+    padding:5px;
+    font-family:coolcond;
+}
+.size-wrapper input[type=radio]:checked + label {
+    opacity:1!important;
+}
 /* Ed content-wrapper */
-
-
 /* Start Jumbotron */
 .jumbotron {
     padding-top: 20px;
@@ -1345,9 +1375,7 @@ top-title-first-text {
     color: #b9b9b9;
     font-family:ralemed;
 }
-.size-label div{
-    display:inline;
-}
+
 /* End product-detail css */
 /* ------------------------------------------------- */
 @media screen and (max-height: 450px) {

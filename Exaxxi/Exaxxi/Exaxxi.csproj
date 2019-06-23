@@ -5,7 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\MyFiles\**" />
+    <Content Remove="wwwroot\MyFiles\**" />
+    <EmbeddedResource Remove="wwwroot\MyFiles\**" />
+    <None Remove="wwwroot\MyFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="angular-file-upload" Version="12.2.13" />
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1" />
     <PackageReference Include="MailKit" Version="2.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
@@ -16,13 +25,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\images\item\" />
     <Folder Include="wwwroot\images\brand\" />
     <Folder Include="wwwroot\images\news\" />
-    <Folder Include="wwwroot\MyFiles\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

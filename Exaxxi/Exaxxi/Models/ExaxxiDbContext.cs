@@ -490,7 +490,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active=true,
+                    lowest_ask=30,
+                    highest_bid=25
                 },
                 new Items
                 {
@@ -504,8 +506,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
-
+                    active = true,
+                    lowest_ask=40,
+                    highest_bid=35
                 },
                 new Items
                 {
@@ -519,8 +522,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
-
+                    active = true,
+                    lowest_ask=44,
+                    highest_bid=55
                 },
                 new Items
                 {
@@ -815,7 +819,9 @@ namespace Exaxxi.Models
                     date_create = DateTime.Now,
                     active=true,
                     id_admin=1,
-                    id_department=1
+                    view=6,
+                    id_department=1,
+                    img="1.jpg"
                 },
                 new News
                 {
@@ -827,7 +833,9 @@ namespace Exaxxi.Models
                     date_create = DateTime.Now,
                     active=true,
                     id_admin=2,
-                    id_department=1
+                    view=8,
+                    id_department=1,
+                    img = "1.jpg"
                 },
                 new News
                 {
@@ -839,7 +847,9 @@ namespace Exaxxi.Models
                     date_create = DateTime.Now,
                     active=true,
                     id_admin=2,
-                    id_department=1
+                    view=9,
+                    id_department=1,
+                    img = "1.jpg"
                 },
                 new News
                 {
@@ -851,7 +861,9 @@ namespace Exaxxi.Models
                     date_create = DateTime.Now,
                     active=true,
                     id_admin=3,
-                    id_department=2
+                    view=96,
+                    id_department=2,
+                    img = "1.jpg"
                 }
             );
             builder.Entity<Posts>().HasData(

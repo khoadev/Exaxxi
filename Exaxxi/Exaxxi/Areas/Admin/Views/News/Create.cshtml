@@ -9,7 +9,7 @@
 <h4>News</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="UploadFileAsync" asp-controller="News" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -29,12 +29,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="vi_content" class="control-label"></label>
-                <input class="form-control" id="vi_content" name="vi_content" />
+                <textarea class="form-control" id="vi_content" name="vi_content"></textarea>
                 <span asp-validation-for="vi_content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="en_content" class="control-label"></label>
-                <input class="form-control" id="en_content" name="en_content" />
+                <textarea class="form-control" id="en_content" name="en_content"></textarea>
                 <span asp-validation-for="en_content" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -58,7 +58,7 @@
                 <select asp-for="id_department" class="form-control" id="departmentname" name="id_department"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default"/>
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -96,6 +96,22 @@
                 }
             });
         });
-    </script>    
+    </script>
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('vi_content', {
+                height: 400,
+                filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
+                filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
+            });
+        });
+
+        CKEDITOR.replace('en_content', {
+            height: 400,
+            filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
+            filebrowserBrowseUrl: '/Admin/Upload/FileBrowse',
+          
+        });
+    </script>
 }
 
