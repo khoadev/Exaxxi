@@ -1,25 +1,32 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Exaxxi.Helper
 {
     public class CallAPI
     {
-        public HttpClient Initial()
+        public HttpClient Initial(string token = null)
         {
             var Client = new HttpClient();
 
             Client.BaseAddress = new Uri("http://localhost:51340");
+            if (token != null)
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             return Client;
         }
         public async Task<bool> postAPI(object obj, string link)
         {
-            HttpClient client = this.Initial();
+            HttpClient client = this.Initial(await HttpContext.Session.GetString("token"));
             var stringContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
             HttpResponseMessage res = await client.PostAsync(link, stringContent);
             if (res.IsSuccessStatusCode)

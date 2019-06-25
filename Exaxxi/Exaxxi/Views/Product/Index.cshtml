@@ -24,6 +24,33 @@
                 <a class="filter-brand-item {{ x.id == @ViewBag.Id_Brand ? 'filter-depart-active' : ''}}" href="/Product/Index?id=@ViewBag.Id_Depart&idBrand={{x.id}}" ng-repeat="x in name">{{x.name}}</a>
 
             </div> <!--end filter-brand-wrapper-->
+            <div class="filter-sort-wrapper">
+                <!--start filter-size-wrapper-->
+                <div class="filter-sort-header">Sort By</div>
+                <label class="radio-container">
+                    Default
+                    <input type="radio" name="radio" ng-model="sort" value="">
+                    <span class="radio-checkmark"></span>
+                </label>
+                <label class="radio-container">
+                    Lowest Ask
+                    <input type="radio" name="radio" ng-model="sort" value="lowest_ask">
+                    <span class="radio-checkmark"></span>
+                    <div class="filter-sort-desc">The 'Most Popular' are the products with the most sales over the past 72 hours.</div>
+                </label>
+                <label class="radio-container">
+                    Highest Bid
+                    <input type="radio" name="radio" ng-model="sort" value="highest_bid">
+                    <span class="radio-checkmark"></span>
+                    <div class="filter-sort-desc">The highest price someone is currently offering to pay for this product.</div>
+                </label>
+                <label class="radio-container">
+                    Volatility
+                    <input type="radio" name="radio" ng-model="sort" value="volatility">
+                    <span class="radio-checkmark"></span>
+                    <div class="filter-sort-desc">A measure of how much price fluctuates. It is calculated as standard deviation divided by average price. A $200 product with 40% volatility results in an average price range of $120 to $280.</div>
+                </label>
+            </div><!--end filter-size-wrapper-->
             <div class="filter-category-wrapper">
                 <!--start filter-category-wrapper-->
                 <div class="filter-name-header">Category's Name</div>
@@ -54,20 +81,19 @@
                               rz-slider-options="slider.options"></rzslider>
                 </div>
                 @*<p>
-                    <label for="amount" class="filter-name-header">Price range</label>
-                    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:100%;">
-                </p>
+                <label for="amount" class="filter-name-header">Price range</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:100%;">
+            </p>
 
-                <div id="slider-range"></div>*@
+            <div id="slider-range"></div>*@
 
             </div><!--end filter-price-wrapper-->
         </div>
         
         <div class="col-lg-9">
-            <div class="sort-name-header">Sort by</div>
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
-                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" dir-paginate="x in item | filter:byRange('lowest_ask', slider.minValue , slider.maxValue) | itemsPerPage: 9">
+                <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" dir-paginate="x in item | filter:byRange('lowest_ask', slider.minValue , slider.maxValue) | itemsPerPage: 9 | orderBy:sort">
 
                     <div class="card card-block">
                         <!-- Start card -->
@@ -84,7 +110,8 @@
                                 </div>
                                 <div class="col-6 col-sm-6 col-md-6 " align="right">
                                     <div class="product-price">
-                                        <p>{{x.lowest_ask| currency:"":0:3}} VND</p>
+                                        <p ng-show="sort!='highest_bid'">{{x.lowest_ask| currency:"":0:3}} VND</p>
+                                        <p ng-hide="sort!='highest_bid'">{{x.highest_bid| currency:"":0:3}} VND</p>
                                         <span class="product-sub-title"></span>
                                     </div>
                                 </div>
@@ -94,7 +121,7 @@
                 </div> <!-- End col -->
             </div> <!-- End row -->
             <div class="pagination-wrapper row">
-                <dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>
+                <dir-pagination-controls boundary-links="true" template-url="../dirPagination.tpl.html"></dir-pagination-controls>
             </div>
         </div>
 </div>

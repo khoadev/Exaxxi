@@ -2,10 +2,18 @@
 <html>
 @{
     var scroll = "";
+    var scrollable = "";
     string actionName = ViewContext.RouteData.Values["action"].ToString();
-    if (actionName == "Register")
+    string controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    if (actionName == "Register" | actionName == "Login" | controllerName == "Product")
     {
         scroll = "navbar-custom-scrolled";
+        scrollable = "";
+    }
+    else
+    {
+        scroll = "";
+        scrollable = "fixed-top";
     }
 }
 <head>
@@ -50,7 +58,7 @@
         <a href="#">FaQ</a>
     </div> <!-- End sidenav -->
 
-    <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top @scroll" id="fixed-top">
+    <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top @scroll" id="@scrollable">
         <!-- Start nav -->
         <!-- Brand -->
         <div class="container-fluid">
@@ -115,10 +123,9 @@
                             <li class="col-xs-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <input type="text" name="key" ng-model="key" class="form-control" placeholder="Search" id="search_input">
+                                        <input type="text" ng-change="search()" name="key" ng-model="key" class="form-control" placeholder="Search" id="search_input">
                                     </div>
                                 </div>
-
 
                             </li>
                             <li class="col-xs-12 custom-scrollbar" id="search-result-wrapper" ng-if="key">
@@ -180,12 +187,12 @@
         </div>
     </nav> <!-- End nav -->
 
-    <div style="background:white!important">
+    <div style="background:white!important;">
 
         @RenderBody()
     </div>
 
-    <footer class="mt-5">
+    <footer >
         <div class="container-fluid" id="footer-wrapper" ng-controller="footerCtrl">
             <div class="row">
                 <div class="col-md-4 col-lg-2" ng-repeat="x in brands">
@@ -215,10 +222,12 @@
         <script src="~/js/rzslider.min.js"></script>
     </environment>
     <script>
-        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider', 'angularUtils.directives.dirPagination']);
-        exaxxiApp.controller('searchCtrl', function ($scope, $http) {
-            $http.get("/api/PostsAPI/Search")
-                .then(function (response) { $scope.names = response.data; });
+        var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider','angularUtils.directives.dirPagination']);
+    exaxxiApp.controller('searchCtrl', function ($scope, $http) {
+        $scope.search = function () {
+                $http.get("/api/PostsAPI/Search")
+                    .then(function (response) { $scope.names = response.data; });
+            };
         });
         exaxxiApp.controller("browseCtrl", function ($scope, $http) {
             var div = document.querySelector('#browse-radio-wrapper');
