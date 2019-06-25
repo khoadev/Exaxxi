@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row" id="logreg-wrapper">
             <div class="col-lg-9" id="logreg-form-wrapper">
-                <div id="login-form">
+                <div id="login-form" ng-controller="UserCtrl">
                     <p class="login-form-text">Login </p>
                     <form>
                         <div class="form-group">
@@ -20,7 +20,7 @@
                             <label for="pwd" class="login-form-label">Password</label>
                             <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd">
                         </div>
-                        <button type="button" class="btn logreg-form-button " id="submit">Login</button> <br>
+                        <button type="button" class="btn logreg-form-button " id="submit" ng-click="sendData()">Login</button> <br>
                         <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
                     </form>
                 </div>
@@ -31,33 +31,76 @@
 
 @section Scripts {
 
+    @*<script>
+            $(function () {
+                //Login
+                $("#submit").on("click", function () {
+                    var username = $("#usr").val();
+                    var password = $("#pwd").val();
+                    var login = {
+                        "username": username,
+                        "password": password,
+                    };
+                    $.ajax({
+                        url: "/api/AdminsAPI/PostAdminsEmail",
+                        type: "POST",
+                        data: JSON.stringify(login),
+                        contentType: "application/json",
+                        success: function () {
+                            // sessionStorage.setItem('token', response);
+                            //console.log(response);
+                            window.location = "/Admin/Admins/Index";
+
+                        },
+                        error: function (notfound) {
+                            alert("Dang nhap that bai");
+                        }
+                    });
+                });
+
+            });
+
+
+        </script>*@
+
     <script>
-        $(function () {
-            //Login
-            $("#submit").on("click", function () {
+
+        
+        app.controller('UserCtrl', function ($scope, $http) {
+            $scope.sendData = function () {
                 var username = $("#usr").val();
                 var password = $("#pwd").val();
+
                 var login = {
                     "username": username,
                     "password": password,
                 };
-                $.ajax({
-                    url: "/api/AdminsAPI/PostAdminsEmail",
-                    type: "POST",
-                    data: JSON.stringify(login),
-                    contentType: "application/json",
-                    success: function () {
-                        window.location = "/Admin/Admins/Index";
-                    },
-                    error: function (notfound) {
-                        alert(notfound.responseText);
-                    }
-                });
-            });
+                $http.post("/api/Auth", JSON.stringify(login)).then(function (response) {
 
+
+                    if (typeof (Storage) !== "undefined") {
+
+                        //set sesionStorage
+                        sessionStorage.setItem('token', response.data.token);
+                        window.location = "/Admin/Admins/Index";
+                        //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    } else {
+                        alert('Trình duyệt của bạn đã quá cũ. Hãy nâng cấp trình duyệt ngay!');
+                    }
+                    var token = response.data.token;
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    }
+
+                    $http.get("/api/AdminsAPI", config).then(function (re) {
+                        alert("ádasd");
+                    });
+                });
+            };
         });
 
-
     </script>
-
 }

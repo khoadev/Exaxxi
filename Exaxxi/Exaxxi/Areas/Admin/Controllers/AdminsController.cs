@@ -12,11 +12,11 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.ViewModels;
 using Exaxxi.Common;
-
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    [Authorize]
+   
     [Area("Admin")]
     public class AdminsController : Controller
     {
@@ -25,7 +25,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Admins
         public IActionResult Index()
         {
-            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
+            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI",HttpContext.Session.GetString("token")).Result);
             
             return View(result);
         }
@@ -68,7 +68,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
             else
             {
-                ViewBag.Message = "mnsdjfhjdshf";
+              
                 return View("Create");
             }
 

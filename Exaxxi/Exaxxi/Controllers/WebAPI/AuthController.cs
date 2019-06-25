@@ -28,7 +28,7 @@ namespace Exaxxi.Controllers.WebAPI
             _context = context;
         }
         
-        [AllowAnonymous]
+        
         [HttpPost]
         public IActionResult CreateToken([FromBody]LoginModel login)
         {
@@ -38,6 +38,7 @@ namespace Exaxxi.Controllers.WebAPI
             if (user != null)
             {
                 var tokenString = BuildToken(user);
+                HttpContext.Session.SetString("token", tokenString);
                 response = Ok(new { token = tokenString });
             }
 
@@ -69,7 +70,7 @@ namespace Exaxxi.Controllers.WebAPI
         private UserModel Authenticate(LoginModel login)
         {
             UserModel user = null;
-            Users data = _context.Users.SingleOrDefault(p => p.email == login.Username);
+            Admins data = _context.Admins.SingleOrDefault(p => p.email == login.Username);
             if (data == null)
             {
                 return user;
@@ -79,6 +80,9 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 user = new UserModel { Name = data.name, Email = data.email };
             }
+            HttpContext.Session.SetInt32("idAdmin", data.id);
+            HttpContext.Session.SetString("nameAdmin", data.name);
+            HttpContext.Session.SetInt32("levelAdmin", data.level);
             return user;
         }
 

@@ -9,6 +9,9 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     </environment>
@@ -22,7 +25,7 @@
         display = "d-none";
     }
     }
-<body>
+<body ng-app="exaxxiApp">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark @display">
         <!-- Start nav -->
         <!-- Brand -->
@@ -34,9 +37,10 @@
             <!-- Links -->
             <ul class="navbar-nav">
 
-                @if (!User.Identity.IsAuthenticated)
+                @using Microsoft.AspNetCore.Http
+                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin").ToString()))
                 {
-
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Login">
                             <span class="glyphicon glyphicon-log-in"></span> Login
@@ -67,12 +71,15 @@
                         <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">Item</a>
                     </li>
                     <li class="nav-item d-none d-md-flex">
+                        <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">Post</a>
+                    </li>
+                    <li class="nav-item d-none d-md-flex">
                         <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">Danh sách size</a>
                     </li>
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">
                             Xin chào
-                            <b>@User.Identity.Name</b>
+                            <b>@HttpContextAccessor.HttpContext.Session.GetString("nameAdmin")</b>
                         </a>
                     </li>
                     <li>
@@ -117,7 +124,10 @@
     <script src="~/js/jquery-3.4.1.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/ckeditor/ckeditor.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script>
+        var app = angular.module('exaxxiApp', []);
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

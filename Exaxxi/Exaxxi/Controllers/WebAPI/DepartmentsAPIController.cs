@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -21,7 +22,7 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         // GET: api/Departments
-        [HttpGet]
+        [HttpGet,Authorize]
         public IEnumerable<Departments> GetDepartments()
         {
             return _context.Departments.OrderBy(p=>p.order);

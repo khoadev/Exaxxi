@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    [Authorize]
+    
     [Area("Admin")]
     public class SizesController : Controller
     {

@@ -14,14 +14,11 @@ using System.IO;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    [Authorize]
+    
     [Area("Admin")]
     public class BrandsController : Controller
     {
         CallAPI _api = new CallAPI();
-
-       
-
         // GET: Admin/Brands
         public IActionResult Index()
         {

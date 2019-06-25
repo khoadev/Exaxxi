@@ -18,15 +18,15 @@ namespace Exaxxi.Helper
             var Client = new HttpClient();
 
             Client.BaseAddress = new Uri("http://localhost:51340");
-            if (token != null)
+            if (!string.IsNullOrEmpty(token))
             {
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
             return Client;
         }
-        public async Task<bool> postAPI(object obj, string link)
+        public async Task<bool> postAPI(object obj, string link, string token = null)
         {
-            HttpClient client = this.Initial(await HttpContext.Session.GetString("token"));
+            HttpClient client = this.Initial(token);
             var stringContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
             HttpResponseMessage res = await client.PostAsync(link, stringContent);
             if (res.IsSuccessStatusCode)
@@ -35,9 +35,9 @@ namespace Exaxxi.Helper
             }
             return false;
         }
-        public async Task<string> getAPI(string link)
+        public async Task<string> getAPI(string link, string token = null)
         {
-            HttpClient client = this.Initial();
+            HttpClient client = this.Initial(token);
             HttpResponseMessage res = await client.GetAsync(link);
             if (res.IsSuccessStatusCode)
             {
@@ -46,9 +46,9 @@ namespace Exaxxi.Helper
             }
             return null;
         }
-        public async Task<bool> deleteAPI(string link)
+        public async Task<bool> deleteAPI(string link, string token = null)
         {
-            HttpClient client = this.Initial();
+            HttpClient client = this.Initial(token);
             HttpResponseMessage res = await client.DeleteAsync(link);
             if (res.IsSuccessStatusCode)
             {
@@ -56,9 +56,9 @@ namespace Exaxxi.Helper
             }
             return false;
         }
-        public async Task<bool> putAPI(object obj, string link)
+        public async Task<bool> putAPI(object obj, string link, string token = null)
         {
-            HttpClient client = this.Initial();
+            HttpClient client = this.Initial(token);
             var stringContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
             HttpResponseMessage res = await client.PutAsync(link, stringContent);
             if (res.IsSuccessStatusCode)
@@ -67,9 +67,9 @@ namespace Exaxxi.Helper
             }
             return false;
         }
-        public async Task<bool> existAPI(string link)
+        public async Task<bool> existAPI(string link, string token = null)
         {
-            HttpClient client = this.Initial();
+            HttpClient client = this.Initial(token);
             HttpResponseMessage res = await client.GetAsync(link);
             if (res.IsSuccessStatusCode)
             {

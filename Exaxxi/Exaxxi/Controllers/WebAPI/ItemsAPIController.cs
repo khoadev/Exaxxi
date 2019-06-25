@@ -25,7 +25,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Items> GetItems()
         {
-            return _context.Items;
+            return _context.Items.Include("admin").Include("category");
         }
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
