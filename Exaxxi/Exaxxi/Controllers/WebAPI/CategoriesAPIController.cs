@@ -28,9 +28,9 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Categories> GetCategories()
         {            
-            return _context.Categories;          
+            return _context.Categories.Include("brand");          
         }
-
+      
         [Route("TakeCateByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Categories> GetAllCate(int Id_Brand, string Qty)
         {

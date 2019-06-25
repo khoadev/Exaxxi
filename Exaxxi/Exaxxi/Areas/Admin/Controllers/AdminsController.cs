@@ -16,8 +16,9 @@ using Exaxxi.Common;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    [Authorize]
+   
     [Area("Admin")]
+   
     public class AdminsController : Controller
     {
         CallAPI _api = new CallAPI();
@@ -68,7 +69,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
             else
             {
-                ViewBag.Message = "mnsdjfhjdshf";
+              
                 return View("Create");
             }
 
