@@ -764,7 +764,68 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+.radio-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: ralemed;
+}
 
+    /* Hide the browser's default radio button */
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.radio-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radio-container:hover input ~ .radio-checkmark {
+    background-color: #ccc;
+}
+
+.radio-container input:checked ~ .radio-checkmark {
+    background-color: #ab1113;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio-container input:checked ~ .radio-checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-container .radio-checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
 #login-form-register {
     background-color: rgba(0,0,0,0.5);
     padding: 20px 40px;
@@ -997,9 +1058,17 @@ top-title-first-text {
 .filter-brand-item:hover {
     color: #ab1113;
 }
-
+.filter-sort-header {
+    font-family: coolcond;
+    text-transform: uppercase;
+    line-height: 35px;
+    font-size: 30px;
+    margin-top: 20px;
+}
+.filter-sort-desc{
+    font-size:12px;
+}
 .category-list-wrapper {
-    height: 200px;
     overflow-y: auto;
 }
 
@@ -1188,12 +1257,9 @@ top-title-first-text {
     margin-top: 7px;
 }
 
-.btn-size {
-    border: none;
-    background-color: transparent;
-    color: black;
-    font-size: 33px;
-    transform: translateY(-13px) translateX(0px);
+.size {
+    font-family: coolrg;
+    color: #777777;
 }
 
 
@@ -1206,14 +1272,14 @@ top-title-first-text {
     border-radius:5px;
 }
 
-    .detail-content-right-final .detail-right {
-        width: 60%;
-        padding-left: 10px;
-        padding-top: 5px;
-        padding-right: 10px;
-        display: block;
-        line-height: 20px;
-    }
+.detail-content-right-final .detail-right {
+    width: 60%;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    display: block;
+    line-height: 20px;
+}
 
 .detail-content-right-final .detail-left {
     width: 40%;
@@ -1226,9 +1292,42 @@ top-title-first-text {
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
 }
+.size-wrapper{
+   display:inline-block;
+   margin-right:5px;
+   margin-bottom:15px;
+   cursor:pointer!important;
+}
+.size-label {
+    opacity: 0.5;
+    transition: 0.3s;
+    display: inline;
+}
+.size-label div {
+    display: inline;
+    cursor: pointer;
+    font-size:20px;
+}
+.size-left {
+    border: solid thin #ab1113;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    color: white;
+    background-color: #ab1113;
+    font-weight: bold;
+    padding: 5px;
+    font-family:coolrg;
+}
+.size-right {
+    padding: 5px;
+    border: solid thin #ab1113;
+    padding:5px;
+    font-family:coolcond;
+}
+.size-wrapper input[type=radio]:checked + label {
+    opacity:1!important;
+}
 /* Ed content-wrapper */
-
-
 /* Start Jumbotron */
 .jumbotron {
     padding-top: 20px;
@@ -1345,26 +1444,120 @@ top-title-first-text {
     color: #b9b9b9;
     font-family:ralemed;
 }
-.size-label div{
-    display:inline;
-}
+
 /* End product-detail css */
+.checkout-product-name {
+    font-family: coolrg;
+    font-size: 30px;
+}
+.checkout-product-info{
+    font-family:ralemed;
+    font-size:15px;
+}
+.checkout-card-title {
+    font-family: coolrg;
+    font-size: 50px;
+    opacity:0.3;
+
+}
+
+.checkout-input{
+    background-color:transparent;
+    border:none!important;
+    border-radius:0px;
+    border-bottom:solid thin black!important;
+    transition:0.3s;
+    font-size:30px;
+    font-family:coolrg;
+}
+.checkout-input::placeholder {
+    color:#d7d7d7;
+}
+.checkout-input:focus {
+    background-color: transparent;
+    border: none !important;
+    border-radius: 0px;
+    border-bottom: solid medium #ab1113 !important;
+    outline-style: none;
+    box-shadow: none;
+}
+.checkout-curency {
+    font-size: 30px;
+    font-family: coolrg;
+}
+.checkout-suggestion {
+    color: #d7d7d7;
+    font-family:coolcond;
+    font-size:20px
+}
+.checkout-estimated-wrapper .checkout-estimated:not(:last-child) {
+    border-bottom: dashed medium #d7d7d7;
+   
+}
+.checkout-estimated {
+    font-family: ralemed;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+.checkout-btn{
+    color:white;
+    font-family:coolrg;
+    opacity:0.8;
+    transition:0.3s;
+    vertical-align:bottom;
+
+}.isbuy{
+     background-color:#0E5396
+ }
+.checkout-btn:hover {
+    opacity:1;
+    color:white
+}
+.checkout-payment-radio{
+    
+}
+.checkout-payment {
+}
+.checkout-payment-wrapper {
+    opacity: 0.2;
+    border: solid thin black;
+    font-family: coolrg;
+    font-size: 25px;
+    padding: 15px 5px 10px 30px;
+    width: 100%;
+    transition: 0.3s;
+}
+.checkout-payment input[type=radio]:checked + label {
+    opacity: 1 !important;
+    border: solid thin #ab1113;
+    background-color: #fce0e1;
+}
+.checkout-payment input[type=radio]:checked + label .checkout-payment-desc {
+    display:block
+}
+.checkout-payment-desc{
+    font-family:ralemed;
+    transition:0.3s;
+    display:none;
+    font-size:15px;
+}
 /* ------------------------------------------------- */
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
     }
 
-    .sidenav a {
-        font-size: 18px;
-    }
+.sidenav a {
+    font-size: 18px;
 }
+    }
+
 .img-container {
-    width: 100%;
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0;
-    cursor: ew-resize;
+width: 100%;
+max-width: 640px;
+margin: 0 auto;
+padding: 0;
+cursor: ew-resize;
 }
 
 .img360 {

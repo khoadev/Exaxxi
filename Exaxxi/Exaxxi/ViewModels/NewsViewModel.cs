@@ -13,5 +13,10 @@ namespace Exaxxi.ViewModels
         public string en_name_depart { get; set; }
         public string name_admin { get; set; }
         public int id_depart { get; set; }
+
+        internal IEnumerable<object> ToList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
