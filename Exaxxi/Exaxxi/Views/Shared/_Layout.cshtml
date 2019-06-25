@@ -53,7 +53,7 @@
             <a href="#" class="sidenav-sub-link">Cate's Name</a>
         </div> <!-- End sidenav-sub-... -->
         <a href="#">Browse</a>
-        <a href="#">News</a>
+        <a asp-controller="News">News</a>
         <a href="#">App</a>
         <a href="#">FaQ</a>
     </div> <!-- End sidenav -->
@@ -95,8 +95,9 @@
                                     <div class="card-columns">
                                         <div class="card brand-name-wrapper " ng-repeat="x in brandcates | filter: {'id_department' : selectedObj.id}">
                                             <div class="card-body">
-                                                <div class="brand-name">{{x.name}}</div>
-                                                <a href="#" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
+                                                
+                                                    <div class="brand-name">{{x.name}}</div>
+                                                    <a href="/Product/Index?idCate={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +107,7 @@
                     </ul><!-- End Mega Menu -->
                 </li>
                 <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" href="#">News</a>
+                    <a class="nav-link" asp-controller="News">News</a>
                 </li>
                 <li class="nav-item d-none d-md-flex">
                     <a class="nav-link" href="#">App</a>
@@ -196,8 +197,8 @@
         <div class="container-fluid" id="footer-wrapper" ng-controller="footerCtrl">
             <div class="row">
                 <div class="col-md-4 col-lg-2" ng-repeat="x in brands">
-                    <p class="footer-content-header">{{x.name}}</p>
-                    <a href="#" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
+                    <a href="/Product/Index?idBrand={{x.id}}"> <p class="footer-content-header">{{x.name}}</p></a>
+                    <a href="/Product/Index?idCate={{y.id}}" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
                 </div>
             </div>
         </div>
