@@ -23,7 +23,7 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         // GET: api/Departments
-        [HttpGet]
+        [HttpGet,Authorize]
         public IEnumerable<Departments> GetDepartments()
         {
             return _context.Departments.OrderBy(p=>p.order);

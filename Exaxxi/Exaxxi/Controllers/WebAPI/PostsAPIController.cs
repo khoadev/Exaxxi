@@ -22,12 +22,12 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         // GET: api/Posts
-        [HttpGet]
-        public IEnumerable<PostViewAdmin> GetPosts()
-        {
-            return _context.Posts.Include("user").Join(_context.Sizes, a=> a.id_size, b=>b.id, (a,b)=> new { a,b}).Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c,d) => new {c,d }).Select(
-                p => new PostViewAdmin {post = p.c.a , size = p.d.VN });
-        }
+        //[HttpGet]
+        //public IEnumerable<PostViewAdmin> GetPosts()
+        //{
+        //    return _context.Posts.Include("user").Join(_context.Sizes, a=> a.id_size, b=>b.id, (a,b)=> new { a,b}).Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c,d) => new {c,d }).Select(
+        //        p => new PostViewAdmin {post = p.c.a , size = p.d.VN });
+        //}
 
         // GET: api/Posts/5
         [HttpGet("{id}")]

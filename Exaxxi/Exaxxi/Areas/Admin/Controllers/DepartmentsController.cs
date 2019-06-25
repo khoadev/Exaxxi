@@ -9,6 +9,7 @@ using Exaxxi.Models;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {

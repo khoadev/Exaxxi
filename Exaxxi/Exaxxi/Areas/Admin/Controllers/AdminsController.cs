@@ -12,13 +12,12 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.ViewModels;
 using Exaxxi.Common;
-
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
    
     [Area("Admin")]
-   
     public class AdminsController : Controller
     {
         CallAPI _api = new CallAPI();
@@ -27,7 +26,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         
         public IActionResult Index()
         {
-            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);
+            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI",HttpContext.Session.GetString("token")).Result);
             
             return View(result);
         }
