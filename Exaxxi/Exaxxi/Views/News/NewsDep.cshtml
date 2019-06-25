@@ -1,5 +1,5 @@
 ﻿@model PagedList.Core.IPagedList<Exaxxi.ViewModels.NewsViewModel>
-    
+
 <div class="container">
     <div class="row" style="margin-top:50px">
         <div class="col-12" ng-controller="ShowDepartment">
@@ -12,17 +12,17 @@
         </div>
     </div>
     <div class="row">
+        @using Exaxxi.Common;
         @foreach (var tintuc in Model)
         {
-
-            <div class="col-md-4 news-wrapper">
-                <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(images/air-jordan-6-infrared-wallpaper-hd.jpg) center">
-                    <div class="news-title-wrapper">
-                        <a href="#">@tintuc.news.vi_title</a>
-                        <div><span style="color:white">@tintuc.name_admin</span> - test(@tintuc.news.date_create) </div>
-                    </div>
+        <div class="col-md-4 news-wrapper">
+            <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(images/air-jordan-6-infrared-wallpaper-hd.jpg) center">
+                <div class="news-title-wrapper">
+                    <a href="#">@tintuc.news.vi_title</a>
+                    <div><span style="color:white">@tintuc.name_admin</span> - @info.Day(tintuc.news.date_create)</div>
                 </div>
             </div>
+        </div>
         }
     </div>
     <div class="pagination-wrapper">
@@ -36,8 +36,8 @@
         </ul>
     </div>
 
-   <pager class="pager-container" list="@Model" asp-action="NewsDep" asp-controller="News" asp-route-loai="@ViewBag.Id_Dep" />
-    
+    <pager class="pager-container" list="@Model" asp-action="NewsDep" asp-controller="News" asp-route-loai="@ViewBag.Id_Dep" />
+
 </div>
 
 @section Scripts{
@@ -49,27 +49,6 @@
             $http.get("/api/DepartmentsAPI/" + @ViewBag.Id_Dep)
                 .then(function (response) { $scope.dep_name = response.data; });
         });
-
-        //Show News
-        $(document).ready()
-        {
-            function test(time) {
-                var now = Date.now();
-                var teo = new Date(time).getTime();
-                var milisecondsDiff = now - teo;
-                var qd = Math.round(milisecondsDiff / (1000 * 60));
-                if (qd < 10) {
-                    return "Just Now";
-                }
-                if (qd < 60 && qd > 10) {
-                    return qd + " minutes ago";
-                }
-                if (qd > 60) {
-                    var day = new Date(time);
-                    return day.toDateString();
-                }
-            }
-        }        
     </script>
 }
 

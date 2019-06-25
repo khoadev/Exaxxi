@@ -91,7 +91,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(posts);
         }
-
+        [HttpGet("PostsExists/{id}")]
         private bool PostsExists(int id)
         {
             return _context.Posts.Any(e => e.id == id);

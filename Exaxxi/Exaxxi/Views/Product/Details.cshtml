@@ -1,4 +1,4 @@
-﻿<div ng-controller="Item_Attribute">
+﻿<div ng-controller="Item_Attribute" style="margin-top:100px">
 
     <div class="content-wrapper" style="padding-bottom: 80px;">
         <!-- Start content wrapper-->
@@ -14,7 +14,7 @@
                         <div class="img360">
                             <img id="myImg" src="~/images/3dimage/{{name[0].item.img}}" />
                         </div>
-                        <img src="images/icons/360-icon-1.jpg" style="width:50px; height:50px; position:absolute; top:10px; left:10px;" />
+                        <img src="~/images/icons/360-icon-1.jpg" style="width:50px; height:50px; position:absolute; top:10px; left:10px;" />
                     </div>
                     <div id="preload-imgs"></div>
                 </div> <!-- End content-left-->
@@ -33,81 +33,46 @@
 
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
-                        <div class="size">
+                        <div class="size" data-toggle="modal" data-target="#myModal">
                             Size
                         </div>
-                        <div class="detail-second-left">
-                            <!-- Start second-left -->
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size" name="size" type="radio" />
-                                <label for="size" class="size-label">
-                                    <div class="size-left">
-                                        26
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Chose Size</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
-                                    <div class="size-right">
-                                        20.000VND
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="detail-second-left">
+                                            <!-- Start second-left -->
+                                            <div class="size-wrapper">
+                                                <input class="d-none" id="size" name="size" type="radio" />
+                                                <label for="size" class="size-label">
+                                                    <div class="size-left">
+                                                        {{name[0].size}}
+                                                    </div>
+                                                    <div class="size-right">
+                                                        {{name[0].item.lowest_ask}} VND
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div> <!-- End second-left -->
                                     </div>
-                                </label>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size1" name="size" type="radio" />
-                                <label for="size1" class="size-label">
-                                    <div class="size-left">
-                                        42
-                                    </div>
-                                    <div class="size-right">
-                                        3.000.000VND
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size2" name="size" type="radio" />
-                                <label for="size2" class="size-label">
-                                    <div class="size-left">
-                                        52
-                                    </div>
-                                    <div class="size-right">
-                                        2.000VND
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size3" name="size" type="radio" />
-                                <label for="size3" class="size-label">
-                                    <div class="size-left">
-                                        60
-                                    </div>
-                                    <div class="size-right">
-                                        3.000.000VND
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size4" name="size" type="radio" />
-                                <label for="size4" class="size-label">
-                                    <div class="size-left">
-                                        80
-                                    </div>
-                                    <div class="size-right">
-                                        3.000.000VND
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="size-wrapper">
-                                <input class="d-none" id="size5" name="size" type="radio" />
-                                <label for="size5" class="size-label">
-                                    <div class="size-left">
-                                        32
-                                    </div>
-                                    <div class="size-right">
-                                        2.000.000VND
-                                    </div>
-                                </label>
-                            </div>
-                            @*<div>
-                                    <p>{{name[0].size}}<br> <h3>ALL</h3> </p>
-                                </div>*@
-                        </div> <!-- End second-left -->
+                        </div>
+                        
 
                         <div class="detail-second-right" style="display: flex;">
                             <!-- Start second-right -->
@@ -172,6 +137,7 @@
 
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js"></script>
+    <script src="~/js/image-360.js"></script>
     <script>
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {

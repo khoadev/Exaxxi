@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+   
     public class NewsController : Controller
     {
         CallAPI _api = new CallAPI();

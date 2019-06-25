@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/bootstrap-horizon.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh">
+        <div class="row">
+            <div class="col-lg-7" style=" padding:20px 30px">
+                <div class="row">
+                    <div class="col-12 p-2" style="background:white;">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <img src="images/Layer 7.png" class="img-fluid"/>
+                            </div>
+                            <div class="col-lg-10" style="border-left:solid thick #ab1113">
+                                <div class="checkout-product-name">
+                                    adidas Yeezy Boost 350 V2 Black (Non-Reflective)
+                                </div>
+                                <div  class="checkout-product-info">
+                                    Highest Bid: <b>$515</b> | Lowest Ask: <b>$519</b><br />
+                                    Size <b>5.5</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12" style="padding:0px!important">
+                        <div class="card-deck">
+                            <div class="card mb-3" style="background:white;">
+                                <div class="card-body">
+                                    <div class="checkout-card-title text-center">
+                                        Place Bid
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <input type="text" class="form-control checkout-input " placeholder="Enter Bid"  />
+                                        </div>
+                                        <div class="col-2 checkout-curency">
+                                            Đ
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 checkout-suggestion">
+                                            A good bid around 200.000VND
+                                        </div>
+                                    </div>
+                                    <div class="checkout-estimated-wrapper">
+                                        <div class="row checkout-estimated">
+                                            <div class="col-6">
+                                                Estimated shipping
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                200.000VND
+                                            </div>
+                                        </div>
+                                        <div class="row checkout-estimated">
+                                            <div class="col-6">
+                                                Authentication fee
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                Free
+                                            </div>
+                                        </div>
+                                        <div class="row checkout-estimated">
+                                            <div class="col-6">
+                                                Total
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                -
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <i class="far fa-clock fa-fw"></i> <label for="sel1">Bid Expiration:</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <select class="form-control" id="sel1">
+                                                    <option>30 days</option>
+                                                    <option>7 days</option>
+                                                    <option>14 days</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button class="btn checkout-btn isbuy col-4">
+                                                Bid
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="background:white;">
+                                <div class="card-body">
+                                    <div class="checkout-card-title text-center">
+                                        Buy
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="500.000" />
+                                        </div>
+                                        <div class="col-2 checkout-curency">
+                                            Đ
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 checkout-suggestion">
+                                            You are about to purchase this product at the lowest Ask price
+                                        </div>
+                                    </div>
+                                    <div class="checkout-estimated-wrapper">
+                                        <div class="row checkout-estimated">
+                                            <div class="col-6">
+                                                Estimated shipping
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                200.000VND
+                                            </div>
+                                        </div>
+                                        <div class="row checkout-estimated">
+                                            <div class="col-6">
+                                                Authentication fee
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                Free
+                                            </div>
+                                        </div>
+                                        <div class="row checkout-estimated">
+                                            <div class="col-6">
+                                                Total
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                -
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button class="btn checkout-btn isbuy col-4">
+                                                Buy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-5 order-first order-lg-last" style=" padding:20px 30px">
+                <div class="row">
+                    <div class="col-12" style="background:white;">
+                        <div class="row">
+                            <div class="col-12 p-3" >
+                                <div class="checkout-card-title text-center">
+                                    Shipping Detail
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your account">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your address" rows="3"></textarea>
+                                    </div>
+                                </form>
+                                <div class="mb-2" style="font-family:coolrg;">
+                                    Payment Method:
+                                </div>
+                                <div class="checkout-payment">
+                                    <input class="d-none" id="payment1" name="payment" type="radio" />
+                                    <label for="payment1" class="checkout-payment-wrapper">
+                                        Cash On Deliery (COD)<br />
+                                        <span class="checkout-payment-desc">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="checkout-payment">
+                                    <input class="d-none" id="payment2" name="payment" type="radio" />
+                                    <label for="payment2" class="checkout-payment-wrapper">
+                                        Credit / Debit<br />
+                                        <span class="checkout-payment-desc">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

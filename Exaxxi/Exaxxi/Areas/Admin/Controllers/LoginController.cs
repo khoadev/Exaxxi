@@ -12,7 +12,7 @@ using Exaxxi.Common;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    [Authorize]
+    
     [Area("Admin")]
     public class LoginController : Controller
     {
@@ -50,10 +50,12 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View(admins);
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
-        }
+      
+            public IActionResult Logout()
+            {
+                HttpContext.Session.Remove("idAdmin");
+                HttpContext.Session.Remove("nameAdmin");
+                return RedirectToAction("Login");
+            }
     }
 }

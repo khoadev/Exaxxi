@@ -6,10 +6,6 @@
 }
 
 <h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a> @ViewBag.Userid
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -28,7 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.active)
             </th>
-            <th></th>
+            <th><a asp-action="Create">Create New</a> @ViewBag.Userid</th>
         </tr>
     </thead>
     <tbody>

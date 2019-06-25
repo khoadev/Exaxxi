@@ -9,7 +9,6 @@ using Exaxxi.Models;
 using Exaxxi.ViewModels;
 using Exaxxi.Common;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 using MimeKit;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json.Linq;
@@ -20,6 +19,7 @@ namespace Exaxxi.Controllers.WebAPI
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+   
     public class AdminsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
@@ -37,7 +37,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Admins;
         }
-       
+
         // GET: api/Admins/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAdmins([FromRoute] int id)
@@ -63,7 +63,7 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return BadRequest(ModelState);
             }
-            
+
             var admins = await _context.Admins.FindAsync(id);
             if (admins == null)
             {
@@ -72,7 +72,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(admins);
         }
-        [AllowAnonymous,HttpGet("GetForgetPassword")]
+        [AllowAnonymous, HttpGet("GetForgetPassword")]
         public IActionResult GetForgetPassword(string email)
         {
             Admins ad = _context.Admins.SingleOrDefault(p => p.email == email);
@@ -92,7 +92,7 @@ namespace Exaxxi.Controllers.WebAPI
 
 
         }
-       
+
         // PUT: api/Admins/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAdmins([FromRoute] int id, [FromBody] Admins admins)
@@ -141,50 +141,34 @@ namespace Exaxxi.Controllers.WebAPI
 
             return CreatedAtAction("GetAdmins", new { id = admins.id }, admins);
         }
-      
+
         [HttpPost("PostAdminsEmail")]
-        public async Task<IActionResult> PostAdminByEmail([FromBody] LoginViewModel model, string returnUrl = "")
+        public IActionResult PostAdminByEmail([FromBody] LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
+
             Admins admin = _context.Admins.SingleOrDefault(p => p.email == model.Username);
             if (admin == null)
             {
                 return NotFound("khong tim thay du lieu");
             }
-          
+
             if (bf.Decrypt_CBC(admin.password) != model.Password)
             {
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
             }
+            //Lưu Session
+
+
             HttpContext.Session.SetInt32("idAdmin", admin.id);
-            //ghi nhận đăng nhập thành công
-            var claims = new List<Claim> {
-                        new Claim(ClaimTypes.Email, admin.email),
-                        new Claim(ClaimTypes.Name, admin.name),
-                        
-                        
-                    };
+            HttpContext.Session.SetString("nameAdmin", admin.name);
 
-            // create identity
-            ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
-            ClaimsPrincipal claimsPricipal = new ClaimsPrincipal(userIdentity);
 
-            await HttpContext.SignInAsync(claimsPricipal);
-
-            //Lấy lại trang yêu cầu (nếu có)
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Login");//default
-            }
+            return Ok();
         }
 
         [AllowAnonymous, Route("ChangePassword")]
