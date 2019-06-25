@@ -1,0 +1,97 @@
+﻿@model Exaxxi.Models.Items
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Items</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.vi_info)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.vi_info)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.en_info)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.en_info)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.img)
+        </dt>
+        <dd>
+            <img src="~/images/item/@Html.DisplayFor(model => model.img)" />
+            
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.volatility)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.volatility)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.trade_min)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.trade_min)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.trade_max)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.trade_max)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.active)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.lowest_ask)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.lowest_ask)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.highest_bid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.highest_bid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.sold)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.sold)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.admin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.admin.email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.category.name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,51 @@
+﻿@model Exaxxi.Models.ds_Size
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>ds_Size</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="VN" class="control-label"></label>
+                <input asp-for="VN" class="form-control" />
+                <span asp-validation-for="VN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="US" class="control-label"></label>
+                <input asp-for="US" class="form-control" />
+                <span asp-validation-for="US" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UK" class="control-label"></label>
+                <input asp-for="UK" class="form-control" />
+                <span asp-validation-for="UK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inch" class="control-label"></label>
+                <input asp-for="Inch" class="form-control" />
+                <span asp-validation-for="Inch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Centimet" class="control-label"></label>
+                <input asp-for="Centimet" class="form-control" />
+                <span asp-validation-for="Centimet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

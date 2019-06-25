@@ -82,22 +82,17 @@
 
                         //set sesionStorage
                         sessionStorage.setItem('token', response.data.token);
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
                         window.location = "/Admin/Admins/Index";
                         //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     } else {
                         alert('Trình duyệt của bạn đã quá cũ. Hãy nâng cấp trình duyệt ngay!');
                     }
-                    var token = response.data.token;
-                    var config = {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token
-                        }
-                    }
-
-                    $http.get("/api/AdminsAPI", config).then(function (re) {
-                        alert("ádasd");
-                    });
+                  
+                   
+                    
+                  
+                   
                 });
             };
         });

@@ -43,14 +43,14 @@
                 {
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Login">
-                            <span class="glyphicon glyphicon-log-in"></span> Login
+                            <span class="glyphicon glyphicon-log-in"></span> Login @HttpContextAccessor.HttpContext.Session.GetString("token")
                         </a>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">Admin</a>
+                        <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">Admin </a>
                     </li>
                     <li class="nav-item d-none d-md-flex">
                         <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">Department</a>

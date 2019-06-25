@@ -27,7 +27,7 @@ namespace Exaxxi.Controllers.WebAPI
             this.config = config;
             _context = context;
         }
-        
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult CreateToken([FromBody]LoginModel login)
@@ -40,7 +40,7 @@ namespace Exaxxi.Controllers.WebAPI
                 var tokenString = BuildToken(user);
                 response = Ok(new { token = tokenString });
             }
-
+           
             return response;
         }
 

@@ -1,0 +1,56 @@
+﻿@model Exaxxi.Models.Posts
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Posts</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date_start" class="control-label"></label>
+                <input asp-for="date_start" class="form-control" />
+                <span asp-validation-for="date_start" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date_end" class="control-label"></label>
+                <input asp-for="date_end" class="form-control" />
+                <span asp-validation-for="date_end" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="kind" class="control-label"></label>
+                <input asp-for="kind" class="form-control" />
+                <span asp-validation-for="kind" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_size" class="control-label"></label>
+                <select asp-for="id_size" class="form-control" asp-items="ViewBag.id_size"></select>
+                <span asp-validation-for="id_size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_user" class="control-label"></label>
+                <select asp-for="id_user" class="form-control" asp-items="ViewBag.id_user"></select>
+                <span asp-validation-for="id_user" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

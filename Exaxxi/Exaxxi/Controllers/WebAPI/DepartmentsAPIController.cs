@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/DepartmentsAPI")]
     [ApiController]
+    [Authorize]
     public class DepartmentsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;

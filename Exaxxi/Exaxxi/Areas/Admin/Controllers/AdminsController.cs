@@ -24,6 +24,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         CallAPI _api = new CallAPI();
         BlowFish bf = new BlowFish(info.keyBF);
         // GET: Admin/Admins
+        
         public IActionResult Index()
         {
             IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI").Result);

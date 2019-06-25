@@ -1,0 +1,117 @@
+﻿@model Exaxxi.Models.Items
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Items</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" asp-controller="Items" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="img" class="control-label"></label>
+                <input type="file" id="img" name="img" />
+                <span asp-validation-for="img" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="vi_info" class="control-label"></label>
+                <textarea asp-for="vi_info" class="form-control"></textarea>
+                <span asp-validation-for="vi_info" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="en_info" class="control-label"></label>
+                <textarea asp-for="en_info" class="form-control"></textarea>
+                <span asp-validation-for="en_info" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="volatility" class="control-label"></label>
+                <input asp-for="volatility" class="form-control" />
+                <span asp-validation-for="volatility" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="trade_min" class="control-label"></label>
+                <input asp-for="trade_min" class="form-control" />
+                <span asp-validation-for="trade_min" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="trade_max" class="control-label"></label>
+                <input asp-for="trade_max" class="form-control" />
+                <span asp-validation-for="trade_max" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="active" /> @Html.DisplayNameFor(model => model.active)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="sold" class="control-label"></label>
+                <input asp-for="sold" class="form-control" />
+                <span asp-validation-for="sold" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_admin" class="control-label"></label>
+                <select asp-for="id_admin" class="form-control" id="admin"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="id_category" class="control-label"></label>
+                <select asp-for="id_category" class="form-control" id="category"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            $.ajax({
+                url: "/api/CategoriesAPI",
+                method: "GET",
+                success: function (data) {
+                    $(data).each(function (index, value) {
+
+                        var option = $("<option/>").attr("value", value.id).html(value.name);
+
+                        $("#category").append(option)
+                    });
+                }
+            });
+            $.ajax({
+                url: "/api/AdminsAPI",
+                method: "GET",
+                success: function (data) {
+                    $(data).each(function (index, value) {
+
+                        var option = $("<option/>").attr("value", value.id).html(value.name);
+
+                        $("#admin").append(option)
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+        CKEDITOR.replace("vi_info");
+        CKEDITOR.replace("en_info");
+    </script>
+}
+
+
