@@ -58,5 +58,11 @@ namespace Exaxxi.Areas.Admin.Controllers
                 HttpContext.Session.Remove("nameAdmin");
                 return RedirectToAction("Login");
             }
+        [HttpPost]
+        public string setTokenSession([FromBody] string token)
+        {
+            HttpContext.Session.SetString("token",token);
+            return HttpContext.Session.GetString("token");
+        }
     }
 }

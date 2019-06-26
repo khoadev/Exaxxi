@@ -76,12 +76,11 @@
                     "password": password,
                 };
                 $http.post("/api/Auth", JSON.stringify(login)).then(function (response) {
-
-
                     if (typeof (Storage) !== "undefined") {
-
                         //set sesionStorage
                         sessionStorage.setItem('token', response.data.token);
+                        var token = sessionStorage.getItem('token');
+                        $http.post("/Admin/Login/setTokenSession", '"' + token + '"');
                         window.location = "/Admin/Admins/Index";
                         //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     } else {
@@ -95,9 +94,7 @@
                         }
                     }
 
-                    $http.get("/api/AdminsAPI", config).then(function (re) {
-                        alert("ádasd");
-                    });
+                    $http.get("/api/AdminsAPI", config);
                 });
             };
         });
