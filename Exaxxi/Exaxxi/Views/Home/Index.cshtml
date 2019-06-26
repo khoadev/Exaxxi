@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<h1>@ViewBag.temp</h1>
 <div id="title-background">
     <!-- Start title-background -->
     <div id="title-text">"Some quote goes here"</div>
@@ -12,6 +12,7 @@
     <!-- Start category-panel -->
     <a ng-repeat="x in names" href="/Home/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'category-panel-active' : ''}}">{{x.vi_name}}</a>
 </div> <!-- End category-panel -->
+
 <div ng-controller="itemPopularCtrl">
     <div class="container" ng-show="items.length != 0">
         <div class="divider-section">
@@ -49,7 +50,7 @@
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
+                                <a href="/Product/Details?id={{x.item.id}}">
                                     {{x.item.name}}
                                 </a>
                             </div>
@@ -105,7 +106,7 @@
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
+                                <a href="/Product/Details?id={{x.item.id}}">
                                     {{x.item.name}}
                                 </a>
                             </div>
@@ -273,7 +274,7 @@
                 <p class="news-category">
                     {{news1.vi_name_depart}}
                 </p><br>
-                <a class="news-title" href="#">
+                <a class="news-title" href="/News/Detail?id={{news1.news.id}}">
 
                     {{news1.news.vi_title}}
                 </a><br>
@@ -287,7 +288,7 @@
             <p class="news-category">
                 {{x.vi_name_depart}}
             </p><br>
-            <a class="news-title-2" href="#">
+            <a class="news-title-2" href="/News/Detail?id={{x.news.id}}">
                 {{x.news.vi_title}}
             </a><br>
             <p class="news-detail-2">

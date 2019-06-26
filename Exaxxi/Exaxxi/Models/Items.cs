@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,8 @@ namespace Exaxxi.Models
         [Display(Name = "Thông tin sản phẩm tiếng anh")]
         [DataType(DataType.Text)]
         public string en_info { get; set; }
+        [Display(Name = "Giới Tính")]
+        public Gender gender { get; set; }
         [Required]
         [Display(Name = "Hình")]
         public string img { get; set; }
@@ -42,5 +45,12 @@ namespace Exaxxi.Models
 
         //public IEnumerable<Sizes> sizes { get; set; }
 
+    }
+    public enum Gender
+    {
+        [Description("Nam")]
+        Male = 0,
+        [Description("Nữ")]
+        Female = 1
     }
 }

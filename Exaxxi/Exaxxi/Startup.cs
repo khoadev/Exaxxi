@@ -7,6 +7,7 @@ using AutoMapper;
 using Exaxxi.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +47,12 @@ namespace Exaxxi
             services.AddDbContext<ExaxxiDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Exaxxi"));
+            });
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                    .RequireAuthenticatedUser().Build());
             });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

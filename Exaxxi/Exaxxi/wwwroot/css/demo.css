@@ -1201,6 +1201,32 @@ top-title-first-text {
     background-color: #ab1113;
     color: white;
 }
+.pager-container{
+    display:flex;
+    justify-content:center;
+}
+.pager-container li a {
+    color: black;
+}
+.pager-container li:hover > a {
+    color: white !important;
+}
+.pager-container li:hover {
+    background-color: #ab1113;
+}
+.pager-container li {
+    font-size: 15px;
+    padding: 0px 4px;
+    margin-right: 10px;
+    border: 1px solid #dee2e6;
+    padding: .5rem .75rem;
+    font-weight: bold;
+    transition:0.3s;
+}
+.pager-container .active {
+    background-color:#ab1113;
+    color:white
+}
 /*Start product-detail css*/
 /* Start content-wrapper */
 .detail-content-right-first h3 {
@@ -1872,6 +1898,7 @@ img {
     border-radius:5px;
 
 }
+
 @media only screen and (max-width: 1024px) {
     .news-content-wrapper {
         padding: 20px;

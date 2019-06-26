@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Exaxxi.Common;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    [Authorize]
+    
     [Area("Admin")]
     public class LoginController : Controller
     {
@@ -50,10 +51,18 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View(admins);
         }
 
-        public async Task<IActionResult> Logout()
+      
+            public IActionResult Logout()
+            {
+                HttpContext.Session.Remove("idAdmin");
+                HttpContext.Session.Remove("nameAdmin");
+                return RedirectToAction("Login");
+            }
+        [HttpPost]
+        public string setTokenSession([FromBody] string token)
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
+            HttpContext.Session.SetString("token",token);
+            return HttpContext.Session.GetString("token");
         }
     }
 }

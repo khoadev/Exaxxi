@@ -27,9 +27,6 @@ namespace Exaxxi.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-NKES72FM;Initial Catalog=Exaxxi;Integrated Security=True");
-
-
-
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -496,7 +493,6 @@ namespace Exaxxi.Models
                     active=true,
                     lowest_ask=30,
                     highest_bid=25
-
                 },
                 new Items
                 {
@@ -513,7 +509,6 @@ namespace Exaxxi.Models
                     active = true,
                     lowest_ask=40,
                     highest_bid=35
-
                 },
                 new Items
                 {
@@ -530,7 +525,6 @@ namespace Exaxxi.Models
                     active = true,
                     lowest_ask=44,
                     highest_bid=55
-
                 },
                 new Items
                 {
@@ -573,7 +567,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items
@@ -617,7 +612,8 @@ namespace Exaxxi.Models
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
-                    id_category = 1
+                    id_category = 1,
+                    active = true
 
                 },
                 new Items

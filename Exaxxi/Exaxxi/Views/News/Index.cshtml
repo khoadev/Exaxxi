@@ -13,7 +13,7 @@
             <div class="row" ng-repeat="x in news">
                 <div class="col-12 news-recent-news-wrapper" style="background-color:#fcfcfc">
                     <div class="news-recent-date">{{timeDiff(x.news.date_create)}}</div>
-                    <a class="news-recent-article" href="#">{{x.news.vi_title}}</a>
+                    <a class="news-recent-article" href="/News/Detail?id={{x.news.id}}">{{x.news.vi_title}}</a>
                 </div>
                
             </div> 
@@ -37,7 +37,7 @@
                 <div class="col-md-4 ">
                     <div class="news-content-department">{{new1.vi_name_depart}}</div>
                     <div class="news-content-title">
-                        <a href="#">{{new1.news.vi_title}}</a>
+                        <a href="/News/Detail?id={{new1.news.id}}">{{new1.news.vi_title}}</a>
                     </div>
                     <div class="news-content-sub"><span style="color:black">{{new1.name_admin}}</span> - {{timeDiff(new1.news.date_create)}}</div>
                 </div>
@@ -47,7 +47,7 @@
                             <div class="card-body">
                                 <div class="news-content-department">{{x.vi_name_depart}}</div>
                                 <div class="news-content-title" style="font-size:20px">
-                                    <a href="#{{x.news.id}}">{{x.news.vi_title}}</a>
+                                    <a href="/News/Detail?id={{x.news.id}}">{{x.news.vi_title}}</a>
                                 </div>
                                 <div class="news-content-sub"><span style="color:black">{{x.name_admin}}</span> - {{timeDiff(x.news.date_create)}}</div>
                             </div>
@@ -65,7 +65,7 @@
                 <div class="col-md-4 news-wrapper" ng-repeat="y in allnews | filter : {'id_depart' :z.id}">
                     <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/{{y.news.img}}) center">
                         <div class="news-title-wrapper">
-                            <a href="#">{{y.news.vi_title}}</a>
+                            <a href="/News/Detail?id={{y.news.id}}">{{y.news.vi_title}}</a>
                             <div><span style="color:white">{{y.name_admin}}</span> - {{timeDiff(y.news.date_create)}}</div>
                         </div>
                     </div>
