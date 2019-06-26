@@ -97,7 +97,7 @@
                                             <div class="card-body">
                                                 
                                                     <div class="brand-name">{{x.name}}</div>
-                                                    <a href="/Product/Index?idCate={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
+                                                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-2" ng-repeat="x in brands">
                     <a href="/Product/Index?idBrand={{x.id}}"> <p class="footer-content-header">{{x.name}}</p></a>
-                    <a href="/Product/Index?idCate={{y.id}}" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
+                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
                 </div>
             </div>
         </div>

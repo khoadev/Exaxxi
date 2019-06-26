@@ -12,6 +12,7 @@
     <!-- Start category-panel -->
     <a ng-repeat="x in names" href="/Home/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'category-panel-active' : ''}}">{{x.vi_name}}</a>
 </div> <!-- End category-panel -->
+
 <div ng-controller="itemPopularCtrl">
     <div class="container" ng-show="items.length != 0">
         <div class="divider-section">

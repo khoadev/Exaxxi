@@ -22,7 +22,7 @@ namespace Exaxxi.Controllers
         }
 
         // GET: Product
-        public IActionResult Index(int? id, int? idBrand, int? idCate)
+        public IActionResult Index(int? id, int? idBrand, int? idCate, int? idCate_f)
         {
             //Get Department
             if (id == null) ViewBag.Id_Depart = JsonConvert.DeserializeObject<Departments>(_api.getAPI("api/DepartmentsAPI/Take1ByOrder").Result).id; else ViewBag.Id_Depart = id;
@@ -38,6 +38,12 @@ namespace Exaxxi.Controllers
 
             //Get Trade_Max
             ViewBag.LA_Min_Max = _api.getAPI("api/ItemsAPI/TakeLowestAskMinMax").Result;
+
+            ViewBag.idCate_f = null;
+            if (idCate_f != null)
+            {
+                ViewBag.idCate_f = idCate_f;
+            }
 
             return View();
         }

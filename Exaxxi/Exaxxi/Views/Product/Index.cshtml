@@ -11,13 +11,13 @@
     <div class="row">
         <div class="col-lg-3">
             <div>
-                <div class="filter-depart-wrapper" ng-controller="ShowDepartment">
+                <div class="filter-depart-wrapper" ng-controller="ShowDepartment" ng-show="@ViewBag.idCate_f==''">
                     <!--start filter-depart-wrapper-->
                     <a ng-repeat="x in name" href="/Product/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'filter-depart-active' : ''}}">{{x.vi_name}}</a>
                 </div> <!--end filter-depart-wrapper-->
             </div>
 
-            <div class="filter-brand-wrapper" ng-controller="ShowBrand">
+            <div class="filter-brand-wrapper" ng-controller="ShowBrand" ng-show="@ViewBag.idCate_f==''">
                 <!--start filter-brand-wrapper-->
                 <div class="filter-name-header">Brand's Name</div>
 
@@ -51,7 +51,7 @@
                     <div class="filter-sort-desc">A measure of how much price fluctuates. It is calculated as standard deviation divided by average price. A $200 product with 40% volatility results in an average price range of $120 to $280.</div>
                 </label>
             </div><!--end filter-size-wrapper-->
-            <div class="filter-category-wrapper">
+            <div class="filter-category-wrapper" ng-show="@ViewBag.idCate_f==''">
                 <!--start filter-category-wrapper-->
                 <div class="filter-name-header">Category's Name</div>
                 <div class="category-list-wrapper custom-scrollbar">
@@ -91,10 +91,13 @@
         </div>
         
         <div class="col-lg-9">
+            @if(ViewBag.idCate_f != null)
+            {
+            <h2>{{name.name}}</h2>
+            }
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
                 <div class="col-6 col-sm-6 col-md-4 col-lg-4" style="margin-top:20px;" dir-paginate="x in item | filter:byRange('lowest_ask', slider.minValue , slider.maxValue) | itemsPerPage: 9 | orderBy:sort">
-
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
@@ -143,28 +146,31 @@
         });
 
         //Show Category
-        exaxxiApp.controller('ShowCate', function ($scope, $http) {
-            $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/all")
+        exaxxiApp.controller('ShowCate', function ($scope, $http) {                   
+
+            if (angular.isDefined(@ViewBag.idCate_f)) {
+                $http.get("/api/CategoriesAPI/" + @ViewBag.idCate_f)
+                    .then(function (response) {
+                        $scope.name = response.data;
+                    });
+            }
+            else
+            {
+                $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/all")
                 .then(function (response) {
                     $scope.name = response.data;                    
                 });
+            }
 
-            $http.get("/api/ItemsAPI/TakeItemByIdBrand/" + @ViewBag.Id_Brand + "/all").
-                then(function (data) {
-                    $scope.item = data.data;
-                });
-
-            
+       
             //Show Product by Category
             $scope.cateModel = {};
             $scope.sizeModel = {};
-            $scope.save = function () {
+            
+            if (angular.isDefined(@ViewBag.idCate_f)) {
+                console.log(1);
                 var checkCate = [];
-                for (var k in $scope.cateModel) {
-                    if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
-                        checkCate.push(k);
-                    }
-                }
+                checkCate.push(@ViewBag.idCate_f);
 
                 var checkSize = [];
                 for (var j in $scope.sizeModel) {
@@ -176,14 +182,53 @@
                 var Array = {
                     cate: checkCate,
                     size: checkSize,
-                    id_brand: @ViewBag.Id_Brand
+                    id_brand: @ViewBag.Id_Brand,
                 }
 
                 $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(Array)).
                     then(function (data) {
-                        $scope.item = data.data;                                                   
-                    });  
-            }  
+                        $scope.item = data.data;
+                    });
+            }
+            else {
+                $http.get("/api/ItemsAPI/TakeItemByIdBrand/" + @ViewBag.Id_Brand + "/all").
+                then(function (data) {
+                    $scope.item = data.data;
+                });
+            }
+
+            $scope.save = function () {
+                var checkCate = [];
+                if (angular.isDefined(@ViewBag.idCate_f)) {
+                    checkCate.push(@ViewBag.idCate_f);
+                }
+                else {
+                    for (var k in $scope.cateModel) {
+                        if ($scope.cateModel.hasOwnProperty(k) && $scope.cateModel[k]) {
+                            checkCate.push(k);
+                        }
+                    }
+                }                
+
+                var checkSize = [];
+                for (var j in $scope.sizeModel) {
+                    if ($scope.sizeModel.hasOwnProperty(j) && $scope.sizeModel[j]) {
+                        checkSize.push(j);
+                    }
+                }
+
+                var Array = {
+                    cate: checkCate,
+                    size: checkSize,
+                    id_brand: @ViewBag.Id_Brand,
+                }
+
+                $http.post("/api/ItemsAPI/TakeIdCategory_Checkbox", JSON.stringify(Array)).
+                    then(function (data) {
+                        $scope.item = data.data;
+                    });
+            }
+       
             $scope.slider = {
                 minValue: @ViewBag.LA_Min_Min,
                 maxValue: @ViewBag.LA_Min_Max,
@@ -192,7 +237,7 @@
                     ceil: @ViewBag.LA_Min_Max,
                     step: 10,
                     translate: function(value) {
-                          return formatNumber(value, '.', ',') + " VND"
+                            return formatNumber(value, '.', ',') + " VND"
                         },
                 }
             };
@@ -201,8 +246,8 @@
                 return minValue <= item[fieldName] && item[fieldName] <= maxValue;
                 };
             };
-
-        });
+           
+        });           
 
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
