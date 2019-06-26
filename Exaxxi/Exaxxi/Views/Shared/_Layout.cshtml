@@ -5,7 +5,7 @@
     var scrollable = "";
     string actionName = ViewContext.RouteData.Values["action"].ToString();
     string controllerName = ViewContext.RouteData.Values["controller"].ToString();
-    if (actionName == "Register" | actionName == "Login" | controllerName == "Product")
+    if (actionName == "Register" | actionName == "Login" | controllerName == "News" |  controllerName == "Product")
     {
         scroll = "navbar-custom-scrolled";
         scrollable = "";
@@ -32,7 +32,7 @@
 
 </head>
 
-<body ng-app="exaxxiApp">
+<body ng-app="exaxxiApp" >
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -188,7 +188,7 @@
         </div>
     </nav> <!-- End nav -->
 
-    <div style="background:white!important;">
+    <div style="background:white!important;" class="pb-5 pt-2">
 
         @RenderBody()
     </div>

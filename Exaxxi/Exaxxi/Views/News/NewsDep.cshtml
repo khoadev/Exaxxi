@@ -4,7 +4,7 @@
     <div class="row" style="margin-top:50px">
         <div class="col-12" ng-controller="ShowDepartment">
             <ul class="list-unstyled news-department-list">
-                <li class="d-inline-block"><a href="#" ng-repeat="x in dep">{{x.vi_name}}</a></li>
+                <li class="d-inline-block"><a href="/news/NewsDep?loai={{x.id}}" ng-repeat="x in dep">{{x.vi_name}}</a></li>
             </ul>
             <div class="news-department-title">
                 {{dep_name.vi_name}}
@@ -18,24 +18,13 @@
         <div class="col-md-4 news-wrapper">
             <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(images/air-jordan-6-infrared-wallpaper-hd.jpg) center">
                 <div class="news-title-wrapper">
-                    <a href="#">@tintuc.news.vi_title</a>
+                    <a href="/news/Detail?id=@tintuc.news.id">@tintuc.news.vi_title</a>
                     <div><span style="color:white">@tintuc.name_admin</span> - @info.Day(tintuc.news.date_create)</div>
                 </div>
             </div>
         </div>
         }
     </div>
-    <div class="pagination-wrapper">
-        <ul class="pagination pagination-md justify-content-center" id="pagination-custom">
-            <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-left"></i></a></li>
-            <li class="page-item"><a class="page-link page-link-custom pagination-active" href="#">1</a></li>
-            <li class="page-item"><a class="page-link page-link-custom" href="#">2</a></li>
-            <li id="pagination-dots"> <i class="fas fa-ellipsis-h"> </i> </li>
-            <li class="page-item"><a class="page-link page-link-custom" href="#">7</a></li>
-            <li class="page-item"><a class="page-link page-link-custom" href="#"><i class="fas fa-angle-double-right"></i></a></li>
-        </ul>
-    </div>
-
     <pager class="pager-container" list="@Model" asp-action="NewsDep" asp-controller="News" asp-route-loai="@ViewBag.Id_Dep" />
 
 </div>
@@ -44,7 +33,7 @@
     <script>
         //Show Department
         exaxxiApp.controller('ShowDepartment', function ($scope, $http) {
-            $http.get("/api/DepartmentsAPI")
+            $http.get("/api/DepartmentsAPI/DepartHasNews")
                 .then(function (response) { $scope.dep = response.data; });
             $http.get("/api/DepartmentsAPI/" + @ViewBag.Id_Dep)
                 .then(function (response) { $scope.dep_name = response.data; });

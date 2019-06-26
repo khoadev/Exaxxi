@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 /* change the background color */
 .navbar-custom {
     background-color: transparent;
@@ -1198,6 +1201,32 @@ top-title-first-text {
     background-color: #ab1113;
     color: white;
 }
+.pager-container{
+    display:flex;
+    justify-content:center;
+}
+.pager-container li a {
+    color: black;
+}
+.pager-container li:hover > a {
+    color: white !important;
+}
+.pager-container li:hover {
+    background-color: #ab1113;
+}
+.pager-container li {
+    font-size: 15px;
+    padding: 0px 4px;
+    margin-right: 10px;
+    border: 1px solid #dee2e6;
+    padding: .5rem .75rem;
+    font-weight: bold;
+    transition:0.3s;
+}
+.pager-container .active {
+    background-color:#ab1113;
+    color:white
+}
 /*Start product-detail css*/
 /* Start content-wrapper */
 .detail-content-right-first h3 {
@@ -1260,6 +1289,7 @@ top-title-first-text {
 .size {
     font-family: coolrg;
     color: #777777;
+    font-size:30px;
 }
 
 
@@ -1283,14 +1313,14 @@ top-title-first-text {
 
 .detail-content-right-final .detail-left {
     width: 40%;
-    line-height:20px;
     background-color: #0E5396;
     color: white;
     text-align: center;
-    padding-bottom: 5px;
+    padding-bottom: 2px;
     font-weight:normal;
     border-top-left-radius:5px;
     border-bottom-left-radius:5px;
+    height:100%;
 }
 .size-wrapper{
    display:inline-block;
@@ -1309,23 +1339,30 @@ top-title-first-text {
     font-size:20px;
 }
 .size-left {
-    border: solid thin #ab1113;
+    border: solid thin #0E5396;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
     color: white;
-    background-color: #ab1113;
+    background-color: #0E5396;
     font-weight: bold;
     padding: 5px;
-    font-family:coolrg;
+    font-family: coolrg;
 }
 .size-right {
     padding: 5px;
-    border: solid thin #ab1113;
-    padding:5px;
-    font-family:coolcond;
+    border: solid thin #0E5396;
+    padding: 5px;
+    font-family: coolcond;
 }
 .size-wrapper input[type=radio]:checked + label {
     opacity:1!important;
+}
+.size-wrapper input[type=checkbox]:checked + label {
+    opacity: 1 !important;
+}
+.is-following{
+    padding:10px;
+    border-radius:5px!important;
 }
 /* Ed content-wrapper */
 /* Start Jumbotron */
@@ -1541,20 +1578,170 @@ top-title-first-text {
     display:none;
     font-size:15px;
 }
+.user-panel {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(31,10,6,0.03), 0 0.9375rem 1.40625rem rgba(31,10,6,0.03), 0 0.25rem 0.53125rem rgba(31,10,6,0.05), 0 0.125rem 0.1875rem rgba(31,10,6,0.03);
+    position: fixed;
+    top: 50px;
+    width: calc(3 / 13 * 100%);
+}
+.user-panel-header {
+    font-family: coolrg;
+    font-size: 30px;
+    border-bottom: rgba(0,0,0,0.04) solid 1px;
+    background: rgba(0,0,0,0.01);
+    padding:20px 20px;
+}
+.user-panel-body{
+    font-family:ralemed;
+    padding:15px 25px!important;
+    font-size:20px;
+}
+.user-panel-body li:not(:last-child){
+    margin-bottom:15px;
+}
+.user-panel-body a {
+    margin-bottom: 15px;
+    padding: 5px 15px;
+    color:black;
+    text-decoration:none;
+    opacity:0.5;
+    transition:0.3s;
+}
+.user-panel-body a:hover{
+    opacity:1;
+}
+.user-panel-active {
+    color: #da624a !important;
+    background-color: #fcf1ef;
+    display:block;
+    padding:5px 15px;
+    border-radius:20px;
+    opacity:1!important;
+}
+.user-info {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(31,10,6,0.03), 0 0.9375rem 1.40625rem rgba(31,10,6,0.03), 0 0.25rem 0.53125rem rgba(31,10,6,0.05), 0 0.125rem 0.1875rem rgba(31,10,6,0.03);
+    margin-top:50px;
+    padding:15px
+}
+.user-info div {
+    color: #495057;
+    font-family:ralemed;
+}
+.user-info .user-number {
+    color: black;
+    font-family: coolrg;
+    font-size: 50px;
+}
+.user-tab{
+    border-bottom:none;
+    transition:0.3s;
+}
+.user-tab .nav-link.active, .user-tab .nav-item.show .nav-link {
+    border: none !important;
+    font-weight: bold !important;
+    border-radius: 20px;
+    color: #da624a !important;
+    background-color: #fcf1ef;
+    padding: 5px 15px;
+}
+.user-tab .nav-link{
+    color:black!important;
+    font-weight:bold;
+}
+.user-tab .nav-link:hover {
+    border:none;
+}
+.user-level {
+    text-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #eeeeee;
+    font-size: 25px;
+    font-family: bebasneue;
+    font-weight: 700;
+    padding-top: 4px;
+    color: white!important;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    width: 55px;
+    height: 55px;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    z-index: 1;
+    font-family:coolrg;
+    display:inline-block;
+    margin-left:10px;
+    margin-top:-10px
+}
+.user-level-completed{
+    background-color:#ab1113;
+}
+.user-progress {
+    height: 25px !important;
+}
+.user-progress .progress-bar{
+    background-color:#ab1113
+}
+.user-progress .sr-only {
+    position: relative !important;
+}
+.td-w10 {
+    width: 10%;
+    padding: 5px 0px !important;
+}
+.td-w65 {
+    width: 65%;
+    padding: 5px 0px !important;
+}
+.td-w25 {
+    width: 25%;
+    padding: 5px 0px !important;
+}
+
 /* ------------------------------------------------- */
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 15px;
     }
 
-.sidenav a {
-    font-size: 18px;
-}
+    .sidenav a {
+        font-size: 18px;
     }
+}
+.btn-360 {
+    background-color: transparent;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border:0;
 
+}
+.btn-360:hover{
+    background-color:transparent;
+
+}
+.btn-360:focus {
+    outline-style: none;
+    box-shadow: none;
+}
+.modal-full {
+    min-width: 95%;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 80%;
+}
 .img-container {
 width: 100%;
-max-width: 640px;
 margin: 0 auto;
 padding: 0;
 cursor: ew-resize;
@@ -1626,9 +1813,7 @@ img {
 
     }
 .news-content-wrapper {
-    height: 100vh;
     padding: 20px 50px 50px 50px;
-    overflow-y: auto;
 }
 .news-recent-news {
     font-family: coolrg;
@@ -1713,6 +1898,7 @@ img {
     border-radius:5px;
 
 }
+
 @media only screen and (max-width: 1024px) {
     .news-content-wrapper {
         padding: 20px;
