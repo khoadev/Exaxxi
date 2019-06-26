@@ -37,7 +37,6 @@ namespace Exaxxi.Controllers.WebAPI
             if (user != null)
             {
                 var tokenString = BuildToken(user);
-                HttpContext.Session.SetString("token", tokenString);
                 response = Ok(new { token = tokenString });
             }
            

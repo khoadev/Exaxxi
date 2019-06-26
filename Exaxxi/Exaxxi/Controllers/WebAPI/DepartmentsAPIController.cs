@@ -55,8 +55,5 @@ namespace Exaxxi.Controllers.WebAPI
 
             return departments;
         }
-
-        
-        
     }
 }
