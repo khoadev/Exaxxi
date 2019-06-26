@@ -17,7 +17,7 @@
         swipeStatus: swipeStatus,
         allowPageScroll: "vertical",
         threshold: 1
-    }
+    };
 
     $(function () {
         imgs = $(".img-container"); // the element that will be swipeable
@@ -26,10 +26,10 @@
 
     function swipeStatus(event, phase, direction, distance) {
         var duration = 0;
-        if (direction == "left") {
+        if (direction === "left") {
             changeImg(distance);
         }
-        else if (direction == "right") {
+        else if (direction === "right") {
             changeImgR(-distance);
         }
     }
@@ -39,7 +39,7 @@
         // divide by 8 (or any number) to spread 
         // it out so it doesn't load new img 
         // every single px of swipe distance
-        imgNum = Math.floor(imgNum / 18);
+        imgNum = Math.floor(imgNum / 8);
 
         if (imgNum < 1) {
             imgNum += num;
@@ -56,7 +56,7 @@
         // divide by 8 (or any number) to spread 
         // it out so it doesn't load new img 
         // every single px of swipe distance
-        imgNum = Math.floor(imgNum / 18);
+        imgNum = Math.floor(imgNum / 8);
 
         var num2 = -Math.abs(num);
         if (imgNum > num2) {
@@ -69,4 +69,4 @@
         // change the image src
         document.getElementById("myImg").src = "../images/3dimage/" + imgNum + ".jpg";
     }
-})
+});
