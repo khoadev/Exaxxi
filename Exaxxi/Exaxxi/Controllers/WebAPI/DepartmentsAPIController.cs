@@ -12,6 +12,7 @@ namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/DepartmentsAPI")]
     [ApiController]
+    
     public class DepartmentsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
@@ -22,7 +23,7 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         // GET: api/Departments
-        [HttpGet,Authorize]
+        [HttpGet]
         public IEnumerable<Departments> GetDepartments()
         {
             return _context.Departments.OrderBy(p=>p.order);

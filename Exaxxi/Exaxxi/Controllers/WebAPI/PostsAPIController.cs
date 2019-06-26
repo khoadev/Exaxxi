@@ -69,7 +69,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id == id_depart)
+                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart)
                 .OrderBy(h => h.c.a.f.sold)
                 .Take(10)
                 .Select(m => new PostViewModel
@@ -87,7 +87,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask)
+                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask)
                 .OrderByDescending(h => h.c.a.e.g.date_start)
                 .Take(10)
                 .Select(m => new PostViewModel

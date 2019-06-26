@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Exaxxi.ViewModels.PostViewAdmin>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.post.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.post.date_start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.post.date_end)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.post.kind)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.post.user)
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.post.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.post.date_start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.post.date_end)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.post.kind)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.post.user.name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
