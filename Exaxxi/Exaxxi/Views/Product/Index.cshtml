@@ -91,9 +91,9 @@
         </div>
         
         <div class="col-lg-9">
-            @if(ViewBag.idCate_f != null)
+            @if (ViewBag.idCate_f != null)
             {
-            <h2>{{name.name}}</h2>
+                <h2>@ViewBag.nameCate_f</h2>
             }
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
@@ -147,28 +147,17 @@
 
         //Show Category
         exaxxiApp.controller('ShowCate', function ($scope, $http) {                   
-
-            if (angular.isDefined(@ViewBag.idCate_f)) {
-                $http.get("/api/CategoriesAPI/" + @ViewBag.idCate_f)
-                    .then(function (response) {
-                        $scope.name = response.data;
-                    });
-            }
-            else
-            {
-                $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/all")
-                .then(function (response) {
-                    $scope.name = response.data;                    
-                });
-            }
-
+            
+            $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/all")
+            .then(function (response) {
+                $scope.name = response.data;                    
+            });
        
             //Show Product by Category
             $scope.cateModel = {};
             $scope.sizeModel = {};
             
             if (angular.isDefined(@ViewBag.idCate_f)) {
-                console.log(1);
                 var checkCate = [];
                 checkCate.push(@ViewBag.idCate_f);
 

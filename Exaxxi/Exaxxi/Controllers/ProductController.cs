@@ -43,6 +43,7 @@ namespace Exaxxi.Controllers
             if (idCate_f != null)
             {
                 ViewBag.idCate_f = idCate_f;
+                ViewBag.nameCate_f = JsonConvert.DeserializeObject<Categories>(_api.getAPI("api/CategoriesAPI/" + idCate_f).Result).name;
             }
 
             return View();
