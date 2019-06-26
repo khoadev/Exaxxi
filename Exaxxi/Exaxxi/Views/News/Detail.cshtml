@@ -41,7 +41,7 @@
                             <img src="../images/{{x.news.img}}" alt="" class="img-fluid">
                         </div>
                         <div class="col-8 pl-0">
-                            <p>{{x.news.vi_title}}<span class="content-right-first-date">{{timeDiff(x.news.date_create)}}</span></p>
+                            <a href="News/Details?id={{x.id}}"> <p>{{x.news.vi_title}}<span class="content-right-first-date">{{timeDiff(x.news.date_create)}}</span></p></a>
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@
                             <img src="../images/{{x.img}}" alt="" class="img-fluid">
                         </div>
                         <div class="col-8 pl-0">
-                            <p>{{x.name}}<span class="content-right-first-price">{{x.lowest_ask}}</span></p>
+                            <a href="/Product/Details?id={{x.id}}" style="color:black"><p>{{x.name}}<span class="content-right-first-price">{{x.lowest_ask}}</span></p></a>
                         </div>
                     </div>
                     
