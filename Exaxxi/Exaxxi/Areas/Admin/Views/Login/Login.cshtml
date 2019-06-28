@@ -65,7 +65,7 @@
 
     <script>
 
-        
+
         app.controller('UserCtrl', function ($scope, $http) {
             $scope.sendData = function () {
                 var username = $("#usr").val();
@@ -79,23 +79,19 @@
                     if (typeof (Storage) !== "undefined") {
                         //set sesionStorage
                         sessionStorage.setItem('token', response.data.token);
+
                         var token = sessionStorage.getItem('token');
-                        $http.post("/Admin/Login/setTokenSession", '"' + token + '"');
-                        window.location = "/Admin/Admins/Index";
+                        $http.post("/Admin/Login/setTokenSession", '"' + token + '"').then(function (data) {
+                            window.location = "/Admin/Admins/Index";
+                        });
+
                         //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     } else {
                         alert('Trình duyệt của bạn đã quá cũ. Hãy nâng cấp trình duyệt ngay!');
                     }
-                    var token = response.data.token;
-                    var config = {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token
-                        }
-                    }
 
-                    $http.get("/api/AdminsAPI", config);
                 });
+
             };
         });
 
