@@ -9,19 +9,20 @@ using Exaxxi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    
+
     [Area("Admin")]
     public class SizesController : Controller
     {
         CallAPI _api = new CallAPI();
-        
+
         // GET: Admin/Sizes
         public IActionResult Index()
         {
-            IEnumerable<Sizes> result = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("api/SizesAPI").Result);
+            IEnumerable<Sizes> result = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("api/SizesAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -33,7 +34,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var sizes = JsonConvert.DeserializeObject<Sizes>(_api.getAPI($"api/SizesAPI/GetSizesDetail/{id}").Result);
+            var sizes = JsonConvert.DeserializeObject<Sizes>(_api.getAPI($"api/SizesAPI/GetSizesDetail/{id}", HttpContext.Session.GetString("token")).Result);
             if (sizes == null)
             {
                 return NotFound();
@@ -45,7 +46,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Sizes/Create
         public IActionResult Create()
         {
-            
+
             return View();
         }
 
@@ -56,13 +57,13 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,lowest_ask,highest_bid,last_sale,id_ds_size,id_item")] Sizes sizes)
         {
-            if (_api.postAPI(sizes, "api/SizesAPI").Result)
+            if (_api.postAPI(sizes, "api/SizesChange", HttpContext.Session.GetString("token")).Result)
             {
-                IEnumerable<Sizes> result = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("api/SizesAPI").Result);
+                IEnumerable<Sizes> result = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("api/SizesAPI", HttpContext.Session.GetString("token")).Result);
                 return RedirectToAction(nameof(Index));
             }
 
-         
+
             return View(sizes);
         }
 
@@ -74,7 +75,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var sizes = JsonConvert.DeserializeObject<Sizes>(_api.getAPI($"api/SizesAPI/{id}").Result);
+            var sizes = JsonConvert.DeserializeObject<Sizes>(_api.getAPI($"api/SizesAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (sizes == null)
             {
                 return NotFound();
@@ -98,7 +99,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(sizes, $"api/SizesAPI/{id}");
+                    var result = await _api.putAPI(sizes, $"api/SizesChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -113,14 +114,14 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(sizes);
         }
 
-        
+
         private bool SizesExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/SizesAPI/SizesExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/SizesAPI/SizesExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }

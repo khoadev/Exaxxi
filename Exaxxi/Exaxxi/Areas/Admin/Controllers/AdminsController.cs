@@ -16,18 +16,18 @@ using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-   
+
     [Area("Admin")]
     public class AdminsController : Controller
     {
         CallAPI _api = new CallAPI();
         BlowFish bf = new BlowFish(info.keyBF);
         // GET: Admin/Admins
-        
+
         public IActionResult Index()
         {
-            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI",HttpContext.Session.GetString("token")).Result);
-            
+            IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI", HttpContext.Session.GetString("token")).Result);
+
             return View(result);
         }
 
@@ -39,7 +39,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             ViewBag.Password = bf.Decrypt_CBC(admins.password);
             if (admins == null)
             {
@@ -62,14 +62,14 @@ namespace Exaxxi.Areas.Admin.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
         {
-            if (_api.postAPI(admins, "api/AdminsAPI").Result)
+            if (_api.postAPI(admins, "api/AdminsAPI", HttpContext.Session.GetString("token")).Result)
             {
 
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-              
+
                 return View("Create");
             }
 
@@ -83,7 +83,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}").Result);
+            var admins = JsonConvert.DeserializeObject<Admins>(_api.getAPI($"api/AdminsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (admins == null)
             {
                 return NotFound();
@@ -107,7 +107,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(admins, $"api/AdminsAPI/{id}");
+                    var result = await _api.putAPI(admins, $"api/AdminsAPI/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,7 +127,7 @@ namespace Exaxxi.Areas.Admin.Controllers
 
         private bool AdminsExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/AdminsAPI/AdminsExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/AdminsAPI/AdminsExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
         [AllowAnonymous]
         public IActionResult ForgetPassword()
