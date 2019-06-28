@@ -170,6 +170,65 @@ namespace Exaxxi.Controllers.WebAPI
             return result.ToList();
         }
 
+        [Route("Buy")]
+        public IActionResult Buy([FromBody] JObject json)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            dynamic data = json;
+            string account = data.account;
+            string phone = data.phone;
+            string address = data.address;
+            string payment = data.payment;
+
+            if(account == "")
+            {
+                return BadRequest("Vui Lòng Nhập Tên Người Nhận");
+            }
+            if (phone == "")
+            {
+                return BadRequest("Vui Lòng Số Điện Thoại");
+            }
+            if (address == "")
+            {
+                return BadRequest("Vui Lòng Địa Chỉ");
+            }
+
+            return Ok();
+        }
+
+        [Route("Bid")]
+        public IActionResult Bid([FromBody] JObject json)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dynamic data = json;
+            double enter_bid = data.enter_bid;
+            string account = data.account;
+            string phone = data.phone;
+            string address = data.address;
+            string payment = data.payment;
+
+            if (account == "")
+            {
+                return BadRequest("Vui Lòng Nhập Tên Người Nhận");
+            }
+            if (phone == "")
+            {
+                return BadRequest("Vui Lòng Số Điện Thoại");
+            }
+            if (address == "")
+            {
+                return BadRequest("Vui Lòng Địa Chỉ");
+            }
+
+            return Ok();
+        }
     }
 }
