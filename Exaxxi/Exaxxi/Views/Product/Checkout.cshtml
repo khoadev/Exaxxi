@@ -1,0 +1,271 @@
+﻿<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh; margin-top:40px" ng-controller="Item_Attribute">
+    <div class="row">
+        <div class="col-lg-7" style=" padding:20px 30px">
+            <div class="row">
+                <div class="col-12 p-2" style="background:white;">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <img src="images/{{name[0].item.img}}" class="img-fluid" />
+                        </div>
+                        <div class="col-lg-10" style="border-left:solid thick #ab1113">
+                            <div class="checkout-product-name">
+                                {{name[0].item.name}}
+                            </div>
+                            <div class="checkout-product-info">
+                                Highest Bid: <b>${{name[0].item.highest_bid}}</b> | Lowest Ask: <b>${{name[0].item.lowest_ask}}</b><br />
+                                Size <b>{{name[0].size}}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12" style="padding:0px!important">
+                    <div class="card-deck">
+                        <div class="card mb-3" style="background:white;">
+                            <div class="card-body">
+                                <div class="checkout-card-title text-center">
+                                    Place Bid
+                                </div>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <input id="enter_bid" type="text" class="form-control checkout-input " placeholder="Enter Bid" />
+                                    </div>
+                                    <div class="col-2 checkout-curency">
+                                        Đ
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 checkout-suggestion">
+                                        A good bid around 200.000VND
+                                    </div>
+                                </div>
+                                <div class="checkout-estimated-wrapper">
+                                    <div class="row checkout-estimated">
+                                        <div class="col-6">
+                                            Estimated shipping
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            200.000VND
+                                        </div>
+                                    </div>
+                                    <div class="row checkout-estimated">
+                                        <div class="col-6">
+                                            Authentication fee
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            Free
+                                        </div>
+                                    </div>
+                                    <div class="row checkout-estimated">
+                                        <div class="col-6">
+                                            Total
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            -
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <i class="far fa-clock fa-fw"></i> <label for="sel1">Bid Expiration:</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <select class="form-control" id="sel1">
+                                                <option>30 days</option>
+                                                <option>7 days</option>
+                                                <option>14 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button id="bid" class="btn checkout-btn isbuy col-4">
+                                            Bid
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3" style="background:white;">
+                            <div class="card-body">
+                                <div class="checkout-card-title text-center">
+                                    Buy
+                                </div>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].item.lowest_ask}}" />
+                                    </div>
+                                    <div class="col-2 checkout-curency">
+                                        Đ
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 checkout-suggestion">
+                                        You are about to purchase this product at the lowest Ask price
+                                    </div>
+                                </div>
+                                <div class="checkout-estimated-wrapper">
+                                    <div class="row checkout-estimated">
+                                        <div class="col-6">
+                                            Estimated shipping
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            200.000VND
+                                        </div>
+                                    </div>
+                                    <div class="row checkout-estimated">
+                                        <div class="col-6">
+                                            Authentication fee
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            Free
+                                        </div>
+                                    </div>
+                                    <div class="row checkout-estimated">
+                                        <div class="col-6">
+                                            Total
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            -
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button id="buy" class="btn checkout-btn isbuy col-4">
+                                            Buy
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-5 order-first order-lg-last" style=" padding:20px 30px">
+            <div class="row">
+                <div class="col-12" style="background:white;">
+                    <div class="row">
+                        <div class="col-12 p-3">
+                            <div class="checkout-card-title text-center">
+                                Shipping Detail
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your account">
+                                </div>
+                                <div class="form-group">
+                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your phone">
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your address" rows="3"></textarea>
+                                </div>
+                            </form>
+                            <div class="mb-2" style="font-family:coolrg;">
+                                Payment Method:
+                            </div>
+                            <div class="checkout-payment">
+                                <input class="d-none" id="payment1" value="cod" name="payment" type="radio" />
+                                <label for="payment1" class="checkout-payment-wrapper">
+                                    Cash On Deliery (COD)<br />
+                                    <span class="checkout-payment-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="checkout-payment">
+                                <input class="d-none" id="payment2" value="cd" name="payment" type="radio" />
+                                <label for="payment2" class="checkout-payment-wrapper">
+                                    Credit / Debit<br />
+                                    <span class="checkout-payment-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        //Items Attribute
+        exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
+            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+                .then(function (response) { $scope.name = response.data });
+
+            //Buy
+            $("#buy").on('click', function () {
+                var account = $("#account").val();
+                var phone = $("#phone").val();
+                var address = $("#address").val();
+
+                payment = $("input[name=payment]:checked").val();
+                if (typeof payment === "undefined") { 
+                    alert("Vui lòng chọn phương thức thanh toán");
+                    return false;
+                }
+
+                var info = {
+                    "account": account,
+                    "phone": phone,
+                    "address": address,
+                    "payment": payment,
+                };
+
+                $http.post("/api/ItemsAPI/Buy", JSON.stringify(info)).
+                    then(function (data) {
+                        window.location = "/Login/Login";
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });                
+            });
+
+            //Bid
+            $("#bid").on('click', function () {
+                var enter_bid = $("#enter_bid").val();
+                var sel1 = $("#sel1").val();
+                var account = $("#account").val();
+                var phone = $("#phone").val();
+                var address = $("#address").val();
+
+                if (enter_bid == "") {
+                    alert("Vui lòng nhập giá tiền");
+                    return false;
+                }
+
+                payment = $("input[name=payment]:checked").val();
+                if (typeof payment === "undefined") {
+                    alert("Vui lòng chọn phương thức thanh toán");
+                    return false;
+                }
+
+                var info = {
+                    "enter_bid": enter_bid,
+                    "sel1": sel1,
+                    "account": account,
+                    "phone": phone,
+                    "address": address,
+                    "payment": payment,
+                };
+
+                $http.post("/api/ItemsAPI/Bid", JSON.stringify(info)).
+                    then(function (data) {
+                        window.location = "/Login/Login";
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
+        });
+    </script>
+}

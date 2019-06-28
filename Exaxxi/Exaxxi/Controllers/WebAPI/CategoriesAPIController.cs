@@ -33,15 +33,15 @@ namespace Exaxxi.Controllers.WebAPI
         }
       
         [Route("TakeCateByIdBrand/{Id_Brand}/{Qty}")]
-        public IEnumerable<Categories> GetAllCate(int Id_Brand, string Qty)
+        public IEnumerable<Categories> GetAllCate(int Id_Brand, int Qty)
         {
-            if (Qty == "all")
+            if (Qty == 0)
             {
                 return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
             }     
             else
             {
-                return null;
+                return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order).Take(Qty);
             }
         }
 

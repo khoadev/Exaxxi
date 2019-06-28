@@ -13,17 +13,17 @@ using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-   
+
     [Area("Admin")]
     public class DepartmentsController : Controller
     {
-       
+
         CallAPI _api = new CallAPI();
-       
+
         // GET: Admin/Departments
         public IActionResult Index()
         {
-            IEnumerable<Departments> result = JsonConvert.DeserializeObject<List<Departments>>(_api.getAPI("api/DepartmentsAPI").Result);
+            IEnumerable<Departments> result = JsonConvert.DeserializeObject<List<Departments>>(_api.getAPI("api/DepartmentsAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -35,7 +35,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (departments == null)
             {
                 return NotFound();
@@ -57,12 +57,12 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,vi_name,en_name,active,order")] Departments departments)
         {
-            if (_api.postAPI(departments, "api/DepartmentsAPI").Result)
+            if (_api.postAPI(departments, "api/DepartmentsChange", HttpContext.Session.GetString("token")).Result)
             {
-                
+
                 return RedirectToAction(nameof(Index));
             }
-            return View("Create");
+            return View(departments);
         }
 
         // GET: Admin/Departments/Edit/5
@@ -73,7 +73,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}").Result);
+            var departments = JsonConvert.DeserializeObject<Departments>(_api.getAPI($"api/DepartmentsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (departments == null)
             {
                 return NotFound();
@@ -97,7 +97,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(departments, $"api/DepartmentsApi/{id}");
+                    var result = await _api.putAPI(departments, $"api/DepartmentsChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,7 +116,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         }
         private bool DepartmentsExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/DepartmentsApi/DepartmentsExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/DepartmentsApi/DepartmentsExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }

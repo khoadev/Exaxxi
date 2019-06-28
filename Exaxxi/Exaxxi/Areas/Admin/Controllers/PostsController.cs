@@ -9,6 +9,7 @@ using Exaxxi.Models;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
 using Exaxxi.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -25,7 +26,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Posts
         public IActionResult Index()
         {
-            IEnumerable<PostViewAdmin> result = JsonConvert.DeserializeObject<List<PostViewAdmin>>(_api.getAPI("api/PostsAPI").Result);
+            IEnumerable<PostViewAdmin> result = JsonConvert.DeserializeObject<List<PostViewAdmin>>(_api.getAPI("api/PostsAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -37,7 +38,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var posts = JsonConvert.DeserializeObject<Posts>(_api.getAPI($"api/PostsAPI/GetPostsDetail/{id}").Result);
+            var posts = JsonConvert.DeserializeObject<Posts>(_api.getAPI($"api/PostsAPI/GetPostsDetail/{id}", HttpContext.Session.GetString("token")).Result);
             if (posts == null)
             {
                 return NotFound();
@@ -59,12 +60,12 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,price,date_start,date_end,kind,id_size,id_user")] Posts posts)
         {
-            if (_api.postAPI(posts, "api/PostsAPI").Result)
+            if (_api.postAPI(posts, "api/PostsChange", HttpContext.Session.GetString("token")).Result)
             {
-                IEnumerable<Posts> result = JsonConvert.DeserializeObject<List<Posts>>(_api.getAPI("api/PostsAPI").Result);
+                IEnumerable<Posts> result = JsonConvert.DeserializeObject<List<Posts>>(_api.getAPI("api/PostsAPI", HttpContext.Session.GetString("token")).Result);
                 return RedirectToAction(nameof(Index));
             }
-           
+
             return View(posts);
         }
 
@@ -81,7 +82,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(posts);
         }
 
@@ -101,7 +102,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(posts, $"api/PostsAPI/{id}");
+                    var result = await _api.putAPI(posts, $"api/PostsChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,13 +117,12 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["id_size"] = new SelectList(_context.Sizes, "id", "id", posts.id_size);
-            ViewData["id_user"] = new SelectList(_context.Users, "id", "email", posts.id_user);
+
             return View(posts);
         }
         private bool PostsExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/PostsAPI/PostsExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/PostsAPI/PostsExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }
