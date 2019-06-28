@@ -80,8 +80,12 @@
                         //set sesionStorage
                         sessionStorage.setItem('token', response.data.token);
                         var token = sessionStorage.getItem('token');
-                        $http.post("/Admin/Login/setTokenSession", '"' + token + '"');
+                        $http.post("/Admin/Login/setTokenSession", '"' + token + '"').then(function (data) {
+                            alert(data.data);
+                        });
+                        
                         window.location = "/Admin/Admins/Index";
+                
                         //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     } else {
                         alert('Trình duyệt của bạn đã quá cũ. Hãy nâng cấp trình duyệt ngay!');
