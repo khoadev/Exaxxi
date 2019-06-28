@@ -9,14 +9,41 @@
                 <div class="col-sm-5 detail-content-left">
                     <!-- Start content-left -->
                     <!--<img src="images/3dimage/1.jpg" id="product-image-3d" class="img-fluid" style="margin-bottom:10px;">
-                    <div id="slider-range-min"></div>-->
-                    <div class="img-container">
-                        <div class="img360">
-                            <img id="myImg" src="~/images/3dimage/{{name[0].item.img}}" />
+    <div id="slider-range-min"></div>-->
+                    <button type="button" class="btn btn-primary btn-360" data-toggle="modal" data-target="#imgModal">
+                        <img src="~/images/icons/360-icon-1.jpg"  />
+                        <img class="img-fluid" src="~/images/3dimage/{{name[0].item.img}}" />
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="imgModal">
+                        <div class="modal-dialog modal-full">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Modal Heading</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="img-container">
+                                        <div class="img360">
+                                            <img id="myImg" class="img-fluid" src="~/images/3dimage/{{name[0].item.img}}" />
+                                        </div>
+                                    </div>
+                                    <div id="preload-imgs"></div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
-                        <img src="~/images/icons/360-icon-1.jpg" style="width:50px; height:50px; position:absolute; top:10px; left:10px;" />
                     </div>
-                    <div id="preload-imgs"></div>
+
                 </div> <!-- End content-left-->
 
                 <div class="col-sm-7 detail-content-right">
@@ -25,18 +52,51 @@
                     <div class="detail-content-right-first">
                         <!-- Start right-first -->
                         <h6>{{name[0].brand_name}}</h6>
-                        <h3>{{name[0].item.name}}</h3>
+                        <h3>{{name[0].item.name}} <i data-toggle="modal" data-target="#followingModal" style="color:#eeeeee" class="fas fa-heart"></i></h3>
+                        <div class="modal fade" id="followingModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Following</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="detail-second-left">
+                                            <!-- Start second-left -->
+                                            <div class="size-wrapper">
+                                                <input class="d-none" id="follow" name="follow" type="checkbox" />
+                                                <label for="follow" class="size-label">
+                                                    <div class="size-left is-following">
+                                                        {{name[0].size}}
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div> <!-- End second-left -->
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button class="btn" style="background-color:#0E5396; color:white">
+                                            Confirm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <p>Condition <span>New</span> | Ticker: <span style="color: black;">123abc</span></p>
-                        <h5>100% Authetic</h5>
+                        <h5>100% Authentic</h5>
                     </div> <!-- End right-first -->
 
 
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
-                        <div class="size" data-toggle="modal" data-target="#myModal">
-                            Size
+                        <div class="size">
+                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black">9</span>
                         </div>
-                        <div class="modal fade" id="myModal">
+                        <div class="modal fade" id="sizeModal">
                             <div class="modal-dialog">
                                 <div class="modal-content">
 
@@ -63,12 +123,6 @@
                                             </div>
                                         </div> <!-- End second-left -->
                                     </div>
-
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

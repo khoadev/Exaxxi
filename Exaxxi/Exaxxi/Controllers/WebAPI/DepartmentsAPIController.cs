@@ -12,7 +12,6 @@ namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/DepartmentsAPI")]
     [ApiController]
-    
     public class DepartmentsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
@@ -56,8 +55,5 @@ namespace Exaxxi.Controllers.WebAPI
 
             return departments;
         }
-
-        
-        
     }
 }

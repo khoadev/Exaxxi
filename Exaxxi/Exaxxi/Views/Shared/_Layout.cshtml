@@ -5,7 +5,7 @@
     var scrollable = "";
     string actionName = ViewContext.RouteData.Values["action"].ToString();
     string controllerName = ViewContext.RouteData.Values["controller"].ToString();
-    if (actionName == "Register" | actionName == "Login" | controllerName == "Product")
+    if (actionName == "Register" | actionName == "Login" | controllerName == "News" |  controllerName == "Product")
     {
         scroll = "navbar-custom-scrolled";
         scrollable = "";
@@ -32,7 +32,7 @@
 
 </head>
 
-<body ng-app="exaxxiApp">
+<body ng-app="exaxxiApp" >
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -97,7 +97,7 @@
                                             <div class="card-body">
                                                 
                                                     <div class="brand-name">{{x.name}}</div>
-                                                    <a href="/Product/Index?idCate={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
+                                                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
         </div>
     </nav> <!-- End nav -->
 
-    <div style="background:white!important;">
+    <div style="background:white!important;" class="pt-2">
 
         @RenderBody()
     </div>
@@ -198,7 +198,7 @@
             <div class="row">
                 <div class="col-md-4 col-lg-2" ng-repeat="x in brands">
                     <a href="/Product/Index?idBrand={{x.id}}"> <p class="footer-content-header">{{x.name}}</p></a>
-                    <a href="/Product/Index?idCate={{y.id}}" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
+                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter: {'id_brand' : x.id}">{{y.name}}<br></a>
                 </div>
             </div>
         </div>

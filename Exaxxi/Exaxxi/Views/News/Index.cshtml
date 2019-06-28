@@ -2,9 +2,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h2>Index</h2>
-<div class="container-fluid" ng-controller="NewsTimeCtrl">
+<div class="container-fluid" style="padding-top:50px;" ng-controller="NewsTimeCtrl">
     <div class="row" ng-controller="DepartCtrl">
         <div class="col-lg-3">
             <div class="row ">
@@ -58,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-5" ng-repeat="z in departs">
+            <div class="row mb-5"  ng-repeat="z in departs" id="depart{{z.id}}">
                 <div class="col-12 news-department-title">
                     {{z.vi_name}}
                     <hr />
