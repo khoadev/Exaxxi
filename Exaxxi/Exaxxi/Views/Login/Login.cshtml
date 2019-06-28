@@ -23,7 +23,7 @@
     }
 }
 
-<div id="logreg-background">
+<div id="logreg-background" ng-controller="Login">
 
     <div class="container">
         <div class="row" id="logreg-wrapper">
@@ -97,7 +97,8 @@
 @section Scripts {
 
     <script>
-        $(function () {
+        exaxxiApp.controller('Login', function ($scope, $http) {
+
             //Login
             $("#submit").on("click", function () {
                 var username = $("#usr").val();
@@ -106,18 +107,19 @@
                     "username": username,
                     "password": password,
                 };
-                $.ajax({
-                    url: "/api/UsersAPI/PostUserLogin",
-                    type: "POST",
-                    data: JSON.stringify(login),
-                    contentType: "application/json",
-                    success: function () {
-                        window.location = "/Home";
-                    },
-                    error: function (notfound) {
-                        alert(notfound.responseText);
-                    }
-                });
+
+                $http.post("/api/UsersAPI/PostUserLogin", JSON.stringify(login)).
+                    then(function (data) {
+
+                        $http.post("/Login/Login", JSON.stringify(data.data)).
+                            then(function () {
+                                window.location = "/Home";
+                            });
+
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
             });
 
             //Register
@@ -147,23 +149,23 @@
                         alert(notfound.responseText);
                     }
                 });
-            });           
+            });
         });
 
-        function CheckExistMail() {
-            var email = $("#email_re").val();
-            $.ajax({
-                url: "/api/UsersAPI/CheckExistMail/?email=" + email,
-                type: 'GET',
-                contentType: "application/json",
-                success: function (data) {
-                    $('#loi').html(data);
-                },
-                error: function () {
-                    alert(notfound.responseText);
-                }
-            });
-        }
+            function CheckExistMail() {
+                var email = $("#email_re").val();
+                $.ajax({
+                    url: "/api/UsersAPI/CheckExistMail/?email=" + email,
+                    type: 'GET',
+                    contentType: "application/json",
+                    success: function (data) {
+                        $('#loi').html(data);
+                    },
+                    error: function () {
+                        alert(notfound.responseText);
+                    }
+                });
+            }       
 
     </script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
