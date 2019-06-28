@@ -15,14 +15,14 @@ using System.IO;
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Area("Admin")]
-  
+
     public class ItemsController : Controller
     {
         CallAPI _api = new CallAPI();
         // GET: Admin/Items
         public IActionResult Index()
         {
-            IEnumerable<Items> result = JsonConvert.DeserializeObject<List<Items>>(_api.getAPI("api/ItemsAPI").Result);
+            IEnumerable<Items> result = JsonConvert.DeserializeObject<List<Items>>(_api.getAPI("api/ItemsAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -34,7 +34,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/GetItemsDetail/{id}").Result);
+            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/GetItemsDetail/{id}", HttpContext.Session.GetString("token")).Result);
             if (items == null)
             {
                 return NotFound();
@@ -72,7 +72,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             //Gán tên file vào img để lưu vào DB
             items.img = img.FileName;
             //Post sang API xử lý
-            if (_api.postAPI(items, "api/ItemsAPI").Result)
+            if (_api.postAPI(items, "api/ItemsChange", HttpContext.Session.GetString("token")).Result)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -88,12 +88,12 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}").Result);
+            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (items == null)
             {
                 return NotFound();
             }
-           
+
             return View(items);
         }
 
@@ -130,7 +130,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                         await img.CopyToAsync(myfile);
                     }
                     items.img = img.FileName;
-                    var result = await _api.putAPI(items, $"api/ItemsAPI/{id}");
+                    var result = await _api.putAPI(items, $"api/ItemsChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,14 +144,14 @@ namespace Exaxxi.Areas.Admin.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }        
+            }
             return View(items);
         }
 
 
         private bool ItemsExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/ItemsAPI/ItemsExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/ItemsAPI/ItemsExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }
