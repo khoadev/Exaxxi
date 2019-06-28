@@ -29,9 +29,9 @@ namespace Exaxxi.Controllers.WebAPI
         }        
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
-        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, string Qty)
+        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
         {
-            if (Qty == "all")
+            if (Qty == 0)
             {
                 return _context.Items
                     .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
@@ -41,7 +41,12 @@ namespace Exaxxi.Controllers.WebAPI
             }
             else
             {
-                return null;
+                return _context.Items
+                   .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                   .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                   .Where(g => g.d.id == Id_Brand)
+                   .Select(p => p.c.a)
+                   .Take(Qty);
             }
         }
 
