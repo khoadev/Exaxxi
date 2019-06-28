@@ -9,21 +9,22 @@ using Exaxxi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-  
+
     [Area("Admin")]
     public class CategoriesController : Controller
     {
-        
+
         CallAPI _api = new CallAPI();
-        
+
 
         // GET: Admin/Categories
         public IActionResult Index()
         {
-            IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI").Result);
+            IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -34,8 +35,8 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/GetCategoriesDetail/{id}").Result);
-            
+            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/GetCategoriesDetail/{id}", HttpContext.Session.GetString("token")).Result);
+
             if (categories == null)
             {
                 return NotFound();
@@ -47,7 +48,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public IActionResult Create()
         {
-            
+
             return View();
         }
 
@@ -58,14 +59,13 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,name,active,order,id_brand")] Categories categories)
         {
-            if (_api.postAPI(categories, "api/CategoriesAPI").Result)
+            if (_api.postAPI(categories, "api/CategoriesChange", HttpContext.Session.GetString("token")).Result)
             {
-                IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI").Result);
-                ViewData["id_brand"] = result;
+                IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI", HttpContext.Session.GetString("token")).Result);
                 return RedirectToAction(nameof(Index));
-                
+
             }
-            
+
             return View(categories);
         }
 
@@ -77,13 +77,13 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/{id}").Result);
+            var categories = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (categories == null)
             {
                 return NotFound();
             }
 
-                
+
             return View(categories);
         }
 
@@ -103,7 +103,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(categories, $"api/CategoriesAPI/{id}");
+                    var result = await _api.putAPI(categories, $"api/CategoriesChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,13 +118,13 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           
+
             return View(categories);
         }
 
         private bool CategoriesExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/CategoriesAPI/CategoriesExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/CategoriesAPI/CategoriesExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }

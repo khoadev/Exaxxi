@@ -9,6 +9,7 @@ using Exaxxi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -16,11 +17,11 @@ namespace Exaxxi.Areas.Admin.Controllers
     public class ds_SizeController : Controller
     {
         CallAPI _api = new CallAPI();
-       
+
         // GET: Admin/ds_Size
         public IActionResult Index()
         {
-            IEnumerable<ds_Size> result = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("api/ds_SizeAPI").Result);
+            IEnumerable<ds_Size> result = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("api/ds_SizeAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -32,7 +33,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var ds_Size = JsonConvert.DeserializeObject<ds_Size>(_api.getAPI($"api/ds_SizeAPI/Getds_SizeDetail/{id}").Result);
+            var ds_Size = JsonConvert.DeserializeObject<ds_Size>(_api.getAPI($"api/ds_SizeAPI/Getds_SizeDetail/{id}", HttpContext.Session.GetString("token")).Result);
             if (ds_Size == null)
             {
                 return NotFound();
@@ -54,9 +55,9 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,VN,US,UK,Inch,Centimet")] ds_Size ds_Size)
         {
-            if (_api.postAPI(ds_Size, "api/ds_SizeAPI").Result)
+            if (_api.postAPI(ds_Size, "api/ds_SizeChange", HttpContext.Session.GetString("token")).Result)
             {
-                IEnumerable<ds_Size> result = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("api/ds_SizeAPI").Result);
+                IEnumerable<ds_Size> result = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("api/ds_SizeAPI", HttpContext.Session.GetString("token")).Result);
                 return RedirectToAction(nameof(Index));
             }
             return View(ds_Size);
@@ -70,7 +71,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var ds_Size = JsonConvert.DeserializeObject<ds_Size>(_api.getAPI($"api/ds_SizeAPI/{id}").Result);
+            var ds_Size = JsonConvert.DeserializeObject<ds_Size>(_api.getAPI($"api/ds_SizeAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (ds_Size == null)
             {
                 return NotFound();
@@ -94,7 +95,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    var result = await _api.putAPI(ds_Size, $"api/ds_SizeAPI/{id}");
+                    var result = await _api.putAPI(ds_Size, $"api/ds_SizeChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -112,11 +113,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View(ds_Size);
         }
 
-     
+
         private bool ds_SizeExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/ds_SizesAPI/ds_SizeExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/ds_SizesAPI/ds_SizeExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
-    
+
 }

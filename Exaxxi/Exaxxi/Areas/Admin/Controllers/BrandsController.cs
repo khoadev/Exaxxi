@@ -14,7 +14,7 @@ using System.IO;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
-    
+
     [Area("Admin")]
     public class BrandsController : Controller
     {
@@ -22,7 +22,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Brands
         public IActionResult Index()
         {
-            IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI/BrandsDefault").Result);
+            IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI/BrandsDefault", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
 
@@ -34,7 +34,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var brands = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/GetbrandsDetail/{id}").Result);
+            var brands = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/GetbrandsDetail/{id}", HttpContext.Session.GetString("token")).Result);
             if (brands == null)
             {
                 return NotFound();
@@ -72,12 +72,12 @@ namespace Exaxxi.Areas.Admin.Controllers
             //Gán tên file vào img để lưu vào DB
             brands.img = img.FileName;
 
-            if (_api.postAPI(brands, "api/BrandsAPI").Result)
+            if (_api.postAPI(brands, "api/BrandsChange", HttpContext.Session.GetString("token")).Result)
             {
-                IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI").Result);
+                IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsChange", HttpContext.Session.GetString("token")).Result);
                 return RedirectToAction(nameof(Index));
             }
-       
+
             return View(brands);
         }
 
@@ -89,7 +89,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var brands = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/{id}").Result);
+            var brands = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (brands == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                         await img.CopyToAsync(myfile);
                     }
                     brands.img = img.FileName;
-                    var result = await _api.putAPI(brands, $"api/BrandsAPI/{id}");
+                    var result = await _api.putAPI(brands, $"api/BrandsChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -145,14 +145,14 @@ namespace Exaxxi.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           
+
             return View(brands);
         }
 
-        
+
         private bool BrandsExists(int id)
         {
-            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/BrandsAPI/BrandsExists/{id}").Result);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/BrandsAPI/BrandsExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }
