@@ -266,7 +266,7 @@
         <!-- Start news-background-1 -->
         <div class="row col-lg-8" style="margin:0px!important; padding:0px!important;">
 
-            <div class="col-sm-6 col-lg-6" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{news1.img}}) center;">
+            <div class="col-sm-6 col-lg-6" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{news1.news.img}}) center;">
 
             </div>
             <div class="col-sm-6 col-lg-6" style="background: #f2f2f2">
@@ -278,12 +278,12 @@
                     {{news1.news.vi_title}}
                 </a><br>
                 <p class="news-detail">
-                    {{news1.news.date_create}}<br>
+                    {{timeDiff(news1.news.date_create)}}<br>
                     {{news1.news.vi_content}}
                 </p>
             </div>
         </div>
-        <div ng-repeat="x in news | limitTo : 5:1 " class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{x.img}}) center;">
+        <div ng-repeat="x in news | limitTo : 5:1 " class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{x.news.img}}) center;">
             <p class="news-category">
                 {{x.vi_name_depart}}
             </p><br>
@@ -291,7 +291,7 @@
                 {{x.news.vi_title}}
             </a><br>
             <p class="news-detail-2">
-                {{x.news.date_create}}<br>
+                {{timeDiff(x.news.date_create)}}<br>
                 {{x.news.vi_content}}
             </p>
         </div>
@@ -329,6 +329,23 @@
                 });
         });
         exaxxiApp.controller('getnewsCtrl', function ($scope, $http) {
+            $scope.timeDiff = function (time) {
+                var now = Date.now();
+                var teo = new Date(time).getTime();
+                var milisecondsDiff = now - teo;
+                var qd = Math.round(milisecondsDiff / (1000 * 60));
+                if (qd < 10) {
+                    return "Just Now";
+                }
+                if (qd < 60 && qd > 10) {
+                    return qd + " minutes ago";
+                }
+                if (qd > 60) {
+                    var day = new Date(time);
+                    return day.toDateString();
+                }
+
+            };
             $http.get("/api/NewsAPI/GetNewsByDepart/"+ @ViewBag.Id_Depart)
                 .then(function (response) {
                     $scope.news = response.data;
