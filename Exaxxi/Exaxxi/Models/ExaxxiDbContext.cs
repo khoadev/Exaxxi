@@ -74,6 +74,46 @@ namespace Exaxxi.Models
                     level = 1,
                     date_create = DateTime.Parse("2019-01-05"),
                     active = true,
+                },
+                new Admins
+                {
+                    id = 5,
+                    name = "kietnguyen1",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
+                    email = "kietnguyen1612@gmail.com",
+                    level = 2,
+                    date_create = DateTime.Parse("2019-01-05"),
+                    active = true,
+                },
+                new Admins
+                {
+                    id = 6,
+                    name = "kietnguyen2",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
+                    email = "kietnguyen1612@gmail.com",
+                    level = 3,
+                    date_create = DateTime.Parse("2019-01-05"),
+                    active = true,
+                },
+                new Admins
+                {
+                    id = 7,
+                    name = "kietnguyen3",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
+                    email = "kietnguyen1617@gmail.com",
+                    level = 3,
+                    date_create = DateTime.Parse("2019-01-05"),
+                    active = true,
+                },
+                new Admins
+                {
+                    id = 8,
+                    name = "kietnguyen4",
+                    password = "9ce749361e3b28e16df8b7adefdb2a4e",
+                    email = "kietnguyen1614@gmail.com",
+                    level = 4,
+                    date_create = DateTime.Parse("2019-01-05"),
+                    active = true,
                 }
             );
             builder.Entity<Users>().HasData(
