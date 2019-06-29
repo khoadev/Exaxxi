@@ -1,4 +1,7 @@
-﻿<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh; margin-top:40px" ng-controller="Item_Attribute">
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh; margin-top:40px" ng-controller="Item_Attribute">
     <div class="row">
         <div class="col-lg-7" style=" padding:20px 30px">
             <div class="row">
@@ -72,7 +75,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <select class="form-control" id="sel1">
+                                            <select class="form-control" id="exp_day">
                                                 <option>30 days</option>
                                                 <option>7 days</option>
                                                 <option>14 days</option>
@@ -157,10 +160,10 @@
                             </div>
                             <form>
                                 <div class="form-group">
-                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your account">
+                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your account" value="{{user_info.name}}">
                                 </div>
                                 <div class="form-group">
-                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your phone">
+                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your phone" value="">
                                 </div>
                                 <div class="form-group">
                                     <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your address" rows="3"></textarea>
@@ -170,7 +173,7 @@
                                 Payment Method:
                             </div>
                             <div class="checkout-payment">
-                                <input class="d-none" id="payment1" value="cod" name="payment" type="radio" />
+                                <input class="d-none" id="payment1" value="Cash On Deliery (COD)" name="payment" type="radio" />
                                 <label for="payment1" class="checkout-payment-wrapper">
                                     Cash On Deliery (COD)<br />
                                     <span class="checkout-payment-desc">
@@ -179,7 +182,7 @@
                                 </label>
                             </div>
                             <div class="checkout-payment">
-                                <input class="d-none" id="payment2" value="cd" name="payment" type="radio" />
+                                <input class="d-none" id="payment2" value="Cash On Deliery (COD)" name="payment" type="radio" />
                                 <label for="payment2" class="checkout-payment-wrapper">
                                     Credit / Debit<br />
                                     <span class="checkout-payment-desc">
@@ -196,11 +199,15 @@
 </div>
 
 @section Scripts{
-    <script>
+<script>
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
                 .then(function (response) { $scope.name = response.data });
+
+            //Take Info User
+            $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.user_info = response.data });
 
             //Buy
             $("#buy").on('click', function () {
@@ -209,7 +216,7 @@
                 var address = $("#address").val();
 
                 payment = $("input[name=payment]:checked").val();
-                if (typeof payment === "undefined") { 
+                if (typeof payment === "undefined") {
                     alert("Vui lòng chọn phương thức thanh toán");
                     return false;
                 }
@@ -221,19 +228,25 @@
                     "payment": payment,
                 };
 
-                $http.post("/api/ItemsAPI/Buy", JSON.stringify(info)).
+                $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
                     then(function (data) {
-                        window.location = "/Login/Login";
+
+                        $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
+                            then(function () {
+                                // 0:=>buy
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0";
+                            });
+
                     })
                     .catch(function onError(response) {
                         alert(response.data);
-                    });                
+                    });
             });
 
             //Bid
             $("#bid").on('click', function () {
                 var enter_bid = $("#enter_bid").val();
-                var sel1 = $("#sel1").val();
+                var exp_day = $("#exp_day").val();
                 var account = $("#account").val();
                 var phone = $("#phone").val();
                 var address = $("#address").val();
@@ -251,21 +264,27 @@
 
                 var info = {
                     "enter_bid": enter_bid,
-                    "sel1": sel1,
+                    "exp_day": exp_day,
                     "account": account,
                     "phone": phone,
                     "address": address,
                     "payment": payment,
                 };
 
-                $http.post("/api/ItemsAPI/Bid", JSON.stringify(info)).
+                $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
                     then(function (data) {
-                        window.location = "/Login/Login";
+
+                        $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
+                            then(function () {
+                                // 1:=>bid
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1";
+                            });
+
                     })
                     .catch(function onError(response) {
                         alert(response.data);
                     });
             });
         });
-    </script>
+</script>
 }

@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Exaxxi.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers
 {
@@ -59,7 +62,50 @@ namespace Exaxxi.Controllers
 
         public IActionResult Checkout(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            ViewBag.IdItem = id;            
+
+            return View();
+        }
+
+        public ActionResult Set_SessionCheckout([FromBody] CheckoutViewModel model)
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            //Lưu Session
+            HttpContext.Session.SetString("ck_account", model.Account);
+            HttpContext.Session.SetString("ck_phone", model.Phone);
+            HttpContext.Session.SetString("ck_address", model.Address);
+            HttpContext.Session.SetString("ck_payment", model.Payment);
+
+            if (model.Enter_bid.ToString() != null)
+            {
+                HttpContext.Session.SetString("ck_enter_bid", model.Enter_bid.ToString());
+            }
+            if (model.Exp_Day != null)
+            {
+                HttpContext.Session.SetString("ck_exp_day", model.Exp_Day);
+            }
+
+            return Ok();        
+        }
+
+        public IActionResult Last_Checkout(int? id, int act)
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             ViewBag.IdItem = id;
+            ViewBag.Act = act;
 
             return View();
         }

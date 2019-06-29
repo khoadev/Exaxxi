@@ -114,10 +114,6 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest("Sai mật khẩu");
             }
 
-            //Lưu Session
-            //HttpContext.Session.SetInt32("idUser", user.id);
-            //HttpContext.Session.SetString("nameUser", user.name);
-
             //Ghi nhận đăng nhập thành công
             return Ok(user);
         }
