@@ -27,7 +27,7 @@
             <th><a asp-action="Create">Create New</a> @ViewBag.Userid</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody ng-controller="deleteAd">
         @foreach (var item in Model)
         {
             <tr>
@@ -49,7 +49,7 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                    <a style="cursor: pointer;" id="delete" class="delete" data-id="@item.id">Delete</a>
+                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
                 </td>
             </tr>
         }
@@ -57,23 +57,45 @@
 </table>
 @section Scripts{
     <script>
-        $(function () {
-            $(".delete").click(function () {
-                var id = $(this).attr("data-id");
-                if (confirm("Bạn có chắc muốn xóa")) {
-                    $.ajax({
-                        url: "/api/AdminsAPI/" + id,
-                        type: "DELETE",
-                        success: function () {
-                            alert("Thành công");
-                            window.location = "/Admin/Admins/Index";
-                        },
-                        error: function (res) {
-                            alert("Lỗi : " + res);
-                        }
-                    });
+        //$(function () {
+        //    $(".delete").click(function () {
+        //        var id = $(this).attr("data-id");
+        //        if (confirm("Bạn có chắc muốn xóa")) {
+        //            $.ajax({
+        //                url: "/api/AdminsAPI/" + id,
+        //                type: "DELETE",
+        //                success: function () {
+        //                    alert("Thành công");
+        //                    window.location = "/Admin/Admins/Index";
+        //                },
+        //                error: function (res) {
+        //                    alert("Lỗi : " + res);
+        //                }
+        //            });
+        //        }
+        //    });
+        //});
+        app.controller('deleteAd', function ($scope, $http) {
+            $scope.Delete = function (id) {
+                var url = '/api/AdminsAPI/' + id;
+                //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
+                var config = {
+                    headers: {
+                        'Context-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
                 }
-            });
+                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                if (isConfirm) {
+                    $http.delete(url, config).then(function (response) {
+                        window.location.reload();
+                    });
+
+                } else {
+                    return false;
+                }
+            }
         });
+
     </script>
 }

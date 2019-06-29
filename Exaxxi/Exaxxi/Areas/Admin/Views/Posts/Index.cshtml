@@ -5,52 +5,92 @@
 }
 
 <h2>Index</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.post.price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.post.date_start)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.post.date_end)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.post.kind)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.post.user)
-            </th>
-          
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.post.price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.post.date_start)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.post.date_end)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.post.kind)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.post.user.name)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div ng-controller="Post">
+    <label for="singleSelect"> Sap xep: </label><br>
+    <select name="singleSelect" ng-model="sort">
+        <option value="">Default</option> 
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+    </select>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.post.price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.post.date_start)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.post.date_end)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.post.kind)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.size)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.post.user)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in name | filter: {post: {kind: sort}}">
+                <td>{{x.post.user.name}}</td>
+                <td>
+                    <span ng-if="x.post.kind == 1">Mua</span>
+                    <span ng-if="x.post.kind == 2">Ban</span>
+                    <span ng-if="x.post.kind == 3">Dang xu ly</span>
+
+                </td>
+
+            </tr>
+            @*@foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.post.price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.post.date_start)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.post.date_end)
+                        </td>
+                        <td>
+                            @if (item.post.kind == 1)
+                            {
+                                <span>Mua</span>
+                            }
+                            else
+                            {
+                                <span>Bán</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.size)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.post.user.name)
+                        </td>
+                    </tr>
+                }*@
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script>
+        app.controller('Post', function ($scope, $http) {
+            $scope.sort = "";
+            $http.get("/api/PostsAPI")
+                .then(function (response) { $scope.name = response.data; console.log($scope.name); });
+
+        });
+
+    </script>
+    }
