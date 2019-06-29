@@ -26,7 +26,7 @@ namespace Exaxxi.Models
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-262PU69\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -524,15 +524,15 @@ namespace Exaxxi.Models
                     name = "Item 1",
                     vi_info = "Thông Tin của item 1 sẽ hiện ở đây",
                     en_info = "There are some infos about Item 1",
-                    img = "item1.pnj",
+                    img = "item1.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
                     active=true,
-                    lowest_ask=30,
-                    highest_bid=25
+                    lowest_ask=300000,
+                    highest_bid=250000
                 },
                 new Items
                 {
@@ -540,15 +540,15 @@ namespace Exaxxi.Models
                     name = "Item 2",
                     vi_info = "Thông Tin của item 2 sẽ hiện ở đây",
                     en_info = "There are some infos about Item 2",
-                    img = "item2.pnj",
+                    img = "item2.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
                     active = true,
-                    lowest_ask=40,
-                    highest_bid=35
+                    lowest_ask=40000,
+                    highest_bid=35000
                 },
                 new Items
                 {
@@ -556,15 +556,15 @@ namespace Exaxxi.Models
                     name = "Item 3",
                     vi_info = "Thông Tin của item 3 sẽ hiện ở đây",
                     en_info = "There are some infos about Item 3",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
                     active = true,
-                    lowest_ask=44,
-                    highest_bid=55
+                    lowest_ask=440000,
+                    highest_bid=550000
                 },
                 new Items
                 {
@@ -572,7 +572,7 @@ namespace Exaxxi.Models
                     name = "Item I",
                     vi_info = "Thông Tin của item I sẽ hiện ở đây",
                     en_info = "There are some infos about Item I",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -587,7 +587,7 @@ namespace Exaxxi.Models
                     name = "Item II",
                     vi_info = "Thông Tin của item II sẽ hiện ở đây",
                     en_info = "There are some infos about Item II",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -602,7 +602,7 @@ namespace Exaxxi.Models
                     name = "Item III",
                     vi_info = "Thông Tin của item III sẽ hiện ở đây",
                     en_info = "There are some infos about Item III",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -617,7 +617,7 @@ namespace Exaxxi.Models
                     name = "Item X",
                     vi_info = "Thông Tin của item X sẽ hiện ở đây",
                     en_info = "There are some infos about Item X",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -632,7 +632,7 @@ namespace Exaxxi.Models
                     name = "Item X1",
                     vi_info = "Thông Tin của item X1 sẽ hiện ở đây",
                     en_info = "There are some infos about Item X1",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -647,7 +647,7 @@ namespace Exaxxi.Models
                     name = "Item X12",
                     vi_info = "Thông Tin của item X12 sẽ hiện ở đây",
                     en_info = "There are some infos about Item X12",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -662,7 +662,7 @@ namespace Exaxxi.Models
                     name = "Item X121",
                     vi_info = "Thông Tin của item X121 sẽ hiện ở đây",
                     en_info = "There are some infos about Item X121",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -677,7 +677,7 @@ namespace Exaxxi.Models
                     name = "Item XEEEEEEE",
                     vi_info = "Thông Tin của item XEEêEEêEE sẽ hiện ở đây",
                     en_info = "There are some infos about Item XEEeEEEEEEEeeeE",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -692,7 +692,7 @@ namespace Exaxxi.Models
                     name = "Item XEEEEEEE",
                     vi_info = "Thông Tin của item XEEêEEêEE sẽ hiện ở đây",
                     en_info = "There are some infos about Item XEEeEEEEEEEeeeE",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -707,7 +707,7 @@ namespace Exaxxi.Models
                     name = "Item XEEEEádasdasfsafasE ",
                     vi_info = "Thông Tin của item XEEEEádasdasfsafasE sẽ hiện ở đây",
                     en_info = "There are some infos about Item XEEEEádasdasfsafasE",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -722,7 +722,7 @@ namespace Exaxxi.Models
                     name = "Item qưtegdsdgegwggegw ",
                     vi_info = "Thông Tin của item qưtegdsdgegwggegw sẽ hiện ở đây",
                     en_info = "There are some infos about Item qưtegdsdgegwggegw",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -737,7 +737,7 @@ namespace Exaxxi.Models
                     name = "fasfasfasfsafsafsaf ",
                     vi_info = "Thông Tin của item fasfasfasfsafsafsaf sẽ hiện ở đây",
                     en_info = "There are some infos about Item fasfasfasfsafsafsaf",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -752,7 +752,7 @@ namespace Exaxxi.Models
                     name = "fasfasfasfsafsafsaf ",
                     vi_info = "Thông Tin của item fasfasfasfsafsafsaf sẽ hiện ở đây",
                     en_info = "There are some infos about Item fasfasfasfsafsafsaf",
-                    img = "item3.pnj",
+                    img = "item3.jpg",
                     volatility = 0,
                     trade_max = 200,
                     trade_min = 100,
@@ -796,54 +796,54 @@ namespace Exaxxi.Models
                 new Sizes
                 {
                     id=1,
-                    lowest_ask=30,
-                    highest_bid=25,
-                    last_sale=24,
+                    lowest_ask=300000,
+                    highest_bid=250000,
+                    last_sale=240000,
                     id_ds_size=1,
                     id_item=1
                 },
                 new Sizes
                 {
                     id=2,
-                    lowest_ask=40,
-                    highest_bid=35,
-                    last_sale=29,
+                    lowest_ask=400000,
+                    highest_bid=350000,
+                    last_sale=290000,
                     id_ds_size=2,
                     id_item=2
                 },
                 new Sizes
                 {
                     id=3,
-                    lowest_ask=40,
-                    highest_bid=35,
-                    last_sale=29,
+                    lowest_ask=400000,
+                    highest_bid=350000,
+                    last_sale=290000,
                     id_ds_size=2,
                     id_item=2
                 },
                 new Sizes
                 {
                     id=4,
-                    lowest_ask=55,
-                    highest_bid=45,
-                    last_sale=40,
+                    lowest_ask=550000,
+                    highest_bid=450000,
+                    last_sale=400000,
                     id_ds_size=3,
                     id_item=3
                 },
                 new Sizes
                 {
                     id = 5,
-                    lowest_ask = 65,
-                    highest_bid = 55,
-                    last_sale = 45,
+                    lowest_ask = 650000,
+                    highest_bid = 550000,
+                    last_sale = 450000,
                     id_ds_size = 1,
                     id_item = 3
                 },
                 new Sizes
                 {
                     id = 6,
-                    lowest_ask = 44,
-                    highest_bid = 33,
-                    last_sale = 22,
+                    lowest_ask = 440000,
+                    highest_bid = 330000,
+                    last_sale = 220000,
                     id_ds_size = 2,
                     id_item = 3
                 }
@@ -910,7 +910,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=1,
-                    price=20,
+                    price=200000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,
@@ -920,7 +920,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=2,
-                    price=30,
+                    price=300000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=2,
@@ -930,7 +930,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=3,
-                    price=35,
+                    price=350000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=2,
@@ -940,7 +940,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=4,
-                    price=35,
+                    price=350000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=2,
@@ -950,7 +950,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=5,
-                    price=35,
+                    price=350000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,
@@ -960,7 +960,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=6,
-                    price=35,
+                    price=350000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,

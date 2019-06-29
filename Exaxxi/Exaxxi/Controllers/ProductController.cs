@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Exaxxi.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers
 {
@@ -52,133 +55,59 @@ namespace Exaxxi.Controllers
         // GET: Product/Details/5
         public IActionResult Details(int? id)
         {
-            //var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}").Result);
-
-            //if (items == null)
-            //{
-            //    return NotFound();
-            //}
-
             ViewBag.IdItem = id;
 
-            return View(/*items*/);
-        }
-
-        // GET: Product/Create
-        public IActionResult Create()
-        {
-            ViewData["id_admin"] = new SelectList(_context.Admins, "id", "email");
-            ViewData["id_category"] = new SelectList(_context.Categories, "id", "name");
             return View();
         }
 
-        // POST: Product/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,vi_info,en_info,img,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items)
+        public IActionResult Checkout(int? id)
         {
-            if (ModelState.IsValid)
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
-                _context.Add(items);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Login");
             }
-            ViewData["id_admin"] = new SelectList(_context.Admins, "id", "email", items.id_admin);
-            ViewData["id_category"] = new SelectList(_context.Categories, "id", "name", items.id_category);
-            return View(items);
+
+            ViewBag.IdItem = id;            
+
+            return View();
         }
 
-        // GET: Product/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Set_SessionCheckout([FromBody] CheckoutViewModel model)
         {
-            if (id == null)
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
-                return NotFound();
+                return RedirectToAction("Index", "Login");
             }
 
-            var items = await _context.Items.FindAsync(id);
-            if (items == null)
+            //Lưu Session
+            HttpContext.Session.SetString("ck_account", model.Account);
+            HttpContext.Session.SetString("ck_phone", model.Phone);
+            HttpContext.Session.SetString("ck_address", model.Address);
+            HttpContext.Session.SetString("ck_payment", model.Payment);
+
+            if (model.Enter_bid.ToString() != null)
             {
-                return NotFound();
+                HttpContext.Session.SetString("ck_enter_bid", model.Enter_bid.ToString());
             }
-            ViewData["id_admin"] = new SelectList(_context.Admins, "id", "email", items.id_admin);
-            ViewData["id_category"] = new SelectList(_context.Categories, "id", "name", items.id_category);
-            return View(items);
+            if (model.Exp_Day != null)
+            {
+                HttpContext.Session.SetString("ck_exp_day", model.Exp_Day);
+            }
+
+            return Ok();        
         }
 
-        // POST: Product/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,vi_info,en_info,img,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items)
+        public IActionResult Last_Checkout(int? id, int act)
         {
-            if (id != items.id)
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
-                return NotFound();
+                return RedirectToAction("Index", "Login");
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(items);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ItemsExists(items.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["id_admin"] = new SelectList(_context.Admins, "id", "email", items.id_admin);
-            ViewData["id_category"] = new SelectList(_context.Categories, "id", "name", items.id_category);
-            return View(items);
-        }
+            ViewBag.IdItem = id;
+            ViewBag.Act = act;
 
-        // GET: Product/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var items = await _context.Items
-                .Include(i => i.admin)
-                .Include(i => i.category)
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            return View(items);
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var items = await _context.Items.FindAsync(id);
-            _context.Items.Remove(items);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ItemsExists(int id)
-        {
-            return _context.Items.Any(e => e.id == id);
+            return View();
         }
     }
 }

@@ -94,6 +94,7 @@
             @if (ViewBag.idCate_f != null)
             {
                 <h2>@ViewBag.nameCate_f</h2>
+                <a asp-action="Index">See All</a>
             }
             <div class="row" style="overflow-x: auto;">
                 <!-- Start row -->
@@ -141,14 +142,14 @@
         //Show Brand
         exaxxiApp.controller('ShowBrand', function ($scope, $http) {
 
-            $http.get("/api/BrandsAPI/TakeBrandByIdDepart/" + @ViewBag.Id_Depart + "/all")
+            $http.get("/api/BrandsAPI/TakeBrandByIdDepart/" + @ViewBag.Id_Depart + "/0")
                 .then(function (response) { $scope.name = response.data; });
         });
 
         //Show Category
         exaxxiApp.controller('ShowCate', function ($scope, $http) {                   
             
-            $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/all")
+            $http.get("/api/CategoriesAPI/TakeCateByIdBrand/" + @ViewBag.Id_Brand + "/0")
             .then(function (response) {
                 $scope.name = response.data;                    
             });
@@ -180,7 +181,7 @@
                     });
             }
             else {
-                $http.get("/api/ItemsAPI/TakeItemByIdBrand/" + @ViewBag.Id_Brand + "/all").
+                $http.get("/api/ItemsAPI/TakeItemByIdBrand/" + @ViewBag.Id_Brand + "/0").
                 then(function (data) {
                     $scope.item = data.data;
                 });
@@ -224,7 +225,7 @@
                 options: {
                     floor: @ViewBag.LA_Min_Min,
                     ceil: @ViewBag.LA_Min_Max,
-                    step: 10,
+                    step: 1000,
                     translate: function(value) {
                             return formatNumber(value, '.', ',') + " VND"
                         },

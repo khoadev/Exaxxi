@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Newtonsoft.Json.Linq;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -29,9 +30,9 @@ namespace Exaxxi.Controllers.WebAPI
         }        
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
-        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, string Qty)
+        public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
         {
-            if (Qty == "all")
+            if (Qty == 0)
             {
                 return _context.Items
                     .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
@@ -41,7 +42,12 @@ namespace Exaxxi.Controllers.WebAPI
             }
             else
             {
-                return null;
+                return _context.Items
+                   .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                   .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                   .Where(g => g.d.id == Id_Brand)
+                   .Select(p => p.c.a)
+                   .Take(Qty);
             }
         }
 
@@ -72,7 +78,8 @@ namespace Exaxxi.Controllers.WebAPI
                     {
                         item = p.h.e.c.a,
                         size = p.h.e.d.VN,
-                        brand_name = p.i.name
+                        brand_name = p.i.name,
+                        cate_name = p.h.f.name,
                     }).ToList();
 
             return items;
@@ -170,6 +177,29 @@ namespace Exaxxi.Controllers.WebAPI
             return result.ToList();
         }
 
+        [Route("BuyBid")]
+        public IActionResult Buy([FromBody] CheckoutViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            if(model.Account == "")
+            {
+                return BadRequest("Vui Lòng Nhập Tên Người Nhận");
+            }
+            if (model.Phone == "")
+            {
+                return BadRequest("Vui Lòng Số Điện Thoại");
+            }
+            if (model.Address == "")
+            {
+                return BadRequest("Vui Lòng Địa Chỉ");
+            }            
+
+            return Ok(model);
+        }
+        
     }
 }

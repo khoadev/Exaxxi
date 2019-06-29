@@ -36,9 +36,12 @@ namespace Exaxxi.Controllers
         }
 
        
-        public IActionResult Login(string returnUrl = "")
+        public IActionResult Login([FromBody] Users model)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            //Lưu Session
+            HttpContext.Session.SetInt32("idUser", model.id);
+            HttpContext.Session.SetString("nameUser", model.name);
+
             return View();
         }
 

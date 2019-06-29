@@ -95,7 +95,7 @@ namespace Exaxxi.Controllers.WebAPI
         
 
         [AllowAnonymous, Route("PostUserLogin")]
-        public IActionResult PostUserByEmail([FromBody] LoginViewModel model, string returnUrl = "")
+        public IActionResult PostUserByEmail([FromBody] LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -114,12 +114,8 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest("Sai mật khẩu");
             }
 
-            //Lưu Session
-            HttpContext.Session.SetInt32("idUser", user.id);
-            HttpContext.Session.SetString("nameUser", user.name);
-
             //Ghi nhận đăng nhập thành công
-            return Ok();
+            return Ok(user);
         }
 
         [AllowAnonymous, Route("PostRegister")]
