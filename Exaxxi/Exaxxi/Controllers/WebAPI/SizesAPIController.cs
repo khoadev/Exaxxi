@@ -65,6 +65,11 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(size);
         }
 
-        
+        [HttpGet("TakeSizesItem/{idItem}")]
+        public IEnumerable<Sizes> TakeSizesItem(int idItem)
+        {
+            return _context.Sizes.Include("size").Where(i => i.id_item == idItem).OrderBy(t => t.size.VN);
+        }
+
     }
 }

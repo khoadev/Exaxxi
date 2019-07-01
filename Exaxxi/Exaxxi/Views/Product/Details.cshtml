@@ -1,5 +1,4 @@
 ﻿<div ng-controller="Item_Attribute" style="margin-top:100px">
-
     <div class="content-wrapper" style="padding-bottom: 80px;">
         <!-- Start content wrapper-->
         <div class="container">
@@ -67,14 +66,18 @@
                                     <div class="modal-body">
                                         <div class="detail-second-left">
                                             <!-- Start second-left -->
+                                        @{ foreach (var item in ViewBag.dsSize)
+                                            {
                                             <div class="size-wrapper">
                                                 <input class="d-none" id="follow" name="follow" type="checkbox" />
                                                 <label for="follow" class="size-label">
                                                     <div class="size-left is-following">
-                                                        {{name[0].size}}
+                                                        @item.VN
                                                     </div>
                                                 </label>
                                             </div>
+                                            }
+                                            }
                                         </div> <!-- End second-left -->
                                     </div>
 
@@ -94,7 +97,7 @@
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
                         <div class="size">
-                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black">9</span>
+                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black">{{name[0].size}}</span>
                         </div>
                         <div class="modal fade" id="sizeModal">
                             <div class="modal-dialog">
@@ -108,19 +111,27 @@
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <div class="detail-second-left">
+                                        <div class="detail-second-left" >
                                             <!-- Start second-left -->
+                                        @{ var i = 0;
+                                          foreach (var item in ViewBag.dsSize)
+                                            {
                                             <div class="size-wrapper">
                                                 <input class="d-none" id="size" name="size" type="radio" />
                                                 <label for="size" class="size-label">
                                                     <div class="size-left">
-                                                        {{name[0].size}}
+                                                        @item.VN
                                                     </div>
-                                                    <div class="size-right">
-                                                        {{name[0].item.lowest_ask}} VND
-                                                    </div>
+                                                    @if (ViewBag.Sizes.Count>i && ViewBag.Sizes[i].id_ds_size == item.id)
+                                                    {
+                                                        <div class="size-right">
+                                                            @ViewBag.Sizes[i++].lowest_ask VND
+                                                        </div>
+                                                    }
                                                 </label>
                                             </div>
+                                                }
+                                            }
                                         </div> <!-- End second-left -->
                                     </div>
                                 </div>
