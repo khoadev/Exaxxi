@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].item.lowest_ask}}" />
+                                        <input id="value_buy" type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].item.lowest_ask}}" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -253,6 +253,11 @@
 
                 if (enter_bid == "") {
                     alert("Vui lòng nhập giá tiền");
+                    return false;
+                }
+
+                if (enter_bid > $("#value_buy").val()) {
+                    alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
                     return false;
                 }
 

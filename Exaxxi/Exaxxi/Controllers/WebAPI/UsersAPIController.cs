@@ -65,11 +65,11 @@ namespace Exaxxi.Controllers.WebAPI
             Users user = _context.Users.SingleOrDefault(p => p.email == email);
             if (user == null)
             {
-                return Ok("Bạn có thể sử dụng email này");
+                return Ok("<span style='color:green'>Bạn có thể sử dụng email này</span>");
             }
             else
             {
-                return Ok("Email này đã tồn tại");
+                return Ok("<span style='color:red'>Email này đã tồn tại</span>");
             }
         }
 
