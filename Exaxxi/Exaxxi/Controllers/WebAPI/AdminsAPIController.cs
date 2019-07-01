@@ -13,6 +13,8 @@ using MimeKit;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -221,7 +223,7 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return BadRequest(ModelState);
             }
-
+           
             var admins = await _context.Admins.FindAsync(id);
             if (admins == null)
             {
@@ -237,6 +239,17 @@ namespace Exaxxi.Controllers.WebAPI
         public bool AdminsExists(int id)
         {
             return _context.Admins.Any(e => e.id == id);
+        }
+        public HttpClient Initial(string token = null)
+        {
+            var Client = new HttpClient();
+
+            Client.BaseAddress = new Uri("http://localhost:51340");
+            if (!string.IsNullOrEmpty(token))
+            {
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            return Client;
         }
     }
 }

@@ -65,11 +65,11 @@ namespace Exaxxi.Controllers.WebAPI
             Users user = _context.Users.SingleOrDefault(p => p.email == email);
             if (user == null)
             {
-                return Ok("Bạn có thể sử dụng email này");
+                return Ok("<span style='color:green'>Bạn có thể sử dụng email này</span>");
             }
             else
             {
-                return Ok("Email này đã tồn tại");
+                return Ok("<span style='color:red'>Email này đã tồn tại</span>");
             }
         }
 
@@ -113,10 +113,6 @@ namespace Exaxxi.Controllers.WebAPI
                 //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
             }
-
-            //Lưu Session
-            //HttpContext.Session.SetInt32("idUser", user.id);
-            //HttpContext.Session.SetString("nameUser", user.name);
 
             //Ghi nhận đăng nhập thành công
             return Ok(user);

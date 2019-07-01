@@ -68,7 +68,7 @@ namespace Exaxxi.Controllers
 
         public IActionResult Register()
         {
-            return View("Login");
+            return View("Index");
         }
 
         public IActionResult PasswordForget()

@@ -7,7 +7,7 @@
     string register = "";
     string firsttitle = "";
     string buttontext = "";
-    if (actionName == "Login")
+    if (actionName == "Index")
     {
         login = "";
         register = "hidden";
@@ -44,7 +44,7 @@
                             <input type="checkbox" id="rmb">
                             <span class="checkmark"></span>
                         </label>
-                        <button type="button" class="btn logreg-form-button " id="submit">Login</button> <br>
+                        <button type="submit" class="btn logreg-form-button " id="submit">Login</button> <br>
                         <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
                     </form>
                 </div>
@@ -74,7 +74,7 @@
                         <div class="form-group" style="min-width:100%!important;">
                             <div class="g-recaptcha" data-sitekey="6Lfwz6IUAAAAAGVKa7XbpkYbqDI9tRE62IUNUGha"></div>
                         </div>
-                        <button type="button" id="sb_reg" class="btn logreg-form-button">Register</button>
+                        <button type="submit" id="sb_reg" class="btn logreg-form-button">Register</button>
                     </form>
                 </div>
             </div>
@@ -143,7 +143,7 @@
                     contentType: "application/json",
                     success: function () {
                         alert("Đăng ký thành công!");
-                        window.location = "/Login/Login";
+                        window.location = "/Login";
                     },
                     error: function (notfound) {
                         alert(notfound.responseText);
