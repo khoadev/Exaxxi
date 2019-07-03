@@ -9,7 +9,8 @@ namespace Exaxxi.Common
     {
         public static string keyBF = "superior5";
         public static string RegEx = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";
-        public static int PAGE_SIZE = 2;
+        public static int PAGE_SIZE = 8;
+        public static int PAGE_SIZE_AD = 5; //phân trang sử dụng trong admin
 
         public static string Day(DateTime time)
         {

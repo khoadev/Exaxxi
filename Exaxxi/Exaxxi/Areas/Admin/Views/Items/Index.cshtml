@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Exaxxi.Models.Items>
-
+﻿@model PagedList.Core.IPagedList<Exaxxi.Models.Items>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,31 +8,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                Tên sản phẩm
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vi_info)
+                Thông tin sản phẩm tiếng việt
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.en_info)
+                Thông tin sản phẩm tiếng anh
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.img)
+                Hình
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.volatility)
+                Biến động giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.active)
+                active
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.sold)
+                sold
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.admin)
+                admin
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.category)
+                category
             </th>
             <th><a asp-action="Create">Create New</a></th>
         </tr>
@@ -79,6 +78,7 @@
         }
     </tbody>
 </table>
+<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="items" />
 @section Scripts{
     <script>
         app.controller('deleteItem', function ($scope, $http) {

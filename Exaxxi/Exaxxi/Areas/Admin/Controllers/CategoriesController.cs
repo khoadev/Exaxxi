@@ -24,6 +24,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Categories
         public IActionResult Index()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
@@ -31,6 +35,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Categories/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -48,7 +56,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Categories/Create
         public IActionResult Create()
         {
-
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -59,6 +70,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,name,active,order,id_brand")] Categories categories)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (_api.postAPI(categories, "api/CategoriesChange", HttpContext.Session.GetString("token")).Result)
             {
                 IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI", HttpContext.Session.GetString("token")).Result);
@@ -72,6 +87,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Categories/Edit/5
         public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -94,6 +113,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,active,order,id_brand")] Categories categories)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != categories.id)
             {
                 return NotFound();
