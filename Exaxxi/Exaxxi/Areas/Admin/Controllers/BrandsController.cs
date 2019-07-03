@@ -22,6 +22,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Brands
         public IActionResult Index()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsAPI/BrandsDefault", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
@@ -29,6 +33,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Brands/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +54,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Brands/Create
         public IActionResult Create()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -56,6 +68,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(IFormFile img, [Bind("id,name,img,active,order,id_department")] Brands brands)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             //Nhận file POST qua
             if (img == null || img.Length == 0)
                 return Content("Không File nào được chọn!");
@@ -84,6 +100,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Brands/Edit/5
         public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -104,6 +124,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,img,active,order,id_department")] Brands brands, IFormFile img)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != brands.id)
             {
                 return NotFound();

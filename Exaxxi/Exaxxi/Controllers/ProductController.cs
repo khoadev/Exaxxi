@@ -31,7 +31,7 @@ namespace Exaxxi.Controllers
             if (id == null) ViewBag.Id_Depart = JsonConvert.DeserializeObject<Departments>(_api.getAPI("api/DepartmentsAPI/Take1ByOrder").Result).id; else ViewBag.Id_Depart = id;
 
             //Get Brand
-            if (idBrand == null) ViewBag.Id_Brand = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/Take1BrandByIdDepart/{ViewBag.Id_Depart}").Result).id; else ViewBag.Id_Brand = idBrand;
+            if (idBrand == null) ViewBag.Id_Brand = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI($"api/BrandsAPI/TakeBrandByIdDepart/{ViewBag.Id_Depart}/1").Result).FirstOrDefault().id; else ViewBag.Id_Brand = idBrand;
 
             //Get Category
             if (idCate == null) ViewBag.Id_Cate = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/Take1CateByIdBrand/{ViewBag.Id_Brand}").Result).id; else ViewBag.Id_Cate = idCate;
@@ -56,7 +56,9 @@ namespace Exaxxi.Controllers
         public IActionResult Details(int? id)
         {
             ViewBag.IdItem = id;
-
+            int idDepart = JsonConvert.DeserializeObject<Items>(_api.getAPI("api/ItemsAPI/" + id).Result).category.brand.id_department;
+            ViewBag.dsSize = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("/api/ds_SizeAPI/Takeds_SizeDepart/" + idDepart).Result);
+            ViewBag.Sizes = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("/api/SizesAPI/TakeSizesItem/" + id).Result);
             return View();
         }
 

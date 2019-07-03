@@ -6,78 +6,43 @@
 
 <h2>Index</h2>
 <div ng-controller="Post">
-    <label for="singleSelect"> Sap xep: </label><br>
+    <label for="singleSelect"> sắp xếp: </label><br>
     <select name="singleSelect" ng-model="sort">
-        <option value="">Default</option> 
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
+        <option value="">Default</option>
+        <option value="1">Mua</option>
+        <option value="2">Bán</option>
+        <option value="3">Đang xử lý</option>
     </select>
     <table class="table">
         <thead>
             <tr>
+                <th> Tên Sản Phẩm</th>
+                <th> Size(VN)</th>
+                <th> Thời gian giao dịch</th>
                 <th>
-                    @Html.DisplayNameFor(model => model.post.price)
+                    Giá
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.post.date_start)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.post.date_end)
+                    Tên người khách hàng
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.post.kind)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.size)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.post.user)
-                </th>
-
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="x in name | filter: {post: {kind: sort}}">
+                <td>{{x.nameItem}}</td>
+                <td>{{x.size}}</td>
+                <td>{{x.post.date_start}}</td>
+                <td>{{x.post.price}}</td>
                 <td>{{x.post.user.name}}</td>
                 <td>
                     <span ng-if="x.post.kind == 1">Mua</span>
-                    <span ng-if="x.post.kind == 2">Ban</span>
-                    <span ng-if="x.post.kind == 3">Dang xu ly</span>
-
+                    <span ng-if="x.post.kind == 2">Bán</span>
+                    <span ng-if="x.post.kind == 3">Đang xử lý</span>
                 </td>
-
             </tr>
-            @*@foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.post.price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.post.date_start)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.post.date_end)
-                        </td>
-                        <td>
-                            @if (item.post.kind == 1)
-                            {
-                                <span>Mua</span>
-                            }
-                            else
-                            {
-                                <span>Bán</span>
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.size)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.post.user.name)
-                        </td>
-                    </tr>
-                }*@
         </tbody>
     </table>
 </div>
@@ -89,8 +54,6 @@
             $scope.sort = "";
             $http.get("/api/PostsAPI")
                 .then(function (response) { $scope.name = response.data; console.log($scope.name); });
-
         });
-
     </script>
-    }
+}

@@ -6,35 +6,44 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Exaxxi.Helper;
+using Exaxxi.Common;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class UsersController : Controller
     {
-        private readonly ExaxxiDbContext _context;
-
-        public UsersController(ExaxxiDbContext context)
-        {
-            _context = context;
-        }
+        CallAPI _api = new CallAPI();
+        BlowFish bf = new BlowFish(info.keyBF);
 
         // GET: Admin/Users
         public IActionResult Index()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            IEnumerable<Users> result = JsonConvert.DeserializeObject<List<Users>>(_api.getAPI("api/UsersAPI", HttpContext.Session.GetString("token")).Result);
             return View();
         }
 
         // GET: Admin/Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
-            var users = await _context.Users
-                .FirstOrDefaultAsync(m => m.id == id);
+            var users = JsonConvert.DeserializeObject<Users>(_api.getAPI($"api/AdminsAPI/{id}", HttpContext.Session.GetString("token")).Result);
+            ViewBag.Password = bf.Decrypt_CBC(users.password);
             if (users == null)
             {
                 return NotFound();
@@ -46,6 +55,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Users/Create
         public IActionResult Create()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -56,24 +69,30 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
         {
-            if (ModelState.IsValid)
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
-                _context.Add(users);
-                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Login");
+            }
+            if (_api.postAPI(users, "api/UsersAPI", HttpContext.Session.GetString("token")).Result)
+            {
                 return RedirectToAction(nameof(Index));
             }
             return View(users);
         }
 
         // GET: Admin/Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
-            var users = await _context.Users.FindAsync(id);
+            var users = JsonConvert.DeserializeObject<Users>(_api.getAPI($"api/UsersAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (users == null)
             {
                 return NotFound();
@@ -88,6 +107,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != users.id)
             {
                 return NotFound();
@@ -97,8 +120,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(users);
-                    await _context.SaveChangesAsync();
+                    var result = await _api.putAPI(users, $"api/UsersAPI/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,38 +138,9 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View(users);
         }
 
-        // GET: Admin/Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var users = await _context.Users
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            return View(users);
-        }
-
-        // POST: Admin/Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var users = await _context.Users.FindAsync(id);
-            _context.Users.Remove(users);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool UsersExists(int id)
         {
-            return _context.Users.Any(e => e.id == id);
+            return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/UsersAPI/UsersExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
     }
 }

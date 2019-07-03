@@ -53,9 +53,9 @@ namespace Exaxxi.Controllers.WebAPI
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Items>> GetItems(int id)
+        public ActionResult<Items> GetItems(int id)
         {
-            var items = await _context.Items.FindAsync(id);
+            var items = _context.Items.Include(i => i.category).ThenInclude(c => c.brand).Where(i => i.id == id).FirstOrDefault();
 
             if (items == null)
             {

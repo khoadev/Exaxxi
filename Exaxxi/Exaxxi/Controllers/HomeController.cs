@@ -16,7 +16,15 @@ namespace Exaxxi.Controllers
         CallAPI _api = new CallAPI();
         public IActionResult Index(int? id)
         {
-            if (id == null) ViewBag.Id_Depart = JsonConvert.DeserializeObject<Departments>(_api.getAPI("api/DepartmentsAPI/Take1ByOrder").Result).id; else ViewBag.Id_Depart = id;
+            if (id == null)
+            {
+                Departments depart = JsonConvert.DeserializeObject<List<Departments>>(_api.getAPI("api/DepartmentsAPI").Result).FirstOrDefault();
+                ViewBag.Id_Depart = depart.id;
+            }
+            else
+            {
+                ViewBag.Id_Depart = id;
+            }
             return View();
         }
         public IActionResult About()

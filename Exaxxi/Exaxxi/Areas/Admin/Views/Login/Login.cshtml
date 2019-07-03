@@ -1,10 +1,9 @@
-﻿@model IEnumerable<Exaxxi.ViewModels.LoginViewModel>
-
+﻿
 @{
     ViewData["Title"] = "Login";
 }
 
-<div id="logreg-background">
+<div id="logreg-background" eventlistener="expression">
 
     <div class="container">
         <div class="row" id="logreg-wrapper">
@@ -20,7 +19,7 @@
                             <label for="pwd" class="login-form-label">Password</label>
                             <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd">
                         </div>
-                        <button type="button" class="btn logreg-form-button " id="submit" ng-click="sendData()">Login</button> <br>
+                        <button type="submit" class="btn logreg-form-button " id="submit" ng-keypress="onKeyPress($event)" ng-click="sendData()">Login</button> <br>
                         <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
                     </form>
                 </div>
@@ -30,7 +29,6 @@
 </div>
 
 @section Scripts {
-
     @*<script>
             $(function () {
                 //Login
@@ -50,23 +48,17 @@
                             // sessionStorage.setItem('token', response);
                             //console.log(response);
                             window.location = "/Admin/Admins/Index";
-
                         },
                         error: function (notfound) {
                             alert("Dang nhap that bai");
                         }
                     });
                 });
-
             });
-
-
         </script>*@
-
     <script>
-
-
         app.controller('UserCtrl', function ($scope, $http) {
+
             $scope.sendData = function () {
                 var username = $("#usr").val();
                 var password = $("#pwd").val();
@@ -75,6 +67,7 @@
                     "username": username,
                     "password": password,
                 };
+
                 $http.post("/api/Auth", JSON.stringify(login)).then(function (response) {
                     if (typeof (Storage) !== "undefined") {
                         //set sesionStorage
@@ -84,16 +77,16 @@
                         $http.post("/Admin/Login/setTokenSession", '"' + token + '"').then(function (data) {
                             window.location = "/Admin/Admins/Index";
                         });
-
                         //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     } else {
                         alert('Trình duyệt của bạn đã quá cũ. Hãy nâng cấp trình duyệt ngay!');
                     }
+                }, function error(response) {
+                    // this function will be called when the request returned error status
+                    alert("Tài khoản hoặc mật khẩu sai!");
 
                 });
-
             };
         });
-
     </script>
 }

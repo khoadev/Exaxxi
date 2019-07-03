@@ -25,7 +25,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View("Login");
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         [Route("Admin")]
         public IActionResult Login(string returnUrl = "")
         {
@@ -50,8 +50,6 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             return View(admins);
         }
-
-
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("idAdmin");

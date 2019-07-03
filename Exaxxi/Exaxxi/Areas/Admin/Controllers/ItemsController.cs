@@ -11,6 +11,9 @@ using Exaxxi.Helper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AutoMapper;
+using PagedList.Core;
+using Exaxxi.Common;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -19,16 +22,31 @@ namespace Exaxxi.Areas.Admin.Controllers
     public class ItemsController : Controller
     {
         CallAPI _api = new CallAPI();
-        // GET: Admin/Items
-        public IActionResult Index()
+        private readonly IMapper mapper;
+
+        public ItemsController(IMapper _map)
         {
-            IEnumerable<Items> result = JsonConvert.DeserializeObject<List<Items>>(_api.getAPI("api/ItemsAPI", HttpContext.Session.GetString("token")).Result);
-            return View(result);
+            mapper = _map;
+        }
+        // GET: Admin/Items
+        public IActionResult Index(int page = 1)
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            var result = JsonConvert.DeserializeObject<List<Items>>(_api.getAPI("api/ItemsAPI", HttpContext.Session.GetString("token")).Result);
+            PagedList<Items> model = new PagedList<Items>(result.AsQueryable(), page, info.PAGE_SIZE_AD);
+            return View(model);
         }
 
         // GET: Admin/Items/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -46,6 +64,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Items/Create
         public IActionResult Create()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -56,6 +78,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,vi_info,en_info,img,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items, IFormFile img)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             //Nhận file POST qua
             if (img == null || img.Length == 0)
                 return Content("Không File nào được chọn!");
@@ -83,6 +109,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Items/Edit/5
         public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -104,6 +134,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,vi_info,en_info,img,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items, IFormFile img)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != items.id)
             {
                 return NotFound();

@@ -26,7 +26,7 @@ namespace Exaxxi.Models
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source= DESKTOP-262PU69\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -770,7 +770,8 @@ namespace Exaxxi.Models
                     US=25,
                     UK=20,
                     Inch=13,
-                    Centimet=45
+                    Centimet=45,
+                    id_Depart=1
                 } ,
                 new ds_Size
                 {
@@ -779,7 +780,8 @@ namespace Exaxxi.Models
                     US=30,
                     UK=25,
                     Inch=18,
-                    Centimet=50
+                    Centimet=50,
+                    id_Depart=1
                 },
                 new ds_Size
                 {
@@ -788,7 +790,8 @@ namespace Exaxxi.Models
                     US=35,
                     UK=30,
                     Inch=21,
-                    Centimet=55
+                    Centimet=55,
+                    id_Depart=1
                 }    
                
             );

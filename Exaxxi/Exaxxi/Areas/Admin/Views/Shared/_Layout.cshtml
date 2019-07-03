@@ -41,11 +41,8 @@
                 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                 @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin").ToString()))
                 {
-                    <li>
-                        <a class="nav-link" asp-controller="Login" asp-action="Login">
-                            <span class="glyphicon glyphicon-log-in"></span> Login
-                        </a>
-                    </li>
+
+
                 }
                 else
                 {
@@ -99,7 +96,7 @@
                         </a>
                     </li>
                     <li ng-controller="session">
-                        <a class="nav-link" ng-click="Session()" asp-controller="Login" asp-action="Logout" >
+                        <a class="nav-link" ng-click="Session()" asp-controller="Login" asp-action="Logout">
                             <span class="glyphicon glyphicon-log-in"></span> Logout
                         </a>
                     </li>
