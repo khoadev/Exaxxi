@@ -21,6 +21,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/ds_Size
         public IActionResult Index()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             IEnumerable<ds_Size> result = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("api/ds_SizeAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
@@ -28,6 +32,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/ds_Size/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -45,6 +53,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/ds_Size/Create
         public IActionResult Create()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -55,6 +67,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,VN,US,UK,Inch,Centimet")] ds_Size ds_Size)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (_api.postAPI(ds_Size, "api/ds_SizeChange", HttpContext.Session.GetString("token")).Result)
             {
                 IEnumerable<ds_Size> result = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("api/ds_SizeAPI", HttpContext.Session.GetString("token")).Result);
@@ -66,6 +82,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/ds_Size/Edit/5
         public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -86,6 +106,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,VN,US,UK,Inch,Centimet")] ds_Size ds_Size)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != ds_Size.id)
             {
                 return NotFound();

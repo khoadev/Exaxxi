@@ -44,20 +44,6 @@ namespace Exaxxi.Controllers
 
             return View();
         }
-
-        public IActionResult Profile()
-        {
-            //Lấy IdUser đăng nhập
-            int? idUser = HttpContext.Session.GetInt32("idUser");
-
-            Users users = _exx.Users.SingleOrDefault(p => p.id == idUser);
-            if (users != null)
-
-            {
-                return View(users);
-            }
-            return RedirectToAction("Login");
-        }
        
         public IActionResult Logout()
         {

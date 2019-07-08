@@ -256,7 +256,7 @@
                     return false;
                 }
 
-                if (enter_bid > $("#value_buy").val()) {
+                if (parseFloat(enter_bid) > parseFloat($("#value_buy").val())) {
                     alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
                     return false;
                 }

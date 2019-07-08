@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
+
 namespace Exaxxi.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -24,6 +25,11 @@ namespace Exaxxi.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             IEnumerable<News> result = JsonConvert.DeserializeObject<List<News>>(_api.getAPI("api/NewsAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
@@ -32,6 +38,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/News/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -49,7 +59,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/News/Create
         public IActionResult Create()
         {
-
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -60,6 +73,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("img")] News news, IFormFile img)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (ModelState.IsValid)
             {
                 if (img != null)
@@ -79,6 +96,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/News/Edit/5
         public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -99,6 +120,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news, IFormFile img)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != news.id)
             {
                 return NotFound();
@@ -148,6 +173,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UploadFileAsync(IFormFile img, [Bind("vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             //Nhận file POST qua
             if (img == null || img.Length == 0)
                 return Content("Không File nào được chọn!");
