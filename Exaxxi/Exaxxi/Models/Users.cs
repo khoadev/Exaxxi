@@ -23,6 +23,12 @@ namespace Exaxxi.Models
         [EmailAddress]
         [Required]
         public string email { get; set; }
+        [Required]
+        [Phone]
+        [Display(Name = "Phone")]
+        public string phone { get; set; }
+        [Display(Name = "Address")]
+        public string address { get; set; }
         //[Display(Name = "size giày")]
         //public ds_Size shoe_size { get; set; }
         //[Display(Name = "Đơn vị tiền tệ")]

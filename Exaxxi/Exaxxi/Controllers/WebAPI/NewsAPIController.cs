@@ -96,7 +96,7 @@ namespace Exaxxi.Controllers.WebAPI
                    vi_name_depart = n.department.vi_name
                });
         }
-
+       
         [Route("GetNewsByDepart/{id_depart}/{id}")]
         public IEnumerable<NewsViewModel> GetNewsByDepart(int id_depart,int id)
         {

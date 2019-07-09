@@ -153,20 +153,24 @@
                             <h3 style="color: #0E5396; font-weight: bold;">{{name[0].item.lowest_ask}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Asks</p>
                         </div>
-                        <div class="detail-left">
-                            <h3 style=" font-family: coolrg;">Buy</h3>
-                            <span style="font-family: coolcond; font-size:20px;">Lowest Asks</span>
-                        </div>
+                        <a href="/Product/Checkout?id=@ViewBag.IdItem">
+                            <div class="detail-left">
+                                <h3 style=" font-family: coolrg;">Buy</h3>
+                                <span style="font-family: coolcond; font-size:20px;">Lowest Asks</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="detail-content-right-final" style="border:1px solid #ab1113">
                         <div class="float-right detail-right">
                             <h3 style="color: brown; font-weight: bold; ">{{name[0].item.highest_bid}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Bids</p>
                         </div>
-                        <div class="detail-left" style="background-color: #ab1113">
-                            <h3 style=" font-family: coolrg;">Sell</h3>
-                            <span style="font-family: coolcond;font-size:20px">Highest Bid</span>
-                        </div>
+                        <a href="/Product/Checkout?id=@ViewBag.IdItem">
+                            <div class="detail-left" style="background-color: #ab1113">
+                                <h3 style=" font-family: coolrg;">Sell</h3>
+                                <span style="font-family: coolcond;font-size:20px">Highest Bid</span>
+                            </div>
+                        </a>
                     </div> <!-- End right-final -->
 
                 </div> <!-- End content-right -->

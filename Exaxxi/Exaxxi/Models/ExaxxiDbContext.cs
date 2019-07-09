@@ -26,7 +26,7 @@ namespace Exaxxi.Models
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source= DESKTOP-262PU69\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-NKES72FM;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -126,7 +126,9 @@ namespace Exaxxi.Models
                     level_seller = 1,
                     score_buyer = 1,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone="0911111111",
+                    address="bitexco quan 1"
                 },
                 new Users
                 {
@@ -137,7 +139,9 @@ namespace Exaxxi.Models
                     level_seller = 2,
                     score_buyer = 2,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "091222222",
+                    address = "land max"
                 },
                 new Users
                 {
@@ -148,7 +152,9 @@ namespace Exaxxi.Models
                     level_seller = 3,
                     score_buyer = 3,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "091111845891",
+                    address = "daslat quan 1"
                 },
                 new Users
                 {
@@ -159,7 +165,9 @@ namespace Exaxxi.Models
                     level_seller = 4,
                     score_buyer = 4,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "0914135111",
+                    address = "lamdong quan 1"
                 }
             );
             builder.Entity<Departments>().HasData(
@@ -578,7 +586,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -593,7 +603,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -608,7 +620,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -623,7 +637,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -638,7 +654,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -653,7 +671,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -668,7 +688,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -683,7 +705,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 1,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -698,7 +722,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 2,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -713,7 +739,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 2,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -728,7 +756,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 2,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -743,7 +773,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 2,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 },
                 new Items
@@ -758,7 +790,9 @@ namespace Exaxxi.Models
                     trade_min = 100,
                     id_admin = 1,
                     id_category = 2,
-                    active = true
+                    active = true,
+                    lowest_ask = 300000,
+                    highest_bid = 250000
 
                 }
             );
@@ -849,6 +883,114 @@ namespace Exaxxi.Models
                     last_sale = 220000,
                     id_ds_size = 2,
                     id_item = 3
+                },
+                new Sizes
+                {
+                    id = 7,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 4
+                },
+                new Sizes
+                {
+                    id = 8,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 5
+                },
+                new Sizes
+                {
+                    id = 9,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 6
+                },
+                new Sizes
+                {
+                    id = 10,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 7
+                },
+                new Sizes
+                {
+                    id = 11,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 8
+                },
+                new Sizes
+                {
+                    id = 12,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 9
+                },
+                new Sizes
+                {
+                    id = 13,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 10
+                },
+                new Sizes
+                {
+                    id = 14,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 11
+                },
+                new Sizes
+                {
+                    id = 15,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 12
+                },
+                new Sizes
+                {
+                    id = 16,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 13
+                },
+                new Sizes
+                {
+                    id = 17,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 14
+                },
+                new Sizes
+                {
+                    id = 18,
+                    lowest_ask = 300000,
+                    highest_bid = 250000,
+                    last_sale = 220000,
+                    id_ds_size = 2,
+                    id_item = 15
                 }
             );
             builder.Entity<News>().HasData(

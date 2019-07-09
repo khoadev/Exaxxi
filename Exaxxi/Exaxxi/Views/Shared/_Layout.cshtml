@@ -95,9 +95,9 @@
                                     <div class="card-columns">
                                         <div class="card brand-name-wrapper " ng-repeat="x in brandcates | filter: {'id_department' : selectedObj.id}">
                                             <div class="card-body">
-                                                
-                                                    <div class="brand-name">{{x.name}}</div>
-                                                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
+
+                                                <div class="brand-name">{{x.name}}</div>
+                                                <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@
                 else
                 {
                     <li>
-                        <a class="nav-link" asp-controller="Login" asp-action="Profile">
+                        <a class="nav-link" asp-controller="User" asp-action="Index">
                             Xin chào
                             <b>@HttpContextAccessor.HttpContext.Session.GetString("nameUser")</b>
                         </a>
@@ -183,6 +183,7 @@
                         </a>
                     </li>
                 }
+
             </ul>
 
         </div>
