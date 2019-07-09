@@ -33,7 +33,6 @@
     <Folder Include="wwwroot\images\item\" />
     <Folder Include="wwwroot\images\brand\" />
     <Folder Include="wwwroot\images\news\" />
-    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

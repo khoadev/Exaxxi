@@ -26,6 +26,10 @@ namespace Exaxxi.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             IEnumerable<Admins> result = JsonConvert.DeserializeObject<List<Admins>>(_api.getAPI("api/AdminsAPI", HttpContext.Session.GetString("token")).Result);
 
             return View(result);
@@ -34,6 +38,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Admins/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -52,6 +60,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Admins/Create
         public IActionResult Create()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -62,6 +74,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (_api.postAPI(admins, "api/AdminsAPI", HttpContext.Session.GetString("token")).Result)
             {
 
@@ -78,6 +94,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Admins/Edit/5
         public IActionResult Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -98,6 +118,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level,date_create,active")] Admins admins)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != admins.id)
             {
                 return NotFound();
@@ -132,6 +156,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         [AllowAnonymous]
         public IActionResult ForgetPassword()
         {
+
             return View();
         }
         [AllowAnonymous]

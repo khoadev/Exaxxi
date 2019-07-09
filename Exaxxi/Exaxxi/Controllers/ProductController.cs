@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
+using Exaxxi.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers
 {
@@ -28,7 +31,7 @@ namespace Exaxxi.Controllers
             if (id == null) ViewBag.Id_Depart = JsonConvert.DeserializeObject<Departments>(_api.getAPI("api/DepartmentsAPI/Take1ByOrder").Result).id; else ViewBag.Id_Depart = id;
 
             //Get Brand
-            if (idBrand == null) ViewBag.Id_Brand = JsonConvert.DeserializeObject<Brands>(_api.getAPI($"api/BrandsAPI/Take1BrandByIdDepart/{ViewBag.Id_Depart}").Result).id; else ViewBag.Id_Brand = idBrand;
+            if (idBrand == null) ViewBag.Id_Brand = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI($"api/BrandsAPI/TakeBrandByIdDepart/{ViewBag.Id_Depart}/1").Result).FirstOrDefault().id; else ViewBag.Id_Brand = idBrand;
 
             //Get Category
             if (idCate == null) ViewBag.Id_Cate = JsonConvert.DeserializeObject<Categories>(_api.getAPI($"api/CategoriesAPI/Take1CateByIdBrand/{ViewBag.Id_Brand}").Result).id; else ViewBag.Id_Cate = idCate;
@@ -53,13 +56,58 @@ namespace Exaxxi.Controllers
         public IActionResult Details(int? id)
         {
             ViewBag.IdItem = id;
-
+            int idDepart = JsonConvert.DeserializeObject<Items>(_api.getAPI("api/ItemsAPI/" + id).Result).category.brand.id_department;
+            ViewBag.dsSize = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("/api/ds_SizeAPI/Takeds_SizeDepart/" + idDepart).Result);
+            ViewBag.Sizes = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("/api/SizesAPI/TakeSizesItem/" + id).Result);
             return View();
         }
 
         public IActionResult Checkout(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            ViewBag.IdItem = id;            
+
+            return View();
+        }
+
+        public ActionResult Set_SessionCheckout([FromBody] CheckoutViewModel model)
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            //Lưu Session
+            HttpContext.Session.SetString("ck_account", model.Account);
+            HttpContext.Session.SetString("ck_phone", model.Phone);
+            HttpContext.Session.SetString("ck_address", model.Address);
+            HttpContext.Session.SetString("ck_payment", model.Payment);
+
+            if (model.Enter_bid.ToString() != null)
+            {
+                HttpContext.Session.SetString("ck_enter_bid", model.Enter_bid.ToString());
+            }
+            if (model.Exp_Day != null)
+            {
+                HttpContext.Session.SetString("ck_exp_day", model.Exp_Day);
+            }
+
+            return Ok();        
+        }
+
+        public IActionResult Last_Checkout(int? id, int act)
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             ViewBag.IdItem = id;
+            ViewBag.Act = act;
 
             return View();
         }

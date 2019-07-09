@@ -16,16 +16,16 @@ namespace Exaxxi.Areas.Admin.Controllers
     [Area("Admin")]
     public class PostsController : Controller
     {
-        private readonly ExaxxiDbContext _context;
+
         CallAPI _api = new CallAPI();
-        public PostsController(ExaxxiDbContext context)
-        {
-            _context = context;
-        }
 
         // GET: Admin/Posts
         public IActionResult Index()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             IEnumerable<PostViewAdmin> result = JsonConvert.DeserializeObject<List<PostViewAdmin>>(_api.getAPI("api/PostsAPI", HttpContext.Session.GetString("token")).Result);
             return View(result);
         }
@@ -33,6 +33,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Posts/Details/5
         public IActionResult Details(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -50,6 +54,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Posts/Create
         public IActionResult Create()
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -60,6 +68,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("id,price,date_start,date_end,kind,id_size,id_user")] Posts posts)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (_api.postAPI(posts, "api/PostsChange", HttpContext.Session.GetString("token")).Result)
             {
                 IEnumerable<Posts> result = JsonConvert.DeserializeObject<List<Posts>>(_api.getAPI("api/PostsAPI", HttpContext.Session.GetString("token")).Result);
@@ -72,12 +84,16 @@ namespace Exaxxi.Areas.Admin.Controllers
         // GET: Admin/Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id == null)
             {
                 return NotFound();
             }
 
-            var posts = await _context.Posts.FindAsync(id);
+            var posts = JsonConvert.DeserializeObject<Posts>(_api.getAPI($"api/PostsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (posts == null)
             {
                 return NotFound();
@@ -93,6 +109,10 @@ namespace Exaxxi.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,price,date_start,date_end,kind,id_size,id_user")] Posts posts)
         {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != posts.id)
             {
                 return NotFound();

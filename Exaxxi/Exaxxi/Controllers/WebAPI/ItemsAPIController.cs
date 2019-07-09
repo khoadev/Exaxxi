@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Newtonsoft.Json.Linq;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -52,9 +53,9 @@ namespace Exaxxi.Controllers.WebAPI
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Items>> GetItems(int id)
+        public ActionResult<Items> GetItems(int id)
         {
-            var items = await _context.Items.FindAsync(id);
+            var items = _context.Items.Include(i => i.category).ThenInclude(c => c.brand).Where(i => i.id == id).FirstOrDefault();
 
             if (items == null)
             {
@@ -77,7 +78,8 @@ namespace Exaxxi.Controllers.WebAPI
                     {
                         item = p.h.e.c.a,
                         size = p.h.e.d.VN,
-                        brand_name = p.i.name
+                        brand_name = p.i.name,
+                        cate_name = p.h.f.name,
                     }).ToList();
 
             return items;
@@ -175,65 +177,29 @@ namespace Exaxxi.Controllers.WebAPI
             return result.ToList();
         }
 
-        [Route("Buy")]
-        public IActionResult Buy([FromBody] JObject json)
+        [Route("BuyBid")]
+        public IActionResult Buy([FromBody] CheckoutViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            dynamic data = json;
-            string account = data.account;
-            string phone = data.phone;
-            string address = data.address;
-            string payment = data.payment;
-
-            if(account == "")
+            if(model.Account == "")
             {
                 return BadRequest("Vui Lòng Nhập Tên Người Nhận");
             }
-            if (phone == "")
+            if (model.Phone == "")
             {
                 return BadRequest("Vui Lòng Số Điện Thoại");
             }
-            if (address == "")
+            if (model.Address == "")
             {
                 return BadRequest("Vui Lòng Địa Chỉ");
-            }
+            }            
 
-            return Ok();
+            return Ok(model);
         }
-
-        [Route("Bid")]
-        public IActionResult Bid([FromBody] JObject json)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            dynamic data = json;
-            double enter_bid = data.enter_bid;
-            string account = data.account;
-            string phone = data.phone;
-            string address = data.address;
-            string payment = data.payment;
-
-            if (account == "")
-            {
-                return BadRequest("Vui Lòng Nhập Tên Người Nhận");
-            }
-            if (phone == "")
-            {
-                return BadRequest("Vui Lòng Số Điện Thoại");
-            }
-            if (address == "")
-            {
-                return BadRequest("Vui Lòng Địa Chỉ");
-            }
-
-            return Ok();
-        }
+        
     }
 }

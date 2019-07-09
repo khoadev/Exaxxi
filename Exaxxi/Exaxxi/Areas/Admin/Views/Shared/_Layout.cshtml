@@ -20,11 +20,11 @@
 @{
     var display = "";
     string actionName = ViewContext.RouteData.Values["action"].ToString();
-    if(actionName == "FileBrowse")
+    if (actionName == "FileBrowse")
     {
         display = "d-none";
     }
-    }
+}
 <body ng-app="exaxxiApp">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark @display">
         <!-- Start nav -->
@@ -41,73 +41,67 @@
                 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                 @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin").ToString()))
                 {
-                    <li>
-                        <a class="nav-link" asp-controller="Login" asp-action="Login">
-                            <span class="glyphicon glyphicon-log-in"></span> Login @HttpContextAccessor.HttpContext.Session.GetString("token")
-                        </a>
-                    </li>
+
+
                 }
                 else
                 {
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">Admin </a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">Department</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">Categorie</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">Brand</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">News</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">Sizes</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">Item</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">Post</a>
-                    </li>
-                    <li class="nav-item d-none d-md-flex">
-                        <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">Danh sách size</a>
-                    </li>
+                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1")
+                    {
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">Admin </a>
+                        </li>
+                    }
+                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "2")
+                    {
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">News</a>
+                        </li>
+                    }
+
+                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "3")
+                    {
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">Department</a>
+                        </li>
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">Categorie</a>
+                        </li>
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">Brand</a>
+                        </li>
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">Danh sách size</a>
+                        </li>
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">Item</a>
+                        </li>
+                    }
+                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "4")
+                    {
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">Post</a>
+                        </li>
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">Sizes</a>
+                        </li>
+                        <li class="nav-item d-none d-md-flex">
+                            <a class="nav-link" asp-controller="Users" asp-area="Admin" asp-action="Index">User</a>
+                        </li>
+                    }
                     <li>
                         <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">
                             Xin chào
                             <b>@HttpContextAccessor.HttpContext.Session.GetString("nameAdmin")</b>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" asp-controller="Login" asp-action="Logout">
+                    <li ng-controller="session">
+                        <a class="nav-link" ng-click="Session()" asp-controller="Login" asp-action="Logout">
                             <span class="glyphicon glyphicon-log-in"></span> Logout
                         </a>
                     </li>
                 }
 
-                <li class="dropdown mega-dropdown nav-item">
-                    <!-- Start Search Mega Dropdown -->
-                    <a href="#" class="nav-link " data-toggle="dropdown"><i class="fas fa-search"></i></a>
-                    <ul class="dropdown-menu mega-dropdown-menu" id="avoid">
-                        <!-- Start Mega Menu -->
-                        <div class="container">
-                            <li class="col-xs-12">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control" placeholder="Search" id="search_input">
-                                    </div>
-                                    <div class="col-md-2" align="right">
-                                        <button class="btn" id="search_button">Go</button>
-                                    </div>
-                                </div>
-                            </li>
-                        </div>
-                    </ul><!-- End Mega Menu -->
-                </li> <!-- End Search Mega Dropdown -->
             </ul>
         </div>
     </nav> <!-- End nav -->
@@ -127,7 +121,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script>
         var app = angular.module('exaxxiApp', []);
+        app.controller('session', function ($scope, $http) {
+            $scope.Session = function (id) {
+                sessionStorage.clear();
+            }
+        });
     </script>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

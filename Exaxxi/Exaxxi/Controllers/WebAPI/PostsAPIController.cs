@@ -26,8 +26,17 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<PostViewAdmin> GetPosts()
         {
-            return _context.Posts.Include("user").Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b }).Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d }).Select(
-                p => new PostViewAdmin { post = p.c.a, size = p.d.VN });
+            return _context.Posts.Include("user")
+                .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
+                .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                .Join(_context.Items, e => e.c.b.id_item, f => f.id, (e, f) => new { e, f })
+                .Select(p => new PostViewAdmin
+                {
+                    post = p.e.c.a,
+                    size = p.e.d.VN,
+                    nameItem = p.f.name,
+
+                });
         }
 
         // GET: api/Posts/5
@@ -67,7 +76,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Posts
                 .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
-                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
+                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
                 .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart)
@@ -85,7 +94,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Posts
                 .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
-                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f })
+                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
                 .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask)

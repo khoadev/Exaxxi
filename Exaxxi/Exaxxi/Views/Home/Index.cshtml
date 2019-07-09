@@ -58,7 +58,7 @@
                                     {{x.item.lowest_ask}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Lowest Ask | sold{{x.item.sold}}</span>
+                                <span class="product-sub-title">Lowest Ask | Sold: {{x.item.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -114,7 +114,7 @@
                                     {{x.item.lowest_ask}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Highest Bid | sold{{x.item.sold}}</span>
+                                <span class="product-sub-title">Highest Bid | Sold: {{x.item.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -346,7 +346,7 @@
                 }
 
             };
-            $http.get("/api/NewsAPI/GetNewsByDepart/"+ @ViewBag.Id_Depart)
+            $http.get("/api/NewsAPI/GetNewsByDepart/"+ @ViewBag.Id_Depart+"/0")
                 .then(function (response) {
                     $scope.news = response.data;
                     $scope.news1 = response.data[0];

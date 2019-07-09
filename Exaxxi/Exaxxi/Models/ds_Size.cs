@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -30,5 +31,6 @@ namespace Exaxxi.Models
         [Required]
         [Range(7, 100, ErrorMessage = "Nằm trong khoảng 7-100")]
         public float Centimet { get; set; }
+        public int id_Depart { get; set; }
     }
 }

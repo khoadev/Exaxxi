@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Exaxxi.Models.Items>
-
+﻿@model PagedList.Core.IPagedList<Exaxxi.Models.Items>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,36 +8,36 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                Tên sản phẩm
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vi_info)
+                Thông tin sản phẩm tiếng việt
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.en_info)
+                Thông tin sản phẩm tiếng anh
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.img)
+                Hình
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.volatility)
+                Biến động giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.active)
+                active
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.sold)
+                sold
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.admin)
+                admin
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.category)
+                category
             </th>
             <th><a asp-action="Create">Create New</a></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody ng-controller="deleteItem">
         @foreach (var item in Model)
         {
             <tr>
@@ -73,31 +72,35 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                    <a style="cursor: pointer;" id="delete" class="delete" data-id="@item.id">Delete</a>
+                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="items" />
 @section Scripts{
     <script>
-        $(function () {
-            $(".delete").click(function () {
-                var id = $(this).attr("data-id");
-                if (confirm("Bạn có chắc muốn xóa")) {
-                    $.ajax({
-                        url: "/api/ItemsAPI/" + id,
-                        type: "DELETE",
-                        success: function () {
-                            alert("Thành công");
-                            window.location = "/Admin/Items/Index";
-                        },
-                        error: function (res) {
-                            alert("Lỗi : " + res);
-                        }
-                    });
+        app.controller('deleteItem', function ($scope, $http) {
+            $scope.Delete = function (id) {
+                var url = '/api/ItemsChange/' + id;
+                //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
+                var config = {
+                    headers: {
+                        'Context-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
                 }
-            });
+                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                if (isConfirm) {
+                    $http.delete(url, config).then(function (response) {
+                        window.location.reload();
+                    });
+
+                } else {
+                    return false;
+                }
+            }
         });
     </script>
 }
