@@ -1,81 +1,66 @@
 ﻿@model IEnumerable<Exaxxi.Models.Sizes>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Post";
 }
-
-<h2>Index</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.lowest_ask)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.highest_bid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.last_sale)
-            </th>
-            <th>
-               Size Việt Nam
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.item)
-            </th>
-            <th><a asp-action="Create">Create New</a></th>
-        </tr>
-    </thead>
-    <tbody ng-controller="deleteSize">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lowest_ask)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.highest_bid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.last_sale)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.size.VN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.item.name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-@section Scripts{
-    <script>
-        app.controller('deleteSize', function ($scope, $http) {
-            $scope.Delete = function (id) {
-                var url = '/api/SizesChange/' + id;
-                //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
-                var config = {
-                    headers: {
-                        'Context-Type': 'application/json',
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                    }
-                }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
-                if (isConfirm) {
-                    $http.delete(url, config).then(function (response) {
-                        window.location.reload();
-                    });
-
-                } else {
-                    return false;
-                }
-            }
-        });
-    </script>
-}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">Danh sách bài Post</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.lowest_ask)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.highest_bid)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.last_sale)
+                                </th>
+                                <th>
+                                    Size Việt Nam
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.item)
+                                </th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.lowest_ask)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.highest_bid)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.last_sale)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.size.VN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.item.name)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> 
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

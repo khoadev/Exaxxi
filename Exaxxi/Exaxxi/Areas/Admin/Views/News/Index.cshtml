@@ -1,87 +1,92 @@
 ﻿@model IEnumerable<Exaxxi.Models.News>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "News";
 }
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">Danh sách tin tức</h4>
+                <p class="card-category"> </p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.vi_title)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.date_create)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.active)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.admin)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.department)
+                                </th>
+                                <th><a asp-action="Create">Thêm</a></th>
+                            </tr>
+                        </thead>
+                        <tbody ng-controller="deleteNew">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.vi_title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.date_create)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.active)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.admin.name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.department.vi_name)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts{
+        <script>
+            app.controller('deleteNew', function ($scope, $http) {
+                $scope.Delete = function (id) {
+                    var url = '/api/NewsChange/' + id;
+                    //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
+                    var config = {
+                        headers: {
+                            'Context-Type': 'application/json',
+                            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                        }
+                    }
+                    var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                    if (isConfirm) {
+                        $http.delete(url, config).then(function (response) {
+                            window.location.reload();
+                        });
 
-<h2>Index</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.vi_title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.vi_content)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.date_create)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.admin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.department)
-            </th>
-            <th><a asp-action="Create">Create New</a></th>
-        </tr>
-    </thead>
-    <tbody ng-controller="deleteNew">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.vi_title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.vi_content)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.date_create)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.active)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.admin.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.department.vi_name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-@section Scripts{
-    <script>
-        app.controller('deleteNew', function ($scope, $http) {
-            $scope.Delete = function (id) {
-                var url = '/api/NewsChange/' + id;
-                //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
-                var config = {
-                    headers: {
-                        'Context-Type': 'application/json',
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    } else {
+                        return false;
                     }
                 }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
-                if (isConfirm) {
-                    $http.delete(url, config).then(function (response) {
-                        window.location.reload();
-                    });
-
-                } else {
-                    return false;
-                }
-            }
-        });
-    </script>
-}
+            });
+        </script>
+    }

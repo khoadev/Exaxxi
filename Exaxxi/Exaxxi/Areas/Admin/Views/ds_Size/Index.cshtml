@@ -3,57 +3,70 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">Danh sách tiêu chuẩn kích thước</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.VN)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.US)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UK)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Inch)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Centimet)
+                                </th>
+                                <th><a asp-action="Create">Thêm</a></th>
+                            </tr>
+                        </thead>
+                        <tbody ng-controller="deleteDSSize">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.US)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UK)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Inch)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Centimet)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2>Index</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.US)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UK)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Inch)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Centimet)
-            </th>
-            <th><a asp-action="Create">Create New</a></th>
-        </tr>
-    </thead>
-    <tbody ng-controller="deleteDSSize">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.US)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UK)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Inch)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Centimet)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 @section Scripts{
     <script>
         app.controller('deleteDSSize', function ($scope, $http) {

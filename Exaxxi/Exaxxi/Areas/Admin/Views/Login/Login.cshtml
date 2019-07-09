@@ -1,61 +1,82 @@
-﻿
-@{
-    ViewData["Title"] = "Login";
+﻿@{
+    Layout = null;
 }
 
-<div id="logreg-background" eventlistener="expression">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Exaxxi</title>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/demo.css" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 
-    <div class="container">
-        <div class="row" id="logreg-wrapper">
-            <div class="col-lg-9" id="logreg-form-wrapper">
-                <div id="login-form" ng-controller="UserCtrl">
-                    <p class="login-form-text">Login </p>
-                    <form>
-                        <div class="form-group">
-                            <label for="usr" class="login-form-label">Email Address</label>
-                            <input type="text" class="form-control form-control-login" placeholder="Enter your email address" id="usr">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    </environment>
+
+</head>
+
+<body ng-app="exaxxiApp">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Start nav -->
+        <!-- Brand -->
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" id="brand">Exxaxxi</a>
+            <button class="navbar-toggler order-first d-flex d-sm-none" type="button" onclick="openNav()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav> <!-- End nav -->
+
+
+    <div class="container body-content ">
+        <div id="logreg-background" eventlistener="expression">
+
+            <div class="container">
+                <div class="row" id="logreg-wrapper">
+                    <div class="col-lg-9" id="logreg-form-wrapper">
+                        <div id="login-form" ng-controller="UserCtrl">
+                            <p class="login-form-text">Login </p>
+                            <form>
+                                <div class="form-group">
+                                    <label for="usr" class="login-form-label">Email Address</label>
+                                    <input type="text" class="form-control form-control-login" placeholder="Enter your email address" id="usr">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd" class="login-form-label">Password</label>
+                                    <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd">
+                                </div>
+                                <button type="submit" class="btn logreg-form-button " id="submit" ng-keypress="onKeyPress($event)" ng-click="sendData()">Login</button> <br>
+                                <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="pwd" class="login-form-label">Password</label>
-                            <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd">
-                        </div>
-                        <button type="submit" class="btn logreg-form-button " id="submit" ng-keypress="onKeyPress($event)" ng-click="sendData()">Login</button> <br>
-                        <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <hr />
+        <footer>
 
-@section Scripts {
-    @*<script>
-            $(function () {
-                //Login
-                $("#submit").on("click", function () {
-                    var username = $("#usr").val();
-                    var password = $("#pwd").val();
-                    var login = {
-                        "username": username,
-                        "password": password,
-                    };
-                    $.ajax({
-                        url: "/api/AdminsAPI/PostAdminsEmail",
-                        type: "POST",
-                        data: JSON.stringify(login),
-                        contentType: "application/json",
-                        success: function () {
-                            // sessionStorage.setItem('token', response);
-                            //console.log(response);
-                            window.location = "/Admin/Admins/Index";
-                        },
-                        error: function (notfound) {
-                            alert("Dang nhap that bai");
-                        }
-                    });
-                });
-            });
-        </script>*@
+            <p>&copy; 2019 - Exaxxi</p>
+        </footer>
+    </div>
+    <script src="~/js/jquery-3.4.1.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script>
+        var app = angular.module('exaxxiApp', []);
+        app.controller('session', function ($scope, $http) {
+            $scope.Session = function (id) {
+                sessionStorage.clear();
+            }
+        });
+    </script>
     <script>
         app.controller('UserCtrl', function ($scope, $http) {
 
@@ -75,7 +96,7 @@
 
                         var token = sessionStorage.getItem('token');
                         $http.post("/Admin/Login/setTokenSession", '"' + token + '"').then(function (data) {
-                            window.location = "/Admin/Admins/Index";
+                            window.location = "/Admin/Dashboard";
                         });
                         //$http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     } else {
@@ -89,4 +110,11 @@
             };
         });
     </script>
-}
+</body>
+</html>
+
+
+
+
+
+
