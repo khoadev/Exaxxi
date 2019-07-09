@@ -1,83 +1,84 @@
 ﻿@model PagedList.Core.IPagedList<Exaxxi.Models.Items>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Items";
 }
-
-<h2>Index</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Tên sản phẩm
-            </th>
-            <th>
-                Thông tin sản phẩm tiếng việt
-            </th>
-            <th>
-                Thông tin sản phẩm tiếng anh
-            </th>
-            <th>
-                Hình
-            </th>
-            <th>
-                Biến động giá
-            </th>
-            <th>
-                active
-            </th>
-            <th>
-                sold
-            </th>
-            <th>
-                admin
-            </th>
-            <th>
-                category
-            </th>
-            <th><a asp-action="Create">Create New</a></th>
-        </tr>
-    </thead>
-    <tbody ng-controller="deleteItem">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.vi_info)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.en_info)
-                </td>
-                <td>
-
-                    @Html.DisplayFor(modelItem => item.img)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.volatility)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.active)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.sold)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.admin.email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.category.name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">Danh sách sản phẩm</h4>
+                <p class="card-category"></p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    Tên sản phẩm
+                                </th>
+                                <th>
+                                    Hình
+                                </th>
+                                <th>
+                                    Biến động giá
+                                </th>
+                                <th>
+                                    active
+                                </th>
+                                <th>
+                                    sold
+                                </th>
+                                <th>
+                                    admin
+                                </th>
+                                <th>
+                                    category
+                                </th>
+                                <th><a asp-action="Create">Thêm</a></th>
+                            </tr>
+                        </thead>
+                        <tbody ng-controller="deleteItem">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.name)
+                                    </td>
+                                    <td>
+                                        <img src="~/images/item/@item.img" width="20" height="100"/>
+                                        
+                                    </td>
+                                    <td>
+                                        
+                                        @Html.DisplayFor(modelItem => item.volatility)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.active)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.sold)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.admin.email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.category.name)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <pager class="pager-container" list="@Model" asp-action="Index" asp-controller="items" />
 @section Scripts{
     <script>

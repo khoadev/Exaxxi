@@ -12,6 +12,6 @@ namespace Exaxxi.ViewModels
         public Posts post { get; set; }
         public int size { get; set; }
         public string nameItem { get; set; }
-
+        public string username { get; set; }
     }
 }

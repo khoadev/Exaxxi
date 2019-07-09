@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Exaxxi.Helper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using PagedList.Core;
+using Exaxxi.Common;
+using AutoMapper;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -19,17 +22,23 @@ namespace Exaxxi.Areas.Admin.Controllers
     {
 
         CallAPI _api = new CallAPI();
+        private readonly IMapper mapper;
 
+        public CategoriesController(IMapper _map)
+        {
+            mapper = _map;
+        }
 
         // GET: Admin/Categories
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
-            IEnumerable<Categories> result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI", HttpContext.Session.GetString("token")).Result);
-            return View(result);
+            var result = JsonConvert.DeserializeObject<List<Categories>>(_api.getAPI("api/CategoriesAPI", HttpContext.Session.GetString("token")).Result);
+            PagedList<Categories> model = new PagedList<Categories>(result.AsQueryable(), page, info.PAGE_SIZE_AD);
+            return View(model);
         }
 
         // GET: Admin/Categories/Details/5
