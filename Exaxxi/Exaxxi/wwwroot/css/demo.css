@@ -251,7 +251,21 @@ html {
     border-bottom: solid medium #ab1113;
     color: #ab1113;
 }
+.test-mega:hover > .dropdown-menu{
+    display: block;
+}
 
+.dropdown > .dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+
+.user-dropdown li a{
+    color:black;
+    padding: 10px;
+    font-family:ralemed;
+    margin-bottom: 10px;
+}
 .divider-wrapper {
     text-align: center;
     margin-top: -35px;
@@ -1553,6 +1567,9 @@ top-title-first-text {
 }.isbuy{
      background-color:#0E5396
  }
+ .issell{
+     background-color:#ab1113
+ }
 .checkout-btn:hover {
     opacity:1;
     color:white
@@ -1722,17 +1739,6 @@ iframe[seamless] {
     width: 25%;
     padding: 5px 0px !important;
 }
-
-/* ------------------------------------------------- */
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-
-    .sidenav a {
-        font-size: 18px;
-    }
-}
 .btn-360 {
     background-color: transparent;
     width: 80px;
@@ -1740,17 +1746,18 @@ iframe[seamless] {
     position: absolute;
     top: 10px;
     left: 10px;
-    border:0;
+    border: 0;
+}
 
-}
-.btn-360:hover{
-    background-color:transparent;
+    .btn-360:hover {
+        background-color: transparent;
+    }
 
-}
-.btn-360:focus {
-    outline-style: none;
-    box-shadow: none;
-}
+    .btn-360:focus {
+        outline-style: none;
+        box-shadow: none;
+    }
+
 .modal-full {
     min-width: 95%;
     margin: 0;
@@ -1758,11 +1765,12 @@ iframe[seamless] {
     margin-right: auto;
     height: 80%;
 }
+
 .img-container {
-width: 100%;
-margin: 0 auto;
-padding: 0;
-cursor: ew-resize;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    cursor: ew-resize;
 }
 
 .img360 {
@@ -1781,35 +1789,43 @@ img {
 #preload-imgs {
     display: none;
 }
-.news-content-department{
-    font-family:coolcond;
-    font-size:20px;
+
+.news-content-department {
+    font-family: coolcond;
+    font-size: 20px;
 }
+
 .news-content-title {
     font-family: coolrg;
     font-size: 30px;
 }
-.news-content-title a {
-    color:black;
-    text-decoration:none!important;
-    transition:0.3s;
-}
-.news-content-title a:hover{
-    color:#ab1113;
-}
+
+    .news-content-title a {
+        color: black;
+        text-decoration: none !important;
+        transition: 0.3s;
+    }
+
+        .news-content-title a:hover {
+            color: #ab1113;
+        }
+
 .news-content-sub {
     font-family: coolcond;
     font-size: 20px;
     color: #777;
 }
+
 .news-content-sub-content .card {
     border: none !important;
-    border-right: solid thin #efefef!important;
-    padding-right:5px
+    border-right: solid thin #efefef !important;
+    padding-right: 5px
 }
+
 .news-content-sub-content .card-body {
-    padding:0px;
+    padding: 0px;
 }
+
 .news-department-list {
     border-top: solid thin #efefef;
     border-bottom: solid thin #efefef;
@@ -1817,80 +1833,93 @@ img {
     font-family: coolcond;
     font-size: 20px;
 }
-.news-department-list a{
-    color:black;
-    opacity:0.4;
-    text-decoration:none!important;
-    transition:0.5s;
-    padding: 0px 20px 0px 20px;
-}
-    .news-department-list a:hover {
-        opacity: 1;
-        border-left: solid thin #efefef;
-        border-right: solid thin #efefef;
 
+    .news-department-list a {
+        color: black;
+        opacity: 0.4;
+        text-decoration: none !important;
+        transition: 0.5s;
+        padding: 0px 20px 0px 20px;
     }
+
+        .news-department-list a:hover {
+            opacity: 1;
+            border-left: solid thin #efefef;
+            border-right: solid thin #efefef;
+        }
+
 .news-content-wrapper {
     padding: 20px 50px 50px 50px;
 }
+
 .news-recent-news {
     font-family: coolrg;
     font-size: 24px;
     text-transform: uppercase;
-    color:#ab1113;
-    padding:40px 20px 40px 20px;
+    color: #ab1113;
+    padding: 40px 20px 40px 20px;
 }
+
 .news-recent-news-wrapper {
     padding: 20px 20px 30px 20px;
     border-bottom: solid medium #f4f4f4;
 }
+
 .news-recent-date {
     font-family: coolrg;
     font-size: 20px;
     color: #ab1113;
 }
-.news-recent-article{
-    font-family:ralemed;
-    font-size:15px;
-    color:black;
-    text-decoration:none!important;
 
+.news-recent-article {
+    font-family: ralemed;
+    font-size: 15px;
+    color: black;
+    text-decoration: none !important;
 }
 
 .news-content-main {
     font-family: coolrg;
     font-size: 50px;
 }
-.news-department-title{
-    font-family:coolrg;
-    font-size:35px;
+
+.news-department-title {
+    font-family: coolrg;
+    font-size: 35px;
 }
+
 .news-wrapper {
     height: 300px;
     padding: 15px 15px;
 }
+
 .news-content {
     height: 100%;
     border-radius: 15px;
-    background-size:cover!important;
+    background-size: cover !important;
 }
-.news-title-wrapper{
-    padding:120px 30px 20px 30px;
-    margin-bottom:10px;
+
+.news-title-wrapper {
+    padding: 120px 30px 20px 30px;
+    margin-bottom: 10px;
 }
-.news-title-wrapper a{
-    color:white;
-    font-family:coolcond;
-    font-size:25px;
-    text-decoration:none!important;
-}
-.news-title-wrapper div {
-    font-family: coolrg;
-    color: #e5e5e5;
-}
+
+    .news-title-wrapper a {
+        color: white;
+        font-family: coolcond;
+        font-size: 25px;
+        text-decoration: none !important;
+    }
+
+    .news-title-wrapper div {
+        font-family: coolrg;
+        color: #e5e5e5;
+    }
+
 .scroll-content::-webkit-scrollbar {
     display: none;
 }
+
 .horizon-prev {
     position: absolute;
     top: 100px;
@@ -1900,24 +1929,145 @@ img {
     cursor: pointer;
     transition: 0.3s;
 }
+
 .horizon-next {
     position: absolute;
     top: 100px;
     right: 0px;
     z-index: 99;
     color: #e8e8e8;
-    cursor:pointer;
+    cursor: pointer;
     transition: 0.3s;
 }
-.horizon-prev:hover, .horizon-next:hover{
-    color:white;
-    background-color:#ab1113;
-    padding:2px 10px;
-    border-radius:5px;
 
+.horizon-prev:hover, .horizon-next:hover {
+    color: white;
+    background-color: #ab1113;
+    padding: 2px 10px;
+    border-radius: 5px;
 }
+/*admin*/
+.ad-bg {
+    background: linear-gradient(rgba(127, 0, 255,0.5),rgba(156, 39, 176,0.5) ),url(../images/air-jordan-athlete-ball-2385477.jpg) center;
+    min-height: 600px;
+    background-size: cover;
+    border-bottom-left-radius: 250px;
+    border-top-left-radius: 250px;
+    transform: rotate(-45deg) translateY(-20px) translateX(100px);
+}
+.ad-login-wrapper{
+    margin-top:200px
+}
+/*/admin*/
+/* ------------------------------------------------- */
 
+@media only screen and (max-width: 576px) {
+
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+
+    .ad-login-wrapper {
+        margin-top: unset;
+    }
+
+    .news-content-wrapper {
+        padding: 20px;
+        height: auto;
+    }
+
+    .search-img {
+        height: auto;
+        width: 100%;
+    }
+
+    .btn-fullwidth {
+        width: 100% !important;
+    }
+
+    .g-recaptcha {
+        transform: scale(0.77);
+        transform-origin: 0 0;
+    }
+
+    .detail-row-first p {
+        text-align: center;
+        transform: translateY(43px);
+        background-color: brown;
+        color: white;
+    }
+
+    .row.detail-row-first {
+        border: none;
+    }
+
+    img.img-fluid {
+        width: 100%;
+    }
+
+    /* Start content-wrapper */
+    .content-right .content-right-first {
+        padding-left: 0px;
+    }
+
+        .content-right .content-right-first h3 {
+            text-align: center;
+        }
+    /* End content-wrapper */
+    #title-text {
+        font-size: 30px;
+    }
+
+    #title-sub-text {
+        font-size: 15px;
+    }
+
+    #title-background {
+        height: 300px;
+    }
+
+    #subs-background {
+        padding: 30px 30px;
+        text-align: center;
+    }
+
+    .btn-subs-explore {
+        min-width: 100% !important;
+    }
+
+    .btn-subs {
+        width: 100%;
+    }
+
+    #subs-input {
+        min-width: 100%;
+    }
+
+    #subs-email-wrapper {
+        padding: 50px 30px;
+    }
+
+    #logreg-background {
+        padding: 50px 20px;
+    }
+
+    .news-content-sub-content .card {
+        border-top: solid thin #efefef !important;
+    }
+}
 @media only screen and (max-width: 1024px) {
+    .ad-bg {
+        background: linear-gradient(rgba(127, 0, 255,0.5),rgba(156, 39, 176,0.5) ),url(../images/air-jordan-athlete-ball-2385477.jpg) center;
+        min-height: 400px;
+        background-size: cover;
+        border-bottom-left-radius: 250px;
+        border-top-left-radius: 250px;
+        transform: rotate(-45deg) translateY(0px) translateX(80px);
+    }
     .news-content-wrapper {
         padding: 20px;
         height:auto;
@@ -1927,86 +2077,3 @@ img {
         padding: 120px 10px 20px 10px;
     }
 }
-    @media only screen and (max-width: 576px) {
-        .news-content-wrapper {
-            padding: 20px;
-            height: auto;
-        }
-        .search-img {
-            height: auto;
-            width: 100%;
-        }
-
-        .btn-fullwidth {
-            width: 100% !important;
-        }
-
-        .g-recaptcha {
-            transform: scale(0.77);
-            transform-origin: 0 0;
-        }
-
-        .detail-row-first p {
-            text-align: center;
-            transform: translateY(43px);
-            background-color: brown;
-            color: white;
-        }
-
-        .row.detail-row-first {
-            border: none;
-        }
-
-        img.img-fluid {
-            width: 100%;
-        }
-
-        /* Start content-wrapper */
-        .content-right .content-right-first {
-            padding-left: 0px;
-        }
-
-            .content-right .content-right-first h3 {
-                text-align: center;
-            }
-        /* End content-wrapper */
-        #title-text {
-            font-size: 30px;
-        }
-
-        #title-sub-text {
-            font-size: 15px;
-        }
-
-        #title-background {
-            height: 300px;
-        }
-
-        #subs-background {
-            padding: 30px 30px;
-            text-align: center;
-        }
-
-        .btn-subs-explore {
-            min-width: 100% !important;
-        }
-
-        .btn-subs {
-            width: 100%;
-        }
-
-        #subs-input {
-            min-width: 100%;
-        }
-
-        #subs-email-wrapper {
-            padding: 50px 30px;
-        }
-
-        #logreg-background {
-            padding: 50px 20px;
-        }
-        .news-content-sub-content .card {
-            border-top: solid thin #efefef !important;
-        }
-    }

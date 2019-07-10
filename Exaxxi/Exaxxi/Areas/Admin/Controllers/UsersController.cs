@@ -27,7 +27,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Login");
             }
             IEnumerable<Users> result = JsonConvert.DeserializeObject<List<Users>>(_api.getAPI("api/UsersAPI", HttpContext.Session.GetString("token")).Result);
-            return View();
+            return View(result);
         }
 
         // GET: Admin/Users/Details/5
