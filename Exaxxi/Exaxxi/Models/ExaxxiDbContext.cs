@@ -19,6 +19,7 @@ namespace Exaxxi.Models
         public DbSet<News> News { get; set; }
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Sizes> Sizes { get; set; }
+        public DbSet<Orders> Orders { get; set; }
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
@@ -126,7 +127,9 @@ namespace Exaxxi.Models
                     level_seller = 1,
                     score_buyer = 1,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "+84343775677",
+                    address = "Bến Tre"
                 },
                 new Users
                 {
@@ -137,7 +140,9 @@ namespace Exaxxi.Models
                     level_seller = 2,
                     score_buyer = 2,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "+84343775677",
+                    address = "Bến Tre"
                 },
                 new Users
                 {
@@ -148,7 +153,9 @@ namespace Exaxxi.Models
                     level_seller = 3,
                     score_buyer = 3,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "+84343775677",
+                    address = "Bến Tre"
                 },
                 new Users
                 {
@@ -159,7 +166,9 @@ namespace Exaxxi.Models
                     level_seller = 4,
                     score_buyer = 4,
                     date_registion = DateTime.Parse("2019-01-05"),
-                    active = true
+                    active = true,
+                    phone = "+84343775677",
+                    address = "Bến Tre"
                 }
             );
             builder.Entity<Departments>().HasData(
