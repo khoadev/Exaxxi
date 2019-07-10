@@ -24,10 +24,6 @@ namespace Exaxxi.Models
         public int status { get; set; }
 
         public int id_user { get; set; }
-        [ForeignKey("id_user")]
-        public Users petitioner { get; set; }
         public int id_post { get; set; }
-        [ForeignKey("id_post")]
-        public Posts post { get; set; }
     }
 }

@@ -251,7 +251,21 @@ html {
     border-bottom: solid medium #ab1113;
     color: #ab1113;
 }
+.test-mega:hover > .dropdown-menu{
+    display: block;
+}
 
+.dropdown > .dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+
+.user-dropdown li a{
+    color:black;
+    padding: 10px;
+    font-family:ralemed;
+    margin-bottom: 10px;
+}
 .divider-wrapper {
     text-align: center;
     margin-top: -35px;
