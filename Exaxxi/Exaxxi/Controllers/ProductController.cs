@@ -129,6 +129,21 @@ namespace Exaxxi.Controllers
             orders.status = 0;
             orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
             orders.id_post = Convert.ToInt32(idPost);
+            orders.authentication_fee = 0;
+
+            if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
+            {
+                orders.payment = 1;
+            }
+
+            if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
+            {
+                orders.payment = 2;
+            }
+
+            orders.price = 0;
+            orders.ship_fee = 0;
+            orders.voucher = "waiting";
 
             if (_api.postAPI(orders, "api/OrdersChange").Result)
             {
