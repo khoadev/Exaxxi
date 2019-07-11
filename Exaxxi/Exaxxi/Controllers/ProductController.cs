@@ -56,7 +56,7 @@ namespace Exaxxi.Controllers
         public IActionResult Details(int? id)
         {
             ViewBag.IdItem = id;
-            int idDepart = JsonConvert.DeserializeObject<Items>(_api.getAPI("api/ItemsAPI/" + id).Result).category.brand.id_department;
+            int idDepart = JsonConvert.DeserializeObject<int>(_api.getAPI("api/ItemsAPI/TakeId_Depart/" + id).Result);
             ViewBag.dsSize = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("/api/ds_SizeAPI/Takeds_SizeDepart/" + idDepart).Result);
             ViewBag.Sizes = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("/api/SizesAPI/TakeSizesItem/" + id).Result);
             return View();
@@ -64,11 +64,6 @@ namespace Exaxxi.Controllers
 
         public IActionResult Checkout(int? id)
         {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
             ViewBag.IdItem = id;            
 
             return View();
