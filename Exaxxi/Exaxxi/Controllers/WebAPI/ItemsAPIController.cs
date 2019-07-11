@@ -26,7 +26,6 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet("GetItemsAd/{idcate}")]
         public IEnumerable<ItemViewAdmin> GetItemsAd(int idcate)
         {
-<<<<<<< HEAD
             if (idcate == 0)
             {
                 return _context.Items
@@ -55,10 +54,6 @@ namespace Exaxxi.Controllers.WebAPI
                         });
             }
         }        
-=======
-            return _context.Items.Include("admin").Include("category");
-        }
->>>>>>> 528a306ae057507186a1ad928ebf111394c32fa1
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
