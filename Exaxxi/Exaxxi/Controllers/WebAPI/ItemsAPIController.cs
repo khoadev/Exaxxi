@@ -23,11 +23,42 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         // GET: api/Items
-        [HttpGet]
-        public IEnumerable<Items> GetItems()
+        [HttpGet("GetItemsAd/{idcate}")]
+        public IEnumerable<ItemViewAdmin> GetItemsAd(int idcate)
         {
+<<<<<<< HEAD
+            if (idcate == 0)
+            {
+                return _context.Items
+                        .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Select(g => new ItemViewAdmin
+                        {
+                            items = g.c.a,
+                            nameAdmin = g.c.b.name,
+                            nameCate = g.d.name
+                            
+                        });
+            }
+            else
+            {
+                return _context.Items
+                        .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Where(p => p.c.a.id_category == idcate)
+                        .Select(g => new ItemViewAdmin
+                        {
+                            items = g.c.a,
+                            nameAdmin = g.c.b.name,
+                            nameCate = g.d.name
+
+                        });
+            }
+        }        
+=======
             return _context.Items.Include("admin").Include("category");
         }
+>>>>>>> 528a306ae057507186a1ad928ebf111394c32fa1
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
@@ -53,16 +84,19 @@ namespace Exaxxi.Controllers.WebAPI
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public ActionResult<Items> GetItems(int id)
+        public ItemViewAdmin GetItems(int id)
         {
-            var items = _context.Items.Include(i => i.category).ThenInclude(c => c.brand).Where(i => i.id == id).FirstOrDefault();
+            return _context.Items
+                         .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                         .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                         .Where(p => p.c.a.id == id)
+                         .Select(g => new ItemViewAdmin
+                         {
+                             items = g.c.a,
+                             nameAdmin = g.c.b.name,
+                             nameCate = g.d.name
 
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            return items;
+                         }).FirstOrDefault();
         }
 
         [HttpGet("TakeAttributeItem/{idItem}")]

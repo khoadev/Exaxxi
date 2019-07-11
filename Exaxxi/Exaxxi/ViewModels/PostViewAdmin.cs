@@ -13,5 +13,6 @@ namespace Exaxxi.ViewModels
         public int size { get; set; }
         public string nameItem { get; set; }
         public string username { get; set; }
+        public Orders order { get; set; }
     }
 }
