@@ -1,4 +1,4 @@
-﻿@model Exaxxi.Models.Items
+﻿@model Exaxxi.ViewModels.ItemViewAdmin
 
 @{
     ViewData["Title"] = "Details";
@@ -11,87 +11,87 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.DisplayNameFor(model => model.items.name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.name)
+            @Html.DisplayFor(model => model.items.name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.vi_info)
+            @Html.DisplayNameFor(model => model.items.vi_info)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.vi_info)
+            @Html.DisplayFor(model => model.items.vi_info)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.en_info)
+            @Html.DisplayNameFor(model => model.items.en_info)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.en_info)
+            @Html.DisplayFor(model => model.items.en_info)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.img)
+            @Html.DisplayNameFor(model => model.items.img)
         </dt>
         <dd>
-            <img src="~/images/item/@Html.DisplayFor(model => model.img)" />
+            <img src="~/images/item/@Html.DisplayFor(model => model.items.img)" />
             
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.volatility)
+            @Html.DisplayNameFor(model => model.items.volatility)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.volatility)
+            @Html.DisplayFor(model => model.items.volatility)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.trade_min)
+            @Html.DisplayNameFor(model => model.items.trade_min)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.trade_min)
+            @Html.DisplayFor(model => model.items.trade_min)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.trade_max)
+            @Html.DisplayNameFor(model => model.items.trade_max)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.trade_max)
+            @Html.DisplayFor(model => model.items.trade_max)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.active)
+            @Html.DisplayNameFor(model => model.items.active)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.active)
+            @Html.DisplayFor(model => model.items.active)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.lowest_ask)
+            @Html.DisplayNameFor(model => model.items.lowest_ask)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.lowest_ask)
+            @Html.DisplayFor(model => model.items.lowest_ask)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.highest_bid)
+            @Html.DisplayNameFor(model => model.items.highest_bid)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.highest_bid)
+            @Html.DisplayFor(model => model.items.highest_bid)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.sold)
+            @Html.DisplayNameFor(model => model.items.sold)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.sold)
+            @Html.DisplayFor(model => model.items.sold)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.admin)
+            @Html.DisplayNameFor(model => model.nameAdmin)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.admin.email)
+            @Html.DisplayFor(model => model.nameAdmin)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.category)
+            @Html.DisplayNameFor(model => model.nameCate)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.category.name)
+            @Html.DisplayFor(model => model.nameCate)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.items.id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
