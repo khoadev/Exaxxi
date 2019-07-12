@@ -1,0 +1,159 @@
+﻿<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="User">
+    <div class="row">
+        @Html.Partial("~/Views/User/Menu.cshtml")
+
+        <div class="col-md-9">
+            <div class="user-info d-flex justify-content-between">
+                <div>
+                    <i class="far fa-chart-bar fa-fw"></i>SALES<br />
+                    <span class="user-number">
+                        20
+                    </span>
+                </div>
+                <div>
+                    <i class="fas fa-tag fa-fw"></i>SALES(#)<br />
+                    <span class="user-number">
+                        20
+                    </span>
+                </div>
+                <div>
+                    <i class="fas fa-percent fa-fw"></i> PA
+                    <br />
+                    <span class="user-number">
+                        20%
+                    </span>
+                </div>
+            </div>
+            <div class="user-info">
+                <ul class="nav nav-tabs user-tab">
+                    <li class="nav-item">
+                        <a class="nav-link  active" data-toggle="tab" href="#current">Current</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#pending">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#history">History</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="current" class="container tab-pane active">
+                        <table class="table table-hover">
+                            <tr>
+                                <td>
+                                    Item
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    Ask Price
+                                </td>
+                                <td>
+                                    Highest Bid
+                                </td>
+                                <td>
+                                    Lowest Ask
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    Expires
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Nike Air Force 2
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    100.000 VND
+                                </td>
+                                <td>
+                                    100.000 VND
+                                </td>
+                                <td>
+                                    100.000 VND
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    0
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="pending" class="container tab-pane fade">
+                        <table class="table table-hover">
+                            <tr>
+                                <td>
+                                    Item
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    Ask Price
+                                </td>
+                                <td>
+                                    Highest Bid
+                                </td>
+                                <td>
+                                    Lowest Ask
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    Expires
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Nike Air Force 2
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    100.000 VND
+                                </td>
+                                <td>
+                                    100.000 VND
+                                </td>
+                                <td>
+                                    100.000 VND
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    0
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="history" class="container tab-pane fade">
+                        <table class="table table-hover">
+                            <tr>
+                                <td>
+                                    Item
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    Ask Price
+                                </td>
+                                <td>
+                                    Highest Bid
+                                </td>
+                                <td>
+                                    Lowest Ask
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    Expires
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">
+                                    Nike Air Force 2
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    100.000 VND
+                                </td>
+                                <td>
+                                    100.000 VND
+                                </td>
+                                <td>
+                                    100.000 VND
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    0
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

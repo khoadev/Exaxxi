@@ -56,7 +56,7 @@ namespace Exaxxi.Controllers
         public IActionResult Details(int? id)
         {
             ViewBag.IdItem = id;
-            int idDepart = JsonConvert.DeserializeObject<Items>(_api.getAPI("api/ItemsAPI/" + id).Result).category.brand.id_department;
+            int idDepart = JsonConvert.DeserializeObject<int>(_api.getAPI("api/ItemsAPI/TakeId_Depart/" + id).Result);
             ViewBag.dsSize = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("/api/ds_SizeAPI/Takeds_SizeDepart/" + idDepart).Result);
             ViewBag.Sizes = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("/api/SizesAPI/TakeSizesItem/" + id).Result);
             return View();
@@ -129,6 +129,21 @@ namespace Exaxxi.Controllers
             orders.status = 0;
             orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
             orders.id_post = Convert.ToInt32(idPost);
+            orders.authentication_fee = 0;
+
+            if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
+            {
+                orders.payment = 1;
+            }
+
+            if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
+            {
+                orders.payment = 2;
+            }
+
+            orders.price = 0;
+            orders.ship_fee = 0;
+            orders.voucher = "waiting";
 
             if (_api.postAPI(orders, "api/OrdersChange").Result)
             {
