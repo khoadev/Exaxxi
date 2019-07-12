@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="User">
+    <div class="row">
+        @Html.Partial("~/Views/User/Menu.cshtml")
+
+        <div class="col-md-9">
+            <div class="user-info">
+                <h3 class="font-weight-bold">
+                    PERSONAL INFO <sup><a href="#" style="font-size:10px">EDIT</a></sup>
+                </h3>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="td-w25">
+                                    NAME
+                                </td>
+                                <td class="td-w10">
+                                    <i class="fas fa-caret-right"></i>
+                                </td>
+                                <td class="td-w65">
+                                    {{user_info.name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-w10">
+                                    EMAIL ADDRESS
+                                </td>
+                                <td class="td-w10">
+                                    <i class="fas fa-caret-right"></i>
+                                </td>
+                                <td class="td-w65">
+                                    {{user_info.email}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-w10">
+                                    PHONE
+                                </td>
+                                <td class="td-w10">
+                                    <i class="fas fa-caret-right"></i>
+                                </td>
+                                <td class="td-w65">
+                                    {{user_info.phone}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-w10">
+                                    SIZE
+                                </td>
+                                <td class="td-w10">
+                                    <i class="fas fa-caret-right"></i>
+                                </td>
+                                <td class="td-w65">
+                                    ABCXYZ
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+                <h3 class="font-weight-bold">
+                    BUYING INFO <sup><a href="#" style="font-size:10px">EDIT</a></sup>
+                </h3>
+                <hr />
+                <h3 class="font-weight-bold">
+                    SHIPPING INFO <sup><a href="#" style="font-size:10px">EDIT</a></sup>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        //Show Department
+        exaxxiApp.controller('User', function ($scope, $http) {
+
+             //Take Info User
+            $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.user_info = response.data });
+        });
+    </script>
+}

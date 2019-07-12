@@ -93,7 +93,19 @@ namespace Exaxxi.Controllers.WebAPI
 
                          }).FirstOrDefault();
         }
-
+        [HttpGet("TakeId_Depart/{id}")]
+        public int TakeId_Depart(int id)
+        {
+            return _context.Items
+                    .Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
+                    .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                    .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
+                    .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
+                    .Where(p => p.h.e.c.a.id == id)
+                    .Select(p => new Brands {
+                        id_department=p.i.id_department
+                    }).FirstOrDefault().id_department;
+        }
         [HttpGet("TakeAttributeItem/{idItem}")]
         public IEnumerable<PostViewModel> TakeAttributeItem(int idItem)
         {

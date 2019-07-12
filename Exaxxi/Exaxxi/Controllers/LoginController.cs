@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Exaxxi.Controllers
 {
-    
+
     public class LoginController : Controller
     {
         private readonly ExaxxiDbContext _exx;
@@ -32,19 +32,35 @@ namespace Exaxxi.Controllers
 
         public IActionResult Index()
         {
+
             return View("Login");
         }
 
-       
-        public IActionResult Login([FromBody] Users model)
+        public Boolean Check()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()) == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public void Login([FromBody] Users model)
         {
             //Lưu Session
             HttpContext.Session.SetInt32("idUser", model.id);
             HttpContext.Session.SetString("nameUser", model.name);
-
-            return View();
         }
-       
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("idUser");
@@ -62,7 +78,7 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult RenewPassword (string email, string hash)
+        public IActionResult RenewPassword(string email, string hash)
         {
             ViewBag.Email = email;
             ViewBag.Hash = hash;
