@@ -1,8 +1,8 @@
-﻿@model PagedList.Core.IPagedList<Exaxxi.Models.Items>
+﻿
 @{
     ViewData["Title"] = "Items";
 }
-<div class="row">
+<div class="row" ng-controller="item">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
@@ -10,15 +10,24 @@
                 <p class="card-category"></p>
             </div>
             <div class="card-body">
+                <label for="singleSelect"> sắp xếp: </label><br>
+                <select name="singleSelect" data-ng-init="change()"  ng-change="change()" id="select" ng-model="confirmed" >
+                    <option value="0" >all</option>
+                    <option  ng-repeat="x in name" value="{{x.id}}" >{{x.name}}</option>
+
+                </select>
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
                             <tr>
-                                <th>
+                                <th ng-click='sortColumn("name")' ng-class='sortClass("name")'>
                                     Tên sản phẩm
                                 </th>
                                 <th>
                                     Hình
+                                </th>
+                                <th ng-click='sortColumn("lowest_ask")' ng-class='sortClass("lowest_ask")'>
+                                    Giá
                                 </th>
                                 <th>
                                     Biến động giá
@@ -38,51 +47,59 @@
                                 <th><a asp-action="Create">Thêm</a></th>
                             </tr>
                         </thead>
-                        <tbody ng-controller="deleteItem">
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-                                    <td>
-                                        <img src="~/images/item/@item.img" width="20" height="100"/>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                        @Html.DisplayFor(modelItem => item.volatility)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.active)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.sold)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.admin.email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.category.name)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                        <tbody>
+
+                            <tr ng-repeat="x in getItem | orderBy:column:reverse">
+                                <td>
+                                    {{x.items.name}}
+                                </td>
+
+                                <td>
+                                    <img src="~/images/item/{{x.items.img}}" width="20" height="100" />
+
+                                </td>
+                                <td>
+                                    {{x.items.lowest_ask}}
+
+                                </td>
+                                <td>
+                                    {{x.items.volatility}}
+
+                                </td>
+                                <td>
+                                    {{x.items.active}}
+
+                                </td>
+                                <td>
+                                    {{x.items.sold}}
+
+                                </td>
+                                <td>
+                                    {{x.nameAdmin}}
+                                   
+                                </td>
+                                <td>
+                                    {{x.nameCate}}
+                                   
+                                </td>
+                                <td>
+                                    <a href="/Admin/Items/Edit/{{x.items.id}}">Edit</a> |
+                                    <a href="/Admin/Items/Details/{{x.items.id}}">Details</a> |
+                                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.items.id)">Delete</a>
+                                </td>
+
+</tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="items" />
+
 @section Scripts{
     <script>
-        app.controller('deleteItem', function ($scope, $http) {
+
+        app.controller('item', function ($scope, $http) {
             $scope.Delete = function (id) {
                 var url = '/api/ItemsChange/' + id;
                 //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
@@ -102,6 +119,49 @@
                     return false;
                 }
             }
-        });
+            // column to sort
+            $scope.column = 'lowest_ask';
+
+            // sort ordering (Ascending or Descending). Set true for desending
+            $scope.reverse = false;
+
+            // called on header click
+            $scope.sortColumn = function (col) {
+                $scope.column = col;
+                if ($scope.reverse) {
+                    $scope.reverse = false;
+                    $scope.reverseclass = 'arrow-up';
+                } else {
+                    $scope.reverse = true;
+                    $scope.reverseclass = 'arrow-down';
+                }
+            };
+
+            // remove and change class
+            $scope.sortClass = function (col) {
+                if ($scope.column == col) {
+                    if ($scope.reverse) {
+                        return 'arrow-down';
+                    } else {
+                        return 'arrow-up';
+                    }
+                } else {
+                    return '';
+                }
+            }
+            $http.get("/api/CategoriesAPI")
+                .then(function (response) { $scope.name = response.data; });
+           
+          
+               $scope.change = function () {
+                    var x = 0;
+                   if ($("#select").val() != null) {
+                       x = $("#select").val();
+                   }
+                    $http.get("/api/ItemsAPI/GetItemsAd/" + x)
+                        .then(function (response) { $scope.getItem = response.data; console.log($scope.getItem); });
+                }
+            });
+       
     </script>
 }

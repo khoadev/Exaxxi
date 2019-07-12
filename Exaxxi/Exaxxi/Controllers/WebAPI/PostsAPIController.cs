@@ -31,13 +31,14 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
                 .Join(_context.Items, e => e.c.b.id_item, f => f.id, (e, f) => new { e, f })
                 .Join(_context.Users, g => g.e.c.a.id_user, h => h.id, (g,h) => new { g,h})
-                .Join(_context.Followings, i => i.h.id, k => k.id_user, (i,k) => new { i,k})
+                .Join(_context.Orders, i => i.h.id, k => k.id_user, (i,k) => new { i,k})
                 .Select(p => new PostViewAdmin
                 {
                     post = p.i.g.e.c.a,
                     size = p.i.g.e.d.VN,
                     nameItem = p.i.g.f.name,
-                    username = p.i.h.name
+                    username = p.i.h.name,
+                    order = p.k
                 });
         }
 

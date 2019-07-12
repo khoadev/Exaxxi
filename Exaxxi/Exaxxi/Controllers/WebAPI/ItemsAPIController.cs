@@ -23,10 +23,36 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         // GET: api/Items
-        [HttpGet]
-        public IEnumerable<Items> GetItems()
+        [HttpGet("GetItemsAd/{idcate}")]
+        public IEnumerable<ItemViewAdmin> GetItemsAd(int idcate)
         {
-            return _context.Items.Include("admin").Include("category");
+            if (idcate == 0)
+            {
+                return _context.Items
+                        .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Select(g => new ItemViewAdmin
+                        {
+                            items = g.c.a,
+                            nameAdmin = g.c.b.name,
+                            nameCate = g.d.name
+                            
+                        });
+            }
+            else
+            {
+                return _context.Items
+                        .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Where(p => p.c.a.id_category == idcate)
+                        .Select(g => new ItemViewAdmin
+                        {
+                            items = g.c.a,
+                            nameAdmin = g.c.b.name,
+                            nameCate = g.d.name
+
+                        });
+            }
         }        
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
@@ -53,16 +79,19 @@ namespace Exaxxi.Controllers.WebAPI
 
         // GET: api/Items/5
         [HttpGet("{id}")]
-        public ActionResult<Items> GetItems(int id)
+        public ItemViewAdmin GetItems(int id)
         {
-            var items = _context.Items.Include(i => i.category).ThenInclude(c => c.brand).Where(i => i.id == id).FirstOrDefault();
+            return _context.Items
+                         .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                         .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                         .Where(p => p.c.a.id == id)
+                         .Select(g => new ItemViewAdmin
+                         {
+                             items = g.c.a,
+                             nameAdmin = g.c.b.name,
+                             nameCate = g.d.name
 
-            if (items == null)
-            {
-                return NotFound();
-            }
-
-            return items;
+                         }).FirstOrDefault();
         }
 
         [HttpGet("TakeAttributeItem/{idItem}")]
@@ -138,6 +167,25 @@ namespace Exaxxi.Controllers.WebAPI
                 .Select(p => p.c.a);
         }
 
+        [Route("TakeIdPost_ForOrder/{id}")]
+        public IActionResult TakeIdPost_ForOrder(int id)
+        {
+            var low_item = _context.Items.Where(p => p.id == id).FirstOrDefault().lowest_ask;
+
+            var pricePost = Convert.ToDouble(low_item);
+
+            var idPost = _context.Posts
+                .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
+                .Where(p => p.d.id == id && p.c.a.price == pricePost && p.c.a.kind == 1)
+                .Select(p => new Posts
+                {
+                    id = p.c.a.id
+                }).FirstOrDefault().id;
+
+            return Ok(idPost);
+        }
+
         [HttpPost]
         [Route("TakeIdCategory_Checkbox")]
         public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
@@ -185,7 +233,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest(ModelState);
             }
 
-            if(model.Account == "")
+            if (model.Account == "")
             {
                 return BadRequest("Vui Lòng Nhập Tên Người Nhận");
             }
@@ -196,10 +244,10 @@ namespace Exaxxi.Controllers.WebAPI
             if (model.Address == "")
             {
                 return BadRequest("Vui Lòng Địa Chỉ");
-            }            
+            }
 
             return Ok(model);
-        }
-        
+        }        
+
     }
 }
