@@ -11,8 +11,6 @@ namespace Exaxxi.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ExaxxiDbContext _exx;
-
         //helper
         CallAPI _api = new CallAPI();
 

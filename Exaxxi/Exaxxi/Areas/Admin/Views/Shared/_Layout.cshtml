@@ -15,7 +15,7 @@
         <link href="~/css/material-dashboard.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
-        <link rel="stylesheet" href="~/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+     
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -30,7 +30,7 @@
 </head>
 <body ng-app="exaxxiApp">
     <div class="wrapper ">
-        <div class="sidebar" data-color="danger" data-background-color="white" data-image="images/sidebar-1.jpg">
+        <div class="sidebar" data-color="danger" data-background-color="white" data-image="~/images/sidebar-1.jpg">
             <!--
                 Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -223,7 +223,7 @@
     <script src="~/js/jquery-3.4.1.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap-material-design.min.js"></script>
-    <script src="~/../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    
     <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
     <script src="~/js/perfect-scrollbar.jquery.min.js"></script>
     <!-- Chartist JS -->
@@ -410,8 +410,10 @@
     </script>
     <script src="~/ckeditor/ckeditor.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="~/js/dirPagination.js"></script>
+
     <script>
-        var app = angular.module('exaxxiApp', []);
+        var app = angular.module('exaxxiApp', ['angularUtils.directives.dirPagination']);
         app.controller('session', function ($scope, $http) {
             $scope.Session = function (id) {
                 sessionStorage.clear();
