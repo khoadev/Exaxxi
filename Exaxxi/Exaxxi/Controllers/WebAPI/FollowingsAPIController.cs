@@ -46,6 +46,44 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(followings);
         }
 
-        
+        [Route("SaveFollowing/{follow}/{idItem}")]
+        public async Task<IActionResult> SaveFollowing(int follow, int idItem)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //Take ID DSSize Table
+            var takeIdDsSize = _context.ds_Size.Where(p => p.VN == follow).FirstOrDefault().id;
+
+            //Take ID Size Table
+            var takeIdSize = _context.Sizes.Where(p => p.id_ds_size == takeIdDsSize && p.id_item == idItem).FirstOrDefault().id;
+
+            if(String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return BadRequest("Please Login For Following!");
+            }
+
+            //Take ID User
+            var takeIdUser = HttpContext.Session.GetInt32("idUser").Value;
+
+            //Count Row in Following Talbe
+            var count = _context.Followings.Where(p => p.id_size == takeIdSize && p.id_user == takeIdUser).Count();
+            if (count > 0)
+            {
+                return BadRequest("This size is followed in your account!");
+            }
+
+            Followings fol = new Followings();
+            fol.id_user = takeIdUser;
+            fol.id_size = takeIdSize;
+
+            _context.Followings.Add(fol);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }

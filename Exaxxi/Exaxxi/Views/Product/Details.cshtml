@@ -1,4 +1,7 @@
-﻿<div ng-controller="Item_Attribute" style="margin-top:100px">
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div ng-controller="Item_Attribute" style="margin-top:100px">
     <div class="content-wrapper" style="padding-bottom: 80px;">
         <!-- Start content wrapper-->
         <div class="container">
@@ -8,9 +11,9 @@
                 <div class="col-sm-5 detail-content-left">
                     <!-- Start content-left -->
                     <!--<img src="images/3dimage/1.jpg" id="product-image-3d" class="img-fluid" style="margin-bottom:10px;">
-    <div id="slider-range-min"></div>-->
+                    <div id="slider-range-min"></div>-->
                     <button type="button" class="btn btn-primary btn-360" data-toggle="modal" data-target="#imgModal">
-                        <img src="~/images/icons/360-icon-1.jpg"  />
+                        <img src="~/images/icons/360-icon-1.jpg" />
                         <img class="img-fluid" src="~/images/3dimage/{{name[0].item.img}}" />
                     </button>
 
@@ -66,26 +69,25 @@
                                     <div class="modal-body">
                                         <div class="detail-second-left">
                                             <!-- Start second-left -->
-                                        @{ foreach (var item in ViewBag.dsSize)
-                                            {
-                                            <div class="size-wrapper">
-                                                <input class="d-none" id="follow" name="follow" type="checkbox" />
-                                                <label for="follow" class="size-label">
-                                                    <div class="size-left is-following">
-                                                        @item.VN
+                                            @{ foreach (var item in ViewBag.dsSize)
+                                                {
+                                                    <div class="size-wrapper">                                                        
+                                                        <label for="follow" class="size-label">
+                                                            <div class="size-left is-following" ng-click="Click(@item.VN)">
+                                                                @item.VN
+                                                            </div>
+                                                        </label>
                                                     </div>
-                                                </label>
-                                            </div>
-                                            }
+                                                }
                                             }
                                         </div> <!-- End second-left -->
                                     </div>
 
-                                    <div class="modal-footer">
-                                        <button class="btn" style="background-color:#0E5396; color:white">
-                                            Confirm
-                                        </button>
-                                    </div>
+                                    @*<div class="modal-footer">
+                                            <button class="btn" style="background-color:#0E5396; color:white">
+                                                Confirm
+                                            </button>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
@@ -111,25 +113,25 @@
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <div class="detail-second-left" >
+                                        <div class="detail-second-left">
                                             <!-- Start second-left -->
-                                        @{ var i = 0;
-                                          foreach (var item in ViewBag.dsSize)
-                                            {
-                                            <div class="size-wrapper">
-                                                <input class="d-none" id="size" name="size" type="radio" />
-                                                <label for="size" class="size-label">
-                                                    <div class="size-left">
-                                                        @item.VN
+                                            @{ var i = 0;
+                                                foreach (var item in ViewBag.dsSize)
+                                                {
+                                                    <div class="size-wrapper">
+                                                        <input class="d-none" id="size" name="size" type="radio" />
+                                                        <label for="size" class="size-label">
+                                                            <div class="size-left">
+                                                                @item.VN
+                                                            </div>
+                                                            @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
+                                                            {
+                                                                <div class="size-right">
+                                                                    @ViewBag.Sizes[i++].lowest_ask VND
+                                                                </div>
+                                                            }
+                                                        </label>
                                                     </div>
-                                                    @if (ViewBag.Sizes.Count>i && ViewBag.Sizes[i].id_ds_size == item.id)
-                                                    {
-                                                        <div class="size-right">
-                                                            @ViewBag.Sizes[i++].lowest_ask VND
-                                                        </div>
-                                                    }
-                                                </label>
-                                            </div>
                                                 }
                                             }
                                         </div> <!-- End second-left -->
@@ -137,7 +139,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
                         <div class="detail-second-right" style="display: flex;">
                             <!-- Start second-right -->
@@ -153,7 +155,7 @@
                             <h3 style="color: #0E5396; font-weight: bold;">{{name[0].item.lowest_ask}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Asks</p>
                         </div>
-                        <a href="/Product/Checkout?id=@ViewBag.IdItem">
+                        <a ng-click="check()">
                             <div class="detail-left">
                                 <h3 style=" font-family: coolrg;">Buy</h3>
                                 <span style="font-family: coolcond; font-size:20px;">Lowest Asks</span>
@@ -212,6 +214,28 @@
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
                 .then(function (response) { $scope.name = response.data });
+
+            $scope.check = function () {
+                $http.get("/Login/Check").then(function (rs) {
+
+                    if (rs.data == true) {
+                        window.location.href = "/Product/Checkout/" +@ViewBag.IdItem;
+                    }
+                    else {
+                        sessionStorage.setItem('url', location.href);
+                        window.open("/Login");
+                    }
+                });
+            };
+
+            $scope.Click = function (follow) {
+                $http.get("/api/FollowingsAPI/SaveFollowing/" + follow + "/" +@ViewBag.IdItem)
+                    .then(function () { alert("This size is followed"); location.reload(); })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            }                                       
         });
+        
     </script>
 }
