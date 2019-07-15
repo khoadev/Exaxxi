@@ -10,6 +10,7 @@
                 <p class="card-category"></p>
             </div>
             <div class="card-body">
+                {{sortBy}}
                 <label for="singleSelect"> sắp xếp: </label><br>
                 <select name="singleSelect" data-ng-init="confirmed" ng-change="change()" id="select" ng-model="confirmed">
                     <option value="">all</option>
@@ -20,13 +21,13 @@
                     <table class="table">
                         <thead class=" text-primary">
                             <tr>
-                                <th ng-click='sortColumn("items.name")' ng-class='sortClass("name")'>
+                                <th ng-click='sort("items.name")'>
                                     Tên sản phẩm
                                 </th>
                                 <th>
                                     Hình
                                 </th>
-                                <th ng-click='sortColumn("items.lowest_ask")' ng-class='sortClass("lowest_ask")'>
+                                <th ng-click='sort("items.lowest_ask")'>
                                     Giá
                                 </th>
                                 <th>
@@ -49,7 +50,7 @@
                         </thead>
                         <tbody>
 
-                            <tr dir-paginate="x in getItem | itemsPerPage: 5 |  orderBy:column:reverse">
+                            <tr dir-paginate="x in getItem |  orderBy:sortBy:reverse | itemsPerPage: 5 ">
                                 <td>
                                     {{x.items.name}}
                                 </td>
@@ -93,7 +94,7 @@
 
                 </div>
                 <div class="pagination-wrapper row">
-                    <dir-pagination-controls boundary-links="true" template-url="../dirPagination.tpl.html"></dir-pagination-controls>
+                    <dir-pagination-controls boundary-links="true" direction-links="true" template-url="../dirPagination.tpl.html"></dir-pagination-controls>
                 </div>
             </div>
         </div>
@@ -123,48 +124,26 @@
                     return false;
                 }
             }
-            // column to sort
-            $scope.column = 'items.lowest_ask';
-
-            // sort ordering (Ascending or Descending). Set true for desending
-            $scope.reverse = false;
-
-            // called on header click
-            $scope.sortColumn = function (col) {
-                $scope.column = col;
-                if ($scope.reverse) {
-                    $scope.reverse = false;
-                    $scope.reverseclass = 'arrow-up';
-                } else {
-                    $scope.reverse = true;
-                    $scope.reverseclass = 'arrow-down';
-                }
-            };
-
-            // remove and change class
-            $scope.sortClass = function (col) {
-                if ($scope.column == col) {
-                    if ($scope.reverse) {
-                        return 'arrow-down';
-                    } else {
-                        return 'arrow-up';
-                    }
-                } else {
-                    return '';
-                }
-            }
             $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.name = response.data; });
             $http.get("/api/ItemsAPI/GetItemsAd/" + 0)
-                .then(function (response) { $scope.getItem = response.data;  });
-          
+                .then(function (response) { $scope.getItem = response.data; });
+            
+             $scope.sort = function(keyname){
+                $scope.sortBy = keyname;   //set the sortBy to the param passed
+                $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+            }
             $scope.change = function () {
+                var x;
                 
-                   if ($("#select").val() != null) {
+                if ($("#select").val() == '') {
+                       x = 0;
+                }
+                   if ($("#select").val() != '') {
                        x = $("#select").val();
-                   }
-                    $http.get("/api/ItemsAPI/GetItemsAd/" + x)
-                        .then(function (response) { $scope.getItem = response.data;});
+                }
+                $http.get("/api/ItemsAPI/GetItemsAd/" + x)
+                    .then(function (response) { $scope.getItem = response.data; console.log($scope.getItem); });
                 }
             });
        
