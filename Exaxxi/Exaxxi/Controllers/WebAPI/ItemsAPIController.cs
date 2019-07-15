@@ -55,6 +55,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
         }
+
         // GET: api/Items
         [HttpGet("GetItemsEdit/{id}")]
         public async Task<IActionResult> GetItemsEdit(int id)
@@ -73,7 +74,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-    
+
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
