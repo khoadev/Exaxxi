@@ -112,44 +112,46 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Confirm_Checkout(int id)
+        public IActionResult Confirm_Checkout(int id, int act)
         {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            if (act == 0)
             {
-                return RedirectToAction("Index", "Login");
+                if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+
+                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/ItemsAPI/TakeIdPost_ForOrder/" + id).Result);
+
+                Orders orders = new Orders();
+
+                orders.time = DateTime.Now;
+                orders.address = HttpContext.Session.GetString("ck_address").ToString();
+                orders.phone = HttpContext.Session.GetString("ck_phone").ToString();
+                orders.status = 1;
+                orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
+                orders.id_post = Convert.ToInt32(idPost);
+                orders.authentication_fee = 0;
+
+                if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
+                {
+                    orders.payment = 1;
+                }
+
+                if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
+                {
+                    orders.payment = 2;
+                }
+
+                orders.price = 0;
+                orders.ship_fee = 0;
+                orders.voucher = "waiting";
+
+                if (_api.postAPI(orders, "api/OrdersChange").Result)
+                {
+                    return RedirectToAction("Index", "User");
+                }
             }
-
-            var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/ItemsAPI/TakeIdPost_ForOrder/" + id).Result);
-
-            Orders orders = new Orders();
-
-            orders.time = DateTime.Now;
-            orders.address = HttpContext.Session.GetString("ck_address").ToString();
-            orders.phone = HttpContext.Session.GetString("ck_phone").ToString();
-            orders.status = 1;
-            orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
-            orders.id_post = Convert.ToInt32(idPost);
-            orders.authentication_fee = 0;
-
-            if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
-            {
-                orders.payment = 1;
-            }
-
-            if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
-            {
-                orders.payment = 2;
-            }
-
-            orders.price = 0;
-            orders.ship_fee = 0;
-            orders.voucher = "waiting";
-
-            if (_api.postAPI(orders, "api/OrdersChange").Result)
-            {
-                return RedirectToAction("Index","User");
-            }
-
             return View();
         }
 

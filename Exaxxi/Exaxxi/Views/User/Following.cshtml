@@ -1,4 +1,7 @@
-﻿<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="User">
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="Following">
     <div class="row">
         @Html.Partial("~/Views/User/Menu.cshtml")
 
@@ -15,6 +18,9 @@
                                     Name
                                 </th>
                                 <th>
+                                    Size
+                                </th>
+                                <th>
                                     Market Value
                                 </th>
                                 <th>
@@ -23,6 +29,23 @@
                                 <th>
                                     Last Sale
                                 </th>
+                            </tr>
+                            <tr ng-repeat="x in follow">
+                                <td class="font-weight-bold">
+                                    {{x.items.name}}
+                                </td>
+                                <td class="font-weight-bold">
+                                    {{x.ds_Sizes.vn}}
+                                </td>
+                                <td class="d-none d-sm-block">
+                                    {{x.items.trade_min}} VND
+                                </td>
+                                <td>
+                                    {{x.sizes.lowest_ask}} VND
+                                </td>
+                                <td>
+                                    {{x.sizes.last_sale}} VND
+                                </td>
                             </tr>
                         </table>
                         <div class="modal fade" id="followingModal">
@@ -72,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div align="center" style="color:#ab1113">
+                        <div align="center" style="color:#ab1113" ng-show="follow.length == 0">
                             <b>
                                 You haven't followed anything yet. Go get some hobbies dude !
                             </b>
@@ -83,3 +106,16 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        //Show Department
+        exaxxiApp.controller('Following', function ($scope, $http) {
+
+            //Take Count Buying Of Account
+            $http.get("/api/FollowingsAPI/TakeFollowOfUser/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.follow = response.data; console.log($scope.follow);});
+            
+        });
+    </script>
+}
