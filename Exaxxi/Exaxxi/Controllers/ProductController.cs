@@ -112,8 +112,9 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Confirm_Checkout(int id, int act)
+        public IActionResult Confirm_Checkout(int id, int act, int? size)
         {
+            //Buy
             if (act == 0)
             {
                 if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
@@ -152,6 +153,40 @@ namespace Exaxxi.Controllers
                     return RedirectToAction("Index", "User");
                 }
             }
+
+            //Bid
+            if (act == 1)
+            {
+                if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+
+                var idSize = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id +"/" + size).Result);
+
+                Posts posts = new Posts();
+
+                posts.price = Convert.ToDouble(HttpContext.Session.GetString("ck_enter_bid").ToString());
+                posts.date_start = DateTime.Now;
+
+                //Xử Lý End Date
+                int day = Convert.ToInt16(HttpContext.Session.GetString("ck_exp_day").ToString());
+                DateTime now = DateTime.Now;
+                DateTime final_day = now.AddDays(day);
+
+                posts.date_end = final_day;
+
+                posts.kind = 1;
+                posts.id_size = Convert.ToInt32(idSize);
+                posts.id_user = HttpContext.Session.GetInt32("idUser").Value;
+                posts.status = 0;
+
+                if (_api.postAPI(posts, "api/PostsChange").Result)
+                {
+                    return RedirectToAction("Index", "User");
+                }
+            }
+
             return View();
         }
 

@@ -71,5 +71,17 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Sizes.Include("size").Where(i => i.id_item == idItem).OrderBy(t => t.size.VN);
         }
 
+        [HttpGet("TakeIdSize_ForBid/{idItem}/{size}")]
+        public IActionResult TakeIdSize_ForBid(int idItem, int size)
+        {
+            var rel = _context.Sizes
+                .Join(_context.Items, a => a.id_item, b => b.id, (a, b) => new { a, b })
+                .Join(_context.ds_Size, c => c.a.id_ds_size, d => d.id, (c, d) => new { c, d })
+                .Where(p => p.c.b.id == idItem && p.d.VN == size)
+                .FirstOrDefault().c.a.id;
+
+            return Ok(rel);
+        }
+
     }
 }

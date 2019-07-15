@@ -161,7 +161,7 @@
                                                 <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                             </td>
                                             <td class="td-w65 font-weight-bold">
-                                                @HttpContextAccessor.HttpContext.Session.GetString("ck_exp_day")
+                                                @HttpContextAccessor.HttpContext.Session.GetString("ck_exp_day") Day
                                             </td>
                                         </tr>
                                     }
@@ -208,7 +208,7 @@
                                     <a href="/Product/Checkout?id=@ViewBag.IdItem">Back</a>
                                 </button>
                                 <button class="btn checkout-btn isbuy">
-                                    <a asp-controller="Product" asp-action="Confirm_Checkout" asp-route-id="@ViewBag.IdItem" asp-route-act="@ViewBag.Act">Proceed</a>
+                                    <a href="/Product/Confirm_Checkout?id=@ViewBag.IdItem&act=@ViewBag.Act&size={{name[0].size}}">Proceed</a>
                                 </button>
                             </div>
                         </div>
