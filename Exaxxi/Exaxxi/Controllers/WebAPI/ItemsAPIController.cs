@@ -53,6 +53,7 @@ namespace Exaxxi.Controllers.WebAPI
 
                         });
             }
+
         }
 
         // GET: api/Items
@@ -73,6 +74,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
+
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
