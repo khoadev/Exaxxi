@@ -26,8 +26,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            IEnumerable<PostViewAdmin> result = JsonConvert.DeserializeObject<List<PostViewAdmin>>(_api.getAPI("api/PostsAPI", HttpContext.Session.GetString("token")).Result);
-            return View(result);
+            return View();
         }
 
         // GET: Admin/Posts/Details/5
@@ -82,7 +81,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         }
 
         // GET: Admin/Posts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {

@@ -11,22 +11,22 @@
             </div>
             <div class="card-body">
                 <label for="singleSelect"> sắp xếp: </label><br>
-                <select name="singleSelect" data-ng-init="change()"  ng-change="change()" id="select" ng-model="confirmed" >
-                    <option value="0" >all</option>
-                    <option  ng-repeat="x in name" value="{{x.id}}" >{{x.name}}</option>
+                <select name="singleSelect" data-ng-init="confirmed" ng-change="change()" id="select" ng-model="confirmed">
+                    <option value="">all</option>
+                    <option ng-repeat="x in name" value="{{x.id}}">{{x.name}}</option>
 
                 </select>
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
                             <tr>
-                                <th ng-click='sortColumn("name")' ng-class='sortClass("name")'>
+                                <th ng-click='sortColumn("items.name")' ng-class='sortClass("name")'>
                                     Tên sản phẩm
                                 </th>
                                 <th>
                                     Hình
                                 </th>
-                                <th ng-click='sortColumn("lowest_ask")' ng-class='sortClass("lowest_ask")'>
+                                <th ng-click='sortColumn("items.lowest_ask")' ng-class='sortClass("lowest_ask")'>
                                     Giá
                                 </th>
                                 <th>
@@ -49,7 +49,7 @@
                         </thead>
                         <tbody>
 
-                            <tr ng-repeat="x in getItem | orderBy:column:reverse">
+                            <tr dir-paginate="x in getItem | itemsPerPage: 5 |  orderBy:column:reverse">
                                 <td>
                                     {{x.items.name}}
                                 </td>
@@ -76,11 +76,11 @@
                                 </td>
                                 <td>
                                     {{x.nameAdmin}}
-                                   
+
                                 </td>
                                 <td>
                                     {{x.nameCate}}
-                                   
+
                                 </td>
                                 <td>
                                     <a href="/Admin/Items/Edit/{{x.items.id}}">Edit</a> |
@@ -88,8 +88,12 @@
                                     <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.items.id)">Delete</a>
                                 </td>
 
-</tbody>
+                        </tbody>
                     </table>
+
+                </div>
+                <div class="pagination-wrapper row">
+                    <dir-pagination-controls boundary-links="true" template-url="../dirPagination.tpl.html"></dir-pagination-controls>
                 </div>
             </div>
         </div>
@@ -120,7 +124,7 @@
                 }
             }
             // column to sort
-            $scope.column = 'lowest_ask';
+            $scope.column = 'items.lowest_ask';
 
             // sort ordering (Ascending or Descending). Set true for desending
             $scope.reverse = false;
@@ -151,15 +155,16 @@
             }
             $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.name = response.data; });
-           
+            $http.get("/api/ItemsAPI/GetItemsAd/" + 0)
+                .then(function (response) { $scope.getItem = response.data;  });
           
-               $scope.change = function () {
-                    var x = 0;
+            $scope.change = function () {
+                
                    if ($("#select").val() != null) {
                        x = $("#select").val();
                    }
                     $http.get("/api/ItemsAPI/GetItemsAd/" + x)
-                        .then(function (response) { $scope.getItem = response.data; console.log($scope.getItem); });
+                        .then(function (response) { $scope.getItem = response.data;});
                 }
             });
        

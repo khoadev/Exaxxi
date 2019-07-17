@@ -118,7 +118,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}", HttpContext.Session.GetString("token")).Result);
+            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/GetItemsEdit/{id}", HttpContext.Session.GetString("token")).Result);
             if (items == null)
             {
                 return NotFound();

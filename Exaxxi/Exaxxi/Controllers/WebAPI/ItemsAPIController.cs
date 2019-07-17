@@ -36,7 +36,7 @@ namespace Exaxxi.Controllers.WebAPI
                             items = g.c.a,
                             nameAdmin = g.c.b.name,
                             nameCate = g.d.name
-                            
+
                         });
             }
             else
@@ -53,7 +53,25 @@ namespace Exaxxi.Controllers.WebAPI
 
                         });
             }
-        }        
+        }
+        // GET: api/Items
+        [HttpGet("GetItemsEdit/{id}")]
+        public async Task<IActionResult> GetItemsEdit(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = await _context.Items.FindAsync(id);
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
@@ -259,7 +277,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(model);
-        }        
+        }
 
     }
 }
