@@ -177,10 +177,10 @@
                         <ul class="dropdown-menu user-dropdown">
                             <li><a asp-controller="User" asp-action="Index"><b>@HttpContextAccessor.HttpContext.Session.GetString("nameUser")</b></a></li>
                             <li><a href="/User">Profile</a></li>
-                            <li><a href="#">Buying</a></li>
-                            <li><a href="#">Selling</a></li>
-                            <li><a href="#">Following</a></li>
-                            <li><a href="#">Setting</a></li>
+                            <li><a href="/User/Buying">Buying</a></li>
+                            <li><a href="/User/Selling">Selling</a></li>
+                            <li><a href="/User/Following">Following</a></li>
+                            <li><a href="/User/Setting">Setting</a></li>
                             <li>
                                 <a asp-controller="Login" asp-action="Logout">
                                     Logout

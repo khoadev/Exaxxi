@@ -112,42 +112,79 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Confirm_Checkout(int id)
+        public IActionResult Confirm_Checkout(int id, int act, int? size)
         {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            //Buy
+            if (act == 0)
             {
-                return RedirectToAction("Index", "Login");
+                if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+
+                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/ItemsAPI/TakeIdPost_ForOrder/" + id).Result);
+
+                Orders orders = new Orders();
+
+                orders.time = DateTime.Now;
+                orders.address = HttpContext.Session.GetString("ck_address").ToString();
+                orders.phone = HttpContext.Session.GetString("ck_phone").ToString();
+                orders.status = 0;
+                orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
+                orders.id_post = Convert.ToInt32(idPost);
+                orders.authentication_fee = 0;
+
+                if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
+                {
+                    orders.payment = 1;
+                }
+
+                if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
+                {
+                    orders.payment = 2;
+                }
+
+                orders.price = 0;
+                orders.ship_fee = 0;
+                orders.voucher = "waiting";
+
+                if (_api.postAPI(orders, "api/OrdersChange").Result)
+                {
+                    return RedirectToAction("Index", "User");
+                }
             }
 
-            var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/ItemsAPI/TakeIdPost_ForOrder/" + id).Result);
-
-            Orders orders = new Orders();
-
-            orders.time = DateTime.Now;
-            orders.address = HttpContext.Session.GetString("ck_address").ToString();
-            orders.phone = HttpContext.Session.GetString("ck_phone").ToString();
-            orders.status = 1;
-            orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
-            orders.id_post = Convert.ToInt32(idPost);
-            orders.authentication_fee = 0;
-
-            if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
+            //Bid
+            if (act == 1)
             {
-                orders.payment = 1;
-            }
+                if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+                {
+                    return RedirectToAction("Index", "Login");
+                }
 
-            if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
-            {
-                orders.payment = 2;
-            }
+                var idSize = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id +"/" + size).Result);
 
-            orders.price = 0;
-            orders.ship_fee = 0;
-            orders.voucher = "waiting";
+                Posts posts = new Posts();
 
-            if (_api.postAPI(orders, "api/OrdersChange").Result)
-            {
-                return RedirectToAction("Index","User");
+                posts.price = Convert.ToDouble(HttpContext.Session.GetString("ck_enter_bid").ToString());
+                posts.date_start = DateTime.Now;
+
+                //Xử Lý End Date
+                int day = Convert.ToInt16(HttpContext.Session.GetString("ck_exp_day").ToString());
+                DateTime now = DateTime.Now;
+                DateTime final_day = now.AddDays(day);
+
+                posts.date_end = final_day;
+
+                posts.kind = 1;
+                posts.id_size = Convert.ToInt32(idSize);
+                posts.id_user = HttpContext.Session.GetInt32("idUser").Value;
+                posts.status = 0;
+
+                if (_api.postAPI(posts, "api/PostsChange").Result)
+                {
+                    return RedirectToAction("Index", "User");
+                }
             }
 
             return View();
