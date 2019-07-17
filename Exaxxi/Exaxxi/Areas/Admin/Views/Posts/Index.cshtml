@@ -1,6 +1,4 @@
-﻿@model IEnumerable<Exaxxi.ViewModels.PostViewAdmin>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 <div class="row">
@@ -11,16 +9,15 @@
                 <p class="card-category"></p>
             </div>
             <div ng-controller="Post">
-                <label for="singleSelect"> sắp xếp: </label><br>
-                <select name="singleSelect" ng-model="sort">
-                    <option value="">Mặc định</option>
+                <label for="singleSelect"> sắp xếp:{{tenmua.id}} </label><br>
+                <select name="singleSelect" ng-model="sort" ng-change="change()">
                     <option value="1">Mua</option>
                     <option value="2">Bán</option>
                     <option value="3">Đang xử lý</option>
                 </select>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" ng-hide="sort==3">
                             <thead class=" text-primary">
                                 <tr>
                                     <th> Tên Sản Phẩm</th>
@@ -33,7 +30,7 @@
                                         Tên người khách hàng
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.post.kind)
+                                        Hình thức giao dịch
                                     </th>
                                 </tr>
                             </thead>
@@ -43,11 +40,49 @@
                                     <td>{{x.size}}</td>
                                     <td>{{x.post.date_start}}</td>
                                     <td>{{x.post.price}}</td>
-                                    <td>{{x.username}}</td>
+                                    <td>{{x.usernameSell}}</td>
                                     <td>
                                         <span ng-if="x.post.kind == 1">Mua</span>
                                         <span ng-if="x.post.kind == 2">Bán</span>
-                                        <span ng-if="x.post.kind == 3">Đang xử lý</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table" ng-show="sort==3">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th> Tên Sản Phẩm</th>
+                                    <th> Size(VN)</th>
+                                    <th> Thời gian giao dịch</th>
+                                    <th>
+                                        Giá
+                                    </th>
+                                    <th>
+                                        Tên người mua
+                                    </th>
+                                    <th>
+                                        Tên người bán
+                                    </th>
+                                    <th>
+                                        Hình thức giao dịch
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="z in nameOrder ">
+                                    <td>{{z.nameItem}}</td>
+                                    <td>{{z.size}}</td>
+                                    <td>{{z.post.date_start}}</td>
+                                    <td>{{z.post.price}}</td>
+                                    <td>{{z.usernameSell}}</td>
+                                    <td>
+                                    <span ng-repeat="a in tenmua">
+                                        <span ng-if="z.order.id_user == a.id">{{a.name}}</span>
+                                    </span>
+                                    </td>
+
+                                    <td>
+                                        <span>Đang xử lý</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -62,9 +97,18 @@
 @section Scripts {
     <script>
         app.controller('Post', function ($scope, $http) {
-            $scope.sort = "";
+            $scope.sort = "1";
+
+            $http.get("/api/PostsAPI/GetPostsSell")
+                .then(function (res) {
+                    $scope.nameOrder = res.data;
+                });
+           
+            $http.get("/api/PostsAPI/GetNameBuy")
+                .then(function (rp) { $scope.tenmua = rp.data;  });
             $http.get("/api/PostsAPI")
-                .then(function (response) { $scope.name = response.data; console.log($scope.name); });
+                .then(function (response) { $scope.name = response.data; });
+
         });
     </script>
 }

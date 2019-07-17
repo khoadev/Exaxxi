@@ -67,7 +67,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
+        public IActionResult Create([Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {

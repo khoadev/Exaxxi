@@ -208,7 +208,7 @@
                                     <a href="/Product/Checkout?id=@ViewBag.IdItem">Back</a>
                                 </button>
                                 <button class="btn checkout-btn isbuy">
-                                    Proceed
+                                    <a asp-controller="Product" asp-action="Confirm_Checkout" asp-route-id="@ViewBag.IdItem">Proceed</a>
                                 </button>
                             </div>
                         </div>

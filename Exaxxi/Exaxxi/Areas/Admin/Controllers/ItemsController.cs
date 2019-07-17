@@ -14,6 +14,7 @@ using System.IO;
 using AutoMapper;
 using PagedList.Core;
 using Exaxxi.Common;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -29,15 +30,14 @@ namespace Exaxxi.Areas.Admin.Controllers
             mapper = _map;
         }
         // GET: Admin/Items
-        public IActionResult Index(int page = 1)
+        public IActionResult Index()
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
-            var result = JsonConvert.DeserializeObject<List<Items>>(_api.getAPI("api/ItemsAPI", HttpContext.Session.GetString("token")).Result);
-            PagedList<Items> model = new PagedList<Items>(result.AsQueryable(), page, info.PAGE_SIZE_AD);
-            return View(model);
+           
+            return View();
         }
 
         // GET: Admin/Items/Details/5
@@ -52,7 +52,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/GetItemsDetail/{id}", HttpContext.Session.GetString("token")).Result);
+            var items = JsonConvert.DeserializeObject<ItemViewAdmin>(_api.getAPI($"api/ItemsAPI/{id}", HttpContext.Session.GetString("token")).Result);
             if (items == null)
             {
                 return NotFound();
@@ -118,7 +118,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/{id}", HttpContext.Session.GetString("token")).Result);
+            var items = JsonConvert.DeserializeObject<Items>(_api.getAPI($"api/ItemsAPI/GetItemsEdit/{id}", HttpContext.Session.GetString("token")).Result);
             if (items == null)
             {
                 return NotFound();

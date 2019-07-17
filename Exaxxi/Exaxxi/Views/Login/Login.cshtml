@@ -24,7 +24,7 @@
 }
 
 <div id="logreg-background" ng-controller="Login">
-
+   
     <div class="container">
         <div class="row" id="logreg-wrapper">
             <div class="col-lg-9" id="logreg-form-wrapper">
@@ -107,13 +107,16 @@
                     "username": username,
                     "password": password,
                 };
-
+                var url = sessionStorage.getItem('url');
                 $http.post("/api/UsersAPI/PostUserLogin", JSON.stringify(login)).
                     then(function (data) {
-
+                     
                         $http.post("/Login/Login", JSON.stringify(data.data)).
                             then(function () {
-                                window.location = "/User";
+                                if (url != null)
+                                    window.location = url;
+                                else
+                                    window.location = "/User";
                             });
 
                     })

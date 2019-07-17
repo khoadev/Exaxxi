@@ -19,14 +19,16 @@ namespace Exaxxi.Models
         public DbSet<News> News { get; set; }
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Sizes> Sizes { get; set; }
+        public DbSet<Orders> Orders { get; set; }
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
-        //Server Name - Kiet: DESKTOP-262PU69\SQLEXPRESS
+        //Server Name - Kiet: DESKTOP-9IBF91T\SQLEXPRESS
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-NKES72FM;Initial Catalog=Exaxxi;Integrated Security=True");
+
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -1060,7 +1062,8 @@ namespace Exaxxi.Models
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,
                     id_size=1,
-                    id_user=1
+                    id_user=1,
+                    status = 0
                 },
                 new Posts
                 {
@@ -1070,7 +1073,8 @@ namespace Exaxxi.Models
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=2,
                     id_size=2,
-                    id_user=2
+                    id_user=2,
+                    status = 0
                 },
                 new Posts
                 {
@@ -1080,7 +1084,8 @@ namespace Exaxxi.Models
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=2,
                     id_size=5,
-                    id_user=3
+                    id_user=3,
+                    status = 0
                 },
                 new Posts
                 {
@@ -1090,7 +1095,8 @@ namespace Exaxxi.Models
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=2,
                     id_size=1,
-                    id_user=3
+                    id_user=3,
+                    status = 0
                 },
                 new Posts
                 {
@@ -1100,7 +1106,8 @@ namespace Exaxxi.Models
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,
                     id_size=4,
-                    id_user=4
+                    id_user=4,
+                    status = 0
                 },
                 new Posts
                 {
@@ -1110,7 +1117,8 @@ namespace Exaxxi.Models
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,
                     id_size=5,
-                    id_user=2
+                    id_user=2,
+                    status = 0
                 }
             );
             builder.Entity<Followings>().HasData(

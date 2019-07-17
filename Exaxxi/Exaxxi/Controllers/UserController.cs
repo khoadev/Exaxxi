@@ -11,8 +11,6 @@ namespace Exaxxi.Controllers
 {
     public class UserController : Controller
     {
-        private readonly ExaxxiDbContext _exx;
-
         //helper
         CallAPI _api = new CallAPI();
 
@@ -25,5 +23,46 @@ namespace Exaxxi.Controllers
 
             return View();
         }
+
+        public IActionResult Buying()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return View();
+        }
+
+        public IActionResult Selling()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return View();
+        }
+
+        public IActionResult Setting()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return View();
+        }
+
+        public IActionResult Following()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            
+            return View();
+        }
+
     }
 }

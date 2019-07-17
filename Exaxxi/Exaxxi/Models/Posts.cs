@@ -22,6 +22,7 @@ namespace Exaxxi.Models
         [Range(0, 1)]
         [Display(Name = "Hình thức giao dịch")]
         public int kind { get; set; }
+        public int status { get; set; }
         public int id_size { get; set; }
         [ForeignKey("id_size")]
         public Sizes size { get; set; }
