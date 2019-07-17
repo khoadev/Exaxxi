@@ -64,5 +64,15 @@ namespace Exaxxi.Controllers
             return View();
         }
 
+        public IActionResult Edit_Per_Info()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return View();
+        }
+
     }
 }

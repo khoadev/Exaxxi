@@ -129,7 +129,7 @@ namespace Exaxxi.Controllers
                 orders.time = DateTime.Now;
                 orders.address = HttpContext.Session.GetString("ck_address").ToString();
                 orders.phone = HttpContext.Session.GetString("ck_phone").ToString();
-                orders.status = 1;
+                orders.status = 0;
                 orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
                 orders.id_post = Convert.ToInt32(idPost);
                 orders.authentication_fee = 0;
