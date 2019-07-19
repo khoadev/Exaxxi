@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<h2>Edit</h2>
+
+<h4>Users</h4>
+<hr />
+<div class="row" ng-controller="Edit_Per">
+    <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input type="text" id="name" class="form-control" value="{{user_info.name}}" />
+            </div>
+            <div class="form-group">
+                <label lass="control-label">Password</label>
+                <input type="password" id="pass" class="form-control" value="" />
+            </div>
+            <div class="form-group">
+                <label lass="control-label">Confirm Password</label>
+                <input type="password" id="re_pass" class="form-control" value="" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" id="email" class="form-control" value="{{user_info.email}}" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Phone</label>
+                <input type="number" id="phone" min="0" class="form-control" value="{{user_info.phone}}" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Address</label>
+                <textarea id="address" class="form-control">{{user_info.address}}</textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="save" class="btn btn-primary" />
+            </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Setting">Back to List</a>
+</div>
+
+@section Scripts{
+    <script>
+
+        exaxxiApp.controller('Edit_Per', function ($scope, $http) {
+            //Take Info User
+            $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.user_info = response.data });
+
+            //Save
+            $("#save").on("click", function () {                
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var pass = $("#pass").val();
+                var re_pass = $("#re_pass").val();
+                var phone = $("#phone").val();
+                var address = $("#address").val();
+
+                var person = {
+                    "id": @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"),
+                    "name": name,
+                    "email": email,
+                    "pass": pass,
+                    "re_pass": re_pass,
+                    "phone": phone,
+                    "address": address,
+                };
+
+                $http.post("/api/UsersChange/Info_Person", JSON.stringify(person)).
+                    then(function () {
+                        alert("Successfully Change");
+                        window.location = "/User/Setting";
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
+        });
+
+    </script>
+}
+

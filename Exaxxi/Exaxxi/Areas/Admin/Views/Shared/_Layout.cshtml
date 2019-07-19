@@ -2,6 +2,10 @@
 @inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html>
+@{
+  
+    string controllernName = ViewContext.RouteData.Values["controller"].ToString();
+}
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
@@ -15,7 +19,7 @@
         <link href="~/css/material-dashboard.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
-     
+
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -30,7 +34,7 @@
 </head>
 <body ng-app="exaxxiApp">
     <div class="wrapper ">
-        <div class="sidebar" data-color="danger" data-background-color="white" data-image="~/images/sidebar-1.jpg">
+        <div class="sidebar" data-color="danger" data-background-color="white" data-image="../images/sidebar-1.jpg">
             <!--
                 Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -43,7 +47,6 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-
                     @using Microsoft.AspNetCore.Http
                     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                     @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin").ToString()))
@@ -56,80 +59,80 @@
 
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1")
                         {
-                            <li class="nav-item active  ">
+                            <li class="nav-item @(controllernName == "Dashboard" ? "active" : "")  ">
                                 <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
                                     <i class="material-icons">dashboard</i>
                                     <p>Dashboard</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Admins" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">person</i>
-                                    Admin
+                                    <p>Admin</p>
                                 </a>
                             </li>
                         }
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "2")
                         {
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "News" ? "active" : "")">
                                 <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">language</i>
-                                    News
+                                    <p>News</p>
                                 </a>
                             </li>
                         }
 
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "3")
                         {
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Departments" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">content_paste</i>
-                                    Department
+                                    <p>Department</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item  @(controllernName == "Categories" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">category</i>
-                                    Categorie
+                                    <p>Categorie</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Brands" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">branding_watermark</i>
-                                    Brand
+                                    <p>Brand</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "ds_Size" ? "active" : "")">
                                 <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">library_books</i>
-                                    Danh sách size
+                                    <p>Sizes List</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Items" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">bubble_chart</i>
-                                    Item
+                                    <p>Item</p>
                                 </a>
                             </li>
                         }
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "4")
                         {
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Posts" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">web</i>
-                                    Post
+                                    <p>Post</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Sizes" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">format_size</i>
-                                    Sizes
+                                    <p>Sizes</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @(controllernName == "Users" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Users" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">person</i>
-                                    User
+                                    <p>User</p>
                                 </a>
                             </li>
                         }
@@ -144,9 +147,6 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                 <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="#pablo">Dashboard</a>
-                    </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="navbar-toggler-icon icon-bar"></span>
@@ -223,7 +223,7 @@
     <script src="~/js/jquery-3.4.1.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap-material-design.min.js"></script>
-    
+
     <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
     <script src="~/js/perfect-scrollbar.jquery.min.js"></script>
     <!-- Chartist JS -->
