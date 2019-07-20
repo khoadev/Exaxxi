@@ -1,4 +1,7 @@
-﻿<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="User">
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="Buying">
     <div class="row">
         @Html.Partial("~/Views/User/Menu.cshtml")
 
@@ -7,7 +10,7 @@
                 <div>
                     <i class="far fa-chart-bar fa-fw"></i>PURCHASING<br />
                     <span class="user-number">
-                        20
+                        {{count_buying}}
                     </span>
                 </div>
                 <div>
@@ -49,18 +52,18 @@
                                     Expires
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-repeat="x in kind_two">
                                 <td class="font-weight-bold">
-                                    Nike Air Force 2
+                                    {{x.items.name}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    100.000 VND
+                                    ... VND
                                 </td>
                                 <td>
-                                    100.000 VND
+                                    {{x.items.highest_bid}} VND
                                 </td>
                                 <td>
-                                    100.000 VND
+                                    {{x.items.lowest_ask}} VND
                                 </td>
                                 <td class="d-none d-sm-block">
                                     0
@@ -75,7 +78,7 @@
                                     Item
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Ask Price
+                                    Bid Price
                                 </td>
                                 <td>
                                     Highest Bid
@@ -87,18 +90,18 @@
                                     Expires
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-repeat="x in kind_one">
                                 <td class="font-weight-bold">
-                                    Nike Air Force 2
+                                    {{x.items.name}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    100.000 VND
+                                    ... VND
                                 </td>
                                 <td>
-                                    100.000 VND
+                                    {{x.items.highest_bid}} VND
                                 </td>
                                 <td>
-                                    100.000 VND
+                                    {{x.items.lowest_ask}} VND
                                 </td>
                                 <td class="d-none d-sm-block">
                                     0
@@ -113,7 +116,7 @@
                                     Item
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Ask Price
+                                    Bid Price
                                 </td>
                                 <td>
                                     Highest Bid
@@ -125,18 +128,18 @@
                                     Expires
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-repeat="x in kind_three">
                                 <td class="font-weight-bold">
-                                    Nike Air Force 2
+                                    {{x.items.name}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    100.000 VND
+                                    ... VND
                                 </td>
                                 <td>
-                                    100.000 VND
+                                    {{x.items.highest_bid}} VND
                                 </td>
                                 <td>
-                                    100.000 VND
+                                    {{x.items.lowest_ask}} VND
                                 </td>
                                 <td class="d-none d-sm-block">
                                     0
@@ -150,3 +153,24 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        //Show Department
+        exaxxiApp.controller('Buying', function ($scope, $http) {
+
+            //Take Count Buying Of Account
+            $http.get("/api/OrdersAPI/CountOrderBuying_Account/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.count_buying = response.data; });
+
+            //Take Detail Buying Of Account with Kind: 1 => current, 2 => pending, 3 => history
+            $http.get("/api/OrdersAPI/TakeDetailBuying_Account/1/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.kind_one = response.data; });
+            $http.get("/api/OrdersAPI/TakeDetailBuying_Account/2/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.kind_two = response.data; });
+            $http.get("/api/OrdersAPI/TakeDetailBuying_Account/3/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.kind_three = response.data; });
+
+        });
+    </script>
+}

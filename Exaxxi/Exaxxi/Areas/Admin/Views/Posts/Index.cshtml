@@ -75,7 +75,11 @@
                                     <td>{{z.post.date_start}}</td>
                                     <td>{{z.post.price}}</td>
                                     <td>{{z.usernameSell}}</td>
-                                    <td><span ng-if="z.post.id_user == tenmua.id">{{tenmua.name}}</span></td>
+                                    <td>
+                                    <span ng-repeat="a in tenmua">
+                                        <span ng-if="z.order.id_user == a.id">{{a.name}}</span>
+                                    </span>
+                                    </td>
 
                                     <td>
                                         <span>Đang xử lý</span>
@@ -101,7 +105,7 @@
                 });
            
             $http.get("/api/PostsAPI/GetNameBuy")
-                .then(function (rp) { $scope.tenmua = rp.data; console.log($scope.tenmua); });
+                .then(function (rp) { $scope.tenmua = rp.data;  });
             $http.get("/api/PostsAPI")
                 .then(function (response) { $scope.name = response.data; });
 

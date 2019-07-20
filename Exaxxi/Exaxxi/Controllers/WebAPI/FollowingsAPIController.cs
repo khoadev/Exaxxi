@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -83,6 +84,23 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [Route("TakeFollowOfUser/{idUser}")]
+        public IActionResult TakeFollowOfUser(int idUser)
+        {
+            var follow = _context.Followings
+                .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
+                .Join(_context.ds_Size, e => e.c.b.id_ds_size, f => f.id, (e,f) => new { e,f })
+                .Where(p => p.e.c.a.id_user == idUser)
+                .Select(g => new FollowingViewModel {
+                    items = g.e.d,
+                    sizes = g.e.c.b, 
+                    ds_Sizes = g.f
+                });
+
+            return Ok(follow);
         }
 
     }

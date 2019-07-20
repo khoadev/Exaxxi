@@ -12,7 +12,6 @@ namespace Exaxxi.Controllers.WebAPI
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class OrdersChangeController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;

@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input id="enter_bid" type="text" class="form-control checkout-input " placeholder="Enter Bid" />
+                                        <input id="enter_bid" ng-model="enter_bid" type="number" class="form-control checkout-input " placeholder="Enter Bid" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 checkout-suggestion">
-                                        A good bid around 200.000VND
+                                        A good bid around {{name[0].item.lowest_ask}}VND
                                     </div>
                                 </div>
                                 <div class="checkout-estimated-wrapper">
@@ -76,16 +76,16 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <select class="form-control" id="exp_day">
-                                                <option>30 days</option>
-                                                <option>7 days</option>
-                                                <option>14 days</option>
+                                                <option value="7">7 days</option>
+                                                <option value="14">14 days</option>
+                                                <option value="30">30 days</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button id="bid" class="btn checkout-btn isbuy col-4">
+                                        <button id="bid" class="btn checkout-btn isbuy col-4" ng-disabled="enter_bid >= name[0].item.lowest_ask">
                                             Bid
                                         </button>
                                     </div>
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input id="value_buy" type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].item.lowest_ask}}" />
+                                        <input id="value_buy" ng-model="value_buy" type="number" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" ng-value="name[0].item.lowest_ask" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -199,11 +199,15 @@
 </div>
 
 @section Scripts{
-<script>        
+    <script>
+
     exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
             $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
-                .then(function (response) { $scope.name = response.data });
+                .then(function (response) {
+                $scope.name = response.data;
+
+                });
 
             //Take Info User
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
@@ -241,10 +245,17 @@
                     .catch(function onError(response) {
                         alert(response.data);
                     });
-            });
-
+        });
+        $scope.enter_bid = parseFloat($("#enter_bid").val());
+        $("#enter_bid").keyup(function () {
+            //alert($("#value_buy").val());
+            if (parseFloat($("#enter_bid").val()) >= parseFloat($("#value_buy").val())) {
+                $("#enter_bid").blur();
+                $("#enter_bid").val($("#value_buy").val());
+            }
+        });
             //Bid
-            $("#bid").on('click', function () {
+        $("#bid").on('click', function () {
                 var enter_bid = $("#enter_bid").val();
                 var exp_day = $("#exp_day").val();
                 var account = $("#account").val();
@@ -254,19 +265,18 @@
                 if (enter_bid == "") {
                     alert("Vui lòng nhập giá tiền");
                     return false;
-                }
-
-                if (parseFloat(enter_bid) > parseFloat($("#value_buy").val())) {
-                    alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
-                    return false;
-                }
+            }
+            if (parseFloat(enter_bid) >= parseFloat($("#value_buy").val())) {
+                        alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
+                        return false;
+                    }
 
                 payment = $("input[name=payment]:checked").val();
                 if (typeof payment === "undefined") {
                     alert("Vui lòng chọn phương thức thanh toán");
                     return false;
                 }
-
+                
                 var info = {
                     "enter_bid": enter_bid,
                     "exp_day": exp_day,
@@ -276,7 +286,7 @@
                     "payment": payment,
                 };
 
-                $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
+                $http.post("/api/ItemsChange/BuyBid", JSON.stringify(info)).
                     then(function (data) {
 
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
@@ -291,5 +301,5 @@
                     });
             });
         });
-</script>
+    </script>
 }

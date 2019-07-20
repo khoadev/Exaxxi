@@ -23,7 +23,7 @@ namespace Exaxxi.Models
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
-        //Server Name - Kiet: DESKTOP-262PU69\SQLEXPRESS
+        //Server Name - Kiet: DESKTOP-9IBF91T\SQLEXPRESS
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1056,7 +1056,7 @@ namespace Exaxxi.Models
                 new Posts
                 {
                     id=1,
-                    price=200000,
+                    price=300000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
                     kind=1,
@@ -1070,7 +1070,7 @@ namespace Exaxxi.Models
                     price=300000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
-                    kind=2,
+                    kind=0,
                     id_size=2,
                     id_user=2,
                     status = 0
@@ -1081,7 +1081,7 @@ namespace Exaxxi.Models
                     price=350000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
-                    kind=2,
+                    kind=0,
                     id_size=5,
                     id_user=3,
                     status = 0
@@ -1092,7 +1092,7 @@ namespace Exaxxi.Models
                     price=350000,
                     date_start= DateTime.Parse("2019-01-05"),
                     date_end= DateTime.Parse("2019-12-12"),
-                    kind=2,
+                    kind=0,
                     id_size=1,
                     id_user=3,
                     status = 0

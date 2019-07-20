@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Exaxxi.Controllers.WebAPI
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostsChangeController : ControllerBase
