@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title ">Danh sách thể loại</h4>
-                <p class="card-category"></p>
+                <p class="card-category">Quản lý danh sách thể loại</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -27,7 +27,7 @@
                                 <th>
                                    Brand
                                 </th>
-                                <th><a asp-action="Create">Thêm</a></th>
+                                <th class="text-right"><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
                         <tbody ng-controller="deleteCa">
@@ -46,10 +46,23 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.brand.name)
                                     </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
+                                    <td class="td-actions text-right">
+                                        <a asp-action="Edit" asp-route-id="@item.id">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.id">
+                                            <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                                <i class="material-icons">
+                                                    info
+                                                </i>
+                                            </button>
+                                        </a>
+                                        <button ng-click="Delete(@item.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                            <i class="material-icons">close</i>
+                                        </button>
+
                                     </td>
                                 </tr>
                             }
