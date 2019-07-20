@@ -13,6 +13,13 @@ namespace Exaxxi.Models
         public int id { get; set; }
         [Display(Name = "Giá")]
         public double price { get; set; }
+        [Display(Name = "Tên Khách Hàng")]
+        public string name_client { get; set; }
+        [Display(Name = "Số Điện Thoại")]
+        [Phone]
+        public string phone { get; set; }
+        [Display(Name = "Địa Chỉ")]
+        public string address { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Ngày bắt đầu")]
         public DateTime date_start { get; set; }

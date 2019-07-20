@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -90,7 +92,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-
+        
         private bool ItemsExists(int id)
         {
             return _context.Items.Any(e => e.id == id);
