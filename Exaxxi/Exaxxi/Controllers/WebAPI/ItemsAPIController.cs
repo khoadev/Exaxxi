@@ -53,7 +53,6 @@ namespace Exaxxi.Controllers.WebAPI
 
                         });
             }
-
         }
 
         // GET: api/Items
@@ -74,7 +73,6 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-
 
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
@@ -218,7 +216,17 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(idPost);
         }
-
+        [Route("Popular/{id_depart}")]
+        public IEnumerable<Items> GetItemsPopular(int id_depart)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(k => k.c.a.active == true && k.d.id_department == id_depart)
+                .OrderBy(h => h.c.a.sold)
+                .Take(10)
+                .Select(m => m.c.a);
+        }
         [HttpPost]
         [Route("TakeIdCategory_Checkbox")]
         public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
@@ -281,6 +289,5 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(model);
         }
-
     }
 }

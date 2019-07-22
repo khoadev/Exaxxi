@@ -68,7 +68,7 @@ namespace Exaxxi.Controllers.WebAPI
             _context.Posts.Add(posts);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPosts", new { id = posts.id }, posts);
+            return Ok();
         }
 
         // DELETE: api/Posts/5

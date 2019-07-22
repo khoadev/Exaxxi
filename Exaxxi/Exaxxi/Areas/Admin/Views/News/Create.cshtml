@@ -3,69 +3,66 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h2>Create</h2>
-
-<h4>News</h4>
-<hr />
 <div class="row">
     <div class="col-md-8">
-        <form asp-action="UploadFileAsync" asp-controller="News" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="vi_title" class="control-label"></label>
-                <input class="form-control" id="vi_title" name="vi_title" />
-                <span asp-validation-for="vi_title" class="text-danger"></span>
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Create News</h4>
+                <p class="card-category">News</p>
             </div>
-            <div class="form-group">
-                <label asp-for="en_title" class="control-label"></label>
-                <input class="form-control" id="en_title" name="en_title" />
-                <span asp-validation-for="en_title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="img" class="control-label"></label>
-                <input type="file" id="img" name="img">
-                <span asp-validation-for="img" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="vi_content" class="control-label"></label>
-                <textarea class="form-control" id="vi_content" name="vi_content"></textarea>
-                <span asp-validation-for="vi_content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="en_content" class="control-label"></label>
-                <textarea class="form-control" id="en_content" name="en_content"></textarea>
-                <span asp-validation-for="en_content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="date_create" class="control-label"></label>
-                <input asp-for="date_create" class="form-control" id="date_create" name="date_create" />
-                <span asp-validation-for="date_create" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="active" id="active" name="active" /> @Html.DisplayNameFor(model => model.active)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_admin" class="control-label"></label>
-                <select asp-for="id_admin" class="form-control" id="adminname" name="id_admin"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="id_department" class="control-label"></label>
-                <select asp-for="id_department" class="form-control" id="departmentname" name="id_department"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
+            <div class="card-body">
+                <form asp-action="UploadFileAsync" asp-controller="News" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="vi_title" class="bmd-label-floating"></label>
+                        <input class="form-control" id="vi_title" name="vi_title" />
+                        <span asp-validation-for="vi_title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="en_title" class="bmd-label-floating"></label>
+                        <input class="form-control" id="en_title" name="en_title" />
+                        <span asp-validation-for="en_title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="img" class="bmd-label-floating btn btn-primary">
+                            Chose Picture
+                        </label>
+                        <input type="file" id="img" name="img">
+                        <span asp-validation-for="img" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="vi_content" class="control-label"></label>
+                        <textarea class="form-control" id="vi_content" name="vi_content"></textarea>
+                        <span asp-validation-for="vi_content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="en_content" class="control-label"></label>
+                        <textarea class="form-control" id="en_content" name="en_content"></textarea>
+                        <span asp-validation-for="en_content" class="text-danger"></span>
+                    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+                    <div class="form-group">
+                        <label asp-for="id_department" class="bmd-label-floating"></label>
+                        <select asp-for="id_department" class="form-control" id="departmentname" name="id_department"></select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check p-0">
+                            <label class="form-check-label">
+                                @Html.DisplayNameFor(model => model.active)
+                                <input asp-for="active" class="form-check-input" type="checkbox" value="" checked>
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <a asp-action="Index">Back to List</a>
+                    <button type="submit" class="btn btn-primary pull-right">Create News</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 @section Scripts{
     <script>
