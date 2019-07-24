@@ -31,7 +31,13 @@ namespace Exaxxi.Controllers.WebAPI
         {            
             return _context.Categories.Include("brand");          
         }
-      
+        [HttpGet("GetCategoriesAd/{idbr}")]
+        public IEnumerable<Categories> GetCategoriesAd(int idbr)
+        {
+
+            return _context.Categories.Where(p => p.id_brand == idbr);
+
+        }
         [Route("TakeCateByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Categories> GetAllCate(int Id_Brand, int Qty)
         {

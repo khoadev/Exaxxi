@@ -28,6 +28,12 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.News.Include("department").Include("admin");
         }
+        [HttpGet("img/{id}")]
+        public IActionResult GetNewsImg(int id)
+        {
+            var data = _context.News.Where(p => p.id == id).FirstOrDefault().img;
+            return Ok(data);
+        }
         [HttpGet("GetAll")]
         public IEnumerable<NewsViewModel> GetAll()
         {

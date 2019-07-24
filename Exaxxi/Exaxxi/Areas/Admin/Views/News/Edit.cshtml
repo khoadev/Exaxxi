@@ -1,5 +1,6 @@
 ﻿@model Exaxxi.Models.News
-
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Edit";
 }
@@ -14,6 +15,7 @@
                 <form asp-action="Edit" asp-controller="News" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="id" />
+                    <input type="hidden" asp-for="id_admin" value="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")" />
                     <div class="form-group">
                         <label asp-for="vi_title" class="bmd-label-floating"></label>
                         <input asp-for="vi_title" class="form-control" />
@@ -29,7 +31,8 @@
                             Chose Picture
                         </label>
                         <img src="~/images/news/@Model.img" height="200" width="100" />
-                        <input type="file" id="img" name="img">
+                        <input type="file" id="img" asp-for="img">
+                       
                         <span asp-validation-for="img" class="hidden form-control"></span>
 
                     </div>
@@ -44,12 +47,6 @@
                         <span asp-validation-for="en_content" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="date_create" class="bmd-label-floating"></label>
-                        <input asp-for="date_create" class="form-control" />
-                        <span asp-validation-for="date_create" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
                         <label asp-for="id_department" class="bmd-label-floating"></label>
                         <select asp-for="id_department" class="form-control" id="departmentname"></select>
                         <span asp-validation-for="id_department" class="text-danger"></span>
@@ -58,7 +55,7 @@
                         <div class="form-check p-0">
                             <label class="form-check-label">
                                 @Html.DisplayNameFor(model => model.active)
-                                <input asp-for="active" class="form-check-input" type="checkbox" value="">
+                                <input asp-for="active" class="form-check-input" type="checkbox">
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -94,23 +91,7 @@
                         });
                     }
                 });
-                $.ajax({
-                    url: "/api/AdminsAPI",
-                    method: "GET",
-                    success: function (data) {
-                        $(data).each(function (index, value) {
-                            var idAdmin = @Model.id_admin;
-                            if (idAdmin == value.id) {
-                                var option = $("<option/>").attr("value", value.id).attr("selected", "selected").html(value.name);
-
-
-                            } else {
-                                var option = $("<option/>").attr("value", value.id).html(value.name);
-                            }
-                            $("#adminname").append(option)
-                        });
-                    }
-                });
+                
             });
     </script>
 
@@ -122,7 +103,7 @@
                 filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
             });
         });
-      
+
         CKEDITOR.replace('en_content', {
             height: 400,
             filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',

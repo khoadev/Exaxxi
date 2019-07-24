@@ -1,9 +1,7 @@
-﻿@model PagedList.Core.IPagedList<Exaxxi.Models.Categories>
-
-@{
+﻿@{
     ViewData["Title"] = "Categories";
 }
-<div class="row">
+<div class="row" ng-controller="Categories">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
@@ -11,6 +9,16 @@
                 <p class="card-category">Quản lý danh sách thể loại</p>
             </div>
             <div class="card-body">
+                <label for="singleSelect"> sắp xếp: </label><br>
+                <select name="singleSelect1" data-ng-init="confirmed" ng-change="change1()" id="select1" ng-model="confirmed">
+                    <option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>
+
+                </select>
+                <label for="singleSelect"> sắp xếp: </label><br>
+                <select name="singleSelect" data-ng-init="selectedItem" ng-change="change()" id="select" ng-model="selectedItem">
+                    <option ng-repeat="z in getItem" value="{{z.id}}">{{z.name}}</option>
+
+                </select>
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
@@ -19,53 +27,32 @@
                                     Tên loại
                                 </th>
                                 <th>
-                                   Trạng thái
+                                    Trạng thái
                                 </th>
                                 <th>
-                                   Thứ tự
+                                    Thứ tự
                                 </th>
-                                <th>
-                                   Brand
-                                </th>
-                                <th class="text-right"><a asp-action="Create">Tạo Mới</a></th>
+                                <th ><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
-                        <tbody ng-controller="deleteCa">
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.active)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.order)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.brand.name)
-                                    </td>
-                                    <td class="td-actions text-right">
-                                        <a asp-action="Edit" asp-route-id="@item.id">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                                <i class="material-icons">edit</i>
-                                            </button>
-                                        </a>
-                                        <a asp-action="Details" asp-route-id="@item.id">
-                                            <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
-                                                <i class="material-icons">
-                                                    info
-                                                </i>
-                                            </button>
-                                        </a>
-                                        <button ng-click="Delete(@item.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                            <i class="material-icons">close</i>
-                                        </button>
+                        <tbody>
+                            <tr ng-repeat="y in getCategories">
+                                <td>
+                                    {{y.name}}
+                                </td>
+                                <td>
+                                    {{y.active}}
+                                </td>
+                                <td>
+                                    {{y.order}}
+                                </td>
+                                <td >
+                                    <a href="/Admin/Brands/Edit/{{y.id}}">Edit</a> |
+                                    <a href="/Admin/Brands/Details/{{y.id}}">Details</a> |
+                                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(y.id)">Delete</a>
+                                </td>
+                            </tr>
 
-                                    </td>
-                                </tr>
-                            }
                         </tbody>
                     </table>
                 </div>
@@ -73,10 +60,9 @@
         </div>
     </div>
 </div>
-<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="Categories" />
 @section Scripts{
     <script>
-        app.controller('deleteCa', function ($scope, $http) {
+        app.controller('Categories', function ($scope, $http) {
             $scope.Delete = function (id) {
                 var url = '/api/CategoriesChange/' + id;
                 //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
@@ -96,6 +82,23 @@
                     return false;
                 }
             }
+             $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.name = response.data;});
+             $http.get("/api/CategoriesAPI/GetCategoriesAd/" + 1)
+                .then(function (response) { $scope.getItem = response.data;});
+            $scope.change1 = function () {
+                var x1 = $("#select1").val();
+               
+                $http.get("/api/BrandsAPI/GetBrandsAd/" + x1)
+                    .then(function (response) { $scope.getItem = response.data;});
+            }
+           
+            $scope.change = function () {
+                var x = $("#select").val();
+                $http.get("/api/CategoriesAPI/GetCategoriesAd/" + x)
+                    .then(function (response) { $scope.getCategories = response.data;});
+            }
+
         });
     </script>
 }
