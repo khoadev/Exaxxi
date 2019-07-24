@@ -25,6 +25,13 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Brands.Include("department");
         }
+        [HttpGet("GetBrandsAd/{idde}")]
+        public IEnumerable<Brands> GetBrandsAd(int idde)
+        {
+          
+                return _context.Brands.Where(p => p.id_department == idde);  
+
+        }
         // GET: api/Brands
         [HttpGet]
         public IEnumerable<Brands> GetBrands()

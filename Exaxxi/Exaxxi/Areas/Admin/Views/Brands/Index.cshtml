@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Brands";
 }
-<div class="row">
+<div class="row" ng-controller="Brand">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
@@ -11,48 +11,45 @@
                 <p class="card-category"></p>
             </div>
             <div class="card-body">
+                <label for="singleSelect"> sắp xếp: </label><br>
+                <select name="singleSelect" ng-change="change()" id="select" ng-model="confirmed">
+                   <option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>
+                </select>
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.name)
+                                    Tên thương hiệu
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.active)
+                                    Trạng thái
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.order)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.department)
+                                    Thứ tự
                                 </th>
                                 <th><a asp-action="Create">Thêm</a></th>
                             </tr>
                         </thead>
-                        <tbody ng-controller="deleteBr">
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.active)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.order)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.department.vi_name)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
-                                    </td>
-                                </tr>
-                            }
+                        <tbody>
+
+                            <tr ng-repeat="x in getItem ">
+                                <td>
+                                    {{x.name}}
+                                </td>
+                                <td>
+                                    {{x.active}}
+                                </td>
+                                <td>
+                                    {{x.order}}
+                                </td>
+                                <td>
+                                    <a href="/Admin/Brands/Edit/{{x.id}}">Edit</a> |
+                                    <a href="/Admin/Brands/Details/{{x.id}}">Details</a> |
+                                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -62,7 +59,7 @@
 </div>
 @section Scripts{
     <script>
-        app.controller('deleteBr', function ($scope, $http) {
+        app.controller('Brand', function ($scope, $http) {
             $scope.Delete = function (id) {
                 var url = '/api/BrandsChange/' + id;
                 //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
@@ -81,6 +78,22 @@
                 } else {
                     return false;
                 }
+            }
+            $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.name = response.data;});
+            $http.get("/api/BrandsAPI/GetBrandsAd/" + 1)
+                .then(function (response) { $scope.getItem = response.data; });
+            $scope.change = function () {
+                var x;
+
+                if ($("#select").val() == 1) {
+                    x = 1;
+                }
+                if ($("#select").val() != '') {
+                    x = $("#select").val();
+                }
+                $http.get("/api/BrandsAPI/GetBrandsAd/" + x)
+                    .then(function (response) { $scope.getItem = response.data; });
             }
         });
     </script>

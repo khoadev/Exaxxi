@@ -26,7 +26,7 @@ namespace Exaxxi.Controllers.WebAPI
     {
         private readonly ExaxxiDbContext _context;
         BlowFish bf = new BlowFish(info.keyBF);
-        Mailer ml =new Mailer();
+        Mailer ml = new Mailer();
 
         public UsersAPIController(ExaxxiDbContext context)
         {
@@ -92,7 +92,7 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(user);
         }
 
-        
+
 
         [AllowAnonymous, Route("PostUserLogin")]
         public IActionResult PostUserByEmail([FromBody] LoginViewModel model)
@@ -139,7 +139,7 @@ namespace Exaxxi.Controllers.WebAPI
             _context.SaveChanges();
 
             //mailer
-            ml.SendMail("Exaxxi Site", model.email, "Register in Exaxxi", "Chúc mừng bạn đã đăng ký thành công!");            
+            ml.SendMail("Exaxxi Site", model.email, "Register in Exaxxi", "Chúc mừng bạn đã đăng ký thành công!");
 
             return Ok(model);
         }
@@ -147,7 +147,7 @@ namespace Exaxxi.Controllers.WebAPI
         [AllowAnonymous, Route("RenewPassword")]
         public IActionResult RenewPassword([FromBody] JObject json)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -166,12 +166,12 @@ namespace Exaxxi.Controllers.WebAPI
                 {
                     return BadRequest("Mật khẩu nhập lại không đúng");
                 }
-                if(password.Length < 8)
+                if (password.Length < 8)
                 {
                     return BadRequest("Mật khẩu tối thiểu 8 ký tự");
                 }
                 Regex rgx = new Regex(info.RegEx);
-                if(!rgx.IsMatch(password))
+                if (!rgx.IsMatch(password))
                 {
                     return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường");
                 }
@@ -187,7 +187,38 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
-       
+        [AllowAnonymous, Route("User_Request")]
+        public IActionResult User_Request([FromBody] JObject json)
+        {
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dynamic data = json;            
+            string re_pro_cate = data.re_pro_cate;
+            string re_pro_name = data.re_pro_name;
+            string re_desc_pro = data.re_desc_pro;
+            string email_user = data.email_user;
+
+            if (re_pro_cate.Length == 0)
+            {
+                return BadRequest("Product's category cannot be null!");
+            }
+            if (re_pro_name.Length == 0)
+            {
+                return BadRequest("Product's name cannot be null!");
+            }
+            if(re_desc_pro.Length == 0)
+            {
+                return BadRequest("Please describe your product!");
+            }            
+
+            //mailer
+            ml.SendMail("Exaxxi Site", email_user, "Request Product!", $"Product's category: {re_pro_cate}.\nProduct's name: {re_pro_name}.\nDescribe: {re_desc_pro}.");
+
+            return Ok();
+        }
     }
 }

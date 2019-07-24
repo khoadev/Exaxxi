@@ -71,25 +71,36 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("img")] News news, IFormFile img)
+        public IActionResult Create(IFormFile img, [Bind("vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
-            if (ModelState.IsValid)
-            {
-                if (img != null)
-                {
-                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image", "news", img.FileName);
-                    using (var file = new FileStream(fullPath, FileMode.Create))
-                    {
-                        img.CopyTo(file);
 
-                    }
-                }
+            //Nhận file POST qua
+            if (img == null || img.Length == 0)
+                return Content("Không File nào được chọn!");
+
+            //Save File da upload vao thu muc MyFiles
+            string fullname = Path.Combine
+                (Directory.GetCurrentDirectory(), "wwwroot", "images", "news", img.FileName);
+
+            using (var myfile = new FileStream(fullname, FileMode.Create))
+            {
+                img.CopyTo(myfile);
             }
 
+            //Gán tên file vào img để lưu vào DB
+            news.img = img.FileName;
+            DateTime aDateTime = DateTime.Now;
+            news.date_create = aDateTime;
+            //Post sang API xử lý
+            if (_api.postAPI(news, "api/NewsChange", HttpContext.Session.GetString("token")).Result)
+            {
+
+                return RedirectToAction(nameof(Index));
+            }
             return View(news);
         }
 
@@ -118,7 +129,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news, IFormFile img)
+        public IActionResult Edit(int id, News news, IFormFile img)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
@@ -129,79 +140,45 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            try
             {
-                try
+                //Nhận file POST qua
+                if (img == null || img.Length == 0)
                 {
-                    //Nhận file POST qua
-                    if (img == null || img.Length == 0)
-                    {
-                        return Content("Không File nào được chọn!");
+                    var nameImg = _api.getAPI($"api/NewsAPI/img/{id}", HttpContext.Session.GetString("token")).Result;
+                    news.img = nameImg.ToString();
 
-                    }
-
-
+                }
+                else
+                {
                     //Save File da upload vao thu muc MyFiles
                     string fullname = Path.Combine
                         (Directory.GetCurrentDirectory(), "wwwroot", "images", "news", img.FileName);
 
                     using (var myfile = new FileStream(fullname, FileMode.Create))
                     {
-                        await img.CopyToAsync(myfile);
+                        img.CopyTo(myfile);
                     }
                     news.img = img.FileName;
-                    var result = await _api.putAPI(news, $"api/NewsChange/{id}", HttpContext.Session.GetString("token"));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!NewsExists(news.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+
+                
+                DateTime aDateTime = DateTime.Now;
+                news.date_create = aDateTime;
+                var result = _api.putAPI(news, $"api/NewsChange/{id}", HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                    return View(news);
+              
+               
             }
 
-            return View(news);
+           
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UploadFileAsync(IFormFile img, [Bind("vi_title,en_title,img,vi_content,en_content,date_create,active,id_admin,id_department")] News news)
-        {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            //Nhận file POST qua
-            if (img == null || img.Length == 0)
-                return Content("Không File nào được chọn!");
-
-            //Save File da upload vao thu muc MyFiles
-            string fullname = Path.Combine
-                (Directory.GetCurrentDirectory(), "wwwroot", "images", "news", img.FileName);
-
-            using (var myfile = new FileStream(fullname, FileMode.Create))
-            {
-                await img.CopyToAsync(myfile);
-            }
-
-            //Gán tên file vào img để lưu vào DB
-            news.img = img.FileName;
-
-            //Post sang API xử lý
-            if (_api.postAPI(news, "api/NewsChange/PostCreateNews", HttpContext.Session.GetString("token")).Result)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View("Index");
-        }
-
         private bool NewsExists(int id)
         {
             return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/NewsAPI/NewsExists/{id}", HttpContext.Session.GetString("token")).Result);

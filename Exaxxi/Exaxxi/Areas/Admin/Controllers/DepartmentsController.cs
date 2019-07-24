@@ -117,26 +117,27 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            try
             {
-                try
-                {
-                    var result = await _api.putAPI(departments, $"api/DepartmentsChange/{id}", HttpContext.Session.GetString("token"));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DepartmentsExists(departments.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                var result = await _api.putAPI(departments, $"api/DepartmentsChange/{id}", HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
             }
-            return View(departments);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DepartmentsExists(departments.id))
+                {
+                    return View(departments);
+                    //return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+
+            
         }
         private bool DepartmentsExists(int id)
         {

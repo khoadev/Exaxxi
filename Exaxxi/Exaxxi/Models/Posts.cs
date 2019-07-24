@@ -26,6 +26,7 @@ namespace Exaxxi.Models
         [DataType(DataType.Date)]
         [Display(Name = "Ngày kết thúc")]
         public DateTime date_end { get; set; }
+        //1:ask, 2:bid
         [Range(1, 2)]
         [Display(Name = "Hình thức giao dịch")]
         public int kind { get; set; }

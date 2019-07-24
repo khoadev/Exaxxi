@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 checkout-suggestion">
-                                        A good bid around {{name[0].item.lowest_ask}}VND
+                                        A good bid around {{name[0].item.lowest_ask}} VND
                                     </div>
                                 </div>
                                 <div class="checkout-estimated-wrapper">
@@ -187,7 +187,7 @@
                                 </label>
                             </div>
                             <div class="checkout-payment">
-                                <input class="d-none" id="payment2" value="Cash On Deliery (COD)" name="payment" type="radio" />
+                                <input class="d-none" id="payment2" value="Credit / Debit" name="payment" type="radio" />
                                 <label for="payment2" class="checkout-payment-wrapper">
                                     Credit / Debit<br />
                                     <span class="checkout-payment-desc">
@@ -240,7 +240,7 @@
                 var address = $("#address").val();
                 var id_city = $("#id_city").val();
 
-                payment = $("input[name=payment]:checked").val();
+                var payment = $("input[name=payment]:checked").val();
                 if (typeof payment === "undefined") {
                     alert("Vui lòng chọn phương thức thanh toán");
                     return false;
@@ -267,7 +267,7 @@
                     .catch(function onError(response) {
                         alert(response.data);
                     });
-        });
+            });
         $scope.enter_bid = parseFloat($("#enter_bid").val());
         $("#enter_bid").keyup(function () {
             //alert($("#value_buy").val());

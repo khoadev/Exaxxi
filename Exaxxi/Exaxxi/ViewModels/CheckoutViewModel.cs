@@ -13,6 +13,7 @@ namespace Exaxxi.ViewModels
         public int id_city { get; set; }
         public string Payment { get; set; }
         public double Enter_bid { get; set; }
+        public double Enter_ask { get; set; }
         public string Exp_Day { get; set; }
     }
 }
