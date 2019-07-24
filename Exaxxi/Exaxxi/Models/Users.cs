@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -43,6 +44,9 @@ namespace Exaxxi.Models
         [DataType(DataType.DateTime)]
         public DateTime date_registion { get; set; }
         public bool active { get; set; }
+        [Required]
+        public int id_city { get; set; }
+        
 
         //public IEnumerable<Followings> followings { get; set; }
         //public IEnumerable<Posts> posts { get; set; }

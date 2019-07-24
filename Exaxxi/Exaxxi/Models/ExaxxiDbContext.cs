@@ -20,6 +20,8 @@ namespace Exaxxi.Models
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Sizes> Sizes { get; set; }
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<Shippings> Shippings { get; set; }
+        public DbSet<Citys> Citys { get; set; }
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
@@ -129,7 +131,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "0911111111",
-                    address = "bitexco quan 1"
+                    address = "bitexco quan 1",
+                    id_city = 1
                 },
                 new Users
                 {
@@ -142,7 +145,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "091222222",
-                    address = "land max"
+                    address = "land max",
+                    id_city = 1
                 },
                 new Users
                 {
@@ -155,7 +159,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "091111845891",
-                    address = "daslat quan 1"
+                    address = "daslat quan 1",
+                    id_city = 3
                 },
                 new Users
                 {
@@ -168,7 +173,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "0914135111",
-                    address = "lamdong quan 1"
+                    address = "lamdong quan 1",
+                    id_city = 2
                 }
             );
             builder.Entity<Departments>().HasData(
@@ -1091,6 +1097,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 1,
                     id_user = 1,
+                    id_city = 1,
                     status = 0
                 },
                 new Posts
@@ -1102,6 +1109,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 1,
                     id_user = 2,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1114,6 +1122,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 2,
                     id_user = 3,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1125,6 +1134,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 2,
                     id_user = 1,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1136,6 +1146,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 3,
                     id_user = 4,
+                    id_city = 1,
                     status = 0
                 },
                 new Posts
@@ -1147,6 +1158,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 3,
                     id_user = 2,
+                    id_city = 1,
                     status = 0
                 },
                 new Posts
@@ -1158,6 +1170,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 4,
                     id_user = 1,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1169,6 +1182,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 4,
                     id_user = 2,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1180,6 +1194,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 5,
                     id_user = 4,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1191,6 +1206,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 5,
                     id_user = 1,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1202,6 +1218,7 @@ namespace Exaxxi.Models
                      kind = 1,
                      id_size = 6,
                      id_user = 1,
+                     id_city = 1,
                      status = 0
                  },
                 new Posts
@@ -1213,7 +1230,8 @@ namespace Exaxxi.Models
                      kind = 0,
                      id_size = 6,
                      id_user = 4,
-                     status = 0
+                    id_city = 1,
+                    status = 0
                  },
                 new Posts
                 {
@@ -1224,6 +1242,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size =7,
                     id_user = 4,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1235,6 +1254,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 7,
                     id_user = 1,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1246,6 +1266,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 8,
                     id_user = 1,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1257,6 +1278,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 8,
                     id_user = 2,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1268,7 +1290,8 @@ namespace Exaxxi.Models
                      kind = 1,
                      id_size = 9,
                      id_user = 4,
-                     status = 0
+                    id_city = 1,
+                    status = 0
                  },
                 new Posts
                  {
@@ -1279,6 +1302,7 @@ namespace Exaxxi.Models
                      kind = 0,
                      id_size = 9,
                      id_user = 1,
+                     id_city = 1,
                      status = 0
                  }
             );
@@ -1300,6 +1324,46 @@ namespace Exaxxi.Models
                     id = 3,
                     id_size = 1,
                     id_user = 2
+                }
+            );
+            builder.Entity<Shippings>().HasData(
+                new Shippings
+                {
+                    id = 1,
+                    name = "Miền Nam",
+                    shipping_fee = 10000
+                },
+                new Shippings
+                {
+                    id = 2,
+                    name = "Miền Trung",
+                    shipping_fee = 20000
+                },
+                new Shippings
+                {
+                    id = 3,
+                    name = "Miền Bắc",
+                    shipping_fee = 30000
+                }
+            );
+            builder.Entity<Citys>().HasData(
+                new Citys
+                {
+                    id = 1,
+                    name = "Tp Hồ Chí Minh",
+                    id_shipping = 1
+                },
+                new Citys
+                {
+                    id = 2,
+                    name = "Huế",
+                    id_shipping = 2
+                },
+                new Citys
+                {
+                    id = 3,
+                    name = "Hà Nội",
+                    id_shipping = 3
                 }
             );
         }
