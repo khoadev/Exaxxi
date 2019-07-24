@@ -43,22 +43,22 @@
                 <div class="card card-block">
                     <!-- Start card -->
                     <div class="product-img-wrapper">
-                        <img src="../images/{{x.item.img}}" class="product-img">
+                        <img src="../images/{{x.img}}" class="product-img">
                     </div>
                     <div class="product-title-wrapper">
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="/Product/Details?id={{x.item.id}}">
-                                    {{x.item.name}}
+                                <a href="/Product/Details?id={{x.id}}">
+                                    {{x.name}}
                                 </a>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 " align="right">
                                 <div class="product-price">
-                                    {{x.item.lowest_ask}}<br>
+                                    {{x.lowest_ask}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Lowest Ask | Sold: {{x.item.sold}}</span>
+                                <span class="product-sub-title">Lowest Ask | Sold: {{x.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -68,7 +68,7 @@
         </div> <!-- End row -->
     </div> <!-- End popular products container -->
 </div>
-<div ng-controller="itemPopularCtrl">
+<div ng-controller="itemHighestBidCtrl">
     <div class="container" ng-show="items.length != 0">
         <div class="divider-section">
             <!-- Start divider-section -->
@@ -316,11 +316,17 @@
                 });
         });
         exaxxiApp.controller('itemPopularCtrl', function ($scope, $http) {
-            $http.get("/api/PostsAPI/Popular/"+ @ViewBag.Id_Depart)
+            $http.get("/api/ItemsAPI/Popular/"+ @ViewBag.Id_Depart)
                 .then(function (response) {
                     $scope.items = response.data;
                 });
 
+        });
+        exaxxiApp.controller('itemHighestBidCtrl', function ($scope, $http) {
+            $http.get("/api/PostsAPI/HighestBidNew/"+ @ViewBag.Id_Depart)
+                .then(function (response) {
+                    $scope.items = response.data;
+                });
         });
         exaxxiApp.controller('itemLowestAskCtrl', function ($scope, $http) {
             $http.get("/api/PostsAPI/LowestAskNew/"+ @ViewBag.Id_Depart)

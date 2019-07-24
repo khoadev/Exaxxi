@@ -40,7 +40,7 @@ namespace Exaxxi.Controllers
         {
             ViewBag.Id_Dep = loai;
 
-            var dsNews = JsonConvert.DeserializeObject<List<NewsViewModel>>(_api.getAPI("api/NewsAPI/GetNewsByDepart/" + loai).Result);
+            var dsNews = JsonConvert.DeserializeObject<List<NewsViewModel>>(_api.getAPI("api/NewsAPI/GetNewsByDepart/" + loai + "/0").Result);
 
             var data = new List<NewsViewModel>();
             NewsViewModel new_temp = null;

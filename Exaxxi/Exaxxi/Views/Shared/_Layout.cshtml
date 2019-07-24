@@ -106,7 +106,7 @@
                     </ul><!-- End Mega Menu -->
                 </li>
                 <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" asp-controller="News">News</a>
+                    <a class="nav-link" asp-controller="News" asp-action="Index">News</a>
                 </li>
                 <li class="nav-item d-none d-md-flex">
                     <a class="nav-link" href="#">App</a>
@@ -189,7 +189,7 @@
                         </ul>
                     </li>
                     <li class="nav-item d-none d-md-flex btn-signup-wrapper">
-                        <a class="nav-link btn btn-signup" data-toggle="modal" data-target="#requestModal">Request</a>
+                        <a class="nav-link btn btn-signup" asp-action="Contact" asp-controller="User" @*data-toggle="modal" data-target="#requestModal"*@>Request</a>
 
                     </li>
 
@@ -199,7 +199,7 @@
 
         </div>
     </nav> <!-- End nav -->
-    <div class="modal fade" id="requestModal">
+    @*<div class="modal fade" id="requestModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -211,25 +211,23 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form>
                         <div class="form-group">
-                            <input type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's category">
+                            <input id="re_pro_cate" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's category">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's name">
+                            <input id="re_pro_name" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's name">
                         </div>
                         <div class="form-group">
-                            <textarea type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Describe your product" rows="3"></textarea>
+                            <textarea id="re_desc_pro" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Describe your product" rows="3"></textarea>
                         </div>
-                    </form>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Send</button>
+                    <button id="re_btn" type="button" class="btn btn-danger">Send</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <div style="background:white!important;">
         @RenderBody()
     </div>
@@ -291,7 +289,7 @@
         });
         $('.avoid').click(function (e) {
             e.stopPropagation();
-        });
+        });                
     </script>
 
     @RenderSection("Scripts", required: false)
