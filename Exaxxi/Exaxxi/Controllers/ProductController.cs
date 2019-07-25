@@ -135,7 +135,7 @@ namespace Exaxxi.Controllers
                 orders.status = 0;
                 orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
                 orders.id_post = Convert.ToInt32(idPost);
-                orders.authentication_fee = 0;
+                orders.service_fee = 0;
                 orders.id_city = HttpContext.Session.GetInt32("ck_city").Value;
 
                 if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
@@ -150,7 +150,7 @@ namespace Exaxxi.Controllers
 
                 orders.price = 0;
                 orders.ship_fee = Convert.ToDouble(HttpContext.Session.GetString("ck_shipping"));
-                orders.voucher = "waiting";
+                orders.id_voucher = "1";
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
@@ -268,7 +268,7 @@ namespace Exaxxi.Controllers
                 orders.status = 0;
                 orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
                 orders.id_post = Convert.ToInt32(idPost);
-                orders.authentication_fee = 0;
+                orders.service_fee = 0;
                 orders.address = HttpContext.Session.GetString("sell_address").ToString();
                 orders.phone = HttpContext.Session.GetString("sell_phone").ToString();
 
@@ -279,7 +279,7 @@ namespace Exaxxi.Controllers
 
                 orders.price = 0;
                 orders.ship_fee = 0;
-                orders.voucher = "waiting";
+                orders.id_voucher = "1";
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
