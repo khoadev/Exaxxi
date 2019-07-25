@@ -99,7 +99,7 @@
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
                         <div class="size">
-                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black">{{name[0].size}}</span>
+                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black">{{name[0].dsSize.vn}}</span>
                         </div>
                         <div class="modal fade" id="sizeModal">
                             <div class="modal-dialog">
@@ -152,7 +152,7 @@
                     <div class="detail-content-right-final">
                         <!-- Start right-final -->
                         <div class="float-right detail-right">
-                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].item.lowest_ask}} VND</h3>
+                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Asks</p>
                         </div>
                         <a ng-click="check()">
@@ -164,10 +164,10 @@
                     </div>
                     <div class="detail-content-right-final" style="border:1px solid #ab1113">
                         <div class="float-right detail-right">
-                            <h3 style="color: brown; font-weight: bold; ">{{name[0].item.highest_bid}} VND</h3>
+                            <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Bids</p>
                         </div>
-                        <a href="/Product/Checkout?id=@ViewBag.IdItem">
+                        <a href="/Product/Sell?id=@ViewBag.IdItem">
                             <div class="detail-left" style="background-color: #ab1113">
                                 <h3 style=" font-family: coolrg;">Sell</h3>
                                 <span style="font-family: coolcond;font-size:20px">Highest Bid</span>
