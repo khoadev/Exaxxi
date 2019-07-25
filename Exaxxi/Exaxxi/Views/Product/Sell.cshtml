@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="text" id="enter_ask" class="form-control checkout-input " placeholder="Enter Ask" />
+                                        <input type="number" ng-model="enter_ask" id="enter_ask" class="form-control checkout-input " placeholder="Enter Ask" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -49,7 +49,7 @@
                                             Transaction fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            {{service_fee.value * 100}}%
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -57,7 +57,7 @@
                                             Payment Proc. (3%)
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            {{enter_ask * 0.03 > 0 ? enter_ask * 0.03 : 0}}VNĐ
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -65,7 +65,7 @@
                                             Estimated Shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            0VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -73,7 +73,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            -
+                                            {{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}
                                         </div>
                                     </div>
                                 </div>
@@ -84,9 +84,9 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <select class="form-control" id="exp_day">
-                                                <option value="30">30 days</option>
                                                 <option value="7">7 days</option>
                                                 <option value="14">14 days</option>
+                                                <option value="30">30 days</option>
                                             </select>
                                         </div>
                                     </div>
@@ -124,7 +124,7 @@
                                             Transaction fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            {{service_fee.value * 100}}%
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -132,7 +132,7 @@
                                             Payment Proc. (3%)
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            {{name[0].item.highest_bid * 0.03}}VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -140,7 +140,7 @@
                                             Estimated Shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            0VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -148,7 +148,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            -
+                                            <input id="total_sell" value="{{name[0].item.highest_bid + (name[0].item.highest_bid * (service_fee.value +  0.03))}}" />
                                         </div>
                                     </div>
                                 </div>
@@ -205,31 +205,43 @@
     </div>
 </div>
 
+
 @section Scripts{
     <script>
 
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
             $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
-            .then(function (response) { $scope.name = response.data });
+                .then(function (response) { $scope.name = response.data; $scope.user = $scope.name; });
 
             //Take Info User
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
-                .then(function (response) { $scope.user_info = response.data });
-
+                .then(function (response) {
+                    $scope.user_info = response.data;
+                    //Take Transaction Fee
+                    $http.get("/api/ServiceFeeDetailsAPI/" + $scope.user_info.level_seller)
+                        .then(function (response) { $scope.service_fee = response.data });
+                });
             //Sell
             $("#sell").on('click', function () {
                 var account = $("#account").val();
                 var phone = $("#phone").val();
                 var address = $("#address").val();
-
                 var payment = $("input[name=payment]:checked").val();
-
+                var total = $("#total_sell").val();
+                var payment_fee = @ViewBag.payment_fee;
+                var service_fee = $scope.service_fee.value;
+                alert(total);
+                alert(payment_fee);
+                alert(service_fee);
                 var info = {
                     "account": account,
                     "phone": phone,
                     "address": address,
                     "payment": payment,
+                    "total_price": total,
+                    "payment_fee": payment_fee,
+                    "service_fee": service_fee
                 };
 
                 $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
@@ -249,14 +261,13 @@
                     var account = $("#account").val();
                     var phone = $("#phone").val();
                     var address = $("#address").val();
+                    var total = $("#total_ask").val();
+                    var payment_fee = @ViewBag.payment_fee;
+                    var service_fee = $scope.service_fee;
 
                     if (enter_ask == "") {
                         alert("Vui lòng nhập giá tiền");
                         return false;
-                    }
-                    if (parseFloat(enter_ask) >= parseFloat($("#value_sell").val())) {
-                                alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
-                                return false;
                     }
 
                     var payment = $("input[name=payment]:checked").val();
@@ -268,6 +279,9 @@
                         "phone": phone,
                         "address": address,
                         "payment": payment,
+                        "total_price": total,
+                        "payment_fee": payment_fee,
+                        "service_fee": service_fee
                     };
 
                     $http.post("/Product/Set_SessionSell", JSON.stringify(info)).

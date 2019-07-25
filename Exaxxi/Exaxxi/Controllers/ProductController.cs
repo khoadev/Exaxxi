@@ -18,7 +18,6 @@ namespace Exaxxi.Controllers
     {
         private readonly ExaxxiDbContext _context;
         CallAPI _api = new CallAPI();
-
         public ProductController(ExaxxiDbContext context)
         {
             _context = context;
@@ -201,9 +200,9 @@ namespace Exaxxi.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            ViewBag.level_seller = 0;
             ViewBag.IdItem = id;
-
+            ViewBag.payment_fee = Exaxxi.Common.info.payment_fee;
             return View();
         }
 
@@ -219,6 +218,9 @@ namespace Exaxxi.Controllers
             HttpContext.Session.SetString("sell_phone", model.Phone);
             HttpContext.Session.SetString("sell_address", model.Address);
             HttpContext.Session.SetString("sell_payment", model.Payment);
+            HttpContext.Session.SetString("sell_payment_fee", model.Payment_fee.ToString());
+            HttpContext.Session.SetString("sell_service_fee", model.Service_fee.ToString());
+            HttpContext.Session.SetString("sell_total_price", model.Total_price.ToString());
 
             if (model.Enter_ask.ToString() != null)
             {

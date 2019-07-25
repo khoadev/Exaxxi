@@ -37,6 +37,8 @@ namespace Exaxxi.Models
         [Display(Name = "Cấp độ người bán")]
         [Range(1,4)]
         public int level_seller { get; set; }
+        [ForeignKey("level_seller")]
+        public ServiceFeeDetails service_fee { get; set; }
         [Display(Name = "Điểm người mua")]
         [Range(0,5)]
         public int score_buyer { get; set; }

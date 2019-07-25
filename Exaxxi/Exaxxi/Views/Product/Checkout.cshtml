@@ -284,6 +284,7 @@
                 var account = $("#account").val();
                 var phone = $("#phone").val();
                 var address = $("#address").val();
+                var id_city = $("#id_city").val();
 
                 if (enter_bid == "") {
                     alert("Vui lòng nhập giá tiền");
@@ -307,7 +308,7 @@
                     "phone": phone,
                     "address": address,
                     "id_city": id_city,
-                    "payment": payment,
+                    "payment": payment
                 };
 
                 $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
