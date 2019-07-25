@@ -15,8 +15,8 @@
                                 {{name[0].item.name}}
                             </div>
                             <div class="checkout-product-info">
-                                Highest Bid: <b>${{name[0].item.highest_bid}}</b> | Lowest Ask: <b>${{name[0].item.lowest_ask}}</b><br />
-                                Size <b>{{name[0].size}}</b>
+                                Highest Bid: <b>${{name[0].size.highest_bid}}</b> | Lowest Ask: <b>${{name[0].size.lowest_ask}}</b><br />
+                                Size <b>{{name[0].dsSize.vn}}</b>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 checkout-suggestion">
-                                        A good bid around {{name[0].item.lowest_ask}} VND
+                                        A good bid around {{name[0].size.lowest_ask}} VND
                                     </div>
                                 </div>
                                 <div class="checkout-estimated-wrapper">
@@ -49,7 +49,7 @@
                                             Estimated shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            {{shipping_fee}}
+                                            <input id="shipping_bid" type="text" value="{{shipping_fee}}" style="border:none; text-align:right; font-weight:bold" disabled />
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -57,7 +57,7 @@
                                             Authentication fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            Free
+                                            Free                                            
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button id="bid" class="btn checkout-btn isbuy col-4" ng-disabled="enter_bid >= name[0].item.lowest_ask">
+                                        <button id="bid" class="btn checkout-btn isbuy col-4" ng-disabled="enter_bid >= name[0].size.lowest_ask">
                                             Bid
                                         </button>
                                     </div>
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input id="value_buy" ng-model="value_buy" type="number" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" ng-value="name[0].item.lowest_ask" />
+                                        <input id="value_buy" ng-model="value_buy" type="number" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" ng-value="name[0].size.lowest_ask" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -116,7 +116,7 @@
                                             Estimated shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            {{shipping_fee}}
+                                            <input id="shipping" type="text" value="{{shipping_fee}}" style="border:none; text-align:right; font-weight:bold" disabled />
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -132,7 +132,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_buy" type="text" ng-value="(name[0].item.lowest_ask + shipping_fee) > 0 ? (name[0].item.lowest_ask + shipping_fee) : 0" style="border:none; text-align:right; font-weight:bold" disabled />
+                                            <input id="total_buy" type="text" ng-value="(name[0].size.lowest_ask + shipping_fee) > 0 ? (name[0].size.lowest_ask + shipping_fee) : 0" style="border:none; text-align:right; font-weight:bold" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -205,10 +205,10 @@
 
 @section Scripts{
     <script>
-        
+
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
                 .then(function (response) {
                     $scope.name = response.data;
                 });
@@ -232,13 +232,15 @@
                         $scope.shipping_fee = response.data;
                     });
             });
-            
+
             //Buy
             $("#buy").on('click', function () {
                 var account = $("#account").val();
                 var phone = $("#phone").val();
                 var address = $("#address").val();
                 var id_city = $("#id_city").val();
+                var shipping = $("#shipping").val();
+                var total_buy = $("#total_buy").val();
 
                 var payment = $("input[name=payment]:checked").val();
                 if (typeof payment === "undefined") {
@@ -252,15 +254,18 @@
                     "address": address,
                     "id_city": id_city,
                     "payment": payment,
+                    "city": id_city,
+                    "shipping": shipping,
+                    "total": total_buy,
                 };
-                
+
                 $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
                     then(function (data) {
 
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 0:=>buy
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0";
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
                             });
 
                     })
@@ -285,6 +290,8 @@
                 var phone = $("#phone").val();
                 var address = $("#address").val();
                 var id_city = $("#id_city").val();
+                var shipping_bid = $("#shipping_bid").val();
+                var total_bid = $("#total_bid").val();
 
                 if (enter_bid == "") {
                     alert("Vui lòng nhập giá tiền");
@@ -300,7 +307,7 @@
                     alert("Vui lòng chọn phương thức thanh toán");
                     return false;
                 }
-                
+
                 var info = {
                     "enter_bid": enter_bid,
                     "exp_day": exp_day,
@@ -308,7 +315,10 @@
                     "phone": phone,
                     "address": address,
                     "id_city": id_city,
-                    "payment": payment
+                    "payment": payment,
+                    "city": id_city,
+                    "shipping": shipping_bid,
+                    "total": total_bid,
                 };
 
                 $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
@@ -317,7 +327,7 @@
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 1:=>bid
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1";
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1" + "&size=" + @ViewBag.SizeVN;
                             });
 
                     })
