@@ -19,8 +19,8 @@
                                     {{name[0].item.name}}
                                 </div>
                                 <div class="checkout-product-info">
-                                    Highest Bid: <b>${{name[0].item.highest_bid}}</b> | Lowest Ask: <b>${{name[0].item.lowest_ask}}</b><br />
-                                    Size <b>{{name[0].size}}</b>
+                                    Highest Bid: <b>${{name[0].size.highest_bid}}</b> | Lowest Ask: <b>${{name[0].size.lowest_ask}}</b><br />
+                                    Size <b>{{name[0].dsSize.vn}}</b>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                                             <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                         </td>
                                         <td class="td-w65 font-weight-bold">
-                                            {{name[0].size}}
+                                            {{name[0].dsSize.vn}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -124,7 +124,7 @@
                                             <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                         </td>
                                         <td class="td-w65 font-weight-bold">
-                                            {{name[0].item.lowest_ask}} VND
+                                            {{name[0].size.lowest_ask}} VND
                                         </td>
                                     </tr>
                                     @if (ViewBag.Act == 1)
@@ -156,6 +156,47 @@
                                     }
 
                                 </table>
+                                <hr />
+                                <table style="font-family:ralemed;width:100%">
+                                    <tr>
+                                        <td class="td-w25">
+                                            City
+                                        </td>
+                                        <td class="td-w10">
+                                            <i class="fas fa-chevron-right" style="opacity:0.5"></i>
+                                        </td>
+                                        <td class="td-w65 font-weight-bold">
+                                            {{city.name}}
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="font-family:ralemed;width:100%">
+                                    <tr>
+                                        <td class="td-w25">
+                                            Shipping Fee
+                                        </td>
+                                        <td class="td-w10">
+                                            <i class="fas fa-chevron-right" style="opacity:0.5"></i>
+                                        </td>
+                                        <td class="td-w65 font-weight-bold">
+                                            @HttpContextAccessor.HttpContext.Session.GetString("ck_shipping")
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="font-family:ralemed;width:100%">
+                                    <tr>
+                                        <td class="td-w25">
+                                            Total
+                                        </td>
+                                        <td class="td-w10">
+                                            <i class="fas fa-chevron-right" style="opacity:0.5"></i>
+                                        </td>
+                                        <td class="td-w65 font-weight-bold">
+                                            @HttpContextAccessor.HttpContext.Session.GetString("ck_total").ToString()
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr />
                                 <hr />
                                 <table style="font-family:ralemed;width:100%">
                                     <tr>
@@ -211,13 +252,15 @@
 </div>
 
 @section Scripts{
-    <script>
+<script>
 
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
                 .then(function (response) { $scope.name = response.data });
+            $http.get("/api/CitysAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("ck_city"))
+                .then(function (response) { $scope.city = response.data });
         });
 
-    </script>
+</script>
 }

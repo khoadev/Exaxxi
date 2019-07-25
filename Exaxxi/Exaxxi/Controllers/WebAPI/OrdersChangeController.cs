@@ -92,6 +92,10 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             _context.Orders.Add(orders);
+
+            //Update Post
+            _context.Posts.First(p => p.id == orders.id_post).status=1;      
+
             await _context.SaveChangesAsync();
 
             return Ok();

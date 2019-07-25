@@ -137,7 +137,8 @@ namespace Exaxxi.Controllers.WebAPI
                     .Select(p => new PostViewModel
                     {
                         item = p.h.e.c.a,
-                        size = p.h.e.d.VN,
+                        size = p.h.e.c.b,
+                        dsSize = p.h.e.d,
                         brand_name = p.i.name,
                         cate_name = p.h.f.name,
                     }).ToList();
