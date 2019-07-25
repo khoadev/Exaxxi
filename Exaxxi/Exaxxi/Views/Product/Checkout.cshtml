@@ -57,7 +57,7 @@
                                             Authentication fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            Free
+                                            Free                                            
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -208,7 +208,7 @@
 
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
                 .then(function (response) {
                     $scope.name = response.data;
                 });
@@ -265,7 +265,7 @@
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 0:=>buy
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0";
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
                             });
 
                     })
@@ -327,7 +327,7 @@
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 1:=>bid
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1";
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1" + "&size=" + @ViewBag.SizeVN;
                             });
 
                     })
