@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -36,6 +37,8 @@ namespace Exaxxi.Models
         [Display(Name = "Cấp độ người bán")]
         [Range(1,4)]
         public int level_seller { get; set; }
+        [ForeignKey("level_seller")]
+        public ServiceFeeDetails service_fee { get; set; }
         [Display(Name = "Điểm người mua")]
         [Range(0,5)]
         public int score_buyer { get; set; }
@@ -43,6 +46,9 @@ namespace Exaxxi.Models
         [DataType(DataType.DateTime)]
         public DateTime date_registion { get; set; }
         public bool active { get; set; }
+        [Required]
+        public int id_city { get; set; }
+        
 
         //public IEnumerable<Followings> followings { get; set; }
         //public IEnumerable<Posts> posts { get; set; }

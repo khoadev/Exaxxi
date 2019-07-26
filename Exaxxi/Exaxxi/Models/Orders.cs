@@ -14,26 +14,31 @@ namespace Exaxxi.Models
         [Display(Name = "Start Time")]
         public DateTime time { get; set; }
         [Required]
-        [Display(Name = "Delivery Address")]
+        [Display(Name = "Địa Chỉ Giao Hàng")]
         public string address { get; set; }
         [Required]
         [Phone]
-        [Display(Name = "Phone")]
+        [Display(Name = "Số Điện Thoại")]
         public string phone { get; set; }
-        [Display(Name = "Ship Fee")]
+        [Display(Name = "Phí Giao Hàng")]
         public double ship_fee { get; set; }
-        [Display(Name = "Authentication Fee")]
-        public double authentication_fee { get; set; }
-        [Display(Name = "Payment")]
+        [Display(Name = "Phí Dịch Vụ")]
+        public double service_fee { get; set; }
+        [Display(Name = "Phương Thức Thanh Toán")]
         public int payment { get; set; }
-        [Display(Name = "Voucher")]
-        public string voucher { get; set; }
-        [Display(Name = "Price")]
+        [Display(Name = "Mã Giảm Giá")]
+        public string id_voucher { get; set; }
+        [Display(Name = "Giá Tiền")]
         public double price { get; set; }
-        [Display(Name = "Status")]
+        [Display(Name = "Trạng Thái")]
         public int status { get; set; }
-
+        [Display(Name = "Số Tiền Được Giảm")]
+        public double discount { get; set; }
+        [Display(Name = "ID User Order")]
         public int id_user { get; set; }
         public int id_post { get; set; }
+        public int id_city { get; set; }
+        [ForeignKey("id_city")]
+        public Citys city { get; set; }
     }
 }

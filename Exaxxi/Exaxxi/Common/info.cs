@@ -11,7 +11,7 @@ namespace Exaxxi.Common
         public static string RegEx = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";
         public static int PAGE_SIZE = 8;
         public static int PAGE_SIZE_AD = 5; //phân trang sử dụng trong admin
-
+        public static double payment_fee = 0.03;
         public static string Day(DateTime time)
         {
             DateTime now = DateTime.Now;

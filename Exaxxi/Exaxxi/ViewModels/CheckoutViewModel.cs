@@ -10,9 +10,15 @@ namespace Exaxxi.ViewModels
         public string Account { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
+        public int id_city { get; set; }
+        public string shipping { get; set; }
+        public double total { get; set; }
         public string Payment { get; set; }
         public double Enter_bid { get; set; }
         public double Enter_ask { get; set; }
         public string Exp_Day { get; set; }
+        public double Total_price { get; set; }
+        public double Payment_fee { get; set; }
+        public double Service_fee { get; set; }
     }
 }

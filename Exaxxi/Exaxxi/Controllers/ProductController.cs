@@ -18,7 +18,6 @@ namespace Exaxxi.Controllers
     {
         private readonly ExaxxiDbContext _context;
         CallAPI _api = new CallAPI();
-
         public ProductController(ExaxxiDbContext context)
         {
             _context = context;
@@ -53,21 +52,31 @@ namespace Exaxxi.Controllers
         }
 
         // GET: Product/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, int? size)
         {
             ViewBag.IdItem = id;
             int idDepart = JsonConvert.DeserializeObject<int>(_api.getAPI("api/ItemsAPI/TakeId_Depart/" + id).Result);
             ViewBag.dsSize = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("/api/ds_SizeAPI/Takeds_SizeDepart/" + idDepart).Result);
             ViewBag.Sizes = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("/api/SizesAPI/TakeSizesItem/" + id).Result);
+            if (size == null)
+            {
+                ViewBag.SizeVN = _api.getAPI("/api/ds_SizeAPI/TakeFirst/" + id).Result;
+            }
+            else
+            {
+                ViewBag.SizeVN = _api.getAPI("/api/ds_SizeAPI/TakeSize/" + id + "/" + size).Result;
+            }
             return View();
         }
 
-        public IActionResult Checkout(int? id)
+        public IActionResult Checkout(int? id, int size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            ViewBag.SizeVN = size;
 
             ViewBag.IdItem = id;            
 
@@ -86,6 +95,9 @@ namespace Exaxxi.Controllers
             HttpContext.Session.SetString("ck_phone", model.Phone);
             HttpContext.Session.SetString("ck_address", model.Address);
             HttpContext.Session.SetString("ck_payment", model.Payment);
+            HttpContext.Session.SetInt32("ck_city", model.id_city);
+            HttpContext.Session.SetString("ck_shipping", model.shipping);
+            HttpContext.Session.SetString("ck_total", model.total.ToString());
 
             if (model.Enter_bid.ToString() != null)
             {
@@ -99,13 +111,13 @@ namespace Exaxxi.Controllers
             return Ok();        
         }
 
-        public IActionResult Last_Checkout(int? id, int act)
+        public IActionResult Last_Checkout(int? id, int act, int size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            ViewBag.SizeVN = size;
             ViewBag.IdItem = id;
             ViewBag.Act = act;
 
@@ -132,9 +144,8 @@ namespace Exaxxi.Controllers
                 orders.status = 0;
                 orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
                 orders.id_post = Convert.ToInt32(idPost);
-                orders.authentication_fee = 0;
-                orders.address = HttpContext.Session.GetString("ck_address").ToString();
-                orders.phone = HttpContext.Session.GetString("ck_phone").ToString();
+                orders.service_fee = 0;
+                orders.id_city = HttpContext.Session.GetInt32("ck_city").Value;
 
                 if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
                 {
@@ -147,8 +158,8 @@ namespace Exaxxi.Controllers
                 }
 
                 orders.price = 0;
-                orders.ship_fee = 0;
-                orders.voucher = "waiting";
+                orders.ship_fee = Convert.ToDouble(HttpContext.Session.GetString("ck_shipping"));
+                orders.id_voucher = "1";
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
@@ -185,6 +196,7 @@ namespace Exaxxi.Controllers
                 posts.address = HttpContext.Session.GetString("ck_address").ToString();
                 posts.phone = HttpContext.Session.GetString("ck_phone").ToString();
                 posts.name_client = HttpContext.Session.GetString("ck_account").ToString();
+                posts.id_city = HttpContext.Session.GetInt32("ck_city").Value;
 
                 if (_api.postAPI(posts, "api/PostsChange").Result)
                 {
@@ -201,9 +213,9 @@ namespace Exaxxi.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            ViewBag.level_seller = 0;
             ViewBag.IdItem = id;
-
+            ViewBag.payment_fee = Exaxxi.Common.info.payment_fee;
             return View();
         }
 
@@ -219,6 +231,9 @@ namespace Exaxxi.Controllers
             HttpContext.Session.SetString("sell_phone", model.Phone);
             HttpContext.Session.SetString("sell_address", model.Address);
             HttpContext.Session.SetString("sell_payment", model.Payment);
+            HttpContext.Session.SetString("sell_payment_fee", model.Payment_fee.ToString());
+            HttpContext.Session.SetString("sell_service_fee", model.Service_fee.ToString());
+            HttpContext.Session.SetString("sell_total_price", model.Total_price.ToString());
 
             if (model.Enter_ask.ToString() != null)
             {
@@ -265,7 +280,7 @@ namespace Exaxxi.Controllers
                 orders.status = 0;
                 orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
                 orders.id_post = Convert.ToInt32(idPost);
-                orders.authentication_fee = 0;
+                orders.service_fee = 0;
                 orders.address = HttpContext.Session.GetString("sell_address").ToString();
                 orders.phone = HttpContext.Session.GetString("sell_phone").ToString();
 
@@ -276,7 +291,7 @@ namespace Exaxxi.Controllers
 
                 orders.price = 0;
                 orders.ship_fee = 0;
-                orders.voucher = "waiting";
+                orders.id_voucher = "1";
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {

@@ -71,7 +71,7 @@
                                             <!-- Start second-left -->
                                             @{ foreach (var item in ViewBag.dsSize)
                                                 {
-                                                    <div class="size-wrapper">                                                        
+                                                    <div class="size-wrapper">
                                                         <label for="follow" class="size-label">
                                                             <div class="size-left is-following" ng-click="Click(@item.VN)">
                                                                 @item.VN
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p>Condition <span>New</span> | Ticker: <span style="color: black;">123abc</span></p>
+                        <p>Condition <span>New</span></p>
                         <h5>100% Authentic</h5>
                     </div> <!-- End right-first -->
 
@@ -99,7 +99,7 @@
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
                         <div class="size">
-                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black">{{name[0].size}}</span>
+                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black"><input id="sizeVN" type="number" value="@ViewBag.SizeVN" /></span>
                         </div>
                         <div class="modal fade" id="sizeModal">
                             <div class="modal-dialog">
@@ -122,7 +122,7 @@
                                                         <input class="d-none" id="size" name="size" type="radio" />
                                                         <label for="size" class="size-label">
                                                             <div class="size-left">
-                                                                @item.VN
+                                                                <input ng-click="btn_size(@item.VN)" type="button" value="@item.VN" />
                                                             </div>
                                                             @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
                                                             {
@@ -152,7 +152,7 @@
                     <div class="detail-content-right-final">
                         <!-- Start right-final -->
                         <div class="float-right detail-right">
-                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].item.lowest_ask}} VND</h3>
+                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Asks</p>
                         </div>
                         <a ng-click="check()">
@@ -164,10 +164,10 @@
                     </div>
                     <div class="detail-content-right-final" style="border:1px solid #ab1113">
                         <div class="float-right detail-right">
-                            <h3 style="color: brown; font-weight: bold; ">{{name[0].item.highest_bid}} VND</h3>
+                            <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Bids</p>
                         </div>
-                        <a href="/Product/Checkout?id=@ViewBag.IdItem">
+                        <a href="/Product/Sell?id=@ViewBag.IdItem&size=@ViewBag.SizeVN">
                             <div class="detail-left" style="background-color: #ab1113">
                                 <h3 style=" font-family: coolrg;">Sell</h3>
                                 <span style="font-family: coolcond;font-size:20px">Highest Bid</span>
@@ -203,7 +203,6 @@
             </div> <!-- End Row -->
         </div> <!-- End container -->
     </div> <!-- End Jumbotron -->
-
 </div>
 
 @section Scripts{
@@ -212,14 +211,17 @@
     <script>
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
-                .then(function (response) { $scope.name = response.data });
+
+            var sizeVN = $("#sizeVN").val();
+
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + sizeVN)
+                .then(function (response) { $scope.name = response.data;});
 
             $scope.check = function () {
                 $http.get("/Login/Check").then(function (rs) {
 
                     if (rs.data == true) {
-                        window.location.href = "/Product/Checkout/" +@ViewBag.IdItem;
+                        window.location.href = "/Product/Checkout?id=" +@ViewBag.IdItem + "&size=" + @ViewBag.SizeVN;
                     }
                     else {
                         sessionStorage.setItem('url', location.href);
@@ -234,8 +236,13 @@
                     .catch(function onError(response) {
                         alert(response.data);
                     });
-            }                                       
+            }
+
+            $scope.btn_size = function (vn) {
+                $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + vn)
+                    .then(function (response) { window.location = "/Product/Details?id=" + @ViewBag.IdItem + "&size=" + vn; });
+            };
         });
-        
+
     </script>
 }
