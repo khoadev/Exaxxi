@@ -207,12 +207,13 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Sell(int? id)
+        public IActionResult Sell(int? id, int size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
+            ViewBag.SizeVN = size;
             ViewBag.level_seller = 0;
             ViewBag.IdItem = id;
             ViewBag.payment_fee = Exaxxi.Common.info.payment_fee;
@@ -247,13 +248,14 @@ namespace Exaxxi.Controllers
             return Ok();
         }
 
-        public IActionResult Sell_Confirm(int? id, int act)
+        public IActionResult Sell_Confirm(int? id, int act, int? size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
 
+            ViewBag.SizeVN = size;
             ViewBag.IdItem = id;
             ViewBag.Act = act;
 

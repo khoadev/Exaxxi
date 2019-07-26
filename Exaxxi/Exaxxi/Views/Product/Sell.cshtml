@@ -15,8 +15,8 @@
                                 {{name[0].item.name}}
                             </div>
                             <div class="checkout-product-info">
-                                Highest Bid: <b>${{name[0].item.highest_bid}}</b> | Lowest Ask: <b>${{name[0].item.lowest_ask}}</b><br />
-                                Size <b>{{name[0].size}}</b>
+                                Highest Bid: <b>${{name[0].size.highest_bid}}</b> | Lowest Ask: <b>${{name[0].size.lowest_ask}}</b><br />
+                                Size <b>{{name[0].dsSize.vn}}</b>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 checkout-suggestion">
-                                        A good ask around {{name[0].item.highest_bid}} VND
+                                        A good ask around {{name[0].size.highest_bid}} VND
                                     </div>
                                 </div>
                                 <div class="checkout-estimated-wrapper">
@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="text" id="value_sell" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].item.highest_bid}}" />
+                                        <input type="text" id="value_sell" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -132,7 +132,7 @@
                                             Payment Proc. (3%)
                                         </div>
                                         <div class="col-6 text-right">
-                                            {{name[0].item.highest_bid * 0.03}}VND
+                                            {{name[0].size.highest_bid * 0.03}}VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -148,7 +148,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_sell" value="{{name[0].item.highest_bid + (name[0].item.highest_bid * (service_fee.value +  0.03))}}" />
+                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" />
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
 
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
                 .then(function (response) { $scope.name = response.data; $scope.user = $scope.name; });
 
             //Take Info User
@@ -244,7 +244,7 @@
                 $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
                     then(function (data) {
                         // 0:=>sell
-                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=0";
+                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
                     })
                     .catch(function onError(response) {
                         alert(response.data);
@@ -284,7 +284,7 @@
                     $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
                     then(function (data) {
                         // 1:=>ask
-                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=1";
+                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=1&size=" + @ViewBag.SizeVN;
                     })
                     .catch(function onError(response) {
                         alert(response.data);
