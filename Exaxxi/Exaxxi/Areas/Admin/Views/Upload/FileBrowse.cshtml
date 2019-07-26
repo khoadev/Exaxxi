@@ -1,4 +1,7 @@
-﻿<html>
+﻿@{
+    Layout = null;
+}
+<html>
 <head>
     <title>files Brower</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -72,7 +75,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-12" style="height:100px; border:2px solid red">
                 <div>
                     <form method="post" enctype="multipart/form-data">
 
@@ -111,8 +114,11 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-3" style="border:2px solid black">
+               
+            </div>
 
-            <div id="fileExplorer" class="col-md-9">
+            <div id="fileExplorer" class="col-md-9" style="border:2px solid #FFE000">
                 @foreach (var fileInfo in ViewBag.fileInfos)
                 {
                     <div class="thumbnail">
