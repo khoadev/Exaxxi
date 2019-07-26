@@ -42,7 +42,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Sizes, c => c.b.id_size, d => d.id, (c, d) => new { c, d })
                 .Join(_context.Items, e => e.d.id_item, f => f.id, (e, f) => new { e, f })
-                .Where(p => p.e.c.a.id_user == idUser && p.e.c.a.status == kind)
+                .Where(p => p.e.c.a.id_user == idUser && p.e.c.a.status == kind && p.e.c.b.kind == 1)
                 .Select(g => new OrderViewModel {
                     items = g.f,
                     orders = g.e.c.a,

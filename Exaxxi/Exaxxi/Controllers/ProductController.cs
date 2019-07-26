@@ -157,9 +157,10 @@ namespace Exaxxi.Controllers
                     orders.payment = 2;
                 }
 
-                orders.price = 0;
+                orders.price = Convert.ToDouble(HttpContext.Session.GetString("ck_total"));
                 orders.ship_fee = Convert.ToDouble(HttpContext.Session.GetString("ck_shipping"));
                 orders.id_voucher = "1";
+                orders.discount = 0;
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
@@ -293,7 +294,7 @@ namespace Exaxxi.Controllers
 
                 orders.price = 0;
                 orders.ship_fee = 0;
-                orders.id_voucher = "1";
+                orders.id_voucher = "1";                
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
