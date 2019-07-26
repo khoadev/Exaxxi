@@ -9,16 +9,10 @@
                 <p class="card-category">Quản lý danh sách thể loại</p>
             </div>
             <div class="card-body">
-                <label for="singleSelect"> sắp xếp: </label><br>
-                <select name="singleSelect1" data-ng-init="confirmed" ng-change="change1()" id="select1" ng-model="confirmed">
-                    <option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>
-
-                </select>
-                <label for="singleSelect"> sắp xếp: </label><br>
-                <select name="singleSelect" data-ng-init="selectedItem" ng-change="change()" id="select" ng-model="selectedItem">
-                    <option ng-repeat="z in getItem" value="{{z.id}}">{{z.name}}</option>
-
-                </select>
+                <label for="singleSelect"> sắp xếp chủng loại: </label><br>
+                <select name="singleSelect1" ng-change="change1()" id="select1" ng-model="selectedItem1" ng-options="item1.vi_name for item1 in name"></select><br />
+                <label for="singleSelect"> sắp xếp nhãn hàng: </label><br>
+                <select name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.name for item in getItem"></select>
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
@@ -32,7 +26,7 @@
                                 <th>
                                     Thứ tự
                                 </th>
-                                <th ><a asp-action="Create">Tạo Mới</a></th>
+                                <th><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +40,7 @@
                                 <td>
                                     {{y.order}}
                                 </td>
-                                <td >
+                                <td>
                                     <a href="/Admin/Brands/Edit/{{y.id}}">Edit</a> |
                                     <a href="/Admin/Brands/Details/{{y.id}}">Details</a> |
                                     <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(y.id)">Delete</a>
@@ -82,21 +76,20 @@
                     return false;
                 }
             }
-             $http.get("/api/DepartmentsAPI")
-                .then(function (response) { $scope.name = response.data;});
-             $http.get("/api/CategoriesAPI/GetCategoriesAd/" + 1)
-                .then(function (response) { $scope.getItem = response.data;});
+            $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.name = response.data; $scope.selectedItem1 = $scope.name[0]; $scope.change1(); });
             $scope.change1 = function () {
-                var x1 = $("#select1").val();
-               
+                var x1 = $scope.selectedItem1.id;
                 $http.get("/api/BrandsAPI/GetBrandsAd/" + x1)
-                    .then(function (response) { $scope.getItem = response.data;});
+                    .then(function (response) {
+                        $scope.getItem = response.data; $scope.selectedItem = $scope.getItem[0];
+                         $scope.change();
+                    });   
             }
-           
             $scope.change = function () {
-                var x = $("#select").val();
+                var x = $scope.selectedItem.id;
                 $http.get("/api/CategoriesAPI/GetCategoriesAd/" + x)
-                    .then(function (response) { $scope.getCategories = response.data;});
+                    .then(function (response) { $scope.getCategories = response.data; });
             }
 
         });
