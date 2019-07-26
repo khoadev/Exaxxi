@@ -52,7 +52,7 @@
                                     Expires
                                 </td>
                             </tr>
-                            <tr ng-repeat="x in kind_two">
+                            <tr ng-repeat="x in current">
                                 <td class="font-weight-bold">
                                     {{x.items.name}}
                                 </td>
@@ -90,7 +90,7 @@
                                     Expires
                                 </td>
                             </tr>
-                            <tr ng-repeat="x in kind_one">
+                            <tr ng-repeat="x in pending">
                                 <td class="font-weight-bold">
                                     {{x.items.name}}
                                 </td>
@@ -128,7 +128,7 @@
                                     Expires
                                 </td>
                             </tr>
-                            <tr ng-repeat="x in kind_three">
+                            <tr ng-repeat="x in history">
                                 <td class="font-weight-bold">
                                     {{x.items.name}}
                                 </td>
@@ -163,13 +163,13 @@
             $http.get("/api/OrdersAPI/CountOrderBuying_Account/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
                 .then(function (response) { $scope.count_buying = response.data; });
 
-            //Take Detail Buying Of Account with Kind: 1 => current, 2 => pending, 3 => history
+            //Take Detail Buying Of Account with Kind: 0 => pending, 1 => current, 2 => history
+            $http.get("/api/OrdersAPI/TakeDetailBuying_Account/0/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.pending = response.data; });
             $http.get("/api/OrdersAPI/TakeDetailBuying_Account/1/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
-                .then(function (response) { $scope.kind_one = response.data; });
+                .then(function (response) { $scope.current = response.data; });
             $http.get("/api/OrdersAPI/TakeDetailBuying_Account/2/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
-                .then(function (response) { $scope.kind_two = response.data; });
-            $http.get("/api/OrdersAPI/TakeDetailBuying_Account/3/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
-                .then(function (response) { $scope.kind_three = response.data; });
+                .then(function (response) { $scope.history = response.data; });
 
         });
     </script>
