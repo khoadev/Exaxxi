@@ -12,8 +12,8 @@
             </div>
             <div class="card-body">
                 <label for="singleSelect"> sắp xếp: </label><br>
-                <select name="singleSelect" ng-change="change()" id="select" ng-model="confirmed">
-                   <option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>
+                <select name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.vi_name for item in name">
+                   @*<option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>*@
                 </select>
                 <div class="table-responsive">
                     <table class="table">
@@ -80,18 +80,10 @@
                 }
             }
             $http.get("/api/DepartmentsAPI")
-                .then(function (response) { $scope.name = response.data;});
-            $http.get("/api/BrandsAPI/GetBrandsAd/" + 1)
-                .then(function (response) { $scope.getItem = response.data; });
+                .then(function (response) { $scope.name = response.data; $scope.selectedItem = $scope.name[0]; $scope.change(); });
             $scope.change = function () {
                 var x;
-
-                if ($("#select").val() == 1) {
-                    x = 1;
-                }
-                if ($("#select").val() != '') {
-                    x = $("#select").val();
-                }
+                x = $scope.selectedItem.id;
                 $http.get("/api/BrandsAPI/GetBrandsAd/" + x)
                     .then(function (response) { $scope.getItem = response.data; });
             }
