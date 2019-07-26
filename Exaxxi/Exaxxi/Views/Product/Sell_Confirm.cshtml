@@ -181,7 +181,7 @@
                                         <td colspan="3">
                                             <div class="row">
                                                 <div class="col-4">
-                                                    <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" />
+                                                    <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" style="background-color:#FFF" />
                                                 </div>
                                                 <div class="col-2 checkout-curency">
                                                     VNĐ
@@ -273,7 +273,7 @@
                                     <a href="/Product/Sell?id=@ViewBag.IdItem&size=@ViewBag.SizeVN">Back</a>
                                 </button>
                                 <button class="btn checkout-btn issell">
-                                    <a href="/Product/Confirm_Sell?id=@ViewBag.IdItem&act=@ViewBag.Act&size={{name[0].size}}">Confirm Sell</a>
+                                    <a style="color:#FFF; text-decoration:none" href="/Product/Confirm_Sell?id=@ViewBag.IdItem&act=@ViewBag.Act&size={{name[0].size}}">Confirm Sell</a>
                                 </button>
                             </div>
                         </div>
