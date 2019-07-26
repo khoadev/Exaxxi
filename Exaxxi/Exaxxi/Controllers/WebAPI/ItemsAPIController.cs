@@ -146,6 +146,27 @@ namespace Exaxxi.Controllers.WebAPI
             return items;
         }
 
+        [HttpGet("Detail/{idItem}/{dsSize}")]
+        public IEnumerable<PostViewModel> Detail(int idItem, int dsSize)
+        {
+            var items = _context.Items
+                    .Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
+                    .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                    .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
+                    .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
+                    .Where(g => g.h.e.c.a.id == idItem && g.h.e.d.VN == dsSize)
+                    .Select(p => new PostViewModel
+                    {
+                        item = p.h.e.c.a,
+                        size = p.h.e.c.b,
+                        dsSize = p.h.e.d,
+                        brand_name = p.i.name,
+                        cate_name = p.h.f.name,
+                    }).ToList();
+
+            return items;
+        }
+
         [Route("ProductDetail")]
         public IActionResult ProductDetail()
         {

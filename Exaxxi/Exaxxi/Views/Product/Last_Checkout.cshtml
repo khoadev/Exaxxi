@@ -235,10 +235,10 @@
                             </div>
                             <div class="col-12 d-flex justify-content-between mt-3">
                                 <button class="btn btn-light">
-                                    <a href="/Product/Checkout?id=@ViewBag.IdItem">Back</a>
+                                    <a href="/Product/Checkout?id=@ViewBag.IdItem&size=@ViewBag.SizeVN">Back</a>
                                 </button>
                                 <button class="btn checkout-btn isbuy">
-                                    <a href="/Product/Confirm_Checkout?id=@ViewBag.IdItem&act=@ViewBag.Act&size={{name[0].size}}">Proceed</a>
+                                    <a href="/Product/Confirm_Checkout?id=@ViewBag.IdItem&act=@ViewBag.Act&size=@ViewBag.SizeVN">Proceed</a>
                                 </button>
                             </div>
                         </div>
@@ -256,11 +256,16 @@
 
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+
+            @*$http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
                 .then(function (response) {
                     $scope.name = response.data;
                     console.log($scope.name);
-                });
+                });*@
+
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
+                .then(function (response) { $scope.name = response.data });
+
             $http.get("/api/CitysAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("ck_city"))
                 .then(function (response) { $scope.city = response.data });
         });

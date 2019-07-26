@@ -18,7 +18,6 @@ namespace Exaxxi.Controllers
     {
         private readonly ExaxxiDbContext _context;
         CallAPI _api = new CallAPI();
-
         public ProductController(ExaxxiDbContext context)
         {
             _context = context;
@@ -53,21 +52,31 @@ namespace Exaxxi.Controllers
         }
 
         // GET: Product/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, int? size)
         {
             ViewBag.IdItem = id;
             int idDepart = JsonConvert.DeserializeObject<int>(_api.getAPI("api/ItemsAPI/TakeId_Depart/" + id).Result);
             ViewBag.dsSize = JsonConvert.DeserializeObject<List<ds_Size>>(_api.getAPI("/api/ds_SizeAPI/Takeds_SizeDepart/" + idDepart).Result);
             ViewBag.Sizes = JsonConvert.DeserializeObject<List<Sizes>>(_api.getAPI("/api/SizesAPI/TakeSizesItem/" + id).Result);
+            if (size == null)
+            {
+                ViewBag.SizeVN = _api.getAPI("/api/ds_SizeAPI/TakeFirst/" + id).Result;
+            }
+            else
+            {
+                ViewBag.SizeVN = _api.getAPI("/api/ds_SizeAPI/TakeSize/" + id + "/" + size).Result;
+            }
             return View();
         }
 
-        public IActionResult Checkout(int? id)
+        public IActionResult Checkout(int? id, int size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            ViewBag.SizeVN = size;
 
             ViewBag.IdItem = id;            
 
@@ -104,13 +113,13 @@ namespace Exaxxi.Controllers
             return Ok();        
         }
 
-        public IActionResult Last_Checkout(int? id, int act)
+        public IActionResult Last_Checkout(int? id, int act, int size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            ViewBag.SizeVN = size;
             ViewBag.IdItem = id;
             ViewBag.Act = act;
 
@@ -218,15 +227,16 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Sell(int? id)
+        public IActionResult Sell(int? id, int size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
-
+            ViewBag.SizeVN = size;
+            ViewBag.level_seller = 0;
             ViewBag.IdItem = id;
-
+            ViewBag.payment_fee = Exaxxi.Common.info.payment_fee;
             return View();
         }
 
@@ -242,6 +252,9 @@ namespace Exaxxi.Controllers
             HttpContext.Session.SetString("sell_phone", model.Phone);
             HttpContext.Session.SetString("sell_address", model.Address);
             HttpContext.Session.SetString("sell_payment", model.Payment);
+            HttpContext.Session.SetString("sell_payment_fee", model.Payment_fee.ToString());
+            HttpContext.Session.SetString("sell_service_fee", model.Service_fee.ToString());
+            HttpContext.Session.SetString("sell_total_price", model.Total_price.ToString());
 
             if (model.Enter_ask.ToString() != null)
             {
@@ -255,13 +268,14 @@ namespace Exaxxi.Controllers
             return Ok();
         }
 
-        public IActionResult Sell_Confirm(int? id, int act)
+        public IActionResult Sell_Confirm(int? id, int act, int? size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
 
+            ViewBag.SizeVN = size;
             ViewBag.IdItem = id;
             ViewBag.Act = act;
 
@@ -300,6 +314,7 @@ namespace Exaxxi.Controllers
                 orders.price = 0;
                 orders.ship_fee = 0;
                 orders.id_voucher = 1;
+
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {

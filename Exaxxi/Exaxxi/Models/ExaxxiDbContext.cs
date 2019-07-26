@@ -22,7 +22,11 @@ namespace Exaxxi.Models
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Shippings> Shippings { get; set; }
         public DbSet<Citys> Citys { get; set; }
+
         public DbSet<Voucher> Vouchers { get; set; }
+
+        public DbSet<ServiceFeeDetails> ServiceFeeDetails { get; set; }
+
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
@@ -1365,6 +1369,36 @@ namespace Exaxxi.Models
                     id = 3,
                     name = "Hà Nội",
                     id_shipping = 3
+                }
+            );
+            builder.Entity<ServiceFeeDetails>().HasData(
+                new ServiceFeeDetails
+                {
+                    id = 1,
+                    level = "1",
+                    sale_required = 0,
+                    value = 0.098
+                },
+                new ServiceFeeDetails
+                {
+                    id = 2,
+                    level = "2",
+                    sale_required = 3,
+                    value = 0.09
+                },
+                new ServiceFeeDetails
+                {
+                    id = 3,
+                    level = "3",
+                    sale_required = 30,
+                    value = 0.085
+                },
+                new ServiceFeeDetails
+                {
+                    id = 4,
+                    level = "4",
+                    sale_required = 100,
+                    value = 0.08
                 }
             );
         }

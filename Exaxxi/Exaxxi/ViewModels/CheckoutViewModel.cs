@@ -17,7 +17,12 @@ namespace Exaxxi.ViewModels
         public double Enter_bid { get; set; }
         public double Enter_ask { get; set; }
         public string Exp_Day { get; set; }
+
         public int? id_voucher { get; set; }
         public double? discount { get; set; }
+
+        public double Total_price { get; set; }
+        public double Payment_fee { get; set; }
+        public double Service_fee { get; set; }
     }
 }

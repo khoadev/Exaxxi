@@ -26,6 +26,19 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.ds_Size;
         }
+
+        [HttpGet("TakeFirst/{id}")]
+        public IActionResult TakeFirst(int id)
+        {            
+            var data = _context.ds_Size
+                .Join(_context.Sizes, a => a.id, b => b.id_ds_size, (a, b) => new { a, b })
+                .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
+                .Where(g => g.d.id == id)
+                .Select(p => p.c.a).FirstOrDefault().VN;
+
+            return Ok(data);
+        }
+
         [HttpGet("Takeds_SizeDepart/{id_Depart}")]
         public IEnumerable<ds_Size> Getds_SizeOfDepart([FromRoute]int id_Depart)
         {
@@ -48,6 +61,17 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             return Ok(ds_Size);
+        }
+        [HttpGet("TakeSize/{id}/{Size}")]
+        public IActionResult TakeSize(int id, int size)
+        {
+            var data = _context.ds_Size
+                .Join(_context.Sizes, a => a.id, b => b.id_ds_size, (a, b) => new { a, b })
+                .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
+                .Where(g => g.d.id == id && g.c.a.VN == size)
+                .Select(p => p.c.a).FirstOrDefault().VN;
+
+            return Ok(data);
         }
         [HttpGet("Getds_SizeDetail/{id}")]
         public async Task<IActionResult> Getds_SizeDetail([FromRoute] int id)

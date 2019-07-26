@@ -34,4 +34,13 @@
     <Folder Include="wwwroot\images\news\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>wwwroot\ckfinder\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>wwwroot\ckfinder\bin\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
