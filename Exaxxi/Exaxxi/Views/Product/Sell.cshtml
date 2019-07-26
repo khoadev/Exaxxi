@@ -231,6 +231,7 @@
                 var total = $("#total_sell").val();
                 var payment_fee = @ViewBag.payment_fee;
                 var service_fee = $scope.service_fee.value;
+                
                 var info = {
                     "account": account,
                     "phone": phone,
@@ -258,9 +259,9 @@
                     var account = $("#account").val();
                     var phone = $("#phone").val();
                     var address = $("#address").val();
-                    var total = $("#total_ask").val();
+                    var total = $("#enter_ask").val();
                     var payment_fee = @ViewBag.payment_fee;
-                    var service_fee = $scope.service_fee;
+                    var service_fee = $scope.service_fee.value;
 
                     if (enter_ask == "") {
                         alert("Vui lòng nhập giá tiền");
