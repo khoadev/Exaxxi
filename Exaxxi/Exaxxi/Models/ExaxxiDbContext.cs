@@ -22,6 +22,7 @@ namespace Exaxxi.Models
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Shippings> Shippings { get; set; }
         public DbSet<Citys> Citys { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
@@ -29,7 +30,7 @@ namespace Exaxxi.Models
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-C9UR2EM\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
