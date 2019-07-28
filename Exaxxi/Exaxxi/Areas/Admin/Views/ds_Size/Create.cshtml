@@ -8,43 +8,81 @@
 
 <h4>ds_Size</h4>
 <hr />
-<div class="row">
+<div class="row" ng-controller="editDsSize">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="VN" class="control-label"></label>
-                <input asp-for="VN" class="form-control" />
-                <span asp-validation-for="VN" class="text-danger"></span>
+                <label>Chủng loại</label>
+                <select name="singleSelect" id="select" ng-model="selectedDepart" ng-options="depart.vi_name for depart in name"></select>
             </div>
             <div class="form-group">
-                <label asp-for="US" class="control-label"></label>
-                <input asp-for="US" class="form-control" />
+                <label lass="control-label">Size VN</label>
+                <input id="VN" class="form-control" />
+               
+            </div>
+            <div class="form-group">
+                <label class="control-label">US</label>
+                <input id="US" class="form-control" />
                 <span asp-validation-for="US" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UK" class="control-label"></label>
-                <input asp-for="UK" class="form-control" />
+                <label class="control-label">UK</label>
+                <input id="UK" class="form-control" />
                 <span asp-validation-for="UK" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Inch" class="control-label"></label>
-                <input asp-for="Inch" class="form-control" />
+                <label class="control-label">Inch</label>
+                <input id="Inch" class="form-control" />
                 <span asp-validation-for="Inch" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Centimet" class="control-label"></label>
-                <input asp-for="Centimet" class="form-control" />
+                <label class="control-label">Centimet</label>
+                <input id="Centimet" class="form-control" />
                 <span asp-validation-for="Centimet" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" ng-click="sendData()"/>
             </div>
         </form>
     </div>
 </div>
+@section Scripts{
+    <script>
+        app.controller('editDsSize', function ($scope, $http) {
+            $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.name = response.data; $scope.selectedDepart = $scope.name[0];});
+            $scope.sendData = function () {
+                var id_department =  $scope.selectedDepart.id;
+                var VN = $("#VN").val();
+                var US = $("#US").val();
+                var UK = $("#UK").val();
+                var Inch = $("#Inch").val();
+                var Centimet = $("#Centimet").val();
+               
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                var ds_Size = {
+                    "VN": VN,
+                    "US": US,
+                    "UK": UK,
+                    "Inch": Inch,
+                    "Centimet": Centimet,
+                    "id_Depart": id_department
+                };
+                var config = {
+                    headers: {
+                        'Context-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+                }
+                $http.post("/api/ds_SizeChange", JSON.stringify(ds_Size),config).then(function (response) {
+                    alert("thanh cong");
+                }, function error(response) {
+                    // this function will be called when the request returned error status
+                    alert("that bai");
 
+                });
+            };
+        });
+    </script>
+}

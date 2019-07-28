@@ -95,6 +95,12 @@
                                     <i class="material-icons">category</i>
                                     <p>Categorie</p>
                                 </a>
+                            </li> 
+                            <li class="nav-item  @(controllernName == "Upload" ? "active" : "")">
+                                <a class="nav-link" asp-controller="Upload" asp-area="Admin" asp-action="Create">
+                                    <i class="material-icons">category</i>
+                                    <p>Tạo Thư mục</p>
+                                </a>
                             </li>
                             <li class="nav-item @(controllernName == "Brands" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">
