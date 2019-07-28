@@ -26,14 +26,16 @@ namespace Exaxxi.Models
         public double service_fee { get; set; }
         [Display(Name = "Phương Thức Thanh Toán")]
         public int payment { get; set; }
+        [Display(Name = "Phí Thanh Toán")]
+        public double payment_pro { get; set; }
         [Display(Name = "Mã Giảm Giá")]
-        public string id_voucher { get; set; }
+        public int? id_voucher { get; set; }
         [Display(Name = "Giá Tiền")]
         public double price { get; set; }
         [Display(Name = "Trạng Thái")]
         public int status { get; set; }
         [Display(Name = "Số Tiền Được Giảm")]
-        public double discount { get; set; }
+        public double? discount { get; set; }
         [Display(Name = "ID User Order")]
         public int id_user { get; set; }
         public int id_post { get; set; }

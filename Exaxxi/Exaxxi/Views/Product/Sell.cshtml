@@ -48,16 +48,16 @@
                                         <div class="col-6">
                                             Transaction fee
                                         </div>
-                                        <div class="col-6 text-right">
-                                            {{service_fee.value * 100}}%
+                                        <div class="col-6 text-right">                                            
+                                            <input id="t_fee" type="text" value="{{service_fee.value * 100}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />%
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
                                         <div class="col-6">
                                             Payment Proc. (3%)
                                         </div>
-                                        <div class="col-6 text-right">
-                                            {{enter_ask * 0.03 > 0 ? enter_ask * 0.03 : 0}}VNĐ
+                                        <div class="col-6 text-right">                                            
+                                            <input id="t_fee" type="text" value="{{enter_ask * 0.03 > 0 ? enter_ask * 0.03 : 0}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />VNĐ
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -73,7 +73,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            {{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}
+                                            <input id="total_ask" value="{{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />                                            
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="text" id="value_sell" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" />
+                                        <input type="text" id="value_sell" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" style="background:#FFF" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -124,7 +124,7 @@
                                             Transaction fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            {{service_fee.value * 100}}%
+                                            <input id="t_fee" type="text" value="{{service_fee.value * 100}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />%
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -132,7 +132,7 @@
                                             Payment Proc. (3%)
                                         </div>
                                         <div class="col-6 text-right">
-                                            {{name[0].size.highest_bid * 0.03}}VND
+                                            <input id="pay_proc" type="text" value="{{name[0].size.highest_bid * 0.03}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -148,7 +148,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" />
+                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -176,13 +176,13 @@
                             </div>
                             <form>
                                 <div class="form-group">
-                                    <input id="account" disabled="disabled" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your account" value="{{user_info.name}}">
+                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your account" value="{{user_info.name}}">
                                 </div>
                                 <div class="form-group">
-                                    <input id="phone" disabled="disabled" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your phone" value="{{user_info.phone}}">
+                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your phone" value="{{user_info.phone}}">
                                 </div>
                                 <div class="form-group">
-                                    <textarea id="address" disabled="disabled" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your address" rows="3">{{user_info.address}}</textarea>
+                                    <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your address" rows="3">{{user_info.address}}</textarea>
                                 </div>
                             </form>
                             <div class="mb-2" style="font-family:coolrg;">
@@ -238,7 +238,7 @@
                     "payment": payment,
                     "total_price": total,
                     "payment_fee": payment_fee,
-                    "service_fee": service_fee
+                    "service_fee": service_fee,                    
                 };
 
                 $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
@@ -257,10 +257,10 @@
                     var exp_day = $("#exp_day").val();
                     var account = $("#account").val();
                     var phone = $("#phone").val();
-                    var address = $("#address").val();
-                    var total = $("#total_ask").val();
+                    var address = $("#address").val();           
                     var payment_fee = @ViewBag.payment_fee;
-                    var service_fee = $scope.service_fee;
+                    var service_fee = $scope.service_fee.value;
+                    var total = $("#total_ask").val();
 
                     if (enter_ask == "") {
                         alert("Vui lòng nhập giá tiền");
