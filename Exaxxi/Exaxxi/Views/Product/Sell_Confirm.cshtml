@@ -191,13 +191,24 @@
                                     </tr>
                                     <tr>
                                         <td class="td-w25">
-                                            Transacton Fee(@HttpContextAccessor.HttpContext.Session.GetString("sell_service_fee")) %
+                                            Transacton Fee({{@HttpContextAccessor.HttpContext.Session.GetString("sell_service_fee") * 100}}) %
                                         </td>
                                         <td class="td-w10">
                                             <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                         </td>
                                         <td class="td-w65 font-weight-bold">
-                                            @HttpContextAccessor.HttpContext.Session.GetString("sell_service_fee") VND
+                                            {{name[0].size.highest_bid * @HttpContextAccessor.HttpContext.Session.GetString("sell_service_fee")}} VND
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-w25">
+                                            Shipping Fee({{@HttpContextAccessor.HttpContext.Session.GetString("sell_payment_fee") * 100}}) %
+                                        </td>
+                                        <td class="td-w10">
+                                            <i class="fas fa-chevron-right" style="opacity:0.5"></i>
+                                        </td>
+                                        <td class="td-w65 font-weight-bold">
+                                            {{name[0].size.highest_bid * @HttpContextAccessor.HttpContext.Session.GetString("sell_payment_fee")}} VND
                                         </td>
                                     </tr>
                                     <tr>
@@ -273,7 +284,7 @@
                                     <a href="/Product/Sell?id=@ViewBag.IdItem&size=@ViewBag.SizeVN">Back</a>
                                 </button>
                                 <button class="btn checkout-btn issell">
-                                    <a style="color:#FFF; text-decoration:none" href="/Product/Confirm_Sell?id=@ViewBag.IdItem&act=@ViewBag.Act&size={{name[0].size}}">Confirm Sell</a>
+                                    <a style="color:#FFF; text-decoration:none" href="/Product/Confirm_Sell?id=@ViewBag.IdItem&act=@ViewBag.Act&size=@ViewBag.SizeVN">Confirm Sell</a>
                                 </button>
                             </div>
                         </div>

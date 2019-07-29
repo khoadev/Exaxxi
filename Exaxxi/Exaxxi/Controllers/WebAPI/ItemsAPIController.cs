@@ -219,25 +219,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Where(p => p.d.id_department == id)
                 .Select(p => p.c.a);
         }
-
-        [Route("TakeIdPost_ForOrder/{id}")]
-        public IActionResult TakeIdPost_ForOrder(int id)
-        {
-            var low_item = _context.Items.Where(p => p.id == id).FirstOrDefault().lowest_ask;
-
-            var pricePost = Convert.ToDouble(low_item);
-
-            var idPost = _context.Posts
-                .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
-                .Where(p => p.d.id == id && p.c.a.price == pricePost && p.c.a.kind == 1)
-                .Select(p => new Posts
-                {
-                    id = p.c.a.id
-                }).FirstOrDefault().id;
-
-            return Ok(idPost);
-        }
+        
         [Route("Popular/{id_depart}")]
         public IEnumerable<Items> GetItemsPopular(int id_depart)
         {

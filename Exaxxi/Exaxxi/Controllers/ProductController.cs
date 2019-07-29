@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using Exaxxi.Common;
 
 namespace Exaxxi.Controllers
 {
@@ -136,7 +137,7 @@ namespace Exaxxi.Controllers
                     return RedirectToAction("Index", "Login");
                 }
                 //var i = HttpContext.Session.GetString("ck_discount");
-                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/ItemsAPI/TakeIdPost_ForOrder/" + id).Result);
+                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size).Result);
 
                 Orders orders = new Orders();
 
@@ -152,12 +153,7 @@ namespace Exaxxi.Controllers
                 {
                     orders.discount = Convert.ToDouble(HttpContext.Session.GetString("ck_discount"));
                 }
-                else
-                {
-                    orders.discount = 0;
-                }
                
-
 
                 if (HttpContext.Session.GetString("ck_payment").ToString() == "Cash On Deliery (COD)")
                 {
@@ -175,11 +171,11 @@ namespace Exaxxi.Controllers
                 {
                     orders.id_voucher = HttpContext.Session.GetInt32("ck_id_voucher").Value;
                 }
-                else
-                {
-                    orders.id_voucher = 0;
-                }
-                
+
+                //Send Mail 
+                var email_post = _api.getAPI("api/PostsAPI/SelectEmailUser/" + idPost).Result;
+                Mailer ml = new Mailer();                
+                ml.SendMail("Exaxxi Site", email_post, "Buy Product", "Your buying has something new. Please check details in your account!");
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
@@ -255,6 +251,7 @@ namespace Exaxxi.Controllers
             HttpContext.Session.SetString("sell_payment_fee", model.Payment_fee.ToString());
             HttpContext.Session.SetString("sell_service_fee", model.Service_fee.ToString());
             HttpContext.Session.SetString("sell_total_price", model.Total_price.ToString());
+            HttpContext.Session.SetString("sell_id_city", model.id_city.ToString());
 
             if (model.Enter_ask.ToString() != null)
             {
@@ -282,7 +279,7 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Confirm_Sell(int id, int act, int? size)
+        public IActionResult Confirm_Sell(int id, int act, int size)
         {
             //Sell
             if (act == 0)
@@ -291,8 +288,8 @@ namespace Exaxxi.Controllers
                 {
                     return RedirectToAction("Index", "Login");
                 }
-
-                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/ItemsAPI/TakeIdPost_ForOrder/" + id).Result);
+                
+                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size).Result);
 
                 Orders orders = new Orders();
 
@@ -302,19 +299,20 @@ namespace Exaxxi.Controllers
                 orders.status = 0;
                 orders.id_user = HttpContext.Session.GetInt32("idUser").Value;
                 orders.id_post = Convert.ToInt32(idPost);
-                orders.service_fee = 0;
-                orders.address = HttpContext.Session.GetString("sell_address").ToString();
-                orders.phone = HttpContext.Session.GetString("sell_phone").ToString();
+                orders.service_fee = Convert.ToDouble(HttpContext.Session.GetString("sell_service_fee"));
+                orders.payment_pro = Convert.ToDouble(HttpContext.Session.GetString("sell_payment_fee"));
+                orders.price = Convert.ToDouble(HttpContext.Session.GetString("sell_total_price"));
+                orders.id_city = Convert.ToInt32(HttpContext.Session.GetString("sell_id_city"));
 
                 if (HttpContext.Session.GetString("sell_payment").ToString() == "Credit / Debit")
                 {
                     orders.payment = 2;
                 }
 
-                orders.price = 0;
-                orders.ship_fee = 0;
-                orders.id_voucher = 1;
-
+                //Send Mail 
+                var email_post = _api.getAPI("api/PostsAPI/SelectEmailUser/" + idPost).Result;
+                Mailer ml = new Mailer();
+                ml.SendMail("Exaxxi Site", email_post, "Sell Product", "Your selling has something new. Please check details in your account!");
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
