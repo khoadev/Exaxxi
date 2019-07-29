@@ -3,62 +3,65 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="row">
+<div class="row" >
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title ">Danh sách tiêu chuẩn kích thước</h4>
                 <p class="card-category"></p>
             </div>
-            <div class="card-body">
+            <div class="card-body" ng-controller="DSSize">
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
                             <tr>
+                                <th>Tên chủng loại</th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.VN)
+                                    Size Việt Nam
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.US)
+                                    Size Mỹ
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.UK)
+                                    Size Anh
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Inch)
+                                    Inch
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Centimet)
+                                    Centimet
                                 </th>
                                 <th><a asp-action="Create">Thêm</a></th>
                             </tr>
                         </thead>
-                        <tbody ng-controller="deleteDSSize">
-                            @foreach (var item in Model)
-                            {
-                                <tr>
+                        <tbody >
+                           
+                                <tr ng-repeat="x in name">
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.VN)
+                                        <span ng-repeat="a in nameDepart">
+                                            <span ng-if="a.id == x.id_Depart">{{a.vi_name}}</span>
+                                        </span>
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.US)
+                                       {{x.vn}}
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UK)
+                                        {{x.us}}
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Inch)
+                                        {{x.uk}}
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Centimet)
+                                        {{x.inch}}
                                     </td>
+                                    <td> {{x.centimet}}</td>
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(@item.id)">Delete</a>
+                                        <a href="/Admin/ds_Size/Edit/{{x.id}}">Edit</a> |
+                                        <a href="/Admin/ds_Size/Details/{{x.id}}">Details</a> |
+                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
                                     </td>
                                 </tr>
-                            }
+                           
                         </tbody>
                     </table>
                 </div>
@@ -69,7 +72,7 @@
 
 @section Scripts{
     <script>
-        app.controller('deleteDSSize', function ($scope, $http) {
+        app.controller('DSSize', function ($scope, $http) {
             $scope.Delete = function (id) {
                 var url = '/api/ds_SizeChange/' + id;
                 //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
@@ -89,6 +92,10 @@
                     return false;
                 }
             }
+              $http.get("/api/DepartmentsAPI")
+                .then(function (response) { $scope.nameDepart = response.data;});
+            $http.get("/api/ds_SizeAPI")
+                .then(function (response) { $scope.name = response.data;});
         });
     </script>
 }
