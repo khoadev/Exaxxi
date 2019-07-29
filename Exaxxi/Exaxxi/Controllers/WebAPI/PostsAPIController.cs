@@ -155,5 +155,14 @@ namespace Exaxxi.Controllers.WebAPI
                     kind = m.c.a.e.g.kind
                 });
         }
+
+        [Route("SelectEmailUser/{idPost}")]
+        public IActionResult SelectEmailUser(int idPost)
+        {
+            var data = _context.Posts
+                .Join(_context.Users, a => a.id_user, b => b.id, (a, b) => new { a, b })
+                .Where(p => p.a.id == idPost).SingleOrDefault().b.email;     
+            return Ok(data);
+        }
     }
 }

@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using Exaxxi.Common;
 
 namespace Exaxxi.Controllers
 {
@@ -170,8 +171,11 @@ namespace Exaxxi.Controllers
                 {
                     orders.id_voucher = HttpContext.Session.GetInt32("ck_id_voucher").Value;
                 }
-                
-                
+
+                //Send Mail 
+                var email_post = _api.getAPI("api/PostsAPI/SelectEmailUser/" + idPost).Result;
+                Mailer ml = new Mailer();                
+                ml.SendMail("Exaxxi Site", email_post, "Buy Product", "Your buying has something new. Please check details in your account!");
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
@@ -304,7 +308,11 @@ namespace Exaxxi.Controllers
                 {
                     orders.payment = 2;
                 }
-                
+
+                //Send Mail 
+                var email_post = _api.getAPI("api/PostsAPI/SelectEmailUser/" + idPost).Result;
+                Mailer ml = new Mailer();
+                ml.SendMail("Exaxxi Site", email_post, "Sell Product", "Your selling has something new. Please check details in your account!");
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
