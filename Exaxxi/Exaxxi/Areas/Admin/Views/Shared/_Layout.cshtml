@@ -135,6 +135,12 @@
                                     <p>Sizes</p>
                                 </a>
                             </li>
+                            <li class="nav-item @(controllernName == "Vouchers" ? "active" : "")">
+                                <a class="nav-link" asp-controller="Vouchers" asp-area="Admin" asp-action="Index">
+                                    <i class="material-icons">format_size</i>
+                                    <p>Vouchers</p>
+                                </a>
+                            </li>
                             <li class="nav-item @(controllernName == "Users" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Users" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">person</i>
