@@ -54,7 +54,7 @@
                     <div class="detail-content-right-first">
                         <!-- Start right-first -->
                         <h6>{{name[0].brand_name}}</h6>
-                        <h3>{{name[0].item.name}} <i data-toggle="modal" data-target="#followingModal" style="color:#eeeeee" class="fas fa-heart"></i></h3>
+                        <h3>{{name[0].item.name}} <i data-toggle="modal" data-target="#followingModal" style="color:#808080; cursor:pointer" class="fas fa-heart"></i></h3>
                         <div class="modal fade" id="followingModal">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -99,7 +99,7 @@
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
                         <div class="size">
-                            <a style="cursor:pointer" data-toggle="modal" data-target="#sizeModal">Size</a> <span style="color:black"><input id="sizeVN" type="number" value="@ViewBag.SizeVN" /></span>
+                            <a style="cursor:pointer; color:aliceblue; font-size:22px" data-toggle="modal" data-target="#sizeModal" class="btn btn-info">Size</a> <span style="color:black">&nbsp;<input id="sizeVN" type="number" value="@ViewBag.SizeVN" style="width:80px; border:none; background-color:#FFF" disabled /></span>
                         </div>
                         <div class="modal fade" id="sizeModal">
                             <div class="modal-dialog">
@@ -119,10 +119,10 @@
                                                 foreach (var item in ViewBag.dsSize)
                                                 {
                                                     <div class="size-wrapper">
-                                                        <input class="d-none" id="size" name="size" type="radio" />
+                                                        @*<input class="d-none" id="size" name="size" type="radio" />*@
                                                         <label for="size" class="size-label">
                                                             <div class="size-left">
-                                                                <input ng-click="btn_size(@item.VN)" type="button" value="@item.VN" />
+                                                                <input ng-click="btn_size(@item.VN)" type="button" value="@item.VN" style="background-color:#0e5396; color:#FFF; border:none" />
                                                             </div>
                                                             @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
                                                             {
@@ -155,7 +155,7 @@
                             <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Asks</p>
                         </div>
-                        <a ng-click="check()">
+                        <a ng-click="check_buy()" style="cursor:pointer">
                             <div class="detail-left">
                                 <h3 style=" font-family: coolrg;">Buy</h3>
                                 <span style="font-family: coolcond; font-size:20px;">Lowest Asks</span>
@@ -167,7 +167,7 @@
                             <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Bids</p>
                         </div>
-                        <a href="/Product/Sell?id=@ViewBag.IdItem&size=@ViewBag.SizeVN">
+                        <a ng-click="check_sell()" style="cursor:pointer">
                             <div class="detail-left" style="background-color: #ab1113">
                                 <h3 style=" font-family: coolrg;">Sell</h3>
                                 <span style="font-family: coolcond;font-size:20px">Highest Bid</span>
@@ -217,11 +217,24 @@
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + sizeVN)
                 .then(function (response) { $scope.name = response.data;});
 
-            $scope.check = function () {
+            $scope.check_buy = function () {
                 $http.get("/Login/Check").then(function (rs) {
 
                     if (rs.data == true) {
                         window.location.href = "/Product/Checkout?id=" +@ViewBag.IdItem + "&size=" + @ViewBag.SizeVN;
+                    }
+                    else {
+                        sessionStorage.setItem('url', location.href);
+                        window.open("/Login");
+                    }
+                });
+            };
+
+            $scope.check_sell = function () {
+                $http.get("/Login/Check").then(function (rs) {
+
+                    if (rs.data == true) {
+                        window.location.href = "/Product/Sell?id=" +@ViewBag.IdItem + "&size=" + @ViewBag.SizeVN;
                     }
                     else {
                         sessionStorage.setItem('url', location.href);

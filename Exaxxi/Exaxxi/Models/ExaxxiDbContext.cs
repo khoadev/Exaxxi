@@ -22,7 +22,11 @@ namespace Exaxxi.Models
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Shippings> Shippings { get; set; }
         public DbSet<Citys> Citys { get; set; }
+
+        public DbSet<Voucher> Vouchers { get; set; }
+
         public DbSet<ServiceFeeDetails> ServiceFeeDetails { get; set; }
+
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS

@@ -136,6 +136,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                @*KHANG design*@
+                                <input id="voucher" type="text" />
+                                <button ng-click="check_voucher()" id="check_voucher" class="btn checkout-btn isbuy col-4">
+                                    Check
+                                </button>
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <button id="buy" class="btn checkout-btn isbuy col-4">
@@ -232,7 +237,8 @@
                         $scope.shipping_fee = response.data;
                     });
             });
-
+            var id_voucher = null;
+            var discount = null;
             //Buy
             $("#buy").on('click', function () {
                 var account = $("#account").val();
@@ -257,6 +263,8 @@
                     "city": id_city,
                     "shipping": shipping,
                     "total": total_buy,
+                    "id_voucher": id_voucher,
+                    "discount": discount
                 };
 
                 $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
@@ -282,7 +290,7 @@
                 $("#total_bid").val(parseFloat($scope.shipping_fee) + parseFloat($("#enter_bid").val()));
             }
         });
-            //Bid
+           //Bid
         $("#bid").on('click', function () {
                 var enter_bid = $("#enter_bid").val();
                 var exp_day = $("#exp_day").val();
@@ -335,6 +343,26 @@
                         alert(response.data);
                     });
             });
+            $scope.check_voucher = function () {
+                var code = $("#voucher").val();
+               var dis = $("#value_buy").val();
+                $http.get("/api/VouchersAPI/Check/" + code + "/" + dis).then(function (rs) {
+                    $scope.voucher = rs.data;
+                    
+                    
+                    alert("Thêm Mã Thành Công!");
+                   
+                    $("#voucher").prop('disabled', true);
+                    $("#check_voucher").prop('disabled', true);
+                    $("#total_buy").val($("#total_buy").val() - $scope.voucher.discount);
+                    id_voucher = $scope.voucher.id_voucher;
+                    discount = $scope.voucher.discount;
+                },
+                    //khong co ma
+                    function () {
+                        alert("Mã giảm giá không hợp lệ!");
+                    });
+            }
         });
     </script>
 }
