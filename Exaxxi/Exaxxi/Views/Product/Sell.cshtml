@@ -57,7 +57,7 @@
                                             Payment Proc. (3%)
                                         </div>
                                         <div class="col-6 text-right">                                            
-                                            <input id="t_fee" type="text" value="{{enter_ask * 0.03 > 0 ? enter_ask * 0.03 : 0}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />VNĐ
+                                            <input id="t_fee" type="text" value="{{enter_ask * 0.03 > 0 ? enter_ask * 0.03 : 0}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -65,7 +65,7 @@
                                             Estimated Shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            0VND
+                                            0 VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -73,7 +73,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_ask" value="{{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />                                            
+                                            <input id="total_ask" value="{{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND                                            
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                             Estimated Shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            0VND
+                                            0 VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -148,7 +148,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />
+                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +184,8 @@
                                 <div class="form-group">
                                     <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your address" rows="3">{{user_info.address}}</textarea>
                                 </div>
-                                <div class="forn-group">
+                                <div class="forn-group" style="margin:5px 0 15px 0">
+                                    <p style="font-family:coolrg;">Place:</p>
                                     <select id="id_city">
                                         <option ng-repeat="x in list_city" value="{{x.id}}" ng-selected="user_info.id_city == x.id">{{x.name}}</option>
                                     </select>
