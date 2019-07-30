@@ -15,8 +15,8 @@
                                 {{name[0].item.name}}
                             </div>
                             <div class="checkout-product-info">
-                                Highest Bid: <b>${{name[0].item.highest_bid}}</b> | Lowest Ask: <b>${{name[0].item.lowest_ask}}</b><br />
-                                Size <b>{{name[0].size}}</b>
+                                Highest Bid: <b>${{name[0].size.highest_bid}}</b> | Lowest Ask: <b>${{name[0].size.lowest_ask}}</b><br />
+                                Size <b>{{name[0].dsSize.vn}}</b>
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="text" class="form-control checkout-input " placeholder="Enter Bid" />
+                                        <input type="number" ng-model="enter_ask" id="enter_ask" class="form-control checkout-input " placeholder="Enter Ask" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 checkout-suggestion">
-                                        A good bid around 200.000VND
+                                        A good ask around {{name[0].size.highest_bid}} VND
                                     </div>
                                 </div>
                                 <div class="checkout-estimated-wrapper">
@@ -48,16 +48,16 @@
                                         <div class="col-6">
                                             Transaction fee
                                         </div>
-                                        <div class="col-6 text-right">
-                                            200.000VND
+                                        <div class="col-6 text-right">                                            
+                                            <input id="t_fee" type="text" value="{{service_fee.value * 100}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />%
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
                                         <div class="col-6">
                                             Payment Proc. (3%)
                                         </div>
-                                        <div class="col-6 text-right">
-                                            200.000VND
+                                        <div class="col-6 text-right">                                            
+                                            <input id="t_fee" type="text" value="{{enter_ask * 0.03 > 0 ? enter_ask * 0.03 : 0}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -65,7 +65,7 @@
                                             Estimated Shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            0 VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -73,7 +73,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            -
+                                            <input id="total_ask" value="{{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND                                            
                                         </div>
                                     </div>
                                 </div>
@@ -83,17 +83,17 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <select class="form-control" id="sel1">
-                                                <option>30 days</option>
-                                                <option>7 days</option>
-                                                <option>14 days</option>
+                                            <select class="form-control" id="exp_day">
+                                                <option value="7">7 days</option>
+                                                <option value="14">14 days</option>
+                                                <option value="30">30 days</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button class="btn checkout-btn issell col-4">
+                                        <button id="ask" class="btn checkout-btn issell col-4">
                                             Ask
                                         </button>
                                     </div>
@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].item.highest_bid}}" />
+                                        <input type="text" id="value_sell" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" style="background:#FFF" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -124,7 +124,7 @@
                                             Transaction fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            <input id="t_fee" type="text" value="{{service_fee.value * 100}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />%
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -132,7 +132,7 @@
                                             Payment Proc. (3%)
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            <input id="pay_proc" type="text" value="{{name[0].size.highest_bid * 0.03}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -140,7 +140,7 @@
                                             Estimated Shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            0 VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -148,13 +148,13 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            -
+                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button class="btn checkout-btn issell col-4">
+                                        <button id="sell" class="btn checkout-btn issell col-4">
                                             Sell
                                         </button>
                                     </div>
@@ -176,20 +176,26 @@
                             </div>
                             <form>
                                 <div class="form-group">
-                                    <input disabled="disabled" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your account" value="{{user_info.name}}">
+                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your account" value="{{user_info.name}}">
                                 </div>
                                 <div class="form-group">
-                                    <input disabled="disabled" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your phone" value="{{user_info.phone}}">
+                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your phone" value="{{user_info.phone}}">
                                 </div>
                                 <div class="form-group">
-                                    <textarea disabled="disabled" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your address" rows="3">{{user_info.address}}</textarea>
+                                    <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px; background:#FFF" placeholder="Enter your address" rows="3">{{user_info.address}}</textarea>
+                                </div>
+                                <div class="forn-group" style="margin:5px 0 15px 0">
+                                    <p style="font-family:coolrg;">Place:</p>
+                                    <select id="id_city">
+                                        <option ng-repeat="x in list_city" value="{{x.id}}" ng-selected="user_info.id_city == x.id">{{x.name}}</option>
+                                    </select>
                                 </div>
                             </form>
                             <div class="mb-2" style="font-family:coolrg;">
                                 Billing Method:
                             </div>
                             <div class="checkout-payment">
-                                <input class="d-none" id="payment2" name="payment" type="radio" checked="checked" />
+                                <input class="d-none" id="payment" value="Credit / Debit" name="payment" type="radio" checked="checked" />
                                 <label for="payment2" class="checkout-payment-wrapper">
                                     Credit / Debit<br />
                                     <span class="checkout-payment-desc">
@@ -205,18 +211,98 @@
     </div>
 </div>
 
+
 @section Scripts{
     <script>
 
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
-            .then(function (response) { $scope.name = response.data });
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
+                .then(function (response) { $scope.name = response.data; $scope.user = $scope.name; });
 
             //Take Info User
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
-                    .then(function (response) { $scope.user_info = response.data });
-        });
+                .then(function (response) {
+                    $scope.user_info = response.data;
+                    //Take Transaction Fee
+                    $http.get("/api/ServiceFeeDetailsAPI/" + $scope.user_info.level_seller)
+                        .then(function (response) { $scope.service_fee = response.data });
+                });
+            //Take List Areas
+            $http.get("/api/CitysAPI")
+                .then(function (response) { $scope.list_city = response.data });
+            //Sell
+            $("#sell").on('click', function () {
+                var account = $("#account").val();
+                var phone = $("#phone").val();
+                var address = $("#address").val();
+                var payment = $("input[name=payment]:checked").val();
+                var total = $("#total_sell").val();
+                var payment_fee = @ViewBag.payment_fee;
+                var service_fee = $scope.service_fee.value;
+                var id_city = $("#id_city").val();
+                
+                var info = {
+                    "account": account,
+                    "phone": phone,
+                    "address": address,
+                    "payment": payment,
+                    "total_price": total,
+                    "payment_fee": payment_fee,
+                    "service_fee": service_fee,
+                    "id_city": id_city
+                };
 
+                $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
+                    then(function (data) {
+                        // 0:=>sell
+                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
+
+            //Ask
+            $("#ask").on('click', function () {
+                    var enter_ask = $("#enter_ask").val();
+                    var exp_day = $("#exp_day").val();
+                    var account = $("#account").val();
+                    var phone = $("#phone").val();
+                    var address = $("#address").val();
+                    var total = $("#enter_ask").val();
+                    var payment_fee = @ViewBag.payment_fee;
+                    var service_fee = $scope.service_fee.value;
+
+
+                    if (enter_ask == "") {
+                        alert("Vui lòng nhập giá tiền");
+                        return false;
+                    }
+
+                    var payment = $("input[name=payment]:checked").val();
+
+                    var info = {
+                        "enter_ask": enter_ask,
+                        "exp_day": exp_day,
+                        "account": account,
+                        "phone": phone,
+                        "address": address,
+                        "payment": payment,
+                        "total_price": total,
+                        "payment_fee": payment_fee,
+                        "service_fee": service_fee
+                    };
+
+                    $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
+                    then(function (data) {
+                        // 1:=>ask
+                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=1&size=" + @ViewBag.SizeVN;
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
+        });
     </script>
 }

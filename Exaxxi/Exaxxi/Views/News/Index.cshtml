@@ -31,7 +31,7 @@
                     <span style="color:#ab1113">Main</span> News
                 </div>
                 <div class="col-md-8 ">
-                    <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/{{new1.news.img}}) center; height:400px;"></div>
+                    <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/news/{{new1.news.img}}) center; height:400px;"></div>
                 </div>
                 <div class="col-md-4 ">
                     <div class="news-content-department">{{new1.vi_name_depart}}</div>
@@ -62,7 +62,7 @@
                     <span class="see-all" style="float:right"><a href="/News/NewsDep?loai={{z.id}}">See All</a></span>
                 </div>
                 <div class="col-md-4 news-wrapper" ng-repeat="y in allnews | filter : {'id_depart' :z.id}">
-                    <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/{{y.news.img}}) center">
+                    <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/news/{{y.news.img}}) center">
                         <div class="news-title-wrapper">
                             <a href="/News/Detail?id={{y.news.id}}">{{y.news.vi_title}}</a>
                             <div><span style="color:white">{{y.name_admin}}</span> - {{timeDiff(y.news.date_create)}}</div>

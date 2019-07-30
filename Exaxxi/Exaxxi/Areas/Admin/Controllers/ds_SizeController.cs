@@ -65,7 +65,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,VN,US,UK,Inch,Centimet")] ds_Size ds_Size)
+        public IActionResult Create([Bind("VN,US,UK,Inch,Centimet,id_Depart")] ds_Size ds_Size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {

@@ -57,5 +57,30 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View("FileBrowse");
 
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public void CreateFolder2(string name)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
+            string pathString = System.IO.Path.Combine(path, name);
+            System.IO.Directory.CreateDirectory(pathString);
+            pathString = System.IO.Path.Combine(pathString, name);
+            if (!System.IO.File.Exists(pathString))
+            {
+                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                {
+
+
+                }
+
+            }
+            //var dir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads"));
+            //ViewBag.fileInfos = dir.GetFiles();
+            
+        }
     }
 }

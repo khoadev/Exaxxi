@@ -15,8 +15,8 @@
                                 {{name[0].item.name}}
                             </div>
                             <div class="checkout-product-info">
-                                Highest Bid: <b>${{name[0].item.highest_bid}}</b> | Lowest Ask: <b>${{name[0].item.lowest_ask}}</b><br />
-                                Size <b>{{name[0].size}}</b>
+                                Highest Bid: <b>${{name[0].size.highest_bid}}</b> | Lowest Ask: <b>${{name[0].size.lowest_ask}}</b><br />
+                                Size <b>{{name[0].dsSize.vn}}</b>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 checkout-suggestion">
-                                        A good bid around {{name[0].item.lowest_ask}}VND
+                                        A good bid around {{name[0].size.lowest_ask}} VND
                                     </div>
                                 </div>
                                 <div class="checkout-estimated-wrapper">
@@ -49,7 +49,7 @@
                                             Estimated shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            <input id="shipping_bid" type="text" value="{{shipping_fee}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -57,7 +57,7 @@
                                             Authentication fee
                                         </div>
                                         <div class="col-6 text-right">
-                                            Free
+                                            Free                                            
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -65,7 +65,7 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            -
+                                            <input id="total_bid" type="text" ng-value="(enter_bid + shipping_fee) > 0 ? (enter_bid + shipping_fee) : 0" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <button id="bid" class="btn checkout-btn isbuy col-4" ng-disabled="enter_bid >= name[0].item.lowest_ask">
+                                        <button id="bid" class="btn checkout-btn isbuy col-4" ng-disabled="enter_bid >= name[0].size.lowest_ask">
                                             Bid
                                         </button>
                                     </div>
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input id="value_buy" ng-model="value_buy" type="number" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" ng-value="name[0].item.lowest_ask" />
+                                        <input id="value_buy" ng-model="value_buy" type="number" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" ng-value="name[0].size.lowest_ask" style="background:#FFF" />
                                     </div>
                                     <div class="col-2 checkout-curency">
                                         Đ
@@ -116,7 +116,7 @@
                                             Estimated shipping
                                         </div>
                                         <div class="col-6 text-right">
-                                            200.000VND
+                                            <input id="shipping" type="text" value="{{shipping_fee}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -132,10 +132,18 @@
                                             Total
                                         </div>
                                         <div class="col-6 text-right">
-                                            -
+                                            <input id="total_buy" type="text" ng-value="(name[0].size.lowest_ask + shipping_fee) > 0 ? (name[0].size.lowest_ask + shipping_fee) : 0" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                 </div>
+                                @*KHANG design*@                                
+                                <div class="row checkout-estimated">
+                                    <div class="col-4">
+                                        Voucher:
+                                    </div>
+                                    <input id="voucher" type="text" class="col-6" style="height:30px" />
+                                    <input type="button" ng-click="check_voucher()" id="check_voucher" class="btn btn-outline-info col-2" value="Check" style="height:30px; font-size:13px" />                                                                                                               
+                                </div>                                
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <button id="buy" class="btn checkout-btn isbuy col-4">
@@ -168,6 +176,12 @@
                                 <div class="form-group">
                                     <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter your address" rows="3">{{user_info.address}}</textarea>
                                 </div>
+                                <div class="forn-group" style="margin:5px 0 15px 0">
+                                    <p style="font-family:coolrg;">Place:</p>
+                                    <select id="id_city">
+                                        <option ng-repeat="x in list_city" value="{{x.id}}" ng-selected="user_info.id_city == x.id">{{x.name}}</option>
+                                    </select>
+                                </div>
                             </form>
                             <div class="mb-2" style="font-family:coolrg;">
                                 Payment Method:
@@ -182,7 +196,7 @@
                                 </label>
                             </div>
                             <div class="checkout-payment">
-                                <input class="d-none" id="payment2" value="Cash On Deliery (COD)" name="payment" type="radio" />
+                                <input class="d-none" id="payment2" value="Credit / Debit" name="payment" type="radio" />
                                 <label for="payment2" class="checkout-payment-wrapper">
                                     Credit / Debit<br />
                                     <span class="checkout-payment-desc">
@@ -201,25 +215,44 @@
 @section Scripts{
     <script>
 
-    exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
+        exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
-            $http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
                 .then(function (response) {
-                $scope.name = response.data;
-
+                    $scope.name = response.data;
                 });
 
             //Take Info User
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
-                .then(function (response) { $scope.user_info = response.data });
+                .then(function (response) {
+                    $scope.user_info = response.data;
+                    $http.get("/api/CitysAPI/TakeShippingFee/" + $scope.user_info.id_city)
+                        .then(function (response) { $scope.shipping_fee = response.data; });
+                });
 
+            //Take List Areas
+            $http.get("/api/CitysAPI")
+                .then(function (response) { $scope.list_city = response.data });
+            //Take Shipping fee
+            $("#id_city").on('change', function () {
+                var id_city = $("#id_city").val();
+                $http.get("/api/CitysAPI/TakeShippingFee/" + id_city)
+                    .then(function (response) {
+                        $scope.shipping_fee = response.data;
+                    });
+            });
+            var id_voucher = null;
+            var discount = null;
             //Buy
             $("#buy").on('click', function () {
                 var account = $("#account").val();
                 var phone = $("#phone").val();
                 var address = $("#address").val();
+                var id_city = $("#id_city").val();
+                var shipping = $("#shipping").val();
+                var total_buy = $("#total_buy").val();
 
-                payment = $("input[name=payment]:checked").val();
+                var payment = $("input[name=payment]:checked").val();
                 if (typeof payment === "undefined") {
                     alert("Vui lòng chọn phương thức thanh toán");
                     return false;
@@ -229,7 +262,13 @@
                     "account": account,
                     "phone": phone,
                     "address": address,
+                    "id_city": id_city,
                     "payment": payment,
+                    "city": id_city,
+                    "shipping": shipping,
+                    "total": total_buy,
+                    "id_voucher": id_voucher,
+                    "discount": discount
                 };
 
                 $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
@@ -238,29 +277,33 @@
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 0:=>buy
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0";
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
                             });
 
                     })
                     .catch(function onError(response) {
                         alert(response.data);
                     });
-        });
+            });
         $scope.enter_bid = parseFloat($("#enter_bid").val());
         $("#enter_bid").keyup(function () {
             //alert($("#value_buy").val());
             if (parseFloat($("#enter_bid").val()) >= parseFloat($("#value_buy").val())) {
                 $("#enter_bid").blur();
                 $("#enter_bid").val($("#value_buy").val());
+                $("#total_bid").val(parseFloat($scope.shipping_fee) + parseFloat($("#enter_bid").val()));
             }
         });
-            //Bid
+           //Bid
         $("#bid").on('click', function () {
                 var enter_bid = $("#enter_bid").val();
                 var exp_day = $("#exp_day").val();
                 var account = $("#account").val();
                 var phone = $("#phone").val();
                 var address = $("#address").val();
+                var id_city = $("#id_city").val();
+                var shipping_bid = $("#shipping_bid").val();
+                var total_bid = $("#total_bid").val();
 
                 if (enter_bid == "") {
                     alert("Vui lòng nhập giá tiền");
@@ -276,23 +319,27 @@
                     alert("Vui lòng chọn phương thức thanh toán");
                     return false;
                 }
-                
+
                 var info = {
                     "enter_bid": enter_bid,
                     "exp_day": exp_day,
                     "account": account,
                     "phone": phone,
                     "address": address,
+                    "id_city": id_city,
                     "payment": payment,
+                    "city": id_city,
+                    "shipping": shipping_bid,
+                    "total": total_bid,
                 };
 
-                $http.post("/api/ItemsChange/BuyBid", JSON.stringify(info)).
+                $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
                     then(function (data) {
 
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 1:=>bid
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1";
+                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1" + "&size=" + @ViewBag.SizeVN;
                             });
 
                     })
@@ -300,6 +347,26 @@
                         alert(response.data);
                     });
             });
+            $scope.check_voucher = function () {
+                var code = $("#voucher").val();
+               var dis = $("#value_buy").val();
+                $http.get("/api/VouchersAPI/Check/" + code + "/" + dis).then(function (rs) {
+                    $scope.voucher = rs.data;
+                    
+                    
+                    alert("Thêm Mã Thành Công!");
+                   
+                    $("#voucher").prop('disabled', true);
+                    $("#check_voucher").prop('disabled', true);
+                    $("#total_buy").val($("#total_buy").val() - $scope.voucher.discount);
+                    id_voucher = $scope.voucher.id_voucher;
+                    discount = $scope.voucher.discount;
+                },
+                    //khong co ma
+                    function () {
+                        alert("Mã giảm giá không hợp lệ!");
+                    });
+            }
         });
     </script>
 }

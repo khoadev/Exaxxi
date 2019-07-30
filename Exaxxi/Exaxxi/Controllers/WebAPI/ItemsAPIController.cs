@@ -137,7 +137,29 @@ namespace Exaxxi.Controllers.WebAPI
                     .Select(p => new PostViewModel
                     {
                         item = p.h.e.c.a,
-                        size = p.h.e.d.VN,
+                        size = p.h.e.c.b,
+                        dsSize = p.h.e.d,
+                        brand_name = p.i.name,
+                        cate_name = p.h.f.name,
+                    }).ToList();
+
+            return items;
+        }
+
+        [HttpGet("Detail/{idItem}/{dsSize}")]
+        public IEnumerable<PostViewModel> Detail(int idItem, int dsSize)
+        {
+            var items = _context.Items
+                    .Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
+                    .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                    .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
+                    .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
+                    .Where(g => g.h.e.c.a.id == idItem && g.h.e.d.VN == dsSize)
+                    .Select(p => new PostViewModel
+                    {
+                        item = p.h.e.c.a,
+                        size = p.h.e.c.b,
+                        dsSize = p.h.e.d,
                         brand_name = p.i.name,
                         cate_name = p.h.f.name,
                     }).ToList();
@@ -197,25 +219,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Where(p => p.d.id_department == id)
                 .Select(p => p.c.a);
         }
-
-        [Route("TakeIdPost_ForOrder/{id}")]
-        public IActionResult TakeIdPost_ForOrder(int id)
-        {
-            var low_item = _context.Items.Where(p => p.id == id).FirstOrDefault().lowest_ask;
-
-            var pricePost = Convert.ToDouble(low_item);
-
-            var idPost = _context.Posts
-                .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
-                .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
-                .Where(p => p.d.id == id && p.c.a.price == pricePost && p.c.a.kind == 1)
-                .Select(p => new Posts
-                {
-                    id = p.c.a.id
-                }).FirstOrDefault().id;
-
-            return Ok(idPost);
-        }
+        
         [Route("Popular/{id_depart}")]
         public IEnumerable<Items> GetItemsPopular(int id_depart)
         {

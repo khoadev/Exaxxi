@@ -26,7 +26,8 @@ namespace Exaxxi.Models
         [DataType(DataType.Date)]
         [Display(Name = "Ngày kết thúc")]
         public DateTime date_end { get; set; }
-        [Range(0, 1)]
+        //1:ask, 2:bid
+        [Range(1, 2)]
         [Display(Name = "Hình thức giao dịch")]
         public int kind { get; set; }
         public int status { get; set; }
@@ -36,5 +37,8 @@ namespace Exaxxi.Models
         public int id_user { get; set; }
         [ForeignKey("id_user")]
         public Users user { get; set; } 
+        public int id_city { get; set; }
+        [ForeignKey("id_city")]
+        public Citys city { get; set; }
     }
 }

@@ -1,0 +1,55 @@
+﻿<div ng-controller="Request" style="margin-top:50px">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h4 class="modal-title">Request Form</h4>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+        <div class="form-group">
+            <input id="re_pro_cate" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's category">
+        </div>
+        <div class="form-group">
+            <input id="re_pro_name" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's name">
+        </div>
+        <div class="form-group">
+            <textarea id="re_desc_pro" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Describe your product" rows="3"></textarea>
+        </div>
+    </div>
+    <!-- Modal footer -->
+    <div class="modal-footer">
+        <button id="re_btn" type="button" class="btn btn-danger">Send</button>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        //Request
+        exaxxiApp.controller("Request", function ($scope, $http) {
+            $http.get("/api/UsersAPI/" + @ViewBag.idUser)
+                .then(function (response) { $scope.email_user = response.data; });
+
+            $("#re_btn").on("click", function () {
+                var re_pro_cate = $("#re_pro_cate").val();
+                var re_pro_name = $("#re_pro_name").val();
+                var re_desc_pro = $("#re_desc_pro").val();
+
+                var info = {
+                    "re_pro_cate": re_pro_cate,
+                    "re_pro_name": re_pro_name,
+                    "re_desc_pro": re_desc_pro,
+                    "email_user": $scope.email_user.email,
+                };
+
+                $http.post("/api/UsersAPI/User_Request", JSON.stringify(info)).
+                    then(function (data) {
+                        alert("Yêu cầu của bạn đã được chấp nhận!");
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
+        });
+    </script>
+}

@@ -6,7 +6,7 @@
 
 }
 
-<div class="top-wrapper" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/@Model.news.img) center;" ng-controller="Show">
+<div class="top-wrapper" style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/news/@Model.news.img) center;" ng-controller="Show">
     <!-- Start top-wrapper -->
     <div class="container">
         <!-- Start Container -->
@@ -36,7 +36,7 @@
 
                     <div class="row content-right-first-news">
                         <div class="col-4">
-                            <img src="../images/{{x.news.img}}" alt="" class="img-fluid">
+                            <img src="../images/news/{{x.news.img}}" alt="" class="img-fluid">
                         </div>
                         <div class="col-8 pl-0">
                             <a href="News/Details?id={{x.id}}"> <p>{{x.news.vi_title}}<span class="content-right-first-date">{{timeDiff(x.news.date_create)}}</span></p></a>

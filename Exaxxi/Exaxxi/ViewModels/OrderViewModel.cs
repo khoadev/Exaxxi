@@ -10,5 +10,6 @@ namespace Exaxxi.ViewModels
     {
         public Items items { get; set; }
         public Orders orders { get; set; }
+        public Sizes size { get; set; }
     }
 }

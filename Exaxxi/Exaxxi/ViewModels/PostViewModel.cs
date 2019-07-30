@@ -14,6 +14,7 @@ namespace Exaxxi.Models
         public string brand_name { get; set; }
         public double price { get; set; }
         public int kind { get; set; }
-        public int size { get; set; }
+        public Sizes size { get; set; }
+        public ds_Size dsSize { get; set; }
     }
 }

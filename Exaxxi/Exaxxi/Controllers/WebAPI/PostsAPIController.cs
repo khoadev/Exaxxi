@@ -123,7 +123,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask)
+                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask && k.c.a.e.g.status == 0)
                 .OrderByDescending(h => h.c.a.e.g.date_start)
                 .Take(10)
                 .Select(m => new PostViewModel
@@ -143,7 +143,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 2 && k.c.a.e.g.price == k.c.a.e.h.highest_bid)
+                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 2 && k.c.a.e.g.price == k.c.a.e.h.highest_bid && k.c.a.e.g.status == 0)
                 .OrderByDescending(h => h.c.a.e.g.date_start)
                 .Take(10)
                 .Select(m => new PostViewModel
@@ -154,6 +154,15 @@ namespace Exaxxi.Controllers.WebAPI
                     price = m.c.a.e.g.price,
                     kind = m.c.a.e.g.kind
                 });
+        }
+
+        [Route("SelectEmailUser/{idPost}")]
+        public IActionResult SelectEmailUser(int idPost)
+        {
+            var data = _context.Posts
+                .Join(_context.Users, a => a.id_user, b => b.id, (a, b) => new { a, b })
+                .Where(p => p.a.id == idPost).SingleOrDefault().b.email;     
+            return Ok(data);
         }
     }
 }

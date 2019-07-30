@@ -20,6 +20,13 @@ namespace Exaxxi.Models
         public DbSet<Posts> Posts { get; set; }
         public DbSet<Sizes> Sizes { get; set; }
         public DbSet<Orders> Orders { get; set; }
+        public DbSet<Shippings> Shippings { get; set; }
+        public DbSet<Citys> Citys { get; set; }
+
+        public DbSet<Voucher> Vouchers { get; set; }
+
+        public DbSet<ServiceFeeDetails> ServiceFeeDetails { get; set; }
+
 
         //Server Name - Escanor: DESKTOP-9LUKN91\SQLEXPRESS
         //Server Name - Khoa: DESKTOP-EH88R88\SQLEXPRESS
@@ -129,7 +136,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "0911111111",
-                    address = "bitexco quan 1"
+                    address = "bitexco quan 1",
+                    id_city = 1
                 },
                 new Users
                 {
@@ -142,7 +150,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "091222222",
-                    address = "land max"
+                    address = "land max",
+                    id_city = 1
                 },
                 new Users
                 {
@@ -155,7 +164,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "091111845891",
-                    address = "daslat quan 1"
+                    address = "daslat quan 1",
+                    id_city = 3
                 },
                 new Users
                 {
@@ -168,7 +178,8 @@ namespace Exaxxi.Models
                     date_registion = DateTime.Parse("2019-01-05"),
                     active = true,
                     phone = "0914135111",
-                    address = "lamdong quan 1"
+                    address = "lamdong quan 1",
+                    id_city = 2
                 }
             );
             builder.Entity<Departments>().HasData(
@@ -565,7 +576,7 @@ namespace Exaxxi.Models
                     name = "Yeezy 500 Super Moon",
                     vi_info = "Những chiếc Yeezy 500 Super Moon Yellows mới này đang nóng hơn cả một ngọn lửa Jackson Hole. Colorway mới nhất trong dòng Yeezy 500, chúng sử dụng đệm adiPrene thay cho BOOST và có vẻ ngoài to hơn sẽ phát triển trên bạn (tin tưởng chúng tôi). Cặp màu vàng toàn mặt trăng này là colorway đầu tiên bị rơi, như là một phần của gói Yeezy season 6, tiếp theo là bản phát hành rộng hơn vào tháng 6 năm 2018. Người hâm mộ của Ye cần phải thực hiện 'No Mistakes' và thêm colorway Yeezy 500 này vào bộ sưu tập càng sớm càng tốt.",
                     en_info = "These new Yeezy 500 Super Moon Yellows are coming in hotter than a Jackson Hole bonfire. The latest colorway in the Yeezy 500 line, these use adiPrene cushioning in place of BOOST and feature a chunkier look that will grow on you (trust us). This all-moon yellow pair was the first colorway that dropped, as part of the Yeezy season 6 bundle, followed by a wider release in June of 2018. Fans of Ye need to make 'No Mistakes' and add this Yeezy 500 colorway into the collection asap.",
-                    img = "yezzy3.jpg",
+                    img = "yeezy3.jpg",
                     volatility = 0,
                     trade_max = 6000000,
                     trade_min = 5000000,
@@ -581,7 +592,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Powerphase Calabasas Core Black",
                     vi_info = "Colorway thứ ba của dòng, adidas Yeezy Powerphase Calabasas này có bảng màu đen đơn sắc.Ngoài ra còn có nhãn hiệu Adidas màu xanh lá cây bên cạnh logo Trefoil màu đỏ.Colorway cổ điển này được phát hành vào tháng 3 năm 2017 với giá $ 120.",
                     en_info = "The third colorway of the series, this adidas Yeezy Powerphase Calabasas features a monochromatic core black color palette. There is also Adidas branding in green next to a red Trefoil logo. This classic colorway released in March 2017 for $120.",
-                    img = "yezzy4.jpg",
+                    img = "yeezy4.jpg",
                     volatility = 0,
                     trade_max = 7000000,
                     trade_min = 5500000,
@@ -597,7 +608,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Boost 750 Light Grey Glow In the Dark",
                     vi_info = "Giày adidas hợp tác đầu tiên của Kanye West, Yeezy Boost 750 OG, được phát hành trên toàn thế giới vào tháng 2 năm 2017 với số lượng cực kỳ hạn chế. Các thiết kế giống như giày cao chót vót thể hiện sự khác biệt hoàn toàn so với các thiết kế trước đó của West, với phần trên bằng da lộn màu nâu nhạt được gắn trên một khung sườn, dụng cụ cao su được trang bị Boost trong một bóng râm trắng tinh tế. Thiết kế tối giản được tạo điểm nhấn với dây buộc quá khổ, chi tiết đục lỗ trên hộp ngón chân, và một dây đeo chân giữa rộng trong một chế tạo twill tonal. Một dây kéo ẩn ở phía bên cung cấp dễ dàng bật và tắt.",
                     en_info = "Kanye West’s very first collaborative adidas shoe, the Yeezy Boost 750 ‘OG’ released worldwide February 2017 in extremely limited quantities. The towering boot-like builds showcases a radical departure from West’s previous designs, featuring a light brown all-suede upper mounted atop a partially ribbed, Boost-equipped rubber tooling in a subtle off-white shade. The minimalist design is accented with oversized rope laces, perforated detailing on the toe box, and a wide midfoot strap in a tonal twill fabrication. A hidden zipper on the lateral side provides easy on and off.",
-                    img = "yezzy5.jpg",
+                    img = "yeezy5.jpg",
                     volatility = 0,
                     trade_max = 4500000,
                     trade_min = 4000000,
@@ -614,7 +625,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Desert Boot Oil",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy6.jpg",
+                    img = "yeezy6.jpg",
                     volatility = 0,
                     trade_max = 8000000,
                     trade_min = 6000000,
@@ -630,7 +641,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Boost 950 Pirate Black",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy7.jpg",
+                    img = "yeezy7.jpg",
                     volatility = 0,
                     trade_max = 8000000,
                     trade_min = 6000000,
@@ -647,7 +658,7 @@ namespace Exaxxi.Models
                     name = "Yeezy 500 Soft Vision",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy16.jpg",
+                    img = "yeezy16.jpg",
                     volatility = 0,
                     trade_max = 8300000,
                     trade_min = 6600000,
@@ -663,7 +674,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Classic",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy8.jpg",
+                    img = "yeezy8.jpg",
                     volatility = 0,
                     trade_max = 1000000,
                     trade_min = 600000,
@@ -678,7 +689,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Boost 500 Bone White",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy9.jpg",
+                    img = "yeezy9.jpg",
                     volatility = 0,
                     trade_max = 11000000,
                     trade_min = 6000000,
@@ -695,7 +706,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Boost 500 Bone White V2",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy9.jpg",
+                    img = "yeezy9.jpg",
                     volatility = 0,
                     trade_max = 11000000,
                     trade_min = 6000000,
@@ -712,7 +723,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Boost 500 Bone White V3",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy9.jpg",
+                    img = "yeezy9.jpg",
                     volatility = 0,
                     trade_max = 11000000,
                     trade_min = 6000000,
@@ -729,7 +740,7 @@ namespace Exaxxi.Models
                     name = "Yeezy 500 Soft Vision V2",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy16.jpg",
+                    img = "yeezy16.jpg",
                     volatility = 0,
                     trade_max = 8300000,
                     trade_min = 6600000,
@@ -746,7 +757,7 @@ namespace Exaxxi.Models
                     name = "Yeezy 500 Soft Vision V4",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
-                    img = "yezzy16.jpg",
+                    img = "yeezy16.jpg",
                     volatility = 0,
                     trade_max = 8300000,
                     trade_min = 6600000,
@@ -763,7 +774,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Powerphase Calabasas Core Black v2",
                     vi_info = "Colorway thứ ba của dòng, adidas Yeezy Powerphase Calabasas này có bảng màu đen đơn sắc.Ngoài ra còn có nhãn hiệu Adidas màu xanh lá cây bên cạnh logo Trefoil màu đỏ.Colorway cổ điển này được phát hành vào tháng 3 năm 2017 với giá $ 120.",
                     en_info = "The third colorway of the series, this adidas Yeezy Powerphase Calabasas features a monochromatic core black color palette. There is also Adidas branding in green next to a red Trefoil logo. This classic colorway released in March 2017 for $120.",
-                    img = "yezzy4.jpg",
+                    img = "yeezy4.jpg",
                     volatility = 0,
                     trade_max = 7000000,
                     trade_min = 5500000,
@@ -779,7 +790,7 @@ namespace Exaxxi.Models
                     name = "Yeezy Powerphase Calabasas Core Black v3",
                     vi_info = "Colorway thứ ba của dòng, adidas Yeezy Powerphase Calabasas này có bảng màu đen đơn sắc.Ngoài ra còn có nhãn hiệu Adidas màu xanh lá cây bên cạnh logo Trefoil màu đỏ.Colorway cổ điển này được phát hành vào tháng 3 năm 2017 với giá $ 120.",
                     en_info = "The third colorway of the series, this adidas Yeezy Powerphase Calabasas features a monochromatic core black color palette. There is also Adidas branding in green next to a red Trefoil logo. This classic colorway released in March 2017 for $120.",
-                    img = "yezzy4.jpg",
+                    img = "yeezy4.jpg",
                     volatility = 0,
                     trade_max = 7000000,
                     trade_min = 5500000,
@@ -1091,6 +1102,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 1,
                     id_user = 1,
+                    id_city = 1,
                     status = 0
                 },
                 new Posts
@@ -1102,6 +1114,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 1,
                     id_user = 2,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1114,6 +1127,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 2,
                     id_user = 3,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1125,6 +1139,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 2,
                     id_user = 1,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1136,6 +1151,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 3,
                     id_user = 4,
+                    id_city = 1,
                     status = 0
                 },
                 new Posts
@@ -1147,6 +1163,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 3,
                     id_user = 2,
+                    id_city = 1,
                     status = 0
                 },
                 new Posts
@@ -1158,6 +1175,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 4,
                     id_user = 1,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1169,6 +1187,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 4,
                     id_user = 2,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1180,6 +1199,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 5,
                     id_user = 4,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1191,6 +1211,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 5,
                     id_user = 1,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1202,6 +1223,7 @@ namespace Exaxxi.Models
                      kind = 1,
                      id_size = 6,
                      id_user = 1,
+                     id_city = 1,
                      status = 0
                  },
                 new Posts
@@ -1213,7 +1235,8 @@ namespace Exaxxi.Models
                      kind = 0,
                      id_size = 6,
                      id_user = 4,
-                     status = 0
+                    id_city = 1,
+                    status = 0
                  },
                 new Posts
                 {
@@ -1224,6 +1247,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size =7,
                     id_user = 4,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1235,6 +1259,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 7,
                     id_user = 1,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1246,6 +1271,7 @@ namespace Exaxxi.Models
                     kind = 1,
                     id_size = 8,
                     id_user = 1,
+                    id_city = 3,
                     status = 0
                 },
                 new Posts
@@ -1257,6 +1283,7 @@ namespace Exaxxi.Models
                     kind = 0,
                     id_size = 8,
                     id_user = 2,
+                    id_city = 2,
                     status = 0
                 },
                 new Posts
@@ -1268,7 +1295,8 @@ namespace Exaxxi.Models
                      kind = 1,
                      id_size = 9,
                      id_user = 4,
-                     status = 0
+                    id_city = 1,
+                    status = 0
                  },
                 new Posts
                  {
@@ -1279,6 +1307,7 @@ namespace Exaxxi.Models
                      kind = 0,
                      id_size = 9,
                      id_user = 1,
+                     id_city = 1,
                      status = 0
                  }
             );
@@ -1300,6 +1329,76 @@ namespace Exaxxi.Models
                     id = 3,
                     id_size = 1,
                     id_user = 2
+                }
+            );
+            builder.Entity<Shippings>().HasData(
+                new Shippings
+                {
+                    id = 1,
+                    name = "Miền Nam",
+                    shipping_fee = 10000
+                },
+                new Shippings
+                {
+                    id = 2,
+                    name = "Miền Trung",
+                    shipping_fee = 20000
+                },
+                new Shippings
+                {
+                    id = 3,
+                    name = "Miền Bắc",
+                    shipping_fee = 30000
+                }
+            );
+            builder.Entity<Citys>().HasData(
+                new Citys
+                {
+                    id = 1,
+                    name = "Tp Hồ Chí Minh",
+                    id_shipping = 1
+                },
+                new Citys
+                {
+                    id = 2,
+                    name = "Huế",
+                    id_shipping = 2
+                },
+                new Citys
+                {
+                    id = 3,
+                    name = "Hà Nội",
+                    id_shipping = 3
+                }
+            );
+            builder.Entity<ServiceFeeDetails>().HasData(
+                new ServiceFeeDetails
+                {
+                    id = 1,
+                    level = "1",
+                    sale_required = 0,
+                    value = 0.098
+                },
+                new ServiceFeeDetails
+                {
+                    id = 2,
+                    level = "2",
+                    sale_required = 3,
+                    value = 0.09
+                },
+                new ServiceFeeDetails
+                {
+                    id = 3,
+                    level = "3",
+                    sale_required = 30,
+                    value = 0.085
+                },
+                new ServiceFeeDetails
+                {
+                    id = 4,
+                    level = "4",
+                    sale_required = 100,
+                    value = 0.08
                 }
             );
         }
