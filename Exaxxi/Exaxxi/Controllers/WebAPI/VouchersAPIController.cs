@@ -75,6 +75,25 @@ namespace Exaxxi.Controllers.WebAPI
            
            
         }
+        //cap nhat voucher khi su dung thanh cong
+        [HttpGet("UpdateCount/{id}")]
+        public IActionResult UpdateCount([FromRoute] int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var check = _context.Vouchers.Where(p => p.id == id).FirstOrDefault().count;
+                var vc = _context.Vouchers.Where(p => p.id == id).First();
+                vc.count = check - 1;
+                _context.SaveChanges();
+
+                return Ok();
+            }
+            
+        }
         //// PUT: api/VouchersAPI/5
         //[HttpPut("{id}")]
         //public async Task<IActionResult> PutVoucher([FromRoute] int id, [FromBody] Voucher voucher)

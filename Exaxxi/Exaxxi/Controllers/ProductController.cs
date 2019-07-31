@@ -127,7 +127,7 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Confirm_Checkout(int id, int act, int? size)
+        public async Task<IActionResult> Confirm_CheckoutAsync(int id, int act, int? size)
         {
             //Buy
             if (act == 0)
@@ -170,6 +170,7 @@ namespace Exaxxi.Controllers
                 if (HttpContext.Session.GetInt32("ck_id_voucher") != null)
                 {
                     orders.id_voucher = HttpContext.Session.GetInt32("ck_id_voucher").Value;
+                    await _api.getAPI("api/VouchersAPI/UpdateCount/" + HttpContext.Session.GetInt32("ck_id_voucher").Value);
                 }
 
                 //Send Mail 
