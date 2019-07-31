@@ -92,6 +92,11 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
 
             var ds_Size = JsonConvert.DeserializeObject<ds_Size>(_api.getAPI($"api/ds_SizeAPI/{id}", HttpContext.Session.GetString("token")).Result);
+
+            //Select Name of Department
+            var name_depart = _api.getAPI($"api/DepartmentsAPI/TakeNameDepWithDsSize/{id}", HttpContext.Session.GetString("token")).Result;
+            ViewBag.NameDepart = name_depart;
+
             if (ds_Size == null)
             {
                 return NotFound();
@@ -104,7 +109,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,VN,US,UK,Inch,Centimet")] ds_Size ds_Size)
+        public async Task<IActionResult> Edit(int id, [Bind("id,VN,US,UK,Inch,Centimet,id_Depart")] ds_Size ds_Size)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
