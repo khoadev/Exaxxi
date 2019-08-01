@@ -34,7 +34,15 @@
     SEND: "Send",
     RENEWPASS: "Renew Password",
     NEWPASS: "New Password",
-    RECENTNEW: "Recent News"
+    RECENTNEW: "Recent News",
+    CLOSE: "Close",
+    FOLLOWING: "Following",
+    LASTSALE: "Last Sale",
+    BUY: "Buy",
+    SELL: "Sell",
+    DESCR: "Decription",
+    CHOOSESIZE: "Choose Size",
+    BID: "Place Bid"
 };
 
 var translationsVI = {
@@ -73,5 +81,14 @@ var translationsVI = {
     SEND: "Gửi",
     RENEWPASS: "Cấp Lại Mật Khẩu",
     NEWPASS: "Mật khẩu mới",
-    RECENTNEW: "Tin tức gần đây"
+    RECENTNEW: "Tin tức gần đây",
+    CLOSE: "Đóng",
+    FOLLOWING: "Đang theo dõi",
+    LASTSALE: "Giá Bán Gần Nhất",
+    BUY: "Mua",
+    SELL: "Bán",
+    DESCR: "Mô Tả",
+    CHOOSESIZE: "Chọn size",
+    BID:"Đặt Giá"
+
 };
