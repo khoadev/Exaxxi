@@ -95,7 +95,7 @@
                                     <i class="material-icons">category</i>
                                     <p>Categorie</p>
                                 </a>
-                            </li> 
+                            </li>
                             <li class="nav-item  @(controllernName == "Upload" ? "active" : "")">
                                 <a class="nav-link" asp-controller="Upload" asp-area="Admin" asp-action="Create">
                                     <i class="material-icons">category</i>
@@ -127,6 +127,12 @@
                                 <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">
                                     <i class="material-icons">web</i>
                                     <p>Post</p>
+                                </a>
+                            </li>
+                            <li class="nav-item @(controllernName == "Orders" ? "active" : "")">
+                                <a class="nav-link" asp-controller="Orders" asp-area="Admin" asp-action="Index">
+                                    <i class="material-icons">web</i>
+                                    <p>Order</p>
                                 </a>
                             </li>
                             <li class="nav-item @(controllernName == "Sizes" ? "active" : "")">

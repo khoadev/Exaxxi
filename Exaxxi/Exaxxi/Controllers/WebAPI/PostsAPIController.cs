@@ -164,5 +164,45 @@ namespace Exaxxi.Controllers.WebAPI
                 .Where(p => p.a.id == idPost).SingleOrDefault().b.email;     
             return Ok(data);
         }
+        [Route("TakeLowestAsk/{id_item}/{id_size}")]
+        public IActionResult TakeLowestAsk(int id_item, int id_size)
+        {
+            double lowestAsk = 0;
+            if(!ModelState.IsValid || id_item == 0)
+            {
+                return BadRequest(ModelState);
+            }
+            if(id_item > 0)
+            {
+                var list = _context.Posts.Join(_context.Sizes, p => p.id_size, s => s.id, (p, s) => new { p, s })
+                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 1 && r.p.status == 0);
+                if(id_size > 0)
+                {
+                    list = list.Where(h => h.s.id == id_size);
+                }
+                lowestAsk = list.OrderBy(o => o.p.price).FirstOrDefault().p.price;
+            }
+            return Ok(lowestAsk);
+        }
+        [Route("TakeHighestBid/{id_item}/{id_size}")]
+        public IActionResult TakeHighestBid(int id_item, int id_size)
+        {
+            double highestBid = 0;
+            if (!ModelState.IsValid || id_item == 0)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id_item > 0)
+            {
+                var list = _context.Posts.Join(_context.Sizes, p => p.id_size, s => s.id, (p, s) => new { p, s })
+                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 2 && r.p.status == 0);
+                if (id_size > 0)
+                {
+                    list = list.Where(h => h.s.id == id_size);
+                }
+                highestBid = list.OrderByDescending(o => o.p.price).FirstOrDefault().p.price;
+            }
+            return Ok(highestBid);
+        }
     }
 }

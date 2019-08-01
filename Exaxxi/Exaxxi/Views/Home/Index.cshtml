@@ -9,7 +9,7 @@
 
 <div id="category-panel" ng-controller="departmentCtrl">
     <!-- Start category-panel -->
-    <a ng-repeat="x in names" href="/Home/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'category-panel-active' : ''}}">{{x.vi_name}}</a>
+    <a ng-repeat="x in names" href="/Home/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'category-panel-active' : ''}}">{{lang=="vi"?x.vi_name:x.en_name}}</a>
 </div> <!-- End category-panel -->
 
 <div ng-controller="itemPopularCtrl">
@@ -17,13 +17,13 @@
         <div class="divider-section">
             <!-- Start divider-section -->
             <div class="see-all">
-                <a href="/Product">
-                    See All
+                <a href="/Product" translate>
+                    {{ 'SEEALL' }}
                 </a>
             </div>
             <hr>
             <div class="divider-wrapper">
-                <p class="title-divider">Popular Products</p>
+                <p class="title-divider" translate>{{ 'POPULAR' }}</p>
             </div>
         </div> <!-- End divider-section -->
     </div>

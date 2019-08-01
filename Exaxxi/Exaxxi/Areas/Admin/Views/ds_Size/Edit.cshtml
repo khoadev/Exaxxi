@@ -57,8 +57,9 @@
 @section Scripts{
     <script>
         app.controller('editDsSize', function ($scope, $http) {
+            var idDep = @ViewBag.NameDepart -1;
             $http.get("/api/DepartmentsAPI")
-                .then(function (response) { $scope.name = response.data; $scope.selectedDepart = $scope.name[0];});
+                .then(function (response) { $scope.name = response.data; $scope.selectedDepart = $scope.name[idDep];});
             $scope.sendData = function () {
                 var id_department =  $scope.selectedDepart.id;
                 var VN = $("#VN").val();
@@ -69,6 +70,7 @@
 
 
                 var ds_Size = {
+                    "id":@Model.id,
                     "VN": VN,
                     "US": US,
                     "UK": UK,
@@ -82,14 +84,13 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 }
-                $scope.id_department = @Model.id_Depart;
-                var url = "/api/ds_SizeChange/" + @Model.id;
-                $http.put(url,JSON.stringify(ds_Size),config).then(function (response) {
+                console.log(ds_Size);
+                $http.put("/api/ds_SizeChange/@Model.id", JSON.stringify(ds_Size),config).then(function (response) {
                     alert("thanh cong");
                 }, function error(response) {
                     // this function will be called when the request returned error status
-                    alert("that bai");
-
+                        alert("that bai");
+                        
                 });
             };
         });

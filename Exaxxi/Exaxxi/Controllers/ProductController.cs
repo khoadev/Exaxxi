@@ -314,9 +314,11 @@ namespace Exaxxi.Controllers
                 var email_post = _api.getAPI("api/PostsAPI/SelectEmailUser/" + idPost).Result;
                 Mailer ml = new Mailer();
                 ml.SendMail("Exaxxi Site", email_post, "Sell Product", "Your selling has something new. Please check details in your account!");
-
+                
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
+                    //update data after sell
+
                     return RedirectToAction("Index", "User");
                 }
             }

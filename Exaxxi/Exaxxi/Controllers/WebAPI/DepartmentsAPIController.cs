@@ -55,5 +55,16 @@ namespace Exaxxi.Controllers.WebAPI
 
             return departments;
         }
+
+        [Route("TakeNameDepWithDsSize/{id}")]
+        public IActionResult TakeNameDepWithDsSize(int id)
+        {
+
+            var name = _context.ds_Size
+                .Join(_context.Departments, a => a.id_Depart, b => b.id, (a, b) => new { a, b })
+                .Where(p => p.a.id == id).FirstOrDefault().b.id;
+
+            return Ok(name);
+        }
     }
 }
