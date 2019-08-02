@@ -74,6 +74,61 @@ namespace Exaxxi.Controllers.WebAPI
             return CreatedAtAction("GetUsers", new { id = users.id }, users);
         }
 
+        [Route("ChangeUserInAdmin")]
+        public async Task<IActionResult> ChangeUserInAdmin([FromBody] JObject json)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dynamic data = json;
+            string pass = data.pass;
+            string re_pass = data.re_pass;
+            bool active = data.active;
+            string email = data.email;
+
+            int act = 0;
+
+            if(active == true)
+            {
+                act = 1;
+            }
+            else
+            {
+                act = 0;
+            }
+
+            if (pass.Length > 0)
+            {
+                if(pass.Length < 8)
+                {
+                    return BadRequest("Mật khẩu tối thiểu 8 ký tự!");
+                }
+
+                if (pass != re_pass)
+                {
+                    return BadRequest("Nhập lại mật khẩu chưa chính xác!");
+                }
+
+                Regex rgx = new Regex(info.RegEx);
+                if (!rgx.IsMatch(pass))
+                {
+                    return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường!");
+                }
+
+                var password = bf.Encrypt_CBC(pass);
+
+                _context.Users.First(p => p.email == email).password = password;
+            }
+
+            _context.Users.First(p => p.email == email).active = Convert.ToBoolean(act);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();            
+        }
+
         [Route("Info_Person")]
         public async Task<IActionResult> Info_Person([FromBody] JObject json)
         {

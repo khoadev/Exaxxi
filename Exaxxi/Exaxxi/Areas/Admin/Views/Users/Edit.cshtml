@@ -8,60 +8,40 @@
 
 <h4>Users</h4>
 <hr />
-<div class="row">
+<div class="row" ng-controller="User">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
                 <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
+                <input readonly asp-for="name" class="form-control" />
                 <span asp-validation-for="name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
+                <input id="pass" type="password" class="form-control" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
+                <input id="re_pass" type="password" class="form-control" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
+                <input readonly id="email" asp-for="email" class="form-control" />
                 <span asp-validation-for="email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="level_seller" class="control-label"></label>
-                <input asp-for="level_seller" class="form-control" />
-                <span asp-validation-for="level_seller" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="score_buyer" class="control-label"></label>
-                <input asp-for="score_buyer" class="form-control" />
-                <span asp-validation-for="score_buyer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="date_registion" class="control-label"></label>
-                <input asp-for="date_registion" class="form-control" />
-                <span asp-validation-for="date_registion" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="active" /> @Html.DisplayNameFor(model => model.active)
+                        <input id="active" asp-for="active" /> @Html.DisplayNameFor(model => model.active)
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input id="save" type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -70,4 +50,30 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+@section Scripts{
+    <script>
+        app.controller('User', function ($scope, $http) {
+            $("#save").on('click', function () {
+                var pass = $("#pass").val();
+                var re_pass = $("#re_pass").val();
+                var active = $("#active").is(":checked");
+                var email = $("#email").val();
+                var user = {
+                    "pass": pass,
+                    "re_pass": re_pass,
+                    "active": active,
+                    "email": email,
+                };
+                console.log(user);
+                $http.post("/api/UsersChange/ChangeUserInAdmin", JSON.stringify(user)).
+                    then(function (data) {
+                        window.location = "/Admin/Users/Index";
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });            
+        });
 
+    </script>
+}
