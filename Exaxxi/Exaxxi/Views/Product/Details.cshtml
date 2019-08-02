@@ -24,7 +24,7 @@
 
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Modal Heading</h4>
+                                    <h4 class="modal-title">3D</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
 
@@ -40,7 +40,7 @@
 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"> {{'CLOSE'| translate}}</button>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Following</h4>
+                                        <h4 class="modal-title"> {{'FOLLOWING'| translate}}</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
@@ -91,15 +91,15 @@
                                 </div>
                             </div>
                         </div>
-                        <p>Condition <span>New</span></p>
-                        <h5>100% Authentic</h5>
+                        @*<p>Condition <span>New</span></p>
+                            <h5>100% Authentic</h5>*@
                     </div> <!-- End right-first -->
 
 
                     <div class="detail-content-right-second">
                         <!-- Start right-second -->
                         <div class="size">
-                            <a style="cursor:pointer; color:aliceblue; font-size:22px" data-toggle="modal" data-target="#sizeModal" class="btn btn-info">Size</a> <span style="color:black">&nbsp;<input id="sizeVN" type="number" value="@ViewBag.SizeVN" style="width:80px; border:none; background-color:#FFF" disabled /></span>
+                            <a style="cursor:pointer; color:aliceblue; font-size:22px" data-toggle="modal" data-target="#sizeModal" class="btn btn-info">{{'SIZE'| translate}}</a> <span style="color:black">&nbsp;<input id="sizeVN" type="number" value="@ViewBag.SizeVN" style="width:80px; border:none; background-color:#FFF" disabled /></span>
                         </div>
                         <div class="modal fade" id="sizeModal">
                             <div class="modal-dialog">
@@ -107,7 +107,7 @@
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Chose Size</h4>
+                                        <h4 class="modal-title">{{'CHOOSESIZE'| translate}}</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
@@ -143,8 +143,9 @@
 
                         <div class="detail-second-right" style="display: flex;">
                             <!-- Start second-right -->
-                            <div><p>Last Sale <br> <h3>{{name[0].item.trade_min | currency:"":0:3}} VND</h3></p></div>
-                            <div><h6>▲+20.000VND(20%)</h6></div>
+                            <div><p>{{'LASTSALE'| translate}}<br> <h3>{{name[0].item.trade_min | currency:"":0:3}} VND</h3></p></div>
+                            @*<div><h6>▲+20.000VND(20%)</h6></div>*@
+
                         </div> <!-- End second-right -->
 
                     </div> <!-- End right-second -->
@@ -153,12 +154,12 @@
                         <!-- Start right-final -->
                         <div class="float-right detail-right">
                             <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask | currency:"":0:3}} VND</h3>
-                            <p style="color: black; transform: translateY(-7px)">View All Asks</p>
+                            @*<p style="color: black; transform: translateY(-7px)">View All Asks</p>*@
                         </div>
                         <a ng-click="check_buy()" style="cursor:pointer">
                             <div class="detail-left">
-                                <h3 style=" font-family: coolrg;">Buy</h3>
-                                <span style="font-family: coolcond; font-size:20px;">Lowest Asks</span>
+                                <h3 style=" font-family: coolrg;">{{'BUY'| translate}}</h3>
+                                <span style="font-family: coolcond; font-size:20px;">{{'LOWESTASK'| translate}}</span>
                             </div>
                         </a>
                     </div>
@@ -169,8 +170,8 @@
                         </div>
                         <a ng-click="check_sell()" style="cursor:pointer">
                             <div class="detail-left" style="background-color: #ab1113">
-                                <h3 style=" font-family: coolrg;">Sell</h3>
-                                <span style="font-family: coolcond;font-size:20px">Highest Bid</span>
+                                <h3 style=" font-family: coolrg;">{{'SELL'| translate}}</h3>
+                                <span style="font-family: coolcond;font-size:20px">{{'HIGHESTBID'| translate}}</span>
                             </div>
                         </a>
                     </div> <!-- End right-final -->
@@ -189,15 +190,15 @@
             <!-- Start container -->
             <div class="row">
                 <!-- Start Row -->
-                <div class="col-sm-4">
-                    <h3>DETAIL</h3>
+                @*<div class="col-sm-4">
+                    <h3>{{'DETAIL'| translate}}</h3>
                     <p style="margin-bottom: 0">Style: XXX-XXX</p>
                     <p style="margin-bottom: 0">Colour:Blue</p>
                     <p style="margin-bottom: 0">Retail Price:100.000VND</p>
                     <p style="margin-bottom: 0">Release Date:2019-04-12</p>
-                </div>
+                </div>*@
                 <div class="col-sm-8">
-                    <h3>DESCRIPTION</h3>
+                    <h3>{{'DESCR'| translate}}</h3>
                     <p>{{name[0].item.vi_info}}</p>
                 </div>
             </div> <!-- End Row -->
