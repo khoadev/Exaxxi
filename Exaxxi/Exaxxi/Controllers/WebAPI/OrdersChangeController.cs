@@ -47,6 +47,16 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(orders);
         }
 
+        [Route("UpdateStatusOrder/{status}/{id}")]
+        public async Task<IActionResult> UpdateStatusOrder(int status, int id)
+        {            
+            var data = _context.Orders.Where(p => p.id == id).First().status = status;            
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // PUT: api/OrdersChange/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrders([FromRoute] int id, [FromBody] Orders orders)
@@ -99,7 +109,7 @@ namespace Exaxxi.Controllers.WebAPI
             await _context.SaveChangesAsync();
 
             return Ok();
-        }
+        }        
 
         // DELETE: api/OrdersChange/5
         [HttpDelete("{id}")]

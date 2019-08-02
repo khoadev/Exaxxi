@@ -126,9 +126,9 @@
                                                             </div>
                                                             @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
                                                             {
-                                                                <div class="size-right">
+                                                                @*<div class="size-right">
                                                                     @ViewBag.Sizes[i++].lowest_ask VND
-                                                                </div>
+                                                                </div>*@
                                                             }
                                                         </label>
                                                     </div>
@@ -143,7 +143,7 @@
 
                         <div class="detail-second-right" style="display: flex;">
                             <!-- Start second-right -->
-                            <div><p>Last Sale <br> <h3>{{name[0].item.trade_min}} VND</h3></p></div>
+                            <div><p>Last Sale <br> <h3>{{name[0].item.trade_min | currency:"":0:3}} VND</h3></p></div>
                             <div><h6>▲+20.000VND(20%)</h6></div>
                         </div> <!-- End second-right -->
 
@@ -152,7 +152,7 @@
                     <div class="detail-content-right-final">
                         <!-- Start right-final -->
                         <div class="float-right detail-right">
-                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask}} VND</h3>
+                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask | currency:"":0:3}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Asks</p>
                         </div>
                         <a ng-click="check_buy()" style="cursor:pointer">
@@ -164,7 +164,7 @@
                     </div>
                     <div class="detail-content-right-final" style="border:1px solid #ab1113">
                         <div class="float-right detail-right">
-                            <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid}} VND</h3>
+                            <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid | currency:"":0:3}} VND</h3>
                             <p style="color: black; transform: translateY(-7px)">View All Bids</p>
                         </div>
                         <a ng-click="check_sell()" style="cursor:pointer">
