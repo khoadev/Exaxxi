@@ -273,6 +273,7 @@
                     var total = $("#enter_ask").val();
                     var payment_fee = @ViewBag.payment_fee;
                     var service_fee = $scope.service_fee.value;
+                    var id_city = $("#id_city").val();
 
 
                     if (enter_ask == "") {
@@ -291,7 +292,8 @@
                         "payment": payment,
                         "total_price": total,
                         "payment_fee": payment_fee,
-                        "service_fee": service_fee
+                        "service_fee": service_fee,
+                        "id_city": id_city
                     };
 
                     $http.post("/Product/Set_SessionSell", JSON.stringify(info)).

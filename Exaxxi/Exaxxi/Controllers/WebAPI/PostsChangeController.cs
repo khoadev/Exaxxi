@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Exaxxi.Common;
+using Exaxxi.Helper;
 using Exaxxi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Exaxxi.Controllers.WebAPI
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostsChangeController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        CallAPI _api = new CallAPI();
 
         public PostsChangeController(ExaxxiDbContext context)
         {
@@ -66,6 +69,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             _context.Posts.Add(posts);
+
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -81,6 +85,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             var posts = await _context.Posts.FindAsync(id);
+
             if (posts == null)
             {
                 return NotFound();
@@ -96,5 +101,6 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Posts.Any(e => e.id == id);
         }
+        
     }
 }

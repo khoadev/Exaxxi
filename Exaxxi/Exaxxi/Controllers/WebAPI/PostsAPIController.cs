@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using Exaxxi.Helper;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -16,6 +18,7 @@ namespace Exaxxi.Controllers.WebAPI
     public class PostsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        CallAPI _api = new CallAPI();
 
         public PostsAPIController(ExaxxiDbContext context)
         {
@@ -180,7 +183,8 @@ namespace Exaxxi.Controllers.WebAPI
                 {
                     list = list.Where(h => h.s.id == id_size);
                 }
-                lowestAsk = list.OrderBy(o => o.p.price).FirstOrDefault().p.price;
+                if (list != null) lowestAsk = list.OrderBy(o => o.p.price).FirstOrDefault().p.price;
+                else return NotFound();
             }
             return Ok(lowestAsk);
         }
@@ -200,7 +204,8 @@ namespace Exaxxi.Controllers.WebAPI
                 {
                     list = list.Where(h => h.s.id == id_size);
                 }
-                highestBid = list.OrderByDescending(o => o.p.price).FirstOrDefault().p.price;
+                if (list.Count() != 0) highestBid = list.OrderByDescending(o => o.p.price).FirstOrDefault().p.price;
+                else return Ok(0);
             }
             return Ok(highestBid);
         }

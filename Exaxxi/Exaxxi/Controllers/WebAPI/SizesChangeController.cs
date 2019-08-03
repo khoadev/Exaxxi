@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Exaxxi.Models;
+using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +56,36 @@ namespace Exaxxi.Controllers.WebAPI
 
             return NoContent();
         }
-
+        // update lowest ask and highest bid of item
+        [AllowAnonymous]
+        [Route("UpdatePrice")]
+        public async Task<IActionResult> UpdatePrice([FromBody]UpdatePrice model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var size = _context.Sizes.Where(r => r.id == model.id).FirstOrDefault();
+            size.lowest_ask = model.lowest_ask;
+            size.highest_bid = model.highest_bid;
+            _context.Entry(size).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SizesExists(model.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         // POST: api/Sizes
         [HttpPost]
         public async Task<IActionResult> PostSizes([FromBody] Sizes sizes)

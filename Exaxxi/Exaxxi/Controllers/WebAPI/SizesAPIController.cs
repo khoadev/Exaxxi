@@ -82,24 +82,30 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(rel);
         }
-        [Route("TakeIdPost_ForOrder/{id_item}/{size}")]
-        public IActionResult TakeIdPost_ForOrder(int id_item, int size)
+        [Route("TakeIdPost_ForOrder/{id_item}/{size}/{kind}")]
+        public IActionResult TakeIdPost_ForOrder(int id_item, int size, int kind)
         {
-            var low_item = _context.Sizes.Include(d => d.size).Include(s => s.item).Where(p => p.id_item == id_item && p.size.VN == size).FirstOrDefault().lowest_ask;
-
-            var pricePost = Convert.ToDouble(low_item);
+            var size_item = _context.Sizes.Include(d => d.size).Include(s => s.item).Where(p => p.id_item == id_item && p.size.VN == size).FirstOrDefault();
+            double pricePost = 0;
+            if (kind == 1) pricePost = size_item.lowest_ask; else if (kind == 2) pricePost = size_item.highest_bid;
 
             var idPost = _context.Posts
                 .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
-                .Where(p => p.d.id == id_item && p.c.a.price == pricePost && p.c.a.kind == 1)
-                .Select(p => new Posts
+                .Where(p => p.d.id == id_item && p.c.a.price == pricePost && p.c.a.kind == kind);
+            if (idPost.Count() == 0)
+                return NotFound();
+            else
+            {
+                if (kind == 1) idPost = idPost.OrderBy(n => n.c.a.price); else if (kind == 2) idPost = idPost.OrderByDescending(n => n.c.a.price);
+                var id_Post = idPost.Select(p => new Posts
                 {
                     id = p.c.a.id
                 }).FirstOrDefault().id;
 
-            return Ok(idPost);
+                return Ok(id_Post);
+            }
         }
-
+        
     }
 }

@@ -57,7 +57,36 @@ namespace Exaxxi.Controllers.WebAPI
 
             return NoContent();
         }
-
+        // update lowest ask and highest bid of item
+        [AllowAnonymous]
+        [Route("UpdatePrice")]
+        public async Task<IActionResult> UpdatePrice([FromBody]UpdatePrice model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var item = _context.Items.Where(r => r.id == model.id).FirstOrDefault();
+            item.lowest_ask = model.lowest_ask;
+            item.highest_bid = model.highest_bid;
+            _context.Entry(item).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ItemsExists(model.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
         // POST: api/Items
         [HttpPost]
         public async Task<IActionResult> PostItems([FromBody] Items items)
