@@ -28,7 +28,7 @@
                                 <th>
                                     Điểm người mua
                                 </th>
-                                <th><a asp-action="Create">Create New</a></th>
+                                <th><i class="fas fa-cog" style="color:#808080"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,9 +51,7 @@
                                         @Html.DisplayFor(modelItem => item.score_buyer)
                                     </td>
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                                        <a asp-action="Edit" asp-route-id="@item.id"><i class="fas fa-edit"></i></a>                                                                                
                                     </td>
                                 </tr>
                             }

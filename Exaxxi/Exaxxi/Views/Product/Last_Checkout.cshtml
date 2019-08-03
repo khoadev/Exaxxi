@@ -19,7 +19,7 @@
                                     {{name[0].item.name}}
                                 </div>
                                 <div class="checkout-product-info">
-                                    Highest Bid: <b>${{name[0].size.highest_bid}}</b> | Lowest Ask: <b>${{name[0].size.lowest_ask}}</b><br />
+                                    Highest Bid: <b>{{name[0].size.highest_bid | currency:"":0:3}} VND</b> | Lowest Ask: <b>{{name[0].size.lowest_ask | currency:"":0:3}} VND</b><br />
                                     Size <b>{{name[0].dsSize.vn}}</b>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                                             <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                         </td>
                                         <td class="td-w65 font-weight-bold">
-                                            {{name[0].size.lowest_ask}} VND
+                                            {{name[0].size.lowest_ask | currency:"":0:3}} VND
                                         </td>
                                     </tr>
                                     @if (ViewBag.Act == 1)
@@ -138,7 +138,7 @@
                                                 <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                             </td>
                                             <td class="td-w65 font-weight-bold">
-                                                @HttpContextAccessor.HttpContext.Session.GetString("ck_enter_bid")
+                                                @Convert.ToDouble(HttpContextAccessor.HttpContext.Session.GetString("ck_enter_bid")).ToString("#,###") VND
                                             </td>
                                         </tr>
 
@@ -179,7 +179,7 @@
                                             <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                         </td>
                                         <td class="td-w65 font-weight-bold">
-                                            @HttpContextAccessor.HttpContext.Session.GetString("ck_shipping")
+                                            @Convert.ToDouble(HttpContextAccessor.HttpContext.Session.GetString("ck_shipping")).ToString("#,###") VND
                                         </td>
                                     </tr>
                                 </table>
@@ -192,7 +192,8 @@
                                             <i class="fas fa-chevron-right" style="opacity:0.5"></i>
                                         </td>
                                         <td class="td-w65 font-weight-bold">
-                                            @HttpContextAccessor.HttpContext.Session.GetString("ck_total").ToString()
+
+                                            @Convert.ToDouble(HttpContextAccessor.HttpContext.Session.GetString("ck_total")).ToString("#,###") VND
                                         </td>
                                     </tr>
                                 </table>
@@ -257,18 +258,20 @@
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
 
-            @*$http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
-                .then(function (response) {
-                    $scope.name = response.data;
-                    console.log($scope.name);
-                });*@
+                                            @*$http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
+    .then(function (response) {
+        $scope.name = response.data;
+        console.log($scope.name);
+    });*@
+/**/
+/**/
 
-            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
-                .then(function (response) { $scope.name = response.data });
+                                                                                                $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
+                                                                                                    .then(function(response) { $scope.name = response.data });
 
-            $http.get("/api/CitysAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("ck_city"))
-                .then(function (response) { $scope.city = response.data });
-        });
+                                                                                                $http.get("/api/CitysAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("ck_city"))
+                                                                                                    .then(function(response) { $scope.city = response.data });
+                                                });
 
-</script>
+                                                </script>
 }

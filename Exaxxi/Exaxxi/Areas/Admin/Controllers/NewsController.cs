@@ -172,9 +172,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                    return View(news);
-              
-               
+                    return View(news);                             
             }
 
            

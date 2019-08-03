@@ -29,57 +29,57 @@
         <div class="row" id="logreg-wrapper">
             <div class="col-lg-9" id="logreg-form-wrapper">
                 <div id="login-form" class="@login">
-                    <p class="login-form-text">Login </p>
+                    <p class="login-form-text" translate>{{'SIGNUP'}} </p>
                     <form>
                         <div class="form-group">
-                            <label for="usr" class="login-form-label">Email Address</label>
-                            <input type="text" class="form-control form-control-login" placeholder="Enter your email address" id="usr">
+                            <label for="usr" class="login-form-label"><span translate>{{'EMAIL'}}</span></label>
+                            <input type="text" class="form-control form-control-login" placeholder="{{'ENMAIL'| translate}}" id="usr">
                         </div>
                         <div class="form-group">
-                            <label for="pwd" class="login-form-label">Password</label>
-                            <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd">
+                            <label for="pwd" class="login-form-label"><span translate>{{'PASS'}}</span></label>
+                            <input type="password" class="form-control form-control-login" placeholder="{{'ENPASS'| translate}}" id="pwd">
                         </div>
                         @*<label class="checkbox-container">
                             Remember me
                             <input type="checkbox" id="rmb">
                             <span class="checkmark"></span>
                         </label>*@
-                        <button type="submit" class="btn logreg-form-button " id="submit">Login</button> <br>
-                        <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login">Forget your password?</a>
+                        <button type="submit" class="btn logreg-form-button " id="submit" translate>{{'SIGNUP'}}</button> <br>
+                        <a id="login-form-link" asp-action="PasswordForget" asp-controller="Login"><span translate>{{'FORGET'}}</span></a>
                     </form>
                 </div>
 
                 <div id="register-form" class="@register">
-                    <p class="login-form-text">Register</p>
+                    <p class="login-form-text" translate>{{'SIGNIN'}}</p>
                     <form>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="login-form-label">Name</label>
-                                <input type="text" class="form-control form-control-login" placeholder="Enter your name" id="name_re" required>
+                                <label class="login-form-label"><span>{{'NAME'| translate}}</span></label>
+                                <input type="text" class="form-control form-control-login" placeholder="{{'ENNAME'| translate}}" id="name_re" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="login-form-label">Email Address</label>
-                                <input type="email" class="form-control form-control-login" placeholder="Enter your email address" id="email_re" required onblur="CheckExistMail()">
+                                <label class="login-form-label"><span translate>{{'EMAIL'}}</span></label>
+                                <input type="email" class="form-control form-control-login" placeholder="{{'ENMAIL'| translate}}" id="email_re" required onblur="CheckExistMail()">
                                 <div id="loi" style="color:#ff0000"></div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="login-form-label">Password</label>
-                                <input type="password" class="form-control form-control-login" placeholder="Enter your password" id="pwd_re" required>
+                                <label class="login-form-label"><span translate>{{'PASS'}}</span></label>
+                                <input type="password" class="form-control form-control-login" placeholder="{{'ENPASS'| translate}}" id="pwd_re" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="login-form-label">Re-enter Password</label>
-                                <input type="password" class="form-control form-control-login" placeholder="Re-enter your password" id="pwd_re_conf" required>
+                                <label class="login-form-label"><span translate>{{'REPASS'}}</span></label>
+                                <input type="password" class="form-control form-control-login" placeholder="{{'REPASS'| translate}}" id="pwd_re_conf" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="login-form-label">Phone</label>
-                                <input type="text" class="form-control form-control-login" placeholder="Enter your phone number" id="phone_number" required>
+                                <label class="login-form-label"><span translate>{{'PHONE'}}</span></label>
+                                <input type="text" class="form-control form-control-login" placeholder="{{'ENPHONE'| translate}}" id="phone_number" required>
                             </div>
                             <div class="form-group col-md-9">
-                                <label class="login-form-label">Address</label>
-                                <input type="text" class="form-control form-control-login" placeholder="Enter your address" id="address" required>
+                                <label class="login-form-label">{{'ADDRESS'| translate}}</label>
+                                <input type="text" class="form-control form-control-login" placeholder="{{'ENADDRESS'| translate}}" id="address" required>
                             </div>
                             <div class="form-group col-md-3">
-                                <label class="login-form-label">City</label>
+                                <label class="login-form-label">{{'CITY'| translate}}</label>
                                 <select id="city" class="form-control form-control-login" required>
                                     <option ng-repeat="x in list_city" value="{{x.id}}">{{x.name}}</option>
                                 </select>
@@ -88,7 +88,7 @@
                         <div class="form-group" style="min-width:100%!important;">
                             <div class="g-recaptcha" data-sitekey="6Lfwz6IUAAAAAGVKa7XbpkYbqDI9tRE62IUNUGha"></div>
                         </div>
-                        <button type="submit" id="sb_reg" class="btn logreg-form-button">Register</button>
+                        <button type="submit" id="sb_reg" class="btn logreg-form-button">{{'SIGNIN'| translate}}</button>
                     </form>
                 </div>
             </div>
@@ -160,9 +160,6 @@
                     "id_city": id_city,
                     "captcha": captcha
                 };
-                alert(phone);
-                alert(address);
-                alert(id_city);
                 $.ajax({
                     url: "/api/UsersAPI/PostRegister",
                     type: "POST",

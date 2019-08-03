@@ -1,0 +1,154 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+}
+
+<h2>Order Detail</h2>
+
+<div ng-controller="Detail">
+    <hr />
+    <dl class="dl-horizontal" ng-repeat="x in name">
+        <dt>
+            Sản Phẩm
+        </dt>
+        <dd>
+            {{x.items.name}}
+        </dd>
+        <dt>
+            Hình
+        </dt>
+        <dd>
+            <img src="~/images/{{x.items.img}}" style="width:200px; height:200px" />
+        </dd>
+        <dt>
+            Thời Gian
+        </dt>
+        <dd>
+            {{x.orders.time | date : 'dd/MM/yyyy || H:mm:s'}}
+        </dd>
+        <dt>
+            Địa Chỉ
+        </dt>
+        <dd>
+            {{x.orders.address}}
+        </dd>
+        <dt>
+            Liên Lạc
+        </dt>
+        <dd>
+            {{x.orders.phone}}
+        </dd>
+        <dt>
+            Phí Vận Chuyển
+        </dt>
+        <dd>
+            {{x.orders.ship_fee | currency:"":0:3}} VND
+        </dd>
+        <dt>
+            Phí Dịch Vụ
+        </dt>
+        <dd>
+            {{x.orders.service_fee | currency:"":0:3}} VND
+        </dd>
+        <dt>
+            Phương Thức Thanh Toán
+        </dt>
+        <dd>
+            {{x.orders.payment == 1 ? 'Cash On Deliery (COD)' : 'Credit / Debit'}}
+        </dd>
+        <dt>
+            Phí Thanh Toán
+        </dt>
+        <dd>
+            {{x.orders.payment_pro | currency:"":0:3}} VND
+        </dd>
+        <dt>
+            Voucher
+        </dt>
+        <dd>
+            {{voucher}}
+        </dd>
+        <dt>
+            Tổng Tiền
+        </dt>
+        <dd>
+            {{x.orders.price | currency:"":0:3}} VND
+        </dd>
+        <dt>
+            Khuyến Mãi
+        </dt>
+        <dd>
+            {{x.orders.discount == NULL ? "Không" : x.orders.discount}}
+        </dd>
+        <dt>
+            Người Mua
+        </dt>
+        <dd>
+            {{x.user.name}}
+        </dd>
+        <dt>
+            Thành Phố
+        </dt>
+        <dd>
+            {{city}}
+        </dd>
+        <dt>
+            Trạng Thái
+        </dt>
+        <dd>
+            @if (ViewBag.Status == 0)
+            {
+                @Html.Raw("Đang chờ xử lý");
+            }
+            @if (ViewBag.Status == 1)
+            {
+                @Html.Raw("Đang chờ hoàn tất");
+            }
+            @if (ViewBag.Status == 2)
+            {
+                @Html.Raw("Đã hoàn tất");
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (ViewBag.Status == 0)
+    {
+        <a id="click" class="btn btn-outline-info" style="color:aqua">Xử Lý Đơn Hàng</a>
+        <a asp-action="Index" class="btn btn-outline-warning">Back to List</a>
+    }
+    @if (ViewBag.Status == 1)
+    {
+        <a id="click" class="btn btn-outline-info" style="color:aqua">Hoàn Tất Đơn Hàng</a>
+        <a asp-action="Shipping" class="btn btn-outline-warning">Back to List</a>
+    }
+</div>
+
+@section Scripts{
+    <script>
+            app.controller('Detail', function ($scope, $http) {
+
+                $http.get("/api/OrdersAPI/Detail/" + @ViewBag.Status + "/" + @ViewBag.IdOrder)
+                    .then(function (response) { $scope.name = response.data;});
+
+                $http.get("/api/OrdersAPI/TakeVoucher/" + @ViewBag.IdOrder)
+                    .then(function (response) { $scope.voucher = response.data; });
+
+                $http.get("/api/OrdersAPI/TakeCity/" + @ViewBag.IdOrder)
+                    .then(function (response) { $scope.city = response.data; });
+
+                $("#click").on('click', function () {                    
+                    $http.get("/api/OrdersChange/UpdateStatusOrder/" + @ViewBag.Update + "/" + @ViewBag.IdOrder)
+                        .then(function (response) {
+                            if (@ViewBag.Status == 0) {
+                                window.location = "/Admin/Orders/Index";
+                            }
+                            if (@ViewBag.Status == 1) {
+                                window.location = "/Admin/Orders/Shipping";
+                            }
+                        });
+                });
+
+            });
+    </script>
+}
+

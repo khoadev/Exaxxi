@@ -110,8 +110,12 @@ namespace Exaxxi.Controllers.WebAPI
 
             if (bf.Decrypt_CBC(user.password) != model.Password)
             {
-                //ModelState.AddModelError();
                 return BadRequest("Sai mật khẩu");
+            }
+
+            if(user.active == false)
+            {
+                return BadRequest("Tài khoản không khả dụng. Vui lòng liên hệ Admin để xử lý!");
             }
 
             //Ghi nhận đăng nhập thành công
