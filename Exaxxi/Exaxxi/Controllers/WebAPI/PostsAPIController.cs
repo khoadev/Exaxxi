@@ -183,8 +183,8 @@ namespace Exaxxi.Controllers.WebAPI
                 {
                     list = list.Where(h => h.s.id == id_size);
                 }
-                if (list != null) lowestAsk = list.OrderBy(o => o.p.price).FirstOrDefault().p.price;
-                else return NotFound();
+                if (list.Count() > 0) lowestAsk = list.OrderBy(o => o.p.price).FirstOrDefault().p.price;
+                else return Ok(0);
             }
             return Ok(lowestAsk);
         }
@@ -204,7 +204,7 @@ namespace Exaxxi.Controllers.WebAPI
                 {
                     list = list.Where(h => h.s.id == id_size);
                 }
-                if (list.Count() != 0) highestBid = list.OrderByDescending(o => o.p.price).FirstOrDefault().p.price;
+                if (list.Count() > 0) highestBid = list.OrderByDescending(o => o.p.price).FirstOrDefault().p.price;
                 else return Ok(0);
             }
             return Ok(highestBid);

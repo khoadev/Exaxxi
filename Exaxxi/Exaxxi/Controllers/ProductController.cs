@@ -180,6 +180,12 @@ namespace Exaxxi.Controllers
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
+                    //update after buy
+                    var post = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/" + idPost).Result);
+                    post.status = 1;
+                    _api.putAPI(post, "api/PostsChange/" + idPost);
+                    var id_size = JsonConvert.DeserializeObject<int>(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id + "/" + size).Result);
+                    UpdatePrice(id, id_size);
                     return RedirectToAction("Index", "User");
                 }
             }
@@ -374,7 +380,7 @@ namespace Exaxxi.Controllers
 
             double lowestAskSizeUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeLowestAsk/" + id_item + "/" + id_size).Result);
             double highestBidSizeUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeHighestBid/" + id_item + "/" + id_size).Result);
-            if (size.lowest_ask < lowestAskSizeUp || size.highest_bid > highestBidSizeUp)
+            if (size.lowest_ask < lowestAskSizeUp || size.highest_bid > highestBidSizeUp || lowestAskSizeUp == 0)
             {
                 if (size.lowest_ask < lowestAskSizeUp || lowestAskSizeUp == 0) price1.lowest_ask = lowestAskSizeUp;
                 if (size.highest_bid > highestBidSizeUp) price1.highest_bid = highestBidSizeUp;
