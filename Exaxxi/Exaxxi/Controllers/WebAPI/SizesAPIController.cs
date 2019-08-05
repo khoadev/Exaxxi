@@ -97,7 +97,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return NotFound();
             else
             {
-                if (kind == 1) idPost = idPost.OrderBy(n => n.c.a.price); else if (kind == 2) idPost = idPost.OrderByDescending(n => n.c.a.price);
+                
                 var id_Post = idPost.Select(p => new Posts
                 {
                     id = p.c.a.id
