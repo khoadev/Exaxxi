@@ -5,17 +5,18 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách size</h4>
+                <h4 class="card-title ">Danh sách post</h4>
                 <p class="card-category"></p>
             </div>
             <div ng-controller="Post">
-                <label for="singleSelect"> sắp xếp:{{tenmua.id}} </label><br>
-                <select name="singleSelect" ng-model="sort" ng-change="change()">
-                    <option value="1">Mua</option>
-                    <option value="2">Bán</option>
-                    <option value="3">Đang xử lý</option>
-                </select>
+                
                 <div class="card-body">
+                    <label for="singleSelect"> sắp xếp:{{tenmua.id}} </label><br>
+                    <select class="form-control col-1" name="singleSelect" ng-model="sort" ng-change="change()">
+                        <option value="1">Mua</option>
+                        <option value="2">Bán</option>
+                        <option value="3">Đang xử lý</option>
+                    </select>
                     <div class="table-responsive">
                         <table class="table" ng-hide="sort==3">
                             <thead class=" text-primary">
@@ -76,9 +77,9 @@
                                     <td>{{z.post.price}}</td>
                                     <td>{{z.usernameSell}}</td>
                                     <td>
-                                    <span ng-repeat="a in tenmua">
-                                        <span ng-if="z.order.id_user == a.id">{{a.name}}</span>
-                                    </span>
+                                        <span ng-repeat="a in tenmua">
+                                            <span ng-if="z.order.id_user == a.id">{{a.name}}</span>
+                                        </span>
                                     </td>
 
                                     <td>

@@ -4,39 +4,54 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Chi Tiết</h4>
+                    <p class="card-category">Categories</p>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="id" />
+                        <div class="form-group">
+                            <label asp-for="name" class="bmd-label-floating"></label>
+                            <input asp-for="name" class="form-control" disabled />
+                            <span asp-validation-for="name" class="text-danger"></span>
+                        </div>
 
-<div>
-    <h4>Categories</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.active)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.order)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.order)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.brand)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.brand.name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+                        <div class="form-group">
+                            <label asp-for="order" class="bmd-label-floating"></label>
+                            <input asp-for="order" class="form-control" disabled/>
+                            <span asp-validation-for="order" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="brand.name" class="bmd-label-floating"></label>
+                            <input asp-for="brand.name" class="form-control" asp-items="ViewBag.id_brand" id="brandname" disabled/>
+                            <span asp-validation-for="brand.name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check p-0">
+                                <label class="form-check-label">
+                                    @Html.DisplayNameFor(model => model.active)
+                                    <input asp-for="active" class="form-check-input" type="checkbox">
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Index">Quay Về</a>
+                        </div>
+                        <a asp-action="Edit" asp-route-id="@Model.id">
+                            <button type="button" class="btn btn-primary pull-right">Chỉnh Sửa</button>
+                        </a>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>

@@ -36,25 +36,19 @@
     <div id="mySidenav" class="sidenav">
         <!-- Start sidenav -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <div id="sidenav-logsign"><a asp-controller="Login" asp-action="Register">SIGN UP</a>/<a asp-controller="Login" asp-action="Login" id="sidenav-logsign-login-text">login</a></div>
+        <div id="sidenav-logsign"><a asp-controller="Login" asp-action="Register" translate>{{ 'SIGNUP' }}</a>/<a asp-controller="Login" asp-action="Login" id="sidenav-logsign-login-text" translate>{{ 'SIGNIN' }}</a></div>
         <a asp-controller="Home" asp-action="Index">Exaxxi</a>
-        <div id="sidenav-sub-section">
+        <div id="sidenav-sub-section" ng-controller="browseCtrl">
             <!-- Start sidenav-sub... -->
-            <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#cate1">Cate's Name</a>
-            <div id="cate1" class="collapse sidenav-product">
-                <!-- Start sidenav-product -->
-                <a href="#">Product's name</a>
-                <a href="#">Product's name</a>
-                <a href="#">Product's name</a>
-                <a href="#">Product's name</a>
-            </div> <!-- End sidenav-product -->
-            <a href="#" class="sidenav-sub-link">Cate's Name</a>
-            <a href="#" class="sidenav-sub-link">Cate's Name</a>
-            <a href="#" class="sidenav-sub-link">Cate's Name</a>
+            <div ng-repeat="x in brandcates | filter: {'id_department' : @ViewBag.Id_Depart}">
+                <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#id{{x.id}}">{{x.name}}</a>
+                <div id="id{{x.id}}" class="collapse sidenav-product">
+                    <!-- Start sidenav-product -->
+                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
+                </div> <!-- End sidenav-product -->
+            </div>
         </div> <!-- End sidenav-sub-... -->
-        <a href="#">Browse</a>
-        <a asp-controller="News">News</a>
-        <a href="#">App</a>
+        <a asp-controller="News" translate>{{ 'NEWS' }}</a>
         <a href="#">FaQ</a>
     </div> <!-- End sidenav -->
 
@@ -93,7 +87,7 @@
                             <li class="col-12">
                                 <div class="row browse-brand-wrapper custom-scrollbar">
                                     <div class="card-columns">
-                                        <div class="card brand-name-wrapper " ng-repeat="x in brandcates | filter: {'id_department' : selectedObj.id}">
+                                        <div class="card brand-name-wrapper" ng-repeat="x in brandcates | filter: {'id_department' : selectedObj.id}">
                                             <div class="card-body">
                                                 <div class="brand-name">{{x.name}}</div>
                                                 <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
@@ -107,9 +101,6 @@
                 </li>
                 <li class="nav-item d-none d-md-flex">
                     <a class="nav-link" asp-controller="News" asp-action="Index" translate>{{ 'NEWS' }}</a>
-                </li>
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" href="#">App</a>
                 </li>
                 <li class="nav-item d-none d-md-flex">
                     <a class="nav-link" href="#">FaQ</a>
@@ -200,7 +191,7 @@
                         </ul>
                     </li>
                     <li class="nav-item d-none d-md-flex btn-signup-wrapper">
-                        <a class="nav-link btn btn-signup" asp-action="Contact" asp-controller="User" @*data-toggle="modal" data-target="#requestModal" *@>Request</a>
+                        <a class="nav-link btn btn-signup" asp-action="Contact" asp-controller="User" @*data-toggle="modal" data-target="#requestModal"*@ translate>{{ 'REQUEST' }}</a>
 
                     </li>
 
@@ -244,7 +235,6 @@
     </div>
 
     <footer>
-        {{lang}}
         <div class="container-fluid" id="footer-wrapper" ng-controller="footerCtrl">
             <div class="row">
                 <div class="col-md-4 col-lg-2" ng-repeat="x in brands">

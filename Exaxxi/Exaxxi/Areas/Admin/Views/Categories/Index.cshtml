@@ -9,10 +9,11 @@
                 <p class="card-category">Quản lý danh sách thể loại</p>
             </div>
             <div class="card-body">
+              
                 <label for="singleSelect"> sắp xếp chủng loại: </label><br>
-                <select name="singleSelect1" ng-change="change1()" id="select1" ng-model="selectedItem1" ng-options="item1.vi_name for item1 in name"></select><br />
+                <select class="form-control" name="singleSelect1" ng-change="change1()" id="select1" ng-model="selectedItem1" ng-options="item1.vi_name for item1 in name"></select><br />
                 <label for="singleSelect"> sắp xếp nhãn hàng: </label><br>
-                <select name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.name for item in getItem"></select>
+                <select  class="form-control" name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.name for item in getItem"></select>
                 <div class="table-responsive">
                     <table class="table">
                         <thead class=" text-primary">
@@ -26,7 +27,7 @@
                                 <th>
                                     Thứ tự
                                 </th>
-                                <th><a asp-action="Create">Tạo Mới</a></th>
+                                <th class="text-right"><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,10 +41,23 @@
                                 <td>
                                     {{y.order}}
                                 </td>
-                                <td>
-                                    <a href="/Admin/Brands/Edit/{{y.id}}">Edit</a> |
-                                    <a href="/Admin/Brands/Details/{{y.id}}">Details</a> |
-                                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(y.id)">Delete</a>
+
+                                <td class="td-actions text-right">
+                                    <a  href="/Admin/Categories/Edit/{{y.id}}">
+                                        <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                    </a>
+                                    <a href="/Admin/Categories/Details/{{y.id}}">
+                                        <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">
+                                                info
+                                            </i>
+                                        </button>
+                                    </a>
+                                    <button ng-click="Delete(y.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                        <i class="material-icons">close</i>
+                                    </button>
                                 </td>
                             </tr>
 

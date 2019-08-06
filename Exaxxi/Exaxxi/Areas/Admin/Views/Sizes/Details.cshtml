@@ -3,46 +3,44 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Sizes</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.lowest_ask)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.lowest_ask)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.highest_bid)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.highest_bid)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.last_sale)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.last_sale)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.size)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.size.VN)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.item)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.item.name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row" ng-controller="editDsSize">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Chi Tiết</h4>
+                <p class="card-category">Sizes</p>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="lowest_ask" class="bmd-label-floating"></label>
+                        <input asp-for="lowest_ask" class="form-control" disabled />
+                        <span asp-validation-for="lowest_ask" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="highest_bid" class="bmd-label-floating"></label>
+                        <input asp-for="highest_bid" class="form-control" disabled />
+                        <span asp-validation-for="highest_bid" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="last_sale" class="bmd-label-floating"></label>
+                        <input asp-for="last_sale" class="form-control" disabled />
+                        <span asp-validation-for="last_sale" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="size.VN" class="bmd-label-floating"></label>
+                        <input asp-for="size.VN" class="form-control" disabled />
+                        <span asp-validation-for="size.VN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="item" class="bmd-label-floating"></label>
+                        <input asp-for="item.name" class="form-control" disabled />
+                        <span asp-validation-for="item.name" class="text-danger"></span>
+                    </div>
+                    <a asp-action="Index">Quay Về</a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

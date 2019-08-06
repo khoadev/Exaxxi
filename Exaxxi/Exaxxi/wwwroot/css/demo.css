@@ -516,6 +516,7 @@ html {
     background-color: #3d3d3d;
     min-height: 250px;
     padding: 20px 50px;
+    z-index:2;
 }
 
 .footer-content {
@@ -551,14 +552,13 @@ html {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 9999!important;
     top: 0;
     left: 0;
     background-color: #272727;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-    z-index: 99;
 }
 
     .sidenav a {
@@ -1620,6 +1620,7 @@ iframe[seamless] {
     position: fixed;
     top: 50px;
     width: calc(3 / 13 * 100%);
+    z-index:1;
 }
 .user-panel-header {
     font-family: coolrg;

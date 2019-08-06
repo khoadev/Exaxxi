@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <label for="singleSelect"> sắp xếp: </label><br>
-                <select name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.vi_name for item in name">
+                <select class="form-control" name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.vi_name for item in name">
                    @*<option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>*@
                 </select>
                 <div class="table-responsive">
@@ -28,7 +28,7 @@
                                 <th>
                                     Thứ tự
                                 </th>
-                                <th><a asp-action="Create">Thêm</a></th>
+                                <th class="text-right"><a asp-action="Create">Thêm</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,10 +43,23 @@
                                 <td>
                                     {{x.order}}
                                 </td>
-                                <td>
-                                    <a href="/Admin/Brands/Edit/{{x.id}}">Edit</a> |
-                                    <a href="/Admin/Brands/Details/{{x.id}}">Details</a> |
-                                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
+                                <td class="td-actions text-right">
+                                    <a href="/Admin/Brands/Edit/{{x.id}}">
+                                        <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                    </a>
+                                    <a href="/Admin/Brands/Details/{{x.id}}">
+                                        <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">
+                                                info
+                                            </i>
+                                        </button>
+                                    </a>
+                                    <button ng-click="Delete(x.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                        <i class="material-icons">close</i>
+                                    </button>
+
                                 </td>
                             </tr>
 

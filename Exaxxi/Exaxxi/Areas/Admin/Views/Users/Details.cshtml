@@ -5,56 +5,74 @@
 }
 
 <h2>Details</h2>
-
-<div>
-    <h4>Users</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.password)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.level_seller)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.level_seller)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.score_buyer)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.score_buyer)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.date_registion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.date_registion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.active)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Chi Tiết</h4>
+                <p class="card-category">Users</p>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="id" />
+                    <div class="form-group">
+                        <label asp-for="name" class="control-label bmd-label-floating"></label>
+                        <input asp-for="name" class="form-control" disabled />
+                        <span asp-validation-for="name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="password" class="control-label bmd-label-floating"></label>
+                        <input asp-for="password" class="form-control" disabled />
+                        <span asp-validation-for="password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="password" class="control-label bmd-label-floating"></label>
+                        <input asp-for="password" class="form-control" disabled />
+                        <span asp-validation-for="password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="password" class="control-label bmd-label-floating"></label>
+                        <input asp-for="password" class="form-control" disabled />
+                        <span asp-validation-for="password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="email" class="control-label bmd-label-floating"></label>
+                        <input asp-for="email" class="form-control" disabled />
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="level_seller" class="control-label bmd-label-floating"></label>
+                        <input asp-for="level_seller" class="form-control" disabled />
+                        <span asp-validation-for="level_seller" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="score_buyer" class="control-label bmd-label-floating"></label>
+                        <input asp-for="score_buyer" class="form-control" disabled />
+                        <span asp-validation-for="score_buyer" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="date_registion" class="control-label bmd-label-floating"></label>
+                        <input asp-for="date_registion" class="form-control" disabled />
+                        <span asp-validation-for="date_registion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check p-0">
+                            <label class="form-check-label">
+                                @Html.DisplayNameFor(model => model.active)
+                                <input asp-for="active" class="form-check-input" type="checkbox" disabled>
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <a asp-action="Index">Quay Về</a>
+                    <a asp-action="Edit" asp-route-id="@Model.id">
+                        <button type="button" class="btn btn-primary pull-right">Chỉnh Sửa</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

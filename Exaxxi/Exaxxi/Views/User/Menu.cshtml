@@ -10,7 +10,7 @@
             @HttpContextAccessor.HttpContext.Session.GetString("nameUser")
         </div>
         <div class="user-panel-body">
-            @actionName
+           
             <ul class="list-unstyled">
                 <li>
                     <a id="pro" href="/User/Index" class="@if (actionName == "Index") { @Html.Raw("user-panel-active")}"><i class="far fa-user-circle fa-fw mr-3"></i>Profile</a>
