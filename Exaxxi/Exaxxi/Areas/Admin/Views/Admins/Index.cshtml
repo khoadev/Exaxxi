@@ -22,16 +22,16 @@
                             @Html.DisplayNameFor(model => model.email)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.level)
+                            Level
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.date_create)
+                            Ngày tạo
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.active)
+                            Trạng thái
                         </th>
                         <th class="text-right">
-                            <a asp-action="Create">Create New</a>
+                            <a asp-action="Create">Tạo Mới</a>
                         </th>
                         </thead>
                         <tbody ng-controller="deleteAd">
@@ -51,7 +51,14 @@
                                         @item.date_create
                                     </td>
                                     <td>
-                                        @item.active
+                                        @if (item.active == true)
+                                        {
+                                            @Html.Raw("Đang hoạt động");
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Đã khóa");
+                                        }
                                     </td>
                                     <td class="td-actions text-right">
                                         <a asp-action="Edit" asp-route-id="@item.id">

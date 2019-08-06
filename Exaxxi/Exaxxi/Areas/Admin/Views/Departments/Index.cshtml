@@ -16,16 +16,16 @@
                         <thead class=" text-primary">
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.vi_name)
+                                    Tên (Vie)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.en_name)
+                                    Tên (Eng)
                                 </th>
                                 <th>
-                                    Trạng Thái
+                                    Trạng thái
                                 </th>
                                 <th>
-                                   Thứ Tự
+                                   Thứ tự
                                 </th>
                                 <th class="text-right"><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
@@ -41,7 +41,14 @@
                                         @Html.DisplayFor(modelItem => item.en_name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.active)
+                                        @if (item.active == true)
+                                        {
+                                            @Html.Raw("Đang hoạt động");
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Đã khóa");
+                                        }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.order)

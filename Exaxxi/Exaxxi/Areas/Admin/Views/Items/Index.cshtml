@@ -11,9 +11,9 @@
             </div>
             <div class="card-body">
                 {{sortBy}}
-                <label for="singleSelect"> sắp xếp: </label><br>
+                <label for="singleSelect"> Thể Loại: </label><br>
                 <select name="singleSelect" data-ng-init="confirmed" ng-change="change()" id="select" ng-model="confirmed">
-                    <option value="">all</option>
+                    <option value="">Tất cả</option>
                     <option ng-repeat="x in name" value="{{x.id}}">{{x.name}}</option>
 
                 </select>
@@ -34,18 +34,18 @@
                                     Biến động giá
                                 </th>
                                 <th>
-                                    active
+                                    Trạng thái
                                 </th>
                                 <th>
-                                    sold
+                                    Đã bán
                                 </th>
                                 <th>
-                                    admin
+                                    Admin
                                 </th>
                                 <th>
-                                    category
+                                    Thể loại
                                 </th>
-                                <th><a asp-action="Create">Thêm</a></th>
+                                <th><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,15 +60,15 @@
 
                                 </td>
                                 <td>
-                                    {{x.items.lowest_ask}}
+                                    {{x.items.lowest_ask | currency:"":0:3}} VND
 
                                 </td>
                                 <td>
-                                    {{x.items.volatility}}
+                                    {{x.items.volatility | currency:"":0:3}} VND
 
                                 </td>
                                 <td>
-                                    {{x.items.active}}
+                                    {{x.items.active == true ? "Đang hoạt động" : "Đã khóa"}}
 
                                 </td>
                                 <td>

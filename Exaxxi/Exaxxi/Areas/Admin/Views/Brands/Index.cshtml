@@ -11,7 +11,7 @@
                 <p class="card-category"></p>
             </div>
             <div class="card-body">
-                <label for="singleSelect"> sắp xếp: </label><br>
+                <label for="singleSelect">Chủng Loại: </label><br>
                 <select name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.vi_name for item in name">
                    @*<option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>*@
                 </select>
@@ -38,7 +38,7 @@
                                     {{x.name}}
                                 </td>
                                 <td>
-                                    {{x.active}}
+                                    {{x.active == true ? "Đang hoạt động" : "Đã khóa"}}
                                 </td>
                                 <td>
                                     {{x.order}}

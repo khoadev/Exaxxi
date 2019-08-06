@@ -6,7 +6,7 @@
 
 <h2>Profile</h2>
 <!-- user form -->
-<div class="row">
+<div class="row" ng-controller="Admin">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
@@ -18,8 +18,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Username</label>
-                                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.name)">
+                                <label class="bmd-label-floating">Email</label>
+                                <input id="email" type="email" class="form-control" value="@Model.email" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Tên</label>
+                                <input id="name" type="text" class="form-control" value="@Model.name" />
                             </div>
                         </div>
                     </div>
@@ -27,42 +35,70 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Mật Khẩu</label>
-                                <input type="text" class="form-control" value="@ViewBag.Password">
+                                <input id="pass" type="password" class="form-control" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Level</label>
-                                <input type="text" class="form-control" value="@Html.DisplayFor(model => model.level)">
+                                <label class="bmd-label-floating">Nhập Lại Mật Khẩu</label>
+                                <input id="re_pass" type="password" class="form-control" />
                             </div>
                         </div>
                     </div>
-                   
-                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+
+                    <button id="click" type="submit" class="btn btn-primary pull-right">Cập Nhật Thông Tin</button>
                     <div class="clearfix"></div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-profile">
-            <div class="card-avatar">
-                <a href="#pablo">
-                    <img class="img" src="~/images/marc.jpg" />
-                </a>
+    @*<div class="col-md-4">
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <a href="#pablo">
+                        <img class="img" src="~/images/marc.jpg" />
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+                    <h4 class="card-title"> @Html.DisplayFor(model => model.name)</h4>
+                    @Html.DisplayFor(model => model.email)
+                    <p class="card-description">
+                        Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                    </p>
+                    <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
+                </div>
             </div>
-            <div class="card-body">
-                <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                <h4 class="card-title"> @Html.DisplayFor(model => model.name)</h4>
-                @Html.DisplayFor(model => model.email)
-                <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                </p>
-                <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
-            </div>
-        </div>
-    </div>
+        </div>*@
 </div>
+
+@section Scripts{
+    <script>
+        app.controller('Admin', function ($scope, $http) {
+            $("#click").on('click', function () {
+                var pass = $("#pass").val();
+                var re_pass = $("#re_pass").val();
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var admin = {
+                    "pass": pass,
+                    "re_pass": re_pass,
+                    "name": name,
+                    "email": email,
+                };
+                $http.post("/api/AdminsAPI/ChangeAdmin", JSON.stringify(admin)).
+                    then(function (data) {
+                        alert("Thay đổi thành công. Vui lòng đăng nhập lại để hoàn tất cập nhật!");
+                        window.location = "/Admin/Dashboard/Index";
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
+        });
+
+    </script>
+}
 

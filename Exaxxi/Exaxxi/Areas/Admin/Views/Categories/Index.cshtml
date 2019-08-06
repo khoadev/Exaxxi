@@ -9,9 +9,9 @@
                 <p class="card-category">Quản lý danh sách thể loại</p>
             </div>
             <div class="card-body">
-                <label for="singleSelect"> sắp xếp chủng loại: </label><br>
+                <label for="singleSelect">Chủng Loại: </label><br>
                 <select name="singleSelect1" ng-change="change1()" id="select1" ng-model="selectedItem1" ng-options="item1.vi_name for item1 in name"></select><br />
-                <label for="singleSelect"> sắp xếp nhãn hàng: </label><br>
+                <label for="singleSelect">Nhãn Hàng: </label><br>
                 <select name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.name for item in getItem"></select>
                 <div class="table-responsive">
                     <table class="table">
@@ -35,14 +35,14 @@
                                     {{y.name}}
                                 </td>
                                 <td>
-                                    {{y.active}}
+                                    {{y.active == true ? 'Đang hoạt động' : 'Đã khóa'}}
                                 </td>
                                 <td>
                                     {{y.order}}
                                 </td>
                                 <td>
-                                    <a href="/Admin/Brands/Edit/{{y.id}}">Edit</a> |
-                                    <a href="/Admin/Brands/Details/{{y.id}}">Details</a> |
+                                    <a href="/Admin/Categories/Edit/{{y.id}}">Edit</a> |
+                                    <a href="/Admin/Categories/Details/{{y.id}}">Details</a> |
                                     <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(y.id)">Delete</a>
                                 </td>
                             </tr>

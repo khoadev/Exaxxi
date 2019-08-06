@@ -64,7 +64,6 @@
                     "active": active,
                     "email": email,
                 };
-                console.log(user);
                 $http.post("/api/UsersChange/ChangeUserInAdmin", JSON.stringify(user)).
                     then(function (data) {
                         window.location = "/Admin/Users/Index";
