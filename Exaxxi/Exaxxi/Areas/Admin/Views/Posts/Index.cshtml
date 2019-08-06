@@ -5,11 +5,16 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách post</h4>
+                <h4 class="card-title ">Danh sách bài post</h4>
                 <p class="card-category"></p>
             </div>
             <div ng-controller="Post">
-                
+                <label for="singleSelect"> Loại:{{tenmua.id}} </label><br>
+                <select name="singleSelect" ng-model="sort" ng-change="change()">
+                    <option value="1">Mua</option>
+                    <option value="2">Bán</option>
+                    <option value="3">Đang xử lý</option>
+                </select>
                 <div class="card-body">
                     <label for="singleSelect"> sắp xếp:{{tenmua.id}} </label><br>
                     <select class="form-control col-1" name="singleSelect" ng-model="sort" ng-change="change()">
@@ -21,14 +26,14 @@
                         <table class="table" ng-hide="sort==3">
                             <thead class=" text-primary">
                                 <tr>
-                                    <th> Tên Sản Phẩm</th>
-                                    <th> Size(VN)</th>
+                                    <th> Tên sản phẩm</th>
+                                    <th> Size (VN)</th>
                                     <th> Thời gian giao dịch</th>
                                     <th>
                                         Giá
                                     </th>
                                     <th>
-                                        Tên người khách hàng
+                                        Tên khách hàng
                                     </th>
                                     <th>
                                         Hình thức giao dịch
@@ -39,8 +44,8 @@
                                 <tr ng-repeat="x in name | filter: {post: {kind: sort}}">
                                     <td>{{x.nameItem}}</td>
                                     <td>{{x.size}}</td>
-                                    <td>{{x.post.date_start}}</td>
-                                    <td>{{x.post.price}}</td>
+                                    <td>{{x.post.date_start | date : 'dd/MM/yyyy H:m:ss'}}</td>
+                                    <td>{{x.post.price | currency:"":0:3}} VND</td>
                                     <td>{{x.usernameSell}}</td>
                                     <td>
                                         <span ng-if="x.post.kind == 1">Mua</span>
@@ -73,8 +78,8 @@
                                 <tr ng-repeat="z in nameOrder ">
                                     <td>{{z.nameItem}}</td>
                                     <td>{{z.size}}</td>
-                                    <td>{{z.post.date_start}}</td>
-                                    <td>{{z.post.price}}</td>
+                                    <td>{{z.post.date_start | date : 'dd/MM/yyyy H:m:ss'}}</td>
+                                    <td>{{z.post.price | currency:"":0:3}} VND</td>
                                     <td>{{z.usernameSell}}</td>
                                     <td>
                                         <span ng-repeat="a in tenmua">

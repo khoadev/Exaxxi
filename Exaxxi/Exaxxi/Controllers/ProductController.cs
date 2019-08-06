@@ -137,8 +137,8 @@ namespace Exaxxi.Controllers
                     return RedirectToAction("Index", "Login");
                 }
                 //var i = HttpContext.Session.GetString("ck_discount");
-                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size).Result);
-
+                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size + "/1").Result);
+                
                 Orders orders = new Orders();
 
                 orders.time = DateTime.Now;
@@ -180,6 +180,12 @@ namespace Exaxxi.Controllers
 
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
+                    //update after buy
+                    var post = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/" + idPost).Result);
+                    post.status = 1;
+                    _api.putAPI(post, "api/PostsChange/" + idPost);
+                    var id_size = JsonConvert.DeserializeObject<int>(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id + "/" + size).Result);
+                    UpdatePrice(id, id_size);
                     return RedirectToAction("Index", "User");
                 }
             }
@@ -290,7 +296,7 @@ namespace Exaxxi.Controllers
                     return RedirectToAction("Index", "Login");
                 }
                 
-                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size).Result);
+                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size +"/2").Result);
 
                 Orders orders = new Orders();
 
@@ -314,9 +320,16 @@ namespace Exaxxi.Controllers
                 var email_post = _api.getAPI("api/PostsAPI/SelectEmailUser/" + idPost).Result;
                 Mailer ml = new Mailer();
                 ml.SendMail("Exaxxi Site", email_post, "Sell Product", "Your selling has something new. Please check details in your account!");
-
+                
                 if (_api.postAPI(orders, "api/OrdersChange").Result)
                 {
+                    //update after sell
+                    var post = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/" + idPost).Result);
+                    post.status = 1;
+                    _api.putAPI(post, "api/PostsChange/" + idPost);
+                    var id_size = JsonConvert.DeserializeObject<int>(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id + "/" + size).Result);
+                    UpdatePrice(id, id_size);
+
                     return RedirectToAction("Index", "User");
                 }
             }
@@ -350,7 +363,7 @@ namespace Exaxxi.Controllers
                 posts.address = HttpContext.Session.GetString("sell_address").ToString();
                 posts.phone = HttpContext.Session.GetString("sell_phone").ToString();
                 posts.name_client = HttpContext.Session.GetString("sell_account").ToString();
-                
+                posts.id_city = Convert.ToInt32(HttpContext.Session.GetString("sell_id_city"));
                 if (_api.postAPI(posts, "api/PostsChange").Result)
                 {
                     return RedirectToAction("Index", "User");
@@ -359,6 +372,31 @@ namespace Exaxxi.Controllers
 
             return View();
         }
+        public async void UpdatePrice(int id_item, int id_size)
+        {
+            var size = JsonConvert.DeserializeObject<Sizes>(_api.getAPI("api/SizesAPI/" + id_size).Result);
+            var item = JsonConvert.DeserializeObject<Items>(_api.getAPI("api/ItemsAPI/GetItemsEdit/" + id_item).Result);
+            UpdatePrice price1 = new UpdatePrice() { id = size.id, lowest_ask = size.lowest_ask, highest_bid = size.highest_bid };
 
+            double lowestAskSizeUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeLowestAsk/" + id_item + "/" + id_size).Result);
+            double highestBidSizeUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeHighestBid/" + id_item + "/" + id_size).Result);
+            if (size.lowest_ask < lowestAskSizeUp || size.highest_bid > highestBidSizeUp || lowestAskSizeUp == 0)
+            {
+                if (size.lowest_ask < lowestAskSizeUp || lowestAskSizeUp == 0) price1.lowest_ask = lowestAskSizeUp;
+                if (size.highest_bid > highestBidSizeUp) price1.highest_bid = highestBidSizeUp;
+                await _api.putAPI(price1, "api/SizesChange/UpdatePrice");
+            }
+
+            UpdatePrice price2 = new UpdatePrice() { id = item.id, lowest_ask = item.lowest_ask.Value, highest_bid = item.highest_bid.Value };
+
+            double lowestAskUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeLowestAsk/" + id_item + "/0").Result);
+            double highestBidUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeHighestBid/" + id_item + "/0").Result);
+            if (item.lowest_ask != lowestAskUp || item.highest_bid != highestBidUp)
+            {
+                if (item.lowest_ask < lowestAskUp || lowestAskUp == 0) price2.lowest_ask = lowestAskUp;
+                if (item.highest_bid > highestBidUp) price2.highest_bid = highestBidUp;
+                await _api.putAPI(price2, "api/ItemsChange/UpdatePrice");
+            }
+        }
     }
 }

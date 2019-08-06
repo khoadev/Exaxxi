@@ -19,41 +19,41 @@
 
             <div class="filter-brand-wrapper" ng-controller="ShowBrand" ng-show="@ViewBag.idCate_f==''">
                 <!--start filter-brand-wrapper-->
-                <div class="filter-name-header">Brand's Name</div>
+                <div class="filter-name-header" translate>{{ 'BRANDNAME' }}</div>
 
                 <a class="filter-brand-item {{ x.id == @ViewBag.Id_Brand ? 'filter-depart-active' : ''}}" href="/Product/Index?id=@ViewBag.Id_Depart&idBrand={{x.id}}" ng-repeat="x in name">{{x.name}}</a>
 
             </div> <!--end filter-brand-wrapper-->
             <div class="filter-sort-wrapper">
                 <!--start filter-size-wrapper-->
-                <div class="filter-sort-header">Sort By</div>
+                <div class="filter-sort-header" translate>{{ 'SORTBY' }}</div>
                 <label class="radio-container">
-                    Default
+                    <span translate>{{'DEFAULT'}}</span>
                     <input type="radio" name="radio" ng-model="sort" value="">
                     <span class="radio-checkmark"></span>
                 </label>
                 <label class="radio-container">
-                    Lowest Ask
+                    <span translate>{{'LOWESTASK'}}</span>
                     <input type="radio" name="radio" ng-model="sort" value="lowest_ask">
                     <span class="radio-checkmark"></span>
-                    <div class="filter-sort-desc">The 'Most Popular' are the products with the most sales over the past 72 hours.</div>
+                    <div class="filter-sort-desc" translate>{{'LOWESTASKDE'}}</div>
                 </label>
                 <label class="radio-container">
-                    Highest Bid
+                    <span translate>{{'HIGHESTBID'}}</span>
                     <input type="radio" name="radio" ng-model="sort" value="highest_bid">
                     <span class="radio-checkmark"></span>
-                    <div class="filter-sort-desc">The highest price someone is currently offering to pay for this product.</div>
+                    <div class="filter-sort-desc" translate>{{'HIGHESTBIDDE'}}</div>
                 </label>
-                <label class="radio-container">
+                @*<label class="radio-container">
                     Volatility
                     <input type="radio" name="radio" ng-model="sort" value="volatility">
                     <span class="radio-checkmark"></span>
                     <div class="filter-sort-desc">A measure of how much price fluctuates. It is calculated as standard deviation divided by average price. A $200 product with 40% volatility results in an average price range of $120 to $280.</div>
-                </label>
+                </label>*@
             </div><!--end filter-size-wrapper-->
             <div class="filter-category-wrapper" ng-show="@ViewBag.idCate_f==''">
                 <!--start filter-category-wrapper-->
-                <div class="filter-name-header">Category's Name</div>
+                <div class="filter-name-header" translate>{{'CATENAME'}}</div>
                 <div class="category-list-wrapper custom-scrollbar">
                     <!--start category-list-wrapper-->
                     <label class="checkbox-container" ng-repeat="x in name">
@@ -65,7 +65,7 @@
             </div> <!--end filter-category-wrapper-->
             <div class="filter-size-wrapper" ng-controller="ShowSize">
                 <!--start filter-size-wrapper-->
-                <div class="filter-name-header">Size's Name</div>
+                <div class="filter-name-header" translate>{{'SIZE'}}</div>
                 <label class="checkbox-container" ng-repeat="x in name">
                     {{x.centimet}} cm
                     <input type="checkbox" ng-model="sizeModel[x.id]" ng-change="save()">
@@ -75,7 +75,7 @@
             <div class="filter-price-wrapper">
                 <!--start filter-price-wrapper-->
                 <div>
-                    <div class="filter-name-header">Price range</div>
+                    <div class="filter-name-header" translate>{{'PRICERANGE'}}</div>
                     <rzslider class="custom-slider" rz-slider-model="slider.minValue"
                               rz-slider-high="slider.maxValue"
                               rz-slider-options="slider.options"></rzslider>
@@ -242,7 +242,7 @@
 
         //Show Size
         exaxxiApp.controller('ShowSize', function ($scope, $http) {
-            $http.get("/api/ds_SizeAPI")
+            $http.get("/api/ds_SizeAPI/Takeds_SizeDepart/"+@ViewBag.Id_Depart)
                 .then(function (response) { $scope.name = response.data; });
         });                             
     </script>

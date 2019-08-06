@@ -40,5 +40,6 @@ namespace Exaxxi.Models
         public int id_city { get; set; }
         [ForeignKey("id_city")]
         public Citys city { get; set; }
+        
     }
 }

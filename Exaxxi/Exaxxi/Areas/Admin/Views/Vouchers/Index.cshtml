@@ -2,8 +2,6 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-
 <div class="row" ng-controller="Vouchers">
     <div class="col-md-12">
         <div class="card">
@@ -17,24 +15,24 @@
                         <thead class=" text-primary">
                             <tr>
                                 <th>
-                                   Code
+                                   Mã Khuyến Mãi
                                 </th>
                                 <th>
-                                    Kind
+                                    Loại Khuyến Mãi
                                 </th>
                                 <th>
-                                    value
+                                    Giá Trị Khuyến Mãi
                                 </th>
                                 <th>
-                                    bat dau tu ngay
+                                    Ngày Bắt Đầu
                                 </th>
                                 <th>
-                                    ket thuc
+                                    Ngày Kết Thúc
                                 </th>
                                 <th>
-                                  count
+                                  Số Lượng
                                 </th>
-                                <th> <a asp-action="Create">Create New</a></th>
+                                <th> <a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,18 +48,17 @@
                                     {{x.value}}
                                 </td>
                                 <td>
-                                    {{x.date_start}}
+                                    {{x.date_start | date : 'dd/MM/yyyy'}}
                                 </td>
                                 <td>
-                                    {{x.date_end}}
+                                    {{x.date_end | date : 'dd/MM/yyyy'}}
                                 </td>
                                 <td>
                                     {{x.count}}
                                 </td>
                                 <td>
-                                    <a href="/Admin/Vouchers/Edit/{{x.id}}">Edit</a> |
-                                    <a href="/Admin/Vouchers/Details/{{x.id}}">Details</a> |
-                                    <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
+                                    <a href="/Admin/Vouchers/Edit/{{x.id}}">Edit</a> |                                    
+                                    <a href="javascript:void()" style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
                                 </td>
                             </tr>
                           

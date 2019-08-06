@@ -30,56 +30,6 @@ namespace Exaxxi.Areas.Admin.Controllers
             return View(result);
         }
 
-        // GET: Admin/Users/Details/5
-        public IActionResult Details(int? id)
-        {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var users = JsonConvert.DeserializeObject<Users>(_api.getAPI($"api/AdminsAPI/{id}", HttpContext.Session.GetString("token")).Result);
-            ViewBag.Password = bf.Decrypt_CBC(users.password);
-            if (users == null)
-            {
-                return NotFound();
-            }
-
-            return View(users);
-        }
-
-        // GET: Admin/Users/Create
-        public IActionResult Create()
-        {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            return View();
-        }
-
-        // POST: Admin/Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
-        {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            if (_api.postAPI(users, "api/UsersAPI", HttpContext.Session.GetString("token")).Result)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            return View(users);
-        }
-
         // GET: Admin/Users/Edit/5
         public IActionResult Edit(int? id)
         {
@@ -105,7 +55,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level_seller,score_buyer,date_registion,active")] Users users)
+        public async Task<IActionResult> Edit(int id, Users users)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
@@ -114,13 +64,13 @@ namespace Exaxxi.Areas.Admin.Controllers
             if (id != users.id)
             {
                 return NotFound();
-            }
+            }            
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var result = await _api.putAPI(users, $"api/UsersAPI/{id}", HttpContext.Session.GetString("token"));
+                    var result = await _api.putAPI(users, $"api/UsersChange/{id}", HttpContext.Session.GetString("token"));
                 }
                 catch (DbUpdateConcurrencyException)
                 {

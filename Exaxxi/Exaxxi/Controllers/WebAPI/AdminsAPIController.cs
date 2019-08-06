@@ -18,7 +18,6 @@ using System.Net.Http.Headers;
 
 namespace Exaxxi.Controllers.WebAPI
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
    
@@ -74,10 +73,9 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(admins);
         }
-        [AllowAnonymous, HttpGet("GetForgetPassword")]
+        [AllowAnonymous, HttpGet("GetForgetPassword/{email}")]
         public IActionResult GetForgetPassword(string email)
         {
-            Admins ad = _context.Admins.SingleOrDefault(p => p.email == email);
             if (ModelState.IsValid)
             {
                 //Mã hóa email
@@ -86,13 +84,9 @@ namespace Exaxxi.Controllers.WebAPI
 
                 //mailer
                 ml.SendMail("Exaxxi Site", email, "Forgot Password in Exaxxi", $"Vui lòng click vào link {link} để đổi mật khẩu");
-
-                return Ok("ok");
             }
 
-            return Ok(ad);
-
-
+            return Ok();        
         }
 
         // PUT: api/Admins/5
@@ -184,12 +178,12 @@ namespace Exaxxi.Controllers.WebAPI
 
             dynamic data = json;
             string hash = data.hash;
-            string username = data.username;
+            string email = data.email;
             string password = data.password;
             string repass = data.repass;
 
             //Check Hash                
-            if (bf.Decrypt_CBC(hash) == username)
+            if (bf.Decrypt_CBC(hash) == email)
             {
                 if (password != repass)
                 {
@@ -205,16 +199,59 @@ namespace Exaxxi.Controllers.WebAPI
                     return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường");
                 }
 
-                Admins ad = _context.Admins.SingleOrDefault(p => p.email == username);
-                ad.password = bf.Encrypt_CBC(password);
-                _context.SaveChanges();
-                return NoContent();
+                var pass = bf.Encrypt_CBC(password);
+
+                _context.Admins.First(p => p.email == email).password = pass;
+
+                _context.SaveChanges();                
             }
-            else
-            {
-                return BadRequest("Link sai!");
-            }
+            return Ok();
         }
+
+        [Route("ChangeAdmin")]
+        public async Task<IActionResult> ChangeAdmin([FromBody] JObject json)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            dynamic data = json;
+            string pass = data.pass;
+            string re_pass = data.re_pass;
+            string name = data.name;           
+            string email = data.email;           
+
+            if (pass.Length > 0)
+            {
+                if (pass.Length < 8)
+                {
+                    return BadRequest("Mật khẩu tối thiểu 8 ký tự!");
+                }
+
+                if (pass != re_pass)
+                {
+                    return BadRequest("Nhập lại mật khẩu chưa chính xác!");
+                }
+
+                Regex rgx = new Regex(info.RegEx);
+                if (!rgx.IsMatch(pass))
+                {
+                    return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường!");
+                }
+
+                var password = bf.Encrypt_CBC(pass);
+
+                _context.Admins.First(p => p.email == email).password = password;
+            }
+
+            _context.Admins.First(p => p.email == email).name = name;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         // DELETE: api/Admins/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAdmins([FromRoute] int id)

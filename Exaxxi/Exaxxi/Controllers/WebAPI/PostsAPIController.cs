@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Exaxxi.Models;
 using Exaxxi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using Exaxxi.Helper;
 
 namespace Exaxxi.Controllers.WebAPI
 {
@@ -16,6 +18,7 @@ namespace Exaxxi.Controllers.WebAPI
     public class PostsAPIController : ControllerBase
     {
         private readonly ExaxxiDbContext _context;
+        CallAPI _api = new CallAPI();
 
         public PostsAPIController(ExaxxiDbContext context)
         {
@@ -163,6 +166,48 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Users, a => a.id_user, b => b.id, (a, b) => new { a, b })
                 .Where(p => p.a.id == idPost).SingleOrDefault().b.email;     
             return Ok(data);
+        }
+        [Route("TakeLowestAsk/{id_item}/{id_size}")]
+        public IActionResult TakeLowestAsk(int id_item, int id_size)
+        {
+            double lowestAsk = 0;
+            if(!ModelState.IsValid || id_item == 0)
+            {
+                return BadRequest(ModelState);
+            }
+            if(id_item > 0)
+            {
+                var list = _context.Posts.Join(_context.Sizes, p => p.id_size, s => s.id, (p, s) => new { p, s })
+                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 1 && r.p.status == 0);
+                if(id_size > 0)
+                {
+                    list = list.Where(h => h.s.id == id_size);
+                }
+                if (list.Count() > 0) lowestAsk = list.OrderBy(o => o.p.price).FirstOrDefault().p.price;
+                else return Ok(0);
+            }
+            return Ok(lowestAsk);
+        }
+        [Route("TakeHighestBid/{id_item}/{id_size}")]
+        public IActionResult TakeHighestBid(int id_item, int id_size)
+        {
+            double highestBid = 0;
+            if (!ModelState.IsValid || id_item == 0)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id_item > 0)
+            {
+                var list = _context.Posts.Join(_context.Sizes, p => p.id_size, s => s.id, (p, s) => new { p, s })
+                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 2 && r.p.status == 0);
+                if (id_size > 0)
+                {
+                    list = list.Where(h => h.s.id == id_size);
+                }
+                if (list.Count() > 0) highestBid = list.OrderByDescending(o => o.p.price).FirstOrDefault().p.price;
+                else return Ok(0);
+            }
+            return Ok(highestBid);
         }
     }
 }

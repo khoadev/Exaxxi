@@ -3,9 +3,11 @@
 <!DOCTYPE html>
 <html>
 @{
-  
+
     string controllernName = ViewContext.RouteData.Values["controller"].ToString();
+    string actionName = ViewContext.RouteData.Values["action"].ToString();
 }
+
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
@@ -34,203 +36,217 @@
 </head>
 <body ng-app="exaxxiApp">
     <div class="wrapper ">
-        <div class="sidebar" data-color="danger" data-background-color="white" data-image="../images/sidebar-1.jpg">
-            <!--
-                Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+        @if (actionName != "ForgetPassword" && actionName != "ChangePassword")
+        {
+            <div class="sidebar" data-color="danger" data-background-color="white" data-image="../images/sidebar-1.jpg">
+                <!--
+                    Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
-                Tip 2: you can also add an image using data-image tag
-            -->
-            <div class="logo">
-                <a href="#" class="simple-text logo-normal">
-                    Admin
-                </a>
+                    Tip 2: you can also add an image using data-image tag
+                -->
+
+                <div class="logo">
+                    <a href="#" class="simple-text logo-normal">
+                        Admin
+                    </a>
+                </div>
+                <div class="sidebar-wrapper">
+                    <ul class="nav">
+                        @using Microsoft.AspNetCore.Http
+                        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                        @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin").ToString()))
+                        {
+
+
+                        }
+                        else
+                        {
+
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1")
+                            {
+                                <li class="nav-item @(controllernName == "Dashboard" ? "active" : "")  ">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                        <i class="material-icons">dashboard</i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Admins" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">person</i>
+                                        <p>Admin</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "2")
+                            {
+                                <li class="nav-item @(controllernName == "News" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">language</i>
+                                        <p>News</p>
+                                    </a>
+                                </li>
+                            }
+
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "3")
+                            {
+                                <li class="nav-item @(controllernName == "Departments" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">content_paste</i>
+                                        <p>Department</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item  @(controllernName == "Categories" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">category</i>
+                                        <p>Categorie</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item  @(controllernName == "Upload" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Upload" asp-area="Admin" asp-action="Create">
+                                        <i class="material-icons">category</i>
+                                        <p>Tạo Thư mục</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Brands" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">branding_watermark</i>
+                                        <p>Brand</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "ds_Size" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">library_books</i>
+                                        <p>Sizes List</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Items" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">bubble_chart</i>
+                                        <p>Item</p>
+                                    </a>
+                                </li>
+                            }
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "4")
+                            {
+                                <li class="nav-item @(controllernName == "Posts" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">web</i>
+                                        <p>Post</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Orders" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Orders" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">web</i>
+                                        <p>Order</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Sizes" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">format_size</i>
+                                        <p>Sizes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Vouchers" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Vouchers" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">format_size</i>
+                                        <p>Vouchers</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @(controllernName == "Users" ? "active" : "")">
+                                    <a class="nav-link" asp-controller="Users" asp-area="Admin" asp-action="Index">
+                                        <i class="material-icons">person</i>
+                                        <p>User</p>
+                                    </a>
+                                </li>
+                            }
+
+
+                        }
+
+                    </ul>
+                </div>
             </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    @using Microsoft.AspNetCore.Http
-                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-                    @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin").ToString()))
-                    {
+        }
 
-
-                    }
-                    else
-                    {
-
-                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1")
-                        {
-                            <li class="nav-item @(controllernName == "Dashboard" ? "active" : "")  ">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                    <i class="material-icons">dashboard</i>
-                                    <p>Dashboard</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "Admins" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Admins" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">person</i>
-                                    <p>Admin</p>
-                                </a>
-                            </li>
-                        }
-                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "2")
-                        {
-                            <li class="nav-item @(controllernName == "News" ? "active" : "")">
-                                <a class="nav-link" asp-controller="News" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">language</i>
-                                    <p>News</p>
-                                </a>
-                            </li>
-                        }
-
-                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "3")
-                        {
-                            <li class="nav-item @(controllernName == "Departments" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Departments" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">content_paste</i>
-                                    <p>Department</p>
-                                </a>
-                            </li>
-                            <li class="nav-item  @(controllernName == "Categories" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Categories" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">category</i>
-                                    <p>Categorie</p>
-                                </a>
-                            </li> 
-                            <li class="nav-item  @(controllernName == "Upload" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Upload" asp-area="Admin" asp-action="Create">
-                                    <i class="material-icons">category</i>
-                                    <p>Tạo Thư mục</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "Brands" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Brands" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">branding_watermark</i>
-                                    <p>Brand</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "ds_Size" ? "active" : "")">
-                                <a class="nav-link" asp-controller="ds_Size" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">library_books</i>
-                                    <p>Sizes List</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "Items" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Items" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">bubble_chart</i>
-                                    <p>Item</p>
-                                </a>
-                            </li>
-                        }
-                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "1" || HttpContextAccessor.HttpContext.Session.GetInt32("levelAdmin").ToString() == "4")
-                        {
-                            <li class="nav-item @(controllernName == "Posts" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Posts" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">web</i>
-                                    <p>Post</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "Sizes" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Sizes" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">format_size</i>
-                                    <p>Sizes</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "Vouchers" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Vouchers" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">format_size</i>
-                                    <p>Vouchers</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @(controllernName == "Users" ? "active" : "")">
-                                <a class="nav-link" asp-controller="Users" asp-area="Admin" asp-action="Index">
-                                    <i class="material-icons">person</i>
-                                    <p>User</p>
-                                </a>
-                            </li>
-                        }
-
-
-                    }
-
-                </ul>
-            </div>
-        </div>
         <div class="main-panel">
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                        <span class="navbar-toggler-icon icon-bar"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end">
-                        <form class="navbar-form">
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                    <div class="ripple-container"></div>
-                                </button>
-                            </div>
-                        </form>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <i class="material-icons">dashboard</i>
-                                    <p class="d-lg-none d-md-block">
-                                        Stats
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">notifications</i>
-                                    <span class="notification">5</span>
-                                    <p class="d-lg-none d-md-block">
-                                        Some Actions
-                                    </p>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                    <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                    <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                    <a class="dropdown-item" href="#">Another Notification</a>
-                                    <a class="dropdown-item" href="#">Another One</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">person</i>
-                                    <p class="d-lg-none d-md-block">
-                                        Account
-                                    </p>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile" ng-controller="session">
-                                    <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">
-                                        Xin chào
-                                        <b>@HttpContextAccessor.HttpContext.Session.GetString("nameAdmin")</b>
+            @if (actionName != "ForgetPassword" && actionName != "ChangePassword")
+            {
+                <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="navbar-toggler-icon icon-bar"></span>
+                            <span class="navbar-toggler-icon icon-bar"></span>
+                            <span class="navbar-toggler-icon icon-bar"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end">
+                            @*<form class="navbar-form">
+                                    <div class="input-group no-border">
+                                        <input type="text" value="" class="form-control" placeholder="Search...">
+                                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                            <i class="material-icons">search</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </form>*@
+                            <ul class="navbar-nav">
+                                @*<li class="nav-item">
+                                        <a class="nav-link" href="#pablo">
+                                            <i class="material-icons">dashboard</i>
+                                            <p class="d-lg-none d-md-block">
+                                                Stats
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">notifications</i>
+                                            <span class="notification">5</span>
+                                            <p class="d-lg-none d-md-block">
+                                                Some Actions
+                                            </p>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Mike John responded to your email</a>
+                                            <a class="dropdown-item" href="#">You have 5 new tasks</a>
+                                            <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+                                            <a class="dropdown-item" href="#">Another Notification</a>
+                                            <a class="dropdown-item" href="#">Another One</a>
+                                        </div>
+                                    </li>*@
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">person</i>
+                                        <p class="d-lg-none d-md-block">
+                                            Account
+                                        </p>
                                     </a>
-                                    <a class="dropdown-item" href="#">Profile</a>
-                                    <a class="dropdown-item" href="#">Settings</a>
-                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile" ng-controller="session">
+                                        <a class="nav-link" asp-controller="Login" asp-action="Profile" asp-route-id="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")">
+                                            Hi,<br />
+                                            <b>@HttpContextAccessor.HttpContext.Session.GetString("nameAdmin")&nbsp;&nbsp;<i class="fas fa-user-edit"></i></b>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
 
-                                    <a class="dropdown-item" ng-click="Session()" asp-controller="Login" asp-action="Logout">
-                                        Log out
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+                                        <a class="dropdown-item" ng-click="Session()" asp-controller="Login" asp-action="Logout">
+                                            Log out
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            }
             <!-- End Navbar -->
             <div class="content">
                 @RenderBody()
             </div>
         </div>
+
     </div>
+
     <!--   Core JS Files   -->
     <script src="~/js/jquery-3.4.1.js"></script>
     <script src="~/js/popper.min.js"></script>
@@ -420,8 +436,8 @@
 
         });
     </script>
-    <script src="~/ckeditor/ckeditor.js"></script> 
-  
+    <script src="~/ckeditor/ckeditor.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="~/js/dirPagination.js"></script>
 

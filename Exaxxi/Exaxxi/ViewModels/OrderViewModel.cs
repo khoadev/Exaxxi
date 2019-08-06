@@ -11,5 +11,7 @@ namespace Exaxxi.ViewModels
         public Items items { get; set; }
         public Orders orders { get; set; }
         public Sizes size { get; set; }
+        public Users user { get; set; }
+        public Voucher voucher { get; set; }
     }
 }

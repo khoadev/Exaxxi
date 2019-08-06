@@ -11,61 +11,59 @@
                 <p class="card-category"></p>
             </div>
             <div class="card-body">
-                <label for="singleSelect"> sắp xếp: </label><br>
-                <select class="form-control" name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.vi_name for item in name">
-                   @*<option ng-repeat="x in name" value="{{x.id}}">{{x.vi_name}}</option>*@
-                </select>
+                <label for="singleSelect">Chủng Loại: </label><br>
+                <select class="form-control" name="singleSelect" ng-change="change()" id="select" ng-model="selectedItem" ng-options="item.vi_name for item in name"></select>
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary">
-                            <tr>
-                                <th>
-                                    Tên thương hiệu
-                                </th>
-                                <th>
-                                    Trạng thái
-                                </th>
-                                <th>
-                                    Thứ tự
-                                </th>
-                                <th class="text-right"><a asp-action="Create">Thêm</a></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                        Tên thương hiệu
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                    <th>
+                                        Thứ tự
+                                    </th>
+                                    <th class="text-right"><a asp-action="Create">Thêm</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                            <tr ng-repeat="x in getItem ">
-                                <td>
-                                    {{x.name}}
-                                </td>
-                                <td>
-                                    {{x.active}}
-                                </td>
-                                <td>
-                                    {{x.order}}
-                                </td>
-                                <td class="td-actions text-right">
-                                    <a href="/Admin/Brands/Edit/{{x.id}}">
-                                        <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
-                                            <i class="material-icons">edit</i>
+                                <tr ng-repeat="x in getItem ">
+                                    <td>
+                                        {{x.name}}
+                                    </td>
+                                    <td>
+                                        {{x.active == true ? "Đang hoạt động" : "Đã khóa"}}
+                                    </td>
+                                    <td>
+                                        {{x.order}}
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <a href="/Admin/Brands/Edit/{{x.id}}">
+                                            <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                        </a>
+                                        <a href="/Admin/Brands/Details/{{x.id}}">
+                                            <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                                <i class="material-icons">
+                                                    info
+                                                </i>
+                                            </button>
+                                        </a>
+                                        <button ng-click="Delete(x.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                            <i class="material-icons">close</i>
                                         </button>
-                                    </a>
-                                    <a href="/Admin/Brands/Details/{{x.id}}">
-                                        <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
-                                            <i class="material-icons">
-                                                info
-                                            </i>
-                                        </button>
-                                    </a>
-                                    <button ng-click="Delete(x.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
 
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>

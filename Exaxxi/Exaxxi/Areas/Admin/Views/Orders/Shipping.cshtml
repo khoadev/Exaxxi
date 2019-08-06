@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Exaxxi.Models.Orders>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+<div class="row" ng-controller="Orders">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title ">Danh sách đơn hàng</h4>
+                <p class="card-category">Quản lý danh sách đơn hàng</p>
+            </div>
+            <span style="text-align:right; margin-top:5px">
+                <a class="btn btn-outline-info" asp-area="Admin" asp-action="Index" asp-controller="Orders" style="width:170px"><i class="fas fa-clipboard-list"></i> Đơn Hàng Mới</a>
+                <a class="btn btn-outline-danger" asp-area="Admin" asp-action="History" asp-controller="Orders" style="width:140px"><i class="fas fa-history"></i> Lịch Sử</a>
+            </span>
+            <h2 style="text-align:center; margin-top:20px">Danh Sách Đơn Hàng Đang Xử Lý</h2>
+            <label style="margin-top:20px; margin-left:10px">Chọn loại:</label>
+            <select id="kind" ng-change="change()" ng-model="kind" style="width:100px; margin-left:10px">
+                <option value="1">Buying</option>
+                <option value="2">Selling</option>
+            </select>
+            <br />
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    Thời Gian
+                                </th>
+                                <th>
+                                    Người Mua
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Sản Phẩm
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="x in name | orderBy : 'orders.time'">
+                                <td>
+                                    {{x.orders.time | date : 'dd/MM/yyyy'}}
+                                </td>
+                                <td>
+                                    {{x.user.name}}
+                                </td>
+                                <td>
+                                    {{x.user.email}}
+                                </td>
+                                <td>
+                                    {{x.items.name}}
+                                </td>
+                                <td class="td-actions text-right">
+                                    <a href="/Admin/Orders/Detail?id={{x.orders.id}}&status=1&update=2">
+                                        <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">
+                                                info
+                                            </i>
+                                        </button>
+                                    </a>
+                                    <button ng-click="Delete(x.orders.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                        <i class="material-icons">close</i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        app.controller('Orders', function ($scope, $http) {
+
+            $scope.kind = "1";
+            var kind = 1;
+
+            //Select default
+            $http.get("/api/OrdersAPI/SelectKind/" + kind + "/1")
+                .then(function (response) { $scope.name = response.data; });
+
+            $scope.change = function () {
+                kind = $("#kind").val();
+                $http.get("/api/OrdersAPI/SelectKind/" + kind + "/1")
+                    .then(function (response) { $scope.name = response.data; });
+            }
+
+            //Delete
+            $scope.Delete = function (id) {
+                var url = '/api/OrdersChange/' + id;
+                //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
+                var config = {
+                    headers: {
+                        'Context-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+                }
+                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                if (isConfirm) {
+                    $http.delete(url, config).then(function (response) {
+                        window.location.reload();
+                    });
+
+                } else {
+                    return false;
+                }
+            }
+        });
+    </script>
+}

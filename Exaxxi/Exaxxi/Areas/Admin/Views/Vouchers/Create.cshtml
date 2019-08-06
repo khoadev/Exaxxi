@@ -19,7 +19,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="kind" class="control-label"></label>
-                <input asp-for="kind" class="form-control" />
+                <select asp-for="kind" class="form-control">
+                    <option value="1">Giảm theo giá</option>
+                    <option value="2">Giảm theo tháng</option>
+                </select>
                 <span asp-validation-for="kind" class="text-danger"></span>
             </div>
             <div class="form-group">
