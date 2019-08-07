@@ -8,15 +8,9 @@
                 <h4 class="card-title ">Danh sách bài post</h4>
                 <p class="card-category"></p>
             </div>
-            <div ng-controller="Post">
-                <label for="singleSelect"> Loại:{{tenmua.id}} </label><br>
-                <select name="singleSelect" ng-model="sort" ng-change="change()">
-                    <option value="1">Mua</option>
-                    <option value="2">Bán</option>
-                    <option value="3">Đang xử lý</option>
-                </select>
+            <div ng-controller="Post">                
                 <div class="card-body">
-                    <label for="singleSelect"> sắp xếp:{{tenmua.id}} </label><br>
+                    <label for="singleSelect"> Loại:{{tenmua.id}} </label><br>
                     <select class="form-control col-1" name="singleSelect" ng-model="sort" ng-change="change()">
                         <option value="1">Mua</option>
                         <option value="2">Bán</option>

@@ -138,7 +138,27 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(news);
 
         }
-        
+
+        [Route("TopNewsView")]
+        public IActionResult TopNewsView()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var news = _context.News
+                .Join(_context.Departments, a => a.id_department, b => b.id, (a, b) => new { a, b })
+                .OrderByDescending(p => p.a.view)
+                .Select(g => new NewsViewModel {
+                    news = g.a,
+                    vi_name_depart = g.b.vi_name,
+                })
+                .Take(5);
+
+            return Ok(news);
+        }
+
         [HttpPost]
         // POST: api/News/PostCreateNews
         [Route("PostCreateNews")]

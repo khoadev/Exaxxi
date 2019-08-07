@@ -74,6 +74,32 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(items);
         }
 
+        [Route("CountItems")]
+        public IActionResult CountItems()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = _context.Items.Count();            
+
+            return Ok(items);
+        }
+
+        [Route("TopItemSold")]
+        public IActionResult TopItemSold()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = _context.Items.OrderByDescending(p => p.sold).Take(10);
+
+            return Ok(items);
+        }
+
         [Route("TakeItemByIdBrand/{Id_Brand}/{Qty}")]
         public IEnumerable<Items> GetAllItemByIdBrand(int Id_Brand, int Qty)
         {

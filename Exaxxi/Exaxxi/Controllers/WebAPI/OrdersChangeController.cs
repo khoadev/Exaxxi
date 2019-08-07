@@ -52,6 +52,18 @@ namespace Exaxxi.Controllers.WebAPI
         {            
             var data = _context.Orders.Where(p => p.id == id).First().status = status;            
 
+            if(status == 2)
+            {
+                var sold = _context.Orders
+                    .Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b })
+                    .Join(_context.Sizes, c => c.b.id_size, d => d.id, (c, d) => new { c, d })
+                    .Join(_context.Items, e => e.d.id_item, f => f.id, (e, f) => new { e, f })
+                    .Where(p => p.e.c.a.id == id)
+                    .FirstOrDefault().f.id;
+
+                var upd_sold = _context.Items.Where(p => p.id == sold).First().sold += sold;
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok();

@@ -96,6 +96,19 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(count);
         }
 
+        [Route("CountOrders")]
+        public IActionResult CountOrders()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var orders = _context.Orders.Where(p => p.status == 0).Count();
+
+            return Ok(orders);
+        }
+
         [Route("TakeDetailBuying_Account/{kind}/{idUser}")]
         public IActionResult TakeDetailBuying_Account(int kind, int idUser)
         {

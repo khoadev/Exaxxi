@@ -73,6 +73,19 @@ namespace Exaxxi.Controllers.WebAPI
             }
         }
 
+        [AllowAnonymous, Route("CountUsers")]
+        public IActionResult CountUsers()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var users = _context.Users.Count();
+
+            return Ok(users);
+        }
+
         [AllowAnonymous, Route("GetForgetPassword")]
         public IActionResult GetForgetPassword(string email)
         {
