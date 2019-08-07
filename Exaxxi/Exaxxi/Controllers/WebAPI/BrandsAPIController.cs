@@ -23,13 +23,13 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet("BrandsDefault")]
         public IEnumerable<Brands> BrandsDefault()
         {
-            return _context.Brands.Include("department");
+            return _context.Brands.Include("department").Where(p=> p.active == true);
         }
         [HttpGet("GetBrandsAd/{idde}")]
         public IEnumerable<Brands> GetBrandsAd(int idde)
         {
           
-                return _context.Brands.Where(p => p.id_department == idde);  
+                return _context.Brands.Where(p => p.id_department == idde && p.active == true);  
 
         }
         // GET: api/Brands
@@ -50,11 +50,11 @@ namespace Exaxxi.Controllers.WebAPI
         {
             if(Qty == 0)
             {
-                return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order);
+                return _context.Brands.Where(p => p.id_department == Id_Depart && p.active == true).OrderBy(p => p.order);
             }
             else
             {
-                return _context.Brands.Where(p => p.id_department == Id_Depart).OrderBy(p => p.order).Take(Qty);
+                return _context.Brands.Where(p => p.id_department == Id_Depart && p.active == true).OrderBy(p => p.order).Take(Qty);
             }
            
         }

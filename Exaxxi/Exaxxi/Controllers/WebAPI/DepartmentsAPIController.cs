@@ -32,6 +32,7 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Departments
                 .Join(_context.News, a => a.id, b => b.id_department, (a, b) => new { a, b })
+                .Where(p=>p.b.active==true)
                 .Select(p => p.a).Distinct()
                 ;
         }
@@ -62,7 +63,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             var name = _context.ds_Size
                 .Join(_context.Departments, a => a.id_Depart, b => b.id, (a, b) => new { a, b })
-                .Where(p => p.a.id == id).FirstOrDefault().b.id;
+                .Where(p => p.a.id == id ).FirstOrDefault().b.id;
 
             return Ok(name);
         }

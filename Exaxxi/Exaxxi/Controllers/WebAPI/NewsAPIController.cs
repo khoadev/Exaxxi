@@ -26,31 +26,31 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<News> GetNews()
         {
-            return _context.News.Include("department").Include("admin");
+            return _context.News.Include("department").Include("admin").Where(p=>p.active==true);
         }
         [HttpGet("img/{id}")]
         public IActionResult GetNewsImg(int id)
         {
-            var data = _context.News.Where(p => p.id == id).FirstOrDefault().img;
+            var data = _context.News.Where(p => p.id == id && p.active == true).FirstOrDefault().img;
             return Ok(data);
         }
         [HttpGet("GetAll")]
         public IEnumerable<NewsViewModel> GetAll()
         {
-            return _context.News.Include(n => n.admin).Include(n => n.department)
+            return _context.News.Include(n => n.admin).Include(n => n.department).Where(c => c.active == true)
               .Select(n => new NewsViewModel
               {
                   news = n,
                   name_admin = n.admin.name,
                   en_name_depart = n.department.en_name,
                   vi_name_depart = n.department.vi_name,
-                  id_depart=n.id_department
+                  id_depart = n.id_department
               });
         }
         [HttpGet("GetById/{id}")]
         public NewsViewModel GetById(int id)
         {
-            return _context.News.Include(n => n.admin).Include(n => n.department).Where(p=>p.id==id)
+            return _context.News.Include(n => n.admin).Include(n => n.department).Where(p => p.id == id && p.active == true)
               .Select(n => new NewsViewModel
               {
                   news = n,
@@ -81,7 +81,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet("GetNewsOrderByTime")]
         public IEnumerable<NewsViewModel> GetNewsOrderByTime()
         {
-            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.date_create).Take(4)
+            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.date_create).Take(4).Where(p => p.active == true)
                .Select(n => new NewsViewModel
                {
                    news = n,
@@ -93,7 +93,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet("GetNewsOrderByView")]
         public IEnumerable<NewsViewModel> GetNewsOrderByView()
         {
-            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.view).Take(4)
+            return _context.News.Include(n => n.admin).Include(n => n.department).OrderByDescending(p => p.view).Take(4).Where(p => p.active == true)
                .Select(n => new NewsViewModel
                {
                    news = n,
@@ -102,19 +102,20 @@ namespace Exaxxi.Controllers.WebAPI
                    vi_name_depart = n.department.vi_name
                });
         }
-       
+
         [Route("GetNewsByDepart/{id_depart}/{id}")]
-        public IEnumerable<NewsViewModel> GetNewsByDepart(int id_depart,int id)
+        public IEnumerable<NewsViewModel> GetNewsByDepart(int id_depart, int id)
         {
-            IEnumerable<News> kq = _context.News.Include(n => n.admin).Include(n => n.department).Where(p => p.id_department == id_depart).OrderBy(p => p.date_create);
+            IEnumerable<News> kq = _context.News.Include(n => n.admin).Include(n => n.department).Where(p => p.id_department == id_depart && p.active == true).OrderBy(p => p.date_create);
 
             if (id != 0) kq = kq.Where(p => p.id != id);
 
-                return kq.Select(n => new NewsViewModel {
-                    news = n,
-                    name_admin = n.admin.name,
-                    en_name_depart = n.department.en_name,
-                    vi_name_depart = n.department.vi_name
+            return kq.Select(n => new NewsViewModel
+            {
+                news = n,
+                name_admin = n.admin.name,
+                en_name_depart = n.department.en_name,
+                vi_name_depart = n.department.vi_name
             });
         }
 
@@ -127,7 +128,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest(ModelState);
             }
 
-            var news = await _context.News.Include(c => c.department).Include(p => p.admin)
+            var news = await _context.News.Include(c => c.department).Include(p => p.admin).Where(p => p.active == true)
                 .FirstOrDefaultAsync(m => m.id == id);
 
             if (news == null)
@@ -150,7 +151,9 @@ namespace Exaxxi.Controllers.WebAPI
             var news = _context.News
                 .Join(_context.Departments, a => a.id_department, b => b.id, (a, b) => new { a, b })
                 .OrderByDescending(p => p.a.view)
-                .Select(g => new NewsViewModel {
+                .Where(p => p.a.active == true)
+                .Select(g => new NewsViewModel
+                {
                     news = g.a,
                     vi_name_depart = g.b.vi_name,
                 })
@@ -159,23 +162,23 @@ namespace Exaxxi.Controllers.WebAPI
             return Ok(news);
         }
 
-        [HttpPost]
-        // POST: api/News/PostCreateNews
-        [Route("PostCreateNews")]
-        public async Task<IActionResult> PostCreateNews([FromBody] News news)
-        {
+        //[HttpPost]
+        //// POST: api/News/PostCreateNews
+        //[Route("PostCreateNews")]
+        //public async Task<IActionResult> PostCreateNews([FromBody] News news)
+        //{
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _context.News.Add(news);
-            await _context.SaveChangesAsync();
+        //    _context.News.Add(news);
+        //    await _context.SaveChangesAsync();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
-       
+
     }
 }

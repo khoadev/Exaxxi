@@ -31,6 +31,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return _context.Items
                         .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
                         .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Where(z => z.c.a.active == true)
                         .Select(g => new ItemViewAdmin
                         {
                             items = g.c.a,
@@ -44,7 +45,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return _context.Items
                         .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
                         .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
-                        .Where(p => p.c.a.id_category == idcate)
+                        .Where(p => p.c.a.id_category == idcate && p.c.a.active == true)
                         .Select(g => new ItemViewAdmin
                         {
                             items = g.c.a,
@@ -82,7 +83,7 @@ namespace Exaxxi.Controllers.WebAPI
                 return BadRequest(ModelState);
             }
 
-            var items = _context.Items.Count();            
+            var items = _context.Items.Count();
 
             return Ok(items);
         }
@@ -129,7 +130,7 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Items
                          .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
                          .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
-                         .Where(p => p.c.a.id == id)
+                         .Where(p => p.c.a.id == id && p.c.a.active == true)
                          .Select(g => new ItemViewAdmin
                          {
                              items = g.c.a,
@@ -146,9 +147,10 @@ namespace Exaxxi.Controllers.WebAPI
                     .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
                     .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
                     .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
-                    .Where(p => p.h.e.c.a.id == id)
-                    .Select(p => new Brands {
-                        id_department=p.i.id_department
+                    .Where(p => p.h.e.c.a.id == id && p.h.e.c.a.active == true)
+                    .Select(p => new Brands
+                    {
+                        id_department = p.i.id_department
                     }).FirstOrDefault().id_department;
         }
         [HttpGet("TakeAttributeItem/{idItem}")]
@@ -159,7 +161,7 @@ namespace Exaxxi.Controllers.WebAPI
                     .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
                     .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
                     .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
-                    .Where(g => g.h.e.c.a.id == idItem)
+                    .Where(g => g.h.e.c.a.id == idItem && g.h.e.c.a.active == true)
                     .Select(p => new PostViewModel
                     {
                         item = p.h.e.c.a,
@@ -180,7 +182,7 @@ namespace Exaxxi.Controllers.WebAPI
                     .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
                     .Join(_context.Categories, e => e.c.a.id_category, f => f.id, (e, f) => new { e, f })
                     .Join(_context.Brands, h => h.f.id_brand, i => i.id, (h, i) => new { h, i })
-                    .Where(g => g.h.e.c.a.id == idItem && g.h.e.d.VN == dsSize)
+                    .Where(g => g.h.e.c.a.id == idItem && g.h.e.d.VN == dsSize && g.h.e.c.a.active == true)
                     .Select(p => new PostViewModel
                     {
                         item = p.h.e.c.a,
@@ -242,17 +244,17 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Items
                 .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(p => p.d.id_department == id)
+                .Where(p => p.d.id_department == id && p.c.a.active == true)
                 .Select(p => p.c.a);
         }
-        
+
         [Route("Popular/{id_depart}")]
         public IEnumerable<Items> GetItemsPopular(int id_depart)
         {
             return _context.Items
                 .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.active == true && k.d.id_department == id_depart)
+                .Where(k => k.c.a.active == true && k.d.id_department == id_depart && k.c.a.active == true)
                 .OrderBy(h => h.c.a.sold)
                 .Take(10)
                 .Select(m => m.c.a);
@@ -276,20 +278,20 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 result = result.Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(x => x.d.id == value_brand)
+                .Where(x => x.d.id == value_brand && x.c.a.active == true)
                 .Select(p => p.c.a);
             }
 
             if (value_cate.Count != 0)
             {
-                result = result.Where(x => value_cate.Contains(x.id_category)).OrderBy(x => x.name);
+                result = result.Where(x => value_cate.Contains(x.id_category) && x.active == true).OrderBy(x => x.name);
             }
 
             if (value_size.Count != 0)
             {
                 result = result.Join(_context.Sizes, a => a.id, b => b.id_item, (a, b) => new { a, b })
                     .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
-                    .Where(x => value_size.Contains(x.d.id))
+                    .Where(x => value_size.Contains(x.d.id) && x.c.a.active == true)
                     .Select(p => p.c.a);
             }
 
