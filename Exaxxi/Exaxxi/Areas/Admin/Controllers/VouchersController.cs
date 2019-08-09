@@ -76,6 +76,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
+            if (voucher.kind == 1 && voucher.value >= 1) voucher.value = voucher.value / 100;
             if (_api.postAPI(voucher, "api/VouchersChange", HttpContext.Session.GetString("token")).Result)
             {
                
