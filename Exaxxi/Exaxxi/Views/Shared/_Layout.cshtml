@@ -102,16 +102,13 @@
                 <li class="nav-item d-none d-md-flex">
                     <a class="nav-link" asp-controller="News" asp-action="Index" translate>{{ 'NEWS' }}</a>
                 </li>
-                <li class="nav-item d-none d-md-flex">
-                    <a class="nav-link" href="#">FaQ</a>
-                </li>
                 <li class="nav-item d-none d-md-flex"  ng-controller="testlang">
-                    <select ng-model="selectedLang" ng-init="selectedLang=lang" ng-change="changeLang()">
+                    <select class="nav-link" ng-model="selectedLang" ng-init="selectedLang=lang" ng-change="changeLang()" style="background-color:#272727; color:antiquewhite; border:none">
                         <option value="vi"  >
-                            vi
+                            VI
                         </option>
                         <option value="en"  >
-                            en
+                            EN
                         </option>
                     </select>
                 </li>
