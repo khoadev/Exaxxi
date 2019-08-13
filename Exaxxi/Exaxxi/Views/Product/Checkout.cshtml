@@ -358,7 +358,14 @@
                    
                     $("#voucher").prop('disabled', true);
                     $("#check_voucher").prop('disabled', true);
-                    $("#total_buy").val($("#total_buy").val() - $scope.voucher.discount);
+                    var lasttotal = $("#total_buy").val() - $scope.voucher.discount;
+                    if (lasttotal > 0) {
+                        $("#total_buy").val(lasttotal);
+                    }
+                    else {
+                        $("#total_buy").val("0");
+                    }
+                    
                     id_voucher = $scope.voucher.id_voucher;
                     discount = $scope.voucher.discount;
                 },

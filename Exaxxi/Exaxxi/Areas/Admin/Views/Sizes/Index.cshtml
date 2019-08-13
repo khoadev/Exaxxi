@@ -38,13 +38,13 @@
                             {
                                 <tr>
                                     <td>
-                                        @Convert.ToDouble(item.lowest_ask).ToString("#,###") VND
+                                        @Convert.ToDouble(item.lowest_ask).ToString("#,###") @if (Convert.ToDouble(item.lowest_ask) > 0) { @Html.Raw("VND");} else { @Html.Raw("<span style='color:red'>Chưa có thông tin</span>"); }
                                     </td>
                                     <td>
-                                        @Convert.ToDouble(item.highest_bid).ToString("#,###") VND
+                                        @Convert.ToDouble(item.highest_bid).ToString("#,###") @if (Convert.ToDouble(item.highest_bid) > 0) { @Html.Raw("VND");} else { @Html.Raw("<span style='color:red'>Chưa có thông tin</span>"); }                           
                                     </td>
                                     <td>
-                                        @Convert.ToDouble(item.last_sale).ToString("#,###") VND
+                                        @Convert.ToDouble(item.last_sale).ToString("#,###") @if (Convert.ToDouble(item.last_sale) > 0) { @Html.Raw("VND");} else { @Html.Raw("<span style='color:red'>Chưa có thông tin</span>"); }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.size.VN)
