@@ -254,11 +254,34 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Items
                 .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.active == true && k.d.id_department == id_depart && k.c.a.active == true)
+                .Where(k => k.c.a.active == true && k.d.id_department == id_depart && k.c.a.active == true && k.c.a.lowest_ask != null)
                 .OrderBy(h => h.c.a.sold)
                 .Take(10)
                 .Select(m => m.c.a);
         }
+        [Route("LowestAskNew/{id_depart}")]
+        public IEnumerable<Items> GetItemslowestask(int id_depart)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(k => k.c.a.active == true && k.d.id_department == id_depart && k.c.a.active == true && k.c.a.lowest_ask != null)
+                .OrderBy(h => h.c.a.lowest_ask)
+                .Take(10)
+                .Select(m => m.c.a);
+        }
+        [Route("HighestBidNew/{id_depart}")]
+        public IEnumerable<Items> GetItemshighestbid(int id_depart)
+        {
+            return _context.Items
+                .Join(_context.Categories, a => a.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(k => k.c.a.active == true && k.d.id_department == id_depart && k.c.a.active == true && k.c.a.highest_bid != null)
+                .OrderBy(h => h.c.a.highest_bid)
+                .Take(10)
+                .Select(m => m.c.a);
+        }
+
         [HttpPost]
         [Route("TakeIdCategory_Checkbox")]
         public IEnumerable<Items> TakeIdCategory_Checkbox([FromBody] JObject json)
