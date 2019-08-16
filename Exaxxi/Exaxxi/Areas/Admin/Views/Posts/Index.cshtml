@@ -12,8 +12,8 @@
                 <div class="card-body">
                     <label for="singleSelect"> Loại:{{tenmua.id}} </label><br>
                     <select class="form-control col-1" name="singleSelect" ng-model="sort" ng-change="change()">
-                        <option value="1">Mua</option>
-                        <option value="2">Bán</option>
+                        <option value="1">Bán</option>
+                        <option value="2">Mua</option>
                         <option value="3">Đang xử lý</option>
                     </select>
                     <div class="table-responsive">
@@ -41,7 +41,7 @@
                                     <td>{{x.post.date_start | date : 'dd/MM/yyyy H:m:ss'}}</td>
                                     <td>{{x.post.price | currency:"":0:3}} VND</td>
                                     <td>{{x.usernameSell}}</td>
-                                    <td>
+                                    <td style="text-align:center">
                                         <span ng-if="x.post.kind == 1">Mua</span>
                                         <span ng-if="x.post.kind == 2">Bán</span>
                                     </td>
