@@ -1,28 +1,25 @@
-﻿<div ng-controller="Request" style="margin-top:50px">
-
-    <!-- Modal Header -->
-    <div class="modal-header">
-        <h4 class="modal-title">Request Form</h4>
-    </div>
-
-    <!-- Modal body -->
-    <div class="modal-body">
-        <div class="form-group">
-            <input id="re_pro_cate" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's category">
+﻿
+<div class="container-fluid" style="background-color:#f2f2f2; padding:100px"  ng-controller="Request">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 user-info">
+            <div class="text-center">
+                <h1>
+                    {{'REFORM' | translate}}
+                </h1>
+            </div>
+            <div class="form-group">
+                <input id="re_pro_cate" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'CATENAME' | translate}}">
+            </div>
+            <div class="form-group">
+                <input id="re_pro_name" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'PRONAME' | translate}}">
+            </div>
+            <div class="form-group">
+                <textarea id="re_desc_pro" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'DESCPRO' | translate}}" rows="3"></textarea>
+            </div>
+            <button id="re_btn" type="button" class="btn btn-danger col-12">{{'SEND' | translate}}</button>
         </div>
-        <div class="form-group">
-            <input id="re_pro_name" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Product's name">
-        </div>
-        <div class="form-group">
-            <textarea id="re_desc_pro" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Describe your product" rows="3"></textarea>
-        </div>
-    </div>
-    <!-- Modal footer -->
-    <div class="modal-footer">
-        <button id="re_btn" type="button" class="btn btn-danger">Send</button>
     </div>
 </div>
-
 @section Scripts{
     <script>
         //Request

@@ -13,19 +13,19 @@
            
             <ul class="list-unstyled">
                 <li>
-                    <a id="pro" href="/User/Index" class="@if (actionName == "Index") { @Html.Raw("user-panel-active")}"><i class="far fa-user-circle fa-fw mr-3"></i>Profile</a>
+                    <a id="pro" href="/User/Index" class="@if (actionName == "Index") { @Html.Raw("user-panel-active")}"><i class="far fa-user-circle fa-fw mr-3"></i>{{'PROFILE'| translate}}</a>
                 </li>
                 <li>
-                    <a id="buy" href="/User/Buying" class="@if (actionName == "Buying") { @Html.Raw("user-panel-active")}"><i class="fas fa-shopping-cart if-fw mr-3"></i>Buying</a>
+                    <a id="buy" href="/User/Buying" class="@if (actionName == "Buying") { @Html.Raw("user-panel-active")}"><i class="fas fa-shopping-cart if-fw mr-3"></i>{{'BUYING'| translate}}</a>
                 </li>
                 <li>
-                    <a id="sel" href="/User/Selling" class="@if (actionName == "Selling") { @Html.Raw("user-panel-active")}"><i class="fas fa-money-bill-wave fa-fw mr-3"></i>Selling</a>
+                    <a id="sel" href="/User/Selling" class="@if (actionName == "Selling") { @Html.Raw("user-panel-active")}"><i class="fas fa-money-bill-wave fa-fw mr-3"></i>{{'SELLING'| translate}}</a>
                 </li>
                 <li>
-                    <a id="fol" href="/User/Following" class="@if (actionName == "Following") { @Html.Raw("user-panel-active")}"><i class="fas fa-newspaper fa-fw mr-3"></i>Following</a>
+                    <a id="fol" href="/User/Following" class="@if (actionName == "Following") { @Html.Raw("user-panel-active")}"><i class="fas fa-newspaper fa-fw mr-3"></i>{{'FOLLOWING'| translate}}</a>
                 </li>
                 <li>
-                    <a id="set" href="/User/Setting" class="@if (actionName == "Setting") { @Html.Raw("user-panel-active")}"><i class="fas fa-cog fa-fw mr-3"></i>Settings</a>
+                    <a id="set" href="/User/Setting" class="@if (actionName == "Setting") { @Html.Raw("user-panel-active")}"><i class="fas fa-cog fa-fw mr-3"></i>{{'SETTING'| translate}}</a>
                 </li>
             </ul>
         </div>

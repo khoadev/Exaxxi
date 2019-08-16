@@ -1,20 +1,20 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="Buying">
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh;padding:100PX 0" ng-controller="Buying">
     <div class="row">
         @Html.Partial("~/Views/User/Menu.cshtml")
 
         <div class="col-md-9">
             <div class="user-info d-flex justify-content-between">
                 <div>
-                    <i class="far fa-chart-bar fa-fw"></i>PURCHASING<br />
+                    <i class="far fa-chart-bar fa-fw text-uppercase"></i>{{'PURCHASING' | translate}}<br />
                     <span class="user-number">
                         {{count_buying}}
                     </span>
                 </div>
                 <div>
-                    <i class="fas fa-tag fa-fw"></i>PURCHASING(#)<br />
+                    <i class="fas fa-tag fa-fw text-uppercase"></i>{{'PURCHASING' | translate}}(#)<br />
                     <span class="user-number">
                         20
                     </span>
@@ -23,13 +23,13 @@
             <div class="user-info">
                 <ul class="nav nav-tabs user-tab">
                     <li class="nav-item">
-                        <a class="nav-link  active" data-toggle="tab" href="#current">Current</a>
+                        <a class="nav-link  active" data-toggle="tab" href="#current">{{'CURRENT' | translate}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#pending">Pending</a>
+                        <a class="nav-link" data-toggle="tab" href="#pending">{{'PENDING' | translate}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#history">History</a>
+                        <a class="nav-link" data-toggle="tab" href="#history">{{'HISTORY' | translate}}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -37,19 +37,19 @@
                         <table class="table table-hover">
                             <tr>
                                 <td>
-                                    Item
+                                    {{'ITEM' | translate}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Bid Price
+                                    {{'BIDPRICE' | translate}}
                                 </td>
                                 <td>
-                                    Highest Bid
+                                    {{'HIGHESTBID' | translate}}
                                 </td>
                                 <td>
-                                    Lowest Ask
+                                    {{'LOWESTASK' | translate}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Expires
+                                    {{'EXPIRES' | translate}}
                                 </td>
                             </tr>
                             <tr ng-repeat="x in current">
@@ -75,19 +75,19 @@
                         <table class="table table-hover">
                             <tr>
                                 <td>
-                                    Item
+                                    {{'ITEM' | translate}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Bid Price
+                                    {{'BIDPRICE' | translate}}
                                 </td>
                                 <td>
-                                    Highest Bid
+                                    {{'HIGHESTBID' | translate}}
                                 </td>
                                 <td>
-                                    Lowest Ask
+                                    {{'LOWESTASK' | translate}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Expires
+                                    {{'EXPIRES' | translate}}
                                 </td>
                             </tr>
                             <tr ng-repeat="x in pending">
@@ -113,19 +113,19 @@
                         <table class="table table-hover">
                             <tr>
                                 <td>
-                                    Item
+                                    {{'ITEM' | translate}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Bid Price
+                                    {{'BIDPRICE' | translate}}
                                 </td>
                                 <td>
-                                    Highest Bid
+                                    {{'HIGHESTBID' | translate}}
                                 </td>
                                 <td>
-                                    Lowest Ask
+                                    {{'LOWESTASK' | translate}}
                                 </td>
                                 <td class="d-none d-sm-block">
-                                    Expires
+                                    {{'EXPIRES' | translate}}
                                 </td>
                             </tr>
                             <tr ng-repeat="x in history">

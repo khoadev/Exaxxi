@@ -275,10 +275,11 @@
 
                     {{news1.news.vi_title}}
                 </a><br>
-                <p class="news-detail">
-                    {{timeDiff(news1.news.date_create)}}<br>
-                    {{news1.news.vi_content}}
-                </p>
+                    <p class="news-detail">
+                        {{timeDiff(news1.news.date_create)}}<br>
+                        <div ng-bind-html="trustAsHtml(news1.news.vi_content)"></div>
+
+                    </p>
             </div>
         </div>
         <div ng-repeat="x in news | limitTo : 5:1 " class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{x.news.img}}) center;">
@@ -288,10 +289,10 @@
             <a class="news-title-2" href="/News/Detail?id={{x.news.id}}">
                 {{x.news.vi_title}}
             </a><br>
-            <p class="news-detail-2">
-                {{timeDiff(x.news.date_create)}}<br>
-                {{x.news.vi_content}}
-            </p>
+                <p class="news-detail-2">
+                    {{timeDiff(x.news.date_create)}}<br>
+                    <div ng-bind-html="trustAsHtml(x.news.vi_content)"></div>
+                </p>
         </div>
 
     </div> <!-- End news-background-1 -->
@@ -334,7 +335,10 @@
 
                 });
         });
-        exaxxiApp.controller('getnewsCtrl', function ($scope, $http) {
+        exaxxiApp.controller('getnewsCtrl', function ($scope, $http, $sce) {
+            $scope.trustAsHtml = function(html) {
+              return $sce.trustAsHtml(html);
+            }
             $scope.timeDiff = function (time) {
                 var now = Date.now();
                 var teo = new Date(time).getTime();

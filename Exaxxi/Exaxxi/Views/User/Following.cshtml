@@ -1,33 +1,33 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="Following">
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh;padding-top:100px" ng-controller="Following">
     <div class="row">
         @Html.Partial("~/Views/User/Menu.cshtml")
 
         <div class="col-md-9">
             <div class="user-info">
                 <h3 class="font-weight-bold">
-                    FOLLOWING@*<sup><a href="#" data-toggle="modal" data-target="#followingModal"> <i class="fas fa-plus"></i></a></sup>*@
+                    {{'FOLLOWING' | translate}}@*<sup><a href="#" data-toggle="modal" data-target="#followingModal"> <i class="fas fa-plus"></i></a></sup>*@
                 </h3>
                 <div class="row">
                     <div class="col-12">
                         <table class="table">
                             <tr>
                                 <th>
-                                    Name
+                                    {{'NAME' | translate}}
                                 </th>
                                 <th>
-                                    Size
+                                    {{'SIZE' | translate}}
                                 </th>
                                 <th>
-                                    Market Value
+                                    {{'MARKETVAL' | translate}}
                                 </th>
                                 <th>
-                                    Lowest Ask
+                                    {{'LOWESTASK' | translate}}
                                 </th>
                                 <th>
-                                    Last Sale
+                                    {{'LASTSALE' | translate}}
                                 </th>
                             </tr>
                             <tr ng-repeat="x in follow">
