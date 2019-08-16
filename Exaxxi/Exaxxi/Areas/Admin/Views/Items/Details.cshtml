@@ -3,95 +3,83 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Items</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.items.name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.vi_info)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.vi_info)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.en_info)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.en_info)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.img)
-        </dt>
-        <dd>
-            <img src="~/images/item/@Html.DisplayFor(model => model.items.img)" />
-            
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.volatility)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.volatility)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.trade_min)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.trade_min)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.trade_max)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.trade_max)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.active)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.lowest_ask)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.lowest_ask)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.highest_bid)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.highest_bid)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.items.sold)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.items.sold)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.nameAdmin)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.nameAdmin)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.nameCate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.nameCate)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.items.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row" ng-controller="editDsSize">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Chi Tiết</h4>
+                <p class="card-category">Item</p>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" asp-controller="Items" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="items.id" />
+                    <div class="form-group">
+                        <label asp-for="items.name" class="bmd-label-floating"></label>
+                        <input asp-for="items.name" class="form-control" disabled />
+                        <span asp-validation-for="items.name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <img src="~/images/item/@Model.items.img" height="200" width="100" />
+                        @*<input asp-for="img" class="hidden form-control" />*@
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="items.vi_info" class=" bmd-label-floating"></label>
+                        <textarea asp-for="items.vi_info" class="form-control" rows="5" disabled></textarea>
+                        <span asp-validation-for="items.vi_info" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="items.en_info" class="bmd-label-floating"></label>
+                        <textarea asp-for="items.en_info" class="form-control" rows="5" disabled></textarea>
+                        <span asp-validation-for="items.en_info" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="items.volatility" class="bmd-label-floating"></label>
+                        <input asp-for="items.volatility" class="form-control" disabled />
+                        <span asp-validation-for="items.volatility" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="items.trade_min" class="bmd-label-floating"></label>
+                        <input asp-for="items.trade_min" class="form-control" disabled />
+                        <span asp-validation-for="items.trade_min" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="items.trade_max" class="bmd-label-floating"></label>
+                        <input asp-for="items.trade_max" class="form-control" disabled />
+                        <span asp-validation-for="items.trade_max" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="items.sold" class="bmd-label-floating"></label>
+                        <input asp-for="items.sold" class="form-control" disabled />
+                        <span asp-validation-for="items.sold" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="nameAdmin" class="bmd-label-floating"></label>
+                        <input asp-for="nameAdmin" class="form-control" id="admin" disabled>
+                        <span asp-validation-for="nameAdmin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="nameCate" class="bmd-label-floating"></label>
+                        <input asp-for="nameCate" class="form-control" id="category" disabled />
+                        <span asp-validation-for="nameCate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check p-0">
+                            <label class="form-check-label">
+                                @Html.DisplayNameFor(model => model.items.active)
+                                <input asp-for="items.active" class="form-check-input" type="checkbox" disabled>
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <a asp-action="Index">Quay Về</a>
+                    <a asp-action="Edit" asp-route-id="@Model.items.id">
+                        <button type="button" class="btn btn-primary pull-right">Chỉnh Sửa</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

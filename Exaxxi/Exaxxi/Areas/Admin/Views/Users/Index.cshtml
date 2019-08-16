@@ -15,7 +15,7 @@
                     <table class="table">
                         <thead class=" text-primary">
                             <tr>
-                                <th>ID</th>
+                                <th>STT</th>
                                 <th>
                                     Tên tài khoản
                                 </th>
@@ -28,32 +28,50 @@
                                 <th>
                                     Điểm người mua
                                 </th>
+                                <th>
+                                    Trạng thái
+                                </th>
                                 <th><i class="fas fa-cog" style="color:#808080"></i></th>
                             </tr>
                         </thead>
                         <tbody>
+                            @{ int i = 1;}
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.id)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.level_seller)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.score_buyer)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.id"><i class="fas fa-edit"></i></a>                                                                                
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @(i++)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.level_seller)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.score_buyer)
+                                </td>
+                                <td>
+                                    @if(item.active == true)
+                                    {
+                                        @Html.Raw("Đang hoạt động");
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("Đã khóa");
+                                    }
+                                </td>
+                                <td class="td-actions text-right">
+                                    <a asp-action="Edit" asp-route-id="@item.id">
+                                        <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

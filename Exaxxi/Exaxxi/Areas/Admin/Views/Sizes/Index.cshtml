@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách bài Post</h4>
+                <h4 class="card-title ">Danh sách size</h4>
                 <p class="card-category"></p>
             </div>
             <div class="card-body">
@@ -16,21 +16,21 @@
                         <thead class=" text-primary">
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.lowest_ask)
+                                    Giá mua thấp nhất
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.highest_bid)
+                                    Giá bán cao nhất
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.last_sale)
+                                    Last Sale
                                 </th>
                                 <th>
-                                    Size Việt Nam
+                                    Size (VN)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.item)
+                                    Sản phẩm
                                 </th>
-                                <th>Details</th>
+                                <th>Chi tiết</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,13 +38,13 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.lowest_ask)
+                                        @Convert.ToDouble(item.lowest_ask).ToString("#,###") VND
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.highest_bid)
+                                        @Convert.ToDouble(item.highest_bid).ToString("#,###") VND
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.last_sale)
+                                        @Convert.ToDouble(item.last_sale).ToString("#,###") VND
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.size.VN)
@@ -52,8 +52,14 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.item.name)
                                     </td>
-                                    <td>
-                                        <a asp-action="Details" asp-route-id="@item.id">Details</a> 
+                                    <td class="td-actions text-right">
+                                        <a asp-action="Details" asp-route-id="@item.id">
+                                            <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                                <i class="material-icons">
+                                                    info
+                                                </i>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                             }

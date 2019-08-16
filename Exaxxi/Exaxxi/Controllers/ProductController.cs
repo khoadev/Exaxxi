@@ -183,7 +183,7 @@ namespace Exaxxi.Controllers
                     //update after buy
                     var post = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/" + idPost).Result);
                     post.status = 1;
-                    _api.putAPI(post, "api/PostsChange/" + idPost);
+                    await _api.putAPI(post, "api/PostsChange/" + idPost);
                     var id_size = JsonConvert.DeserializeObject<int>(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id + "/" + size).Result);
                     UpdatePrice(id, id_size);
                     return RedirectToAction("Index", "User");

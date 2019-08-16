@@ -52,6 +52,50 @@ namespace Exaxxi.Controllers.WebAPI
         {            
             var data = _context.Orders.Where(p => p.id == id).First().status = status;            
 
+            if(status == 2)
+            {
+                // update sold of item
+                var id_item = _context.Orders
+                    .Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b })
+                    .Join(_context.Sizes, c => c.b.id_size, d => d.id, (c, d) => new { c, d })
+                    .Join(_context.Items, e => e.d.id_item, f => f.id, (e, f) => new { e, f })
+                    .Where(p => p.e.c.a.id == id)
+                    .FirstOrDefault().f.id;
+
+                var upd_sold = _context.Items.Where(p => p.id == id_item).First().sold += 1;
+
+                //update level seller and score buyer
+                int kind = _context.Orders.Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b }).Where(p => p.a.id == id).First().b.kind;
+                int id_buyer = 0, id_seller = 0;
+                if (kind == 1)
+                {
+                    id_buyer = _context.Orders.Where(p => p.id == id).First().id_user;
+                    id_seller = _context.Orders.Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b }).Where(p => p.a.id == id).First().b.id_user;
+                }
+                else if(kind == 2)
+                {
+                    id_seller = _context.Orders.Where(p => p.id == id).First().id_user;
+                    id_buyer = _context.Orders.Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b }).Where(p => p.a.id == id).First().b.id_user;
+                }
+                if (id_buyer != 0 && id_seller != 0)
+                {
+                    int score_buyer = _context.Users.Where(p => p.id == id_buyer).First().score_buyer;
+                    int level_seller = _context.Users.Where(p => p.id == id_seller).First().level_seller;
+
+                    if (score_buyer == 5)
+                        _context.Users.Where(p => p.id == id_buyer).First().score_buyer = 0;
+                    else
+                        _context.Users.Where(p => p.id == id_buyer).First().score_buyer += 1;
+
+                    //check and update level seller for user
+                    _context.Users.Where(p => p.id == id_seller).First().num_item_selled += 1;
+                    Users user = _context.Users.Where(r => r.id == id_seller).FirstOrDefault();
+                    var check = _context.ServiceFeeDetails.Where(r => r.sale_required <= user.num_item_selled).OrderBy(o => o.level).LastOrDefault();
+                    if (user.level_seller != check.level) user.level_seller = check.level;
+                    _context.Entry(user).State = EntityState.Modified;
+                }
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok();

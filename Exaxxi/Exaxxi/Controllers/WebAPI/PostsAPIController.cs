@@ -62,6 +62,7 @@ namespace Exaxxi.Controllers.WebAPI
                     order = p.k
                 }).Where(i => i.post.status == 1);
         }
+
         [HttpGet("GetNameBuy")]
         public IEnumerable<Users> GetNameBuy()
         {
@@ -100,6 +101,20 @@ namespace Exaxxi.Controllers.WebAPI
                 }
                 );
         }
+
+        [Route("CountPosts")]
+        public IActionResult CountPosts()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var posts = _context.Posts.Count();
+
+            return Ok(posts);
+        }
+
         //[Route("Popular/{id_depart}")]
         //public IEnumerable<PostViewModel> GetItemsPopular(int id_depart)
         //{

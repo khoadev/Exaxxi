@@ -110,7 +110,7 @@
             });
             $http.get("/api/NewsAPI/GetAll").then(function (data) {
                 $scope.allnews = data.data;
-                console.log($scope.allnews);
+                
             });
         });
         exaxxiApp.controller('NewsViewCtrl', function ($scope, $http) {

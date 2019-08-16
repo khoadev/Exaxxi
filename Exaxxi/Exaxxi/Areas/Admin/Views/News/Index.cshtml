@@ -16,19 +16,22 @@
                         <thead class=" text-primary">
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.vi_title)
+                                    Tiêu đề (Vie)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.date_create)
+                                    Tiêu đề (Eng)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.active)
+                                    Ngày tạo
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.admin)
+                                    Trạng thái
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.department)
+                                    Admin
+                                </th>
+                                <th>
+                                    Thuộc chủng loại
                                 </th>
                                 <th class="text-right"><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
@@ -38,14 +41,23 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.vi_title)
+                                        @item.vi_title.Substring(0,20)...
+                                    </td>
+                                    <td>
+                                        @item.en_title.Substring(0,10)...
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.date_create)
                                     </td>
                                     <td>
-                                        {{@item.active==true?'Dang hoat dong':'dang an'}}
-                                        @Html.DisplayFor(modelItem => item.active)
+                                        @if (item.active == true)
+                                        {
+                                            @Html.Raw("Đang hoạt động");
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("Đã khóa");
+                                        }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.admin.name)

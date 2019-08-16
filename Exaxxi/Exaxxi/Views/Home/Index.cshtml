@@ -37,7 +37,7 @@
         <div class="horizon-next" id="popular-next">
             <i class="fas fa-angle-right fa-2x"></i>
         </div>
-        <div class="row flex-row flex-nowrap scroll-content " id="popular-scroll-content" style="overflow-x: auto">
+        <div class="row flex-row flex-nowrap scroll-content" id="popular-scroll-content" style="overflow-x: auto">
             <!-- Start row -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 xx-content" ng-repeat="x in items">
                 <div class="card card-block">
@@ -129,13 +129,13 @@
         <div class="divider-section">
             <!-- Start divider-section -->
             <div class="see-all">
-                <a href="#">
+                <a href="/Product">
                     See All
                 </a>
             </div>
             <hr>
             <div class="divider-wrapper">
-                <p class="title-divider">Lowest Asks New</p>
+                <p class="title-divider">Lowest Asks</p>
             </div>
         </div> <!-- End divider-section -->
     </div>
@@ -160,7 +160,7 @@
                         <!-- Start product-title-wrapper -->
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 product-name">
-                                <a href="#">
+                                <a href="/Product/Details?id={{x.item.id}}">
                                     {{x.item.name}}
                                 </a>
                             </div>
@@ -183,7 +183,7 @@
     <div class="divider-section">
         <!-- Start divider-section -->
         <div class="see-all">
-            <a href="#">
+            <a href="/Product">
                 See All
             </a>
         </div>

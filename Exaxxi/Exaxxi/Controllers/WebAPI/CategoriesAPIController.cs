@@ -29,13 +29,13 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Categories> GetCategories()
         {            
-            return _context.Categories.Include("brand");          
+            return _context.Categories.Include("brand").Where(p=>p.active==true);          
         }
         [HttpGet("GetCategoriesAd/{idbr}")]
         public IEnumerable<Categories> GetCategoriesAd(int idbr)
         {
 
-            return _context.Categories.Where(p => p.id_brand == idbr);
+            return _context.Categories.Where(p => p.id_brand == idbr && p.active == true);
 
         }
         [Route("TakeCateByIdBrand/{Id_Brand}/{Qty}")]
@@ -43,18 +43,18 @@ namespace Exaxxi.Controllers.WebAPI
         {
             if (Qty == 0)
             {
-                return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order);
+                return _context.Categories.Where(p => p.id_brand == Id_Brand && p.active == true).OrderBy(p => p.order);
             }     
             else
             {
-                return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order).Take(Qty);
+                return _context.Categories.Where(p => p.id_brand == Id_Brand && p.active == true).OrderBy(p => p.order).Take(Qty);
             }
         }
 
         [Route("Take1CateByIdBrand/{Id_Brand}")]
         public Categories Get1Cate(int Id_Brand)
         {
-            return _context.Categories.Where(p => p.id_brand == Id_Brand).OrderBy(p => p.order).FirstOrDefault();
+            return _context.Categories.Where(p => p.id_brand == Id_Brand && p.active == true).OrderBy(p => p.order).FirstOrDefault();
         }
 
         // GET: api/Categories/5
@@ -100,6 +100,7 @@ namespace Exaxxi.Controllers.WebAPI
             return _context.Categories
                     .Join(_context.Brands, a => a.id_brand, b => b.id, (a, b) => new { a, b })
                     .Join(_context.Departments, c => c.b.id_department, d => d.id, (c, d) => new { c, d })
+                    .Where(z=>z.c.a.active==true)
                     .Select(p => new BrowserData
                     {
                         id_brand= p.c.b.id,

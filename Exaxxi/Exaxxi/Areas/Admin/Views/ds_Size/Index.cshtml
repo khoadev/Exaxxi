@@ -31,36 +31,48 @@
                                 <th>
                                     Centimet
                                 </th>
-                                <th><a asp-action="Create">Thêm</a></th>
+                                <th class="text-right"><a asp-action="Create">Thêm</a></th>
                             </tr>
                         </thead>
                         <tbody >
                            
-                                <tr ng-repeat="x in name">
-                                    <td>
-                                        <span ng-repeat="a in nameDepart">
-                                            <span ng-if="a.id == x.id_Depart">{{a.vi_name}}</span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                       {{x.vn}}
-                                    </td>
-                                    <td>
-                                        {{x.us}}
-                                    </td>
-                                    <td>
-                                        {{x.uk}}
-                                    </td>
-                                    <td>
-                                        {{x.inch}}
-                                    </td>
-                                    <td> {{x.centimet}}</td>
-                                    <td>
-                                        <a href="/Admin/ds_Size/Edit/{{x.id}}">Edit</a> |
-                                        <a href="/Admin/ds_Size/Details/{{x.id}}">Details</a> |
-                                        <a style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
-                                    </td>
-                                </tr>
+                            <tr ng-repeat="x in name">
+                                <td>
+                                    <span ng-repeat="a in nameDepart">
+                                        <span ng-if="a.id == x.id_Depart">{{a.vi_name}}</span>
+                                    </span>
+                                </td>
+                                <td>
+                                    {{x.vn}}
+                                </td>
+                                <td>
+                                    {{x.us}}
+                                </td>
+                                <td>
+                                    {{x.uk}}
+                                </td>
+                                <td>
+                                    {{x.inch}}
+                                </td>
+                                <td> {{x.centimet}}</td>
+                                <td class="td-actions text-right">
+                                    <a href="/Admin/ds_Size/Edit/{{x.id}}">
+                                        <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                    </a>
+                                    <a href="/Admin/ds_Size/Details/{{x.id}}">
+                                        <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                            <i class="material-icons">
+                                                info
+                                            </i>
+                                        </button>
+                                    </a>
+                                    <button ng-click="Delete(x.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
                            
                         </tbody>
                     </table>

@@ -4,6 +4,7 @@
     SIGNUP:'Sign Up',
     SIGNIN:'Sign In',
     SEEALL:'See All',
+    REQUEST:'Request',
     POPULAR: 'Popular Products',
     BRANDNAME: "Brand's Name",
     SORTBY: 'SORT BY',
@@ -50,8 +51,9 @@ var translationsVI = {
     NEWS: 'Tin Tức',
     SIGNUP: 'Đăng Nhập',
     SIGNIN: 'Đăng Ký',
-    SEEALL: 'Xem Tất Cả',
     POPULAR: 'Hàng Bán Chạy',
+    REQUEST: 'Yêu Cầu',
+    SEEALL: 'Xem Tất Cả',
     BRANDNAME: "Tên Hãng",
     SORTBY: 'Sắp Xếp',
     DEFAULT: 'Mặc Định',
@@ -90,5 +92,4 @@ var translationsVI = {
     DESCR: "Mô Tả",
     CHOOSESIZE: "Chọn size",
     BID:"Đặt Giá"
-
 };

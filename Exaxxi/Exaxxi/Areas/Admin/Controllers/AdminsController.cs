@@ -156,7 +156,6 @@ namespace Exaxxi.Areas.Admin.Controllers
         [AllowAnonymous]
         public IActionResult ForgetPassword()
         {
-
             return View();
         }
         [AllowAnonymous]

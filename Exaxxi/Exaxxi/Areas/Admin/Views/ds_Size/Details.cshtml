@@ -4,45 +4,47 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Chi Tiết</h4>
+                <p class="card-category">Size</p>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">VN</label>
+                        <input id="VN" class="form-control" value="@Model.VN" disabled />
+                        <span asp-validation-for="VN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">US</label>
+                        <input id="US" class="form-control" value="@Model.US" disabled/>
+                        <span asp-validation-for="US" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">UK</label>
+                        <input id="UK" class="form-control" value="@Model.UK" disabled />
+                        <span asp-validation-for="UK" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Inch</label>
+                        <input id="Inch" class="form-control" value="@Model.Inch" disabled />
+                        <span asp-validation-for="Inch" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Centimet</label>
+                        <input id="Centimet" class="form-control" value="@Model.Centimet" disabled />
+                        <span asp-validation-for="Centimet" class="text-danger"></span>
+                    </div>
+                    <a asp-action="Index">Quay Về</a>
+                    <a asp-action="Edit" asp-route-id="@Model.id">
+                        <button type="button" class="btn btn-primary pull-right">Chỉnh Sửa</button>
+                    </a>
 
-<div>
-    <h4>ds_Size</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.VN)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.VN)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.US)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.US)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UK)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UK)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Inch)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Inch)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Centimet)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Centimet)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
