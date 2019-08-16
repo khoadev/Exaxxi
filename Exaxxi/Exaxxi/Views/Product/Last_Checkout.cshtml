@@ -253,25 +253,17 @@
 </div>
 
 @section Scripts{
-<script>
+    <script>
 
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
 
-                                            @*$http.get("/api/ItemsAPI/TakeAttributeItem/" + @ViewBag.IdItem)
-    .then(function (response) {
-        $scope.name = response.data;
-        console.log($scope.name);
-    });*@
-/**/
-/**/
+            $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
+                .then(function(response) { $scope.name = response.data });
 
-                                                                                                $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
-                                                                                                    .then(function(response) { $scope.name = response.data });
+            $http.get("/api/CitysAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("ck_city"))
+                .then(function(response) { $scope.city = response.data });
+        });
 
-                                                                                                $http.get("/api/CitysAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("ck_city"))
-                                                                                                    .then(function(response) { $scope.city = response.data });
-                                                });
-
-                                                </script>
+    </script>
 }
