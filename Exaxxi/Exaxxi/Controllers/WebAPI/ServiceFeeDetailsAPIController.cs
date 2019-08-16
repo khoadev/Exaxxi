@@ -45,7 +45,18 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(serviceFeeDetails);
         }
-
+        [Route("CheckLevel/{id_user}")]
+        public IActionResult CheckLevel([FromRoute] int id_user)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            Users user = _context.Users.Where(r => r.id == id_user).FirstOrDefault();
+            var check = _context.ServiceFeeDetails.Where(r => r.sale_required <= user.num_item_selled).LastOrDefault();
+            if (user.level_seller != check.level) return Ok(check.level);
+            else return NotFound();
+        }
         // PUT: api/ServiceFeeDetailsAPI/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServiceFeeDetails([FromRoute] int id, [FromBody] ServiceFeeDetails serviceFeeDetails)

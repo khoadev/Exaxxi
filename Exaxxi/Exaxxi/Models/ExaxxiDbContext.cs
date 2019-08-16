@@ -137,7 +137,8 @@ namespace Exaxxi.Models
                     active = true,
                     phone = "0911111111",
                     address = "bitexco quan 1",
-                    id_city = 1
+                    id_city = 1,
+                    num_item_selled = 0
                 },
                 new Users
                 {
@@ -151,7 +152,8 @@ namespace Exaxxi.Models
                     active = true,
                     phone = "091222222",
                     address = "land max",
-                    id_city = 1
+                    id_city = 1,
+                    num_item_selled = 0
                 },
                 new Users
                 {
@@ -165,7 +167,8 @@ namespace Exaxxi.Models
                     active = true,
                     phone = "091111845891",
                     address = "daslat quan 1",
-                    id_city = 3
+                    id_city = 3,
+                    num_item_selled = 0
                 },
                 new Users
                 {
@@ -179,7 +182,8 @@ namespace Exaxxi.Models
                     active = true,
                     phone = "0914135111",
                     address = "lamdong quan 1",
-                    id_city = 2
+                    id_city = 2,
+                    num_item_selled = 0
                 }
             );
             builder.Entity<Departments>().HasData(
@@ -1375,29 +1379,31 @@ namespace Exaxxi.Models
                 new ServiceFeeDetails
                 {
                     id = 1,
-                    level = "1",
+                    level = 1,
                     sale_required = 0,
                     value = 0.098
                 },
                 new ServiceFeeDetails
                 {
                     id = 2,
-                    level = "2",
+                    level = 2,
                     sale_required = 3,
                     value = 0.09
                 },
                 new ServiceFeeDetails
                 {
                     id = 3,
-                    level = "3",
+                    level = 3,
                     sale_required = 30,
+                    money_sale_required = 10000,
                     value = 0.085
                 },
                 new ServiceFeeDetails
                 {
                     id = 4,
-                    level = "4",
+                    level = 4,
                     sale_required = 100,
+                    money_sale_required = 25000,
                     value = 0.08
                 }
             );

@@ -34,6 +34,8 @@ namespace Exaxxi.Models
         //public ds_Size shoe_size { get; set; }
         //[Display(Name = "Đơn vị tiền tệ")]
         //string Currency { get; set; }
+        [Display(Name = "Number Item User Selled")]
+        public int num_item_selled { get; set; }
         [Display(Name = "Cấp độ người bán")]
         [Range(1,4)]
         public int level_seller { get; set; }

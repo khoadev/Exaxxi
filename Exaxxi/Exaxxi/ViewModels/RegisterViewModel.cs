@@ -41,7 +41,7 @@ namespace Exaxxi.ViewModels
 
         public Users toUsers()
         {
-            return new Users { name = this.name, password = this.password, email = this.email, phone = this.phone, address = this.address, id_city = this.id_city, active = true, level_seller = 1, score_buyer = 0, date_registion = DateTime.Now };
+            return new Users { name = this.name, password = this.password, email = this.email, phone = this.phone, address = this.address, id_city = this.id_city, active = true, num_item_selled = 0, level_seller = 1, score_buyer = 0, date_registion = DateTime.Now };
         }
     }
     

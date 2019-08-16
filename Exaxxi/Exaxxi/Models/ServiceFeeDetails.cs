@@ -10,13 +10,15 @@ namespace Exaxxi.Models
     {
         [Key]
         public int id { get; set; }
-        [Display(Name = "Cấp")]
+        [Display(Name = "Level")]
         [Required]
-        public string level { get; set; }
-        [Display(Name ="Số Hóa Đơn Yêu Cầu")]
+        public int level { get; set; }
+        [Display(Name ="Sale Requested")]
         [Required]
         public int sale_required { get; set; }
-        [Display(Name = "Giá trị")]
+        [Display(Name = "Money Sale Requested")]
+        public double money_sale_required { get; set; }
+        [Display(Name = "Value")]
         [Required]
         [Range(0, 1)]
         public double value { get; set; }

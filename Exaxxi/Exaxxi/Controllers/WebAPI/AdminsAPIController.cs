@@ -36,7 +36,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet]
         public IEnumerable<Admins> GetAdmins()
         {
-            return _context.Admins;
+            return _context.Admins.OrderBy(p => p.level);
         }
 
         // GET: api/Admins/5
@@ -73,6 +73,27 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(admins);
         }
+
+        [HttpGet("GetEmailAdmin/{email}")]
+        public IActionResult GetEmailAdmin([FromRoute] string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var admins = _context.Admins.SingleOrDefault(p => p.email == email);
+
+            if (admins == null)
+            {
+                return Ok("null");
+            }
+            else
+            {
+                return Ok(admins.email);
+            }
+        }
+
         [AllowAnonymous, HttpGet("GetForgetPassword/{email}")]
         public IActionResult GetForgetPassword(string email)
         {
@@ -91,17 +112,40 @@ namespace Exaxxi.Controllers.WebAPI
 
         // PUT: api/Admins/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdmins([FromRoute] int id, [FromBody] Admins admins)
+        public async Task<IActionResult> PutAdmins([FromBody] JObject json)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != admins.id)
+            dynamic data = json;
+            int id = data.id;
+            string name = data.name;
+            string pass = data.password;
+            string email = data.email;
+            int level = data.level;
+            bool active = data.active;
+
+            Admins admins = new Admins();
+            admins.level = level;
+            admins.name = name;
+            admins.email = email;
+            admins.active = active;
+
+            if(pass.Length > 0)
             {
-                return BadRequest();
+                var new_pass = bf.Encrypt_CBC(pass);
+                admins.password = new_pass;
             }
+            else
+            {
+                var old_pass = _context.Admins.FirstOrDefault(p => p.email == admins.email).password;
+                admins.password = old_pass;
+            }
+
+            var create_at = _context.Admins.FirstOrDefault(p => p.email == admins.email).date_create;
+            admins.date_create = create_at;
 
             _context.Entry(admins).State = EntityState.Modified;
 
@@ -132,10 +176,60 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return BadRequest(ModelState);
             }
+
+            var hash_pass = bf.Encrypt_CBC(admins.password);
+            admins.password = hash_pass;
+            admins.date_create = DateTime.Now;
+            
             _context.Admins.Add(admins);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAdmins", new { id = admins.id }, admins);
+        }
+
+        [Route("UpdateAdmins")]
+        public async Task<IActionResult> UpdateAdmins([FromBody] JObject json)
+        {
+            dynamic data = json;
+            string name = data.name;
+            string pass = data.password;
+            string email = data.email;
+            int level = data.level;
+            bool active = data.active;
+
+            int act = 0;
+
+            if(active == true)
+            {
+                act = 1;
+            }            
+
+            if (pass.Length > 0)
+            {
+                if (pass.Length < 8)
+                {
+                    return BadRequest("Mật khẩu tối thiểu 8 ký tự!");
+                }
+               
+                Regex rgx = new Regex(info.RegEx);
+                if (!rgx.IsMatch(pass))
+                {
+                    return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường!");
+                }
+
+                var password = bf.Encrypt_CBC(pass);
+
+                _context.Admins.First(p => p.email == email).password = password;
+            }
+
+            var admin = _context.Admins.SingleOrDefault(p => p.email == email);
+            admin.name = name;
+            admin.level = level;
+            admin.active = Convert.ToBoolean(act);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         [HttpPost("PostAdminsEmail")]

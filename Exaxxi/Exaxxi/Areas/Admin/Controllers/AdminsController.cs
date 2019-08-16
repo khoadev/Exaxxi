@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Exaxxi.ViewModels;
 using Exaxxi.Common;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -72,20 +73,29 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins, LoginViewModel model)
+        public IActionResult Create([Bind("id,name,password,email,level,date_create,active")] Admins admins)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            //Select mail
+            if(_api.getAPI($"api/AdminsAPI/GetEmailAdmin/{admins.email}", HttpContext.Session.GetString("token")).Result != null)
+            {
+                if (admins.email == _api.getAPI($"api/AdminsAPI/GetEmailAdmin/{admins.email}", HttpContext.Session.GetString("token")).Result)
+                {
+                    ViewBag.EmailExist = "Email này đã tồn tại!";
+                    return View("Create");
+                }
+            }
+            
             if (_api.postAPI(admins, "api/AdminsAPI", HttpContext.Session.GetString("token")).Result)
             {
-
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-
                 return View("Create");
             }
 
@@ -109,55 +119,19 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
             return View(admins);
-        }
-
-        // POST: Admin/Admins/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,password,email,level,date_create,active")] Admins admins)
-        {
-            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            if (id != admins.id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var result = await _api.putAPI(admins, $"api/AdminsAPI/{id}", HttpContext.Session.GetString("token"));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AdminsExists(admins.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(admins);
-        }
+        }        
 
         private bool AdminsExists(int id)
         {
             return JsonConvert.DeserializeObject<bool>(_api.getAPI($"api/AdminsAPI/AdminsExists/{id}", HttpContext.Session.GetString("token")).Result);
         }
+
         [AllowAnonymous]
         public IActionResult ForgetPassword()
         {
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult ChangePassword(string email, string hash)
         {
