@@ -226,8 +226,16 @@
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
                 .then(function (response) {
                     $scope.user_info = response.data;
-                    $http.get("/api/CitysAPI/TakeShippingFee/" + $scope.user_info.id_city)
-                        .then(function (response) { $scope.shipping_fee = response.data; });
+                    if ($scope.user_info.score_buyer > 4) {
+                        $scope.shipping_fee = 0;
+                    }
+                    else {
+                        $http.get("/api/CitysAPI/TakeShippingFee/" + $scope.user_info.id_city)
+                            .then(function (response) {
+                                $scope.shipping_fee = response.data;
+                            });
+                    }
+                    
                 });
 
             //Take List Areas
@@ -238,7 +246,14 @@
                 var id_city = $("#id_city").val();
                 $http.get("/api/CitysAPI/TakeShippingFee/" + id_city)
                     .then(function (response) {
-                        $scope.shipping_fee = response.data;
+                        if ($scope.user_info.score_buyer > 4) {
+                            $scope.shipping_fee = 0;
+                        }
+                        else {
+                            $scope.shipping_fee = response.data;
+
+                        }
+                        
                     });
             });
             var id_voucher = null;
