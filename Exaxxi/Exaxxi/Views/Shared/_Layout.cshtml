@@ -283,8 +283,11 @@
             };
         });
          exaxxiApp.run(function($rootScope,$translate) {
-          $rootScope.lang = $translate.use();
-        });
+             $rootScope.lang = $translate.use();
+             localStorage.setItem("lang", $translate.use());
+           
+         });
+
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $scope.search = function () {
                 $http.get("/api/PostsAPI/Search")
