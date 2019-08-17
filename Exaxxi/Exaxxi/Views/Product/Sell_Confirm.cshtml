@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 <div class="p-5" style="background-color:#f2f2f2; min-height:100vh;">
     <div class="container" ng-controller="Item_Attribute">
         <div class="row">
@@ -11,7 +12,7 @@
                     <div class="col-12 p-2" style="background:white;">
                         <div class="row">
                             <div class="col-lg-2">
-                                <img src="images/{{name[0].item.img}}" class="img-fluid" />
+                                <img src="~/images/{{name[0].item.img}}" class="img-fluid" />
                             </div>
                             <div class="col-lg-10" style="border-left:solid thick #ab1113">
                                 <div class="checkout-product-name">
@@ -181,7 +182,18 @@
                                         <td colspan="3">
                                             <div class="row">
                                                 <div class="col-4">
-                                                    <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" style="background-color:#FFF" />
+                                                    @{
+                                                        if (Convert.ToInt32(HttpContextAccessor.HttpContext.Session.GetString("sell_enter_ask")) != 0)
+                                                        {
+                                                            <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="@ViewBag.PriceTemp" style="background-color:#FFF" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" style="background-color:#FFF" />
+                                                        }
+                                                    }
+
+                                                    @*<input type="text" disabled="disabled" class="form-control checkout-input " placeholder="Enter Bid" value="{{name[0].size.highest_bid}}" style="background-color:#FFF" />*@
                                                 </div>
                                                 <div class="col-2 checkout-curency">
                                                     VNĐ
@@ -290,7 +302,14 @@
         //Items Attribute
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
-                .then(function (response) { $scope.name = response.data });
+                .then(function (response) { $scope.name = response.data; });
+            $scope.price = 0;
+            @{
+                if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("sell_enter_ask")))
+                {
+                    
+                }
+            }
         });
 
     </script>

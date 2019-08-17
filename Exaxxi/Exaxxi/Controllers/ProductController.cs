@@ -240,6 +240,13 @@ namespace Exaxxi.Controllers
             ViewBag.level_seller = 0;
             ViewBag.IdItem = id;
             ViewBag.payment_fee = Exaxxi.Common.info.payment_fee;
+
+            //CheckSession
+            if (!String.IsNullOrEmpty(HttpContext.Session.GetString("sell_enter_ask")))
+            {
+                HttpContext.Session.Remove("sell_enter_ask");
+            }
+
             return View();
         }
 
@@ -260,7 +267,7 @@ namespace Exaxxi.Controllers
             HttpContext.Session.SetString("sell_total_price", model.Total_price.ToString());
             HttpContext.Session.SetString("sell_id_city", model.id_city.ToString());
 
-            if (model.Enter_ask.ToString() != null)
+            if (model.Enter_ask != 0)
             {
                 HttpContext.Session.SetString("sell_enter_ask", model.Enter_ask.ToString());
             }
@@ -282,6 +289,11 @@ namespace Exaxxi.Controllers
             ViewBag.SizeVN = size;
             ViewBag.IdItem = id;
             ViewBag.Act = act;
+            if (!String.IsNullOrEmpty(HttpContext.Session.GetString("sell_enter_ask")))
+            {
+                ViewBag.PriceTemp = HttpContext.Session.GetString("sell_enter_ask");
+            }
+            
 
             return View();
         }
