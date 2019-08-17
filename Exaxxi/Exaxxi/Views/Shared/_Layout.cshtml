@@ -5,7 +5,7 @@
     var scrollable = "";
     string actionName = ViewContext.RouteData.Values["action"].ToString();
     string controllerName = ViewContext.RouteData.Values["controller"].ToString();
-    if (actionName == "Register" | actionName == "Login" | controllerName == "News" | controllerName == "Product")
+    if (actionName == "Register" | actionName == "Login" | controllerName == "News" | controllerName == "Product" | controllerName == "User")
     {
         scroll = "navbar-custom-scrolled";
         scrollable = "";
@@ -49,7 +49,6 @@
             </div>
         </div> <!-- End sidenav-sub-... -->
         <a asp-controller="News" translate>{{ 'NEWS' }}</a>
-        <a href="#">FaQ</a>
     </div> <!-- End sidenav -->
 
     <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top @scroll" id="@scrollable">
@@ -75,12 +74,10 @@
 
                                         <div class="browse-radio" ng-repeat="x in deps">
                                             <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''" />
-
                                             <label for="{{x.id}}" class="{{x.id==selectedObj.id?'label-checked':''}}">
                                                 {{lang=="en"?x.en_name:x.vi_name}}
                                             </label>
                                         </div>
-
                                     </div>
                                 </div>
                             </li>
@@ -103,16 +100,15 @@
                     <a class="nav-link" asp-controller="News" asp-action="Index" translate>{{ 'NEWS' }}</a>
                 </li>
                 <li class="nav-item d-none d-md-flex"  ng-controller="testlang">
-                    <select class="nav-link" ng-model="selectedLang" ng-init="selectedLang=lang" ng-change="changeLang()" style="background-color:#272727; color:antiquewhite; border:none">
-                        <option value="vi"  >
+                    <select class="nav-link" ng-model="selectedLang" ng-init="selectedLang=lang" ng-change="changeLang()" style="background-color:transparent; color:white; border:none">
+                        <option value="vi" style="color:black" >
                             VI
                         </option>
-                        <option value="en"  >
+                        <option value="en" style="color:black" >
                             EN
                         </option>
                     </select>
                 </li>
-
                 <li class="dropdown mega-dropdown nav-item">
                     <!-- Start Search Mega Dropdown -->
                     <a href="#" class="nav-link " data-toggle="dropdown"><i class="fas fa-search"></i></a>
@@ -125,7 +121,6 @@
                                         <input type="text" ng-change="search()" name="key" ng-model="key" class="form-control" placeholder="Search" id="search_input">
                                     </div>
                                 </div>
-
                             </li>
                             <li class="col-xs-12 custom-scrollbar" id="search-result-wrapper" ng-if="key">
                                 <div class="dropdown-divider"></div>
@@ -139,10 +134,8 @@
                                         <img src="~/images/{{x.item.img}}" class="search-img" />
                                     </div>
                                     <div class="col-9 col-md-10 search-name-wrapper">
-
                                         <div><span class="search-brand-name">{{x.brand_name}}</span>/<span class="search-category-name">{{x.cate_name}}</span></div>
-
-                                        <a href="#" class="search-product-name">
+                                        <a href="/Product/Details?id={{x.item.id}}" class="search-product-name">
                                             {{x.item.name}}
                                         </a>
                                     </div>
@@ -175,23 +168,21 @@
                         </a>
                         <ul class="dropdown-menu user-dropdown">
                             <li><a asp-controller="User" asp-action="Index"><b>@HttpContextAccessor.HttpContext.Session.GetString("nameUser")</b></a></li>
-                            <li><a href="/User">Profile</a></li>
-                            <li><a href="/User/Buying">Buying</a></li>
-                            <li><a href="/User/Selling">Selling</a></li>
-                            <li><a href="/User/Following">Following</a></li>
-                            <li><a href="/User/Setting">Setting</a></li>
+                            <li><a href="/User">{{'PROFILE'| translate}}</a></li>
+                            <li><a href="/User/Buying">{{'BUYING'| translate}}</a></li>
+                            <li><a href="/User/Selling">{{'SELLING'| translate}}</a></li>
+                            <li><a href="/User/Following">{{'FOLLOWING'| translate}}</a></li>
+                            <li><a href="/User/Setting">{{'SETTING'| translate}}</a></li>
                             <li>
                                 <a asp-controller="Login" asp-action="Logout">
-                                    Logout
+                                    {{'LOGOUT'| translate}}
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item d-none d-md-flex btn-signup-wrapper">
                         <a class="nav-link btn btn-signup" asp-action="Contact" asp-controller="User" @*data-toggle="modal" data-target="#requestModal"*@ translate>{{ 'REQUEST' }}</a>
-
                     </li>
-
                 }
 
             </ul>
@@ -270,10 +261,11 @@
         <script src="~/js/dirPagination.js"></script>
         <script src="~/js/rzslider.min.js"></script>
         <script src="~/js/lang.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular-sanitize.js"></script>
     </environment>
     <script>
     
-    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider', 'angularUtils.directives.dirPagination', 'ngCookies', 'pascalprecht.translate']);
+    var exaxxiApp = angular.module('exaxxiApp', ['ngMaterial', 'ngMessages', 'rzSlider', 'angularUtils.directives.dirPagination', 'ngCookies', 'pascalprecht.translate', 'ngSanitize']);
         
         exaxxiApp.config(['$translateProvider', function ($translateProvider) {
           // add translation tables

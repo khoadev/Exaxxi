@@ -1,21 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh" ng-controller="User">
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh; padding-top:100px" ng-controller="User">
     <div class="row">
         @Html.Partial("~/Views/User/Menu.cshtml")
 
         <div class="col-md-9">
             <div class="user-info">
                 <h3 class="font-weight-bold">
-                    PERSONAL INFO <sup><a href="/User/Edit_Per_Info" style="font-size:10px">EDIT</a></sup>
+                    {{'PERSONALINFO' | translate}} <sup><a href="/User/Edit_Per_Info" style="font-size:10px">{{'EDIT' | translate}}</a></sup>
                 </h3>
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-borderless">
-                            <tr>
+                        <table class="table table-borderless text-uppercase">
+                            <tr class="">
                                 <td class="td-w25">
-                                    NAME
+                                   {{'NAME' | translate}}
                                 </td>
                                 <td class="td-w10">
                                     <i class="fas fa-caret-right"></i>
@@ -26,7 +26,7 @@
                             </tr>
                             <tr>
                                 <td class="td-w10">
-                                    EMAIL ADDRESS
+                                    {{'EMAIL' | translate}}
                                 </td>
                                 <td class="td-w10">
                                     <i class="fas fa-caret-right"></i>
@@ -37,7 +37,7 @@
                             </tr>
                             <tr>
                                 <td class="td-w10">
-                                    PHONE
+                                    {{'PHONE' | translate}}
                                 </td>
                                 <td class="td-w10">
                                     <i class="fas fa-caret-right"></i>
@@ -48,7 +48,7 @@
                             </tr>
                             <tr>
                                 <td class="td-w10">
-                                    ADDRESS
+                                    {{'ADDRESS' | translate}}
                                 </td>
                                 <td class="td-w10">
                                     <i class="fas fa-caret-right"></i>
@@ -61,13 +61,13 @@
                     </div>
                 </div>
                 <hr />
-                <h3 class="font-weight-bold">
+                @*<h3 class="font-weight-bold">
                     BUYING INFO <sup><a href="#" style="font-size:10px">EDIT</a></sup>
                 </h3>
                 <hr />
                 <h3 class="font-weight-bold">
                     SHIPPING INFO <sup><a href="#" style="font-size:10px">EDIT</a></sup>
-                </h3>
+                </h3>*@
             </div>
         </div>
     </div>

@@ -4,89 +4,111 @@
 @{
     ViewData["Title"] = "Admin";
 }
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách Admin</h4>
-                <p class="card-category">Quản lý danh sách admin</p>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary">
-                        <th>
-                            @Html.DisplayNameFor(model => model.name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.email)
-                        </th>
-                        <th>
-                            Level
-                        </th>
-                        <th>
-                            Ngày tạo
-                        </th>
-                        <th>
-                            Trạng thái
-                        </th>
-                        <th class="text-right">
-                            <a asp-action="Create">Tạo Mới</a>
-                        </th>
-                        </thead>
-                        <tbody ng-controller="deleteAd">
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.name
-                                    </td>
-                                    <td>
-                                        @item.email
-                                    </td>
-                                    <td>
-                                        @item.level
-                                    </td>
-                                    <td>
-                                        @item.date_create
-                                    </td>
-                                    <td>
-                                        @if (item.active == true)
-                                        {
-                                            @Html.Raw("Đang hoạt động");
-                                        }
-                                        else
-                                        {
-                                            @Html.Raw("Đã khóa");
-                                        }
-                                    </td>
-                                    <td class="td-actions text-right">
-                                        <a asp-action="Edit" asp-route-id="@item.id">
-                                            <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
-                                                <i class="material-icons">edit</i>
-                                            </button>
-                                        </a>
-                                        <a asp-action="Details" asp-route-id="@item.id">
-                                            <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
-                                                <i class="material-icons">
-                                                    info
-                                                </i>
-                                            </button>
-                                        </a>
-                                        <button ng-click="Delete(@item.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                            <i class="material-icons">close</i>
-                                        </button>
 
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Danh sách Admin</h4>
+                    <p class="card-category">Quản lý danh sách admin</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                            <th>
+                                @Html.DisplayNameFor(model => model.name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.email)
+                            </th>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th class="text-right">
+                                <a asp-action="Create">Tạo Mới</a>
+                            </th>
+                            </thead>
+                            <tbody ng-controller="deleteAd">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.id != HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin"))
+                                    {
+                                    <tr>
+                                        <td>
+                                            @item.name
+                                        </td>
+                                        <td>
+                                            @item.email
+                                        </td>
+                                        <td>
+                                            @if (item.level == 1)
+                                            {
+                                                @Html.Raw("<span style='color:red; font-weight:bold'>QL Tổng</span>");
+                                            }
+                                            @if (item.level == 2)
+                                            {
+                                                @Html.Raw("<span style='color:blue; font-weight:bold'>QL Tin Tức</span>");
+                                            }
+                                            @if (item.level == 3)
+                                            {
+                                                @Html.Raw("<span style='color:green; font-weight:bold'>QL Sản Phẩm</span>");
+                                            }
+                                            @if (item.level == 4)
+                                            {
+                                                @Html.Raw("<span style='color:orange; font-weight:bold'>QL Giao Dịch</span>");
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.date_create.ToString("dd/MM/yyyy hh:mm")
+                                        </td>
+                                        <td>
+                                            @if (item.active == true)
+                                            {
+                                                @Html.Raw("Đang hoạt động");
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw("Đã khóa");
+                                            }
+                                        </td>
+                                        <td class="td-actions text-right">
+                                            <a asp-action="Edit" asp-route-id="@item.id">
+                                                <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                            </a>
+                                            <a asp-action="Details" asp-route-id="@item.id">
+                                                <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                                    <i class="material-icons">
+                                                        info
+                                                    </i>
+                                                </button>
+                                            </a>
+                                            @*<button ng-click="Delete(@item.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                                <i class="material-icons">close</i>
+                                            </button>*@
+
+                                        </td>
+                                    </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
 @section Scripts{
     <script>
         //$(function () {
@@ -108,6 +130,7 @@
         //    });
         //});
         app.controller('deleteAd', function ($scope, $http) {
+
             $scope.Delete = function (id) {
                 var url = '/api/AdminsAPI/' + id;
                 //  $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('token');
