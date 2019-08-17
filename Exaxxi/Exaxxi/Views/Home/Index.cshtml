@@ -277,7 +277,7 @@
                 </a><br>
                     <p class="news-detail">
                         {{timeDiff(news1.news.date_create)}}<br>
-                        <div ng-bind-html="trustAsHtml(news1.news.vi_content)"></div>
+                        @*<div ng-bind-html="trustAsHtml(news1.news.vi_content)"></div>*@
 
                     </p>
             </div>
@@ -336,9 +336,7 @@
                 });
         });
         exaxxiApp.controller('getnewsCtrl', function ($scope, $http, $sce) {
-            $scope.trustAsHtml = function(html) {
-              return $sce.trustAsHtml(html);
-            }
+            
             $scope.timeDiff = function (time) {
                 var now = Date.now();
                 var teo = new Date(time).getTime();

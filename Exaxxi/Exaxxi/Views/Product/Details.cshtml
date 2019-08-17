@@ -119,7 +119,7 @@
                                                 foreach (var item in ViewBag.dsSize)
                                                 {
                                                     <div class="size-wrapper">
-                                                        @*<input class="d-none" id="size" name="size" type="radio" />*@
+                                                        <input class="d-none" id="size" name="size" type="radio" />
                                                         <label for="size" class="size-label">
                                                             <div class="size-left">
                                                                 <input ng-click="btn_size(@item.VN)" type="button" value="@item.VN" style="background-color:#0e5396; color:#FFF; border:none" />
@@ -199,7 +199,8 @@
                 </div>*@
                 <div class="col-sm-8">
                     <h3>{{'DESCR'| translate}}</h3>
-                    <p>{{name[0].item.vi_info}}</p>
+                    <p ng-bind-html="trustAsHtml(name[0].item.vi_info)">
+                    </p>
                 </div>
             </div> <!-- End Row -->
         </div> <!-- End container -->
