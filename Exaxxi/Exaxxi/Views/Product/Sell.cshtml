@@ -218,7 +218,10 @@
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
-                .then(function (response) { $scope.name = response.data; $scope.user = $scope.name; });
+                .then(function (response) {
+                    $scope.name = response.data; $scope.user = $scope.name;
+                    if (parseFloat($scope.name[0].size.highest_bid) == 0) { $("#sell").attr("disabled", true); }
+                });
 
             //Take Info User
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
