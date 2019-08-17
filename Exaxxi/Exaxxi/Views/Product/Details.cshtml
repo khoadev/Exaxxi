@@ -143,7 +143,7 @@
 
                         <div class="detail-second-right" style="display: flex;">
                             <!-- Start second-right -->
-                            <div><p>{{'LASTSALE'| translate}}<br> <h3>{{name[0].item.trade_min | currency:"":0:3}} VND</h3></p></div>
+                            <div><p>{{'LASTSALE'| translate}}<br> <h3>{{lastsale | currency:"":0:3}} VND</h3></p></div>
                             @*<div><h6>▲+20.000VND(20%)</h6></div>*@
 
                         </div> <!-- End second-right -->
@@ -216,8 +216,12 @@
             var sizeVN = $("#sizeVN").val();
 
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + sizeVN)
-                .then(function (response) { $scope.name = response.data;});
-
+                .then(function (response) {
+                $scope.name = response.data;
+                    $http.get("/api/OrdersAPI/TakeLastSale/"+@ViewBag.IdItem)
+                    .then(function (response) { $scope.lastsale = response.data;});
+                });
+            
             $scope.check_buy = function () {
                 $http.get("/Login/Check").then(function (rs) {
 

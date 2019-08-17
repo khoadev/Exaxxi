@@ -159,7 +159,7 @@ namespace Exaxxi.Controllers
                 {
                     orders.payment = 1;
                 }
-
+                else
                 if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
                 {
                     orders.payment = 2;
@@ -314,6 +314,11 @@ namespace Exaxxi.Controllers
                 if (HttpContext.Session.GetString("sell_payment").ToString() == "Credit / Debit")
                 {
                     orders.payment = 2;
+                }
+                else
+                if (HttpContext.Session.GetString("sell_payment").ToString() == "Cash On Deliery (COD)")
+                {
+                    orders.payment = 1;
                 }
 
                 //Send Mail 
