@@ -15,26 +15,23 @@
                 <div class="user-level user-level-completed">{{user_info.level_seller}}</div>
                 <div class="row">
                     <div class="col-md-4 ">
-
-                        <h5 class="font-weight-bold">{{ 'SALES' | translate}}: 0</h5>
-                        <h5 class="font-weight-bold text-uppercase">{{ 'TRANSFEE' | translate}}:</h5>
-                        <h6>WATCHES: 9.8%</h6>
-                        <h6>HANDBAGS: 10%</h6>
-                        <h6>STREETWEAR: 9.5%</h6>
+                        <h5 class="font-weight-bold">{{ 'SALES' | translate}}: {{user_info.num_item_selled}}</h5>
+                        <h5 class="font-weight-bold">SCORE BUYER: {{user_info.score_buyer}}</h5>
+                        <h5 class="font-weight-bold text-uppercase">{{ 'TRANSFEE' | translate}}:{{user_info.service_fee.value * 100}}%</h5>
                     </div>
                     <div class="col-md-8">
-                        <div class="progress user-progress  mt-2">
+                        @*<div class="progress user-progress  mt-2">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%; color:white;">
                                 1/3 {{'SALESCOMPLETED' | translate}}
                             </div>
-                        </div>
+                        </div>*@
 
-                        <div class="d-flex mt-3">
+                        @*<div class="d-flex mt-3">
                             <h4>
                                 2 {{'MORENEEDED' | translate}}
                             </h4>
                             <div class="user-level">2</div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
 

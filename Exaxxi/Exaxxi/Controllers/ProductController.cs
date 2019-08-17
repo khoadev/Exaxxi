@@ -223,6 +223,7 @@ namespace Exaxxi.Controllers
 
                 if (_api.postAPI(posts, "api/PostsChange").Result)
                 {
+                    UpdatePrice(id, Convert.ToInt32(idSize));
                     return RedirectToAction("Index", "User");
                 }
             }
@@ -348,9 +349,10 @@ namespace Exaxxi.Controllers
                 }
                 double price = Convert.ToDouble(HttpContext.Session.GetString("sell_enter_ask").ToString());
                 var idSize = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id + "/" + size).Result);
-                Posts postmatch = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/FindPostMatchForAsk/" + idSize + "/" + price).Result);
-                if (postmatch != null)
+                
+                if (_api.getAPI("api/PostsAPI/FindPostMatchForAsk/" + idSize + "/" + price).Result != null)
                 {
+                    var postmatch = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/FindPostMatchForAsk/" + idSize + "/" + price).Result);
                     return Confirm_Sell(id,0,size,postmatch.id);
                 }
                 else
@@ -377,6 +379,7 @@ namespace Exaxxi.Controllers
                     posts.id_city = Convert.ToInt32(HttpContext.Session.GetString("sell_id_city"));
                     if (_api.postAPI(posts, "api/PostsChange").Result)
                     {
+                        UpdatePrice(id, Convert.ToInt32(idSize));
                         return RedirectToAction("Index", "User");
                     }
                 }
@@ -392,10 +395,10 @@ namespace Exaxxi.Controllers
 
             double lowestAskSizeUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeLowestAsk/" + id_item + "/" + id_size).Result);
             double highestBidSizeUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeHighestBid/" + id_item + "/" + id_size).Result);
-            if (size.lowest_ask < lowestAskSizeUp || size.highest_bid > highestBidSizeUp || lowestAskSizeUp == 0)
+            if (size.lowest_ask != lowestAskSizeUp || size.highest_bid != highestBidSizeUp || lowestAskSizeUp == 0)
             {
-                if (size.lowest_ask < lowestAskSizeUp || lowestAskSizeUp == 0) price1.lowest_ask = lowestAskSizeUp;
-                if (size.highest_bid > highestBidSizeUp) price1.highest_bid = highestBidSizeUp;
+                if (size.lowest_ask != lowestAskSizeUp || lowestAskSizeUp == 0) price1.lowest_ask = lowestAskSizeUp;
+                if (size.highest_bid != highestBidSizeUp) price1.highest_bid = highestBidSizeUp;
                 await _api.putAPI(price1, "api/SizesChange/UpdatePrice");
             }
 
@@ -405,8 +408,8 @@ namespace Exaxxi.Controllers
             double highestBidUp = JsonConvert.DeserializeObject<double>(_api.getAPI("api/PostsAPI/TakeHighestBid/" + id_item + "/0").Result);
             if (item.lowest_ask != lowestAskUp || item.highest_bid != highestBidUp)
             {
-                if (item.lowest_ask < lowestAskUp || lowestAskUp == 0) price2.lowest_ask = lowestAskUp;
-                if (item.highest_bid > highestBidUp) price2.highest_bid = highestBidUp;
+                if (item.lowest_ask != lowestAskUp || lowestAskUp == 0) price2.lowest_ask = lowestAskUp;
+                if (item.highest_bid != highestBidUp) price2.highest_bid = highestBidUp;
                 await _api.putAPI(price2, "api/ItemsChange/UpdatePrice");
             }
         }

@@ -42,14 +42,14 @@ namespace Exaxxi.Controllers.WebAPI
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsers([FromRoute] int id)
+        public IActionResult GetUsers([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var users = await _context.Users.FindAsync(id);
+            var users = _context.Users.Include(u => u.service_fee).Where(r => r.id == id).FirstOrDefault();
 
             if (users == null)
             {
