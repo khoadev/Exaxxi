@@ -195,6 +195,15 @@
                                 {{'PAYMETH' | translate}}::
                             </div>
                             <div class="checkout-payment">
+                                <input class="d-none" id="payment1" value="Cash On Deliery (COD)" name="payment" type="radio" checked="checked" />
+                                <label for="payment1" class="checkout-payment-wrapper">
+                                    {{'COD' | translate}} (COD)<br />
+                                    <span class="checkout-payment-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                    </span>
+                                </label>
+                            </div>
+                            @*<div class="checkout-payment">
                                 <input class="d-none" id="payment" value="Credit / Debit" name="payment" type="radio" checked="checked" />
                                 <label for="payment2" class="checkout-payment-wrapper">
                                     Credit / Debit<br />
@@ -202,7 +211,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                     </span>
                                 </label>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -218,7 +227,10 @@
         exaxxiApp.controller('Item_Attribute', function ($scope, $http) {
             //Items Attribute
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
-                .then(function (response) { $scope.name = response.data; $scope.user = $scope.name; });
+                .then(function (response) {
+                    $scope.name = response.data; $scope.user = $scope.name;
+                    if (parseFloat($scope.name[0].size.highest_bid) == 0) { $("#sell").attr("disabled", true); }
+                });
 
             //Take Info User
             $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))

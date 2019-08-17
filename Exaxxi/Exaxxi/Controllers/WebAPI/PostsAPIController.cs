@@ -224,5 +224,18 @@ namespace Exaxxi.Controllers.WebAPI
             }
             return Ok(highestBid);
         }
+        [Route("FindPostMatchForAsk/{id_size}/{price}")]
+        public IActionResult FindPostMatchForAsk([FromRoute] int id_size,[FromRoute] double price)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var post = _context.Posts.Include(p => p.user).Where(r => r.id_size == id_size && r.price >= price && r.kind == 2 && r.status == 0).OrderBy(o => o.price).FirstOrDefault();
+
+            if (post == null) return NotFound();
+
+            return Ok(post);
+        }
     }
 }

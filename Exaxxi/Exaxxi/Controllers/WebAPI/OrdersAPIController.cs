@@ -152,5 +152,19 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(data);
         }
+
+        [Route("TakeLastSale/{id_item}")]
+        public IActionResult TakeLastSale([FromRoute] int id_item)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var priceLastSale = _context.Orders
+                .Join(_context.Posts, a => a.id_post, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Sizes, c => c.b.id_size, d => d.id, (c, d) => new { c, d })
+                .Where(r => r.d.id_item == id_item && r.c.a.status == 2).OrderByDescending(o => o.c.a.time).FirstOrDefault();
+            if (priceLastSale == null) return Ok(0); else return Ok(priceLastSale.c.b.price);
+        }
     }
 }

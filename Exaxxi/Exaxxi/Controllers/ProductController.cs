@@ -159,7 +159,7 @@ namespace Exaxxi.Controllers
                 {
                     orders.payment = 1;
                 }
-
+                else
                 if (HttpContext.Session.GetString("ck_payment").ToString() == "Credit / Debit")
                 {
                     orders.payment = 2;
@@ -286,7 +286,7 @@ namespace Exaxxi.Controllers
             return View();
         }
 
-        public IActionResult Confirm_Sell(int id, int act, int size)
+        public IActionResult Confirm_Sell(int id, int act, int size, int idPost = 0)
         {
             //Sell
             if (act == 0)
@@ -296,7 +296,7 @@ namespace Exaxxi.Controllers
                     return RedirectToAction("Index", "Login");
                 }
                 
-                var idPost = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size +"/2").Result);
+                if(idPost == 0) idPost = JsonConvert.DeserializeObject<int>(_api.getAPI("api/SizesAPI/TakeIdPost_ForOrder/" + id + "/" + size +"/2").Result);
 
                 Orders orders = new Orders();
 
@@ -314,6 +314,11 @@ namespace Exaxxi.Controllers
                 if (HttpContext.Session.GetString("sell_payment").ToString() == "Credit / Debit")
                 {
                     orders.payment = 2;
+                }
+                else
+                if (HttpContext.Session.GetString("sell_payment").ToString() == "Cash On Deliery (COD)")
+                {
+                    orders.payment = 1;
                 }
 
                 //Send Mail 
@@ -341,32 +346,39 @@ namespace Exaxxi.Controllers
                 {
                     return RedirectToAction("Index", "Login");
                 }
-
+                double price = Convert.ToDouble(HttpContext.Session.GetString("sell_enter_ask").ToString());
                 var idSize = JsonConvert.DeserializeObject(_api.getAPI("api/SizesAPI/TakeIdSize_ForBid/" + id + "/" + size).Result);
-
-                Posts posts = new Posts();
-
-                posts.price = Convert.ToDouble(HttpContext.Session.GetString("sell_enter_ask").ToString());
-                posts.date_start = DateTime.Now;
-
-                //Xử Lý End Date
-                int day = Convert.ToInt16(HttpContext.Session.GetString("sell_exp_day").ToString());
-                DateTime now = DateTime.Now;
-                DateTime final_day = now.AddDays(day);
-
-                posts.date_end = final_day;
-
-                posts.kind = 1;
-                posts.id_size = Convert.ToInt32(idSize);
-                posts.id_user = HttpContext.Session.GetInt32("idUser").Value;
-                posts.status = 0;
-                posts.address = HttpContext.Session.GetString("sell_address").ToString();
-                posts.phone = HttpContext.Session.GetString("sell_phone").ToString();
-                posts.name_client = HttpContext.Session.GetString("sell_account").ToString();
-                posts.id_city = Convert.ToInt32(HttpContext.Session.GetString("sell_id_city"));
-                if (_api.postAPI(posts, "api/PostsChange").Result)
+                Posts postmatch = JsonConvert.DeserializeObject<Posts>(_api.getAPI("api/PostsAPI/FindPostMatchForAsk/" + idSize + "/" + price).Result);
+                if (postmatch != null)
                 {
-                    return RedirectToAction("Index", "User");
+                    return Confirm_Sell(id,0,size,postmatch.id);
+                }
+                else
+                {
+                    Posts posts = new Posts();
+
+                    posts.price = price;
+                    posts.date_start = DateTime.Now;
+
+                    //Xử Lý End Date
+                    int day = Convert.ToInt16(HttpContext.Session.GetString("sell_exp_day").ToString());
+                    DateTime now = DateTime.Now;
+                    DateTime final_day = now.AddDays(day);
+
+                    posts.date_end = final_day;
+
+                    posts.kind = 1;
+                    posts.id_size = Convert.ToInt32(idSize);
+                    posts.id_user = HttpContext.Session.GetInt32("idUser").Value;
+                    posts.status = 0;
+                    posts.address = HttpContext.Session.GetString("sell_address").ToString();
+                    posts.phone = HttpContext.Session.GetString("sell_phone").ToString();
+                    posts.name_client = HttpContext.Session.GetString("sell_account").ToString();
+                    posts.id_city = Convert.ToInt32(HttpContext.Session.GetString("sell_id_city"));
+                    if (_api.postAPI(posts, "api/PostsChange").Result)
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
                 }
             }
 

@@ -190,7 +190,7 @@
                                 {{'PAYMETH' | translate}}:
                             </div>
                             <div class="checkout-payment">
-                                <input class="d-none" id="payment1" value="Cash On Deliery (COD)" name="payment" type="radio" />
+                                <input class="d-none" id="payment1" value="Cash On Deliery (COD)" name="payment" type="radio" checked="checked" />
                                 <label for="payment1" class="checkout-payment-wrapper">
                                     {{'COD' | translate}} (COD)<br />
                                     <span class="checkout-payment-desc">
@@ -198,7 +198,7 @@
                                     </span>
                                 </label>
                             </div>
-                            <div class="checkout-payment">
+                            @*<div class="checkout-payment">
                                 <input class="d-none" id="payment2" value="Credit / Debit" name="payment" type="radio" />
                                 <label for="payment2" class="checkout-payment-wrapper">
                                     Credit / Debit<br />
@@ -206,7 +206,7 @@
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                     </span>
                                 </label>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -223,6 +223,7 @@
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + @ViewBag.SizeVN)
                 .then(function (response) {
                     $scope.name = response.data;
+                    if (parseFloat($scope.name[0].size.lowest_ask) == 0) { $("#buy").attr("disabled", true); }
                 });
 
             //Take Info User
@@ -306,7 +307,7 @@
         $scope.enter_bid = parseFloat($("#enter_bid").val());
         $("#enter_bid").keyup(function () {
             //alert($("#value_buy").val());
-            if (parseFloat($("#enter_bid").val()) >= parseFloat($("#value_buy").val())) {
+            if (parseFloat($("#enter_bid").val()) >= parseFloat($("#value_buy").val()) && parseFloat($("#value_buy").val()) > 0) {
                 $("#enter_bid").blur();
                 $("#enter_bid").val($("#value_buy").val());
                 $("#total_bid").val(parseFloat($scope.shipping_fee) + parseFloat($("#enter_bid").val()));
@@ -353,13 +354,11 @@
 
                 $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
                     then(function (data) {
-
                         $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
                             then(function () {
                                 // 1:=>bid
                                 window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1" + "&size=" + @ViewBag.SizeVN;
                             });
-
                     })
                     .catch(function onError(response) {
                         alert(response.data);
