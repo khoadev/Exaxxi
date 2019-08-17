@@ -101,7 +101,40 @@ namespace Exaxxi.Controllers.WebAPI
                 }
                 );
         }
+        [Route("TakeAsk/{id}")]
+        public IEnumerable<PostViewModel> takeask(int id)
+        {
+            return _context.Posts
+                .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
+                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
+                .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(k => k.c.a.f.active == true && k.c.a.e.g.id_user == id && k.c.a.e.g.kind==1)
+                .Select(m => new PostViewModel
+                {
+                    post =m.c.a.e.g,
+                    item = m.c.a.f,
+                    
+                });
 
+        }
+        [Route("TakeBid/{id}")]
+        public IEnumerable<PostViewModel> takebid(int id)
+        {
+            return _context.Posts
+                .Join(_context.Sizes, g => g.id_size, h => h.id, (g, h) => new { g, h })
+                .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
+                .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
+                .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
+                .Where(k => k.c.a.f.active == true && k.c.a.e.g.id_user == id && k.c.a.e.g.kind == 2)
+                .Select(m => new PostViewModel
+                {
+                    post = m.c.a.e.g,
+                    item = m.c.a.f,
+
+                });
+
+        }
         [Route("CountPosts")]
         public IActionResult CountPosts()
         {

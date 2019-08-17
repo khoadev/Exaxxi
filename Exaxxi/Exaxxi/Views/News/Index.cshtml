@@ -13,7 +13,7 @@
             <div class="row" ng-repeat="x in news">
                 <div class="col-12 news-recent-news-wrapper" style="background-color:#fcfcfc">
                     <div class="news-recent-date">{{timeDiff(x.news.date_create)}}</div>
-                    <a class="news-recent-article" href="/News/Detail?id={{x.news.id}}">{{x.news.vi_title}}</a>
+                    <a class="news-recent-article" href="/News/Detail?id={{x.news.id}}">{{lang=="en"?x.news.en_title:x.news.vi_title}}</a>
                 </div>
                
             </div> 
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-12" >
                     <ul class="list-unstyled news-department-list" >
-                        <li class="d-inline-block" ng-repeat="x in departs"><a href="#depart{{x.id}}">{{x.vi_name}}</a></li>
+                        <li class="d-inline-block" ng-repeat="x in departs"><a href="#depart{{x.id}}">{{lang=="en"?x.en_name:x.vi_name}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -34,9 +34,9 @@
                     <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/news/{{new1.news.img}}) center; height:400px;"></div>
                 </div>
                 <div class="col-md-4 ">
-                    <div class="news-content-department">{{new1.vi_name_depart}}</div>
+                    <div class="news-content-department">{{lang=="en"?new1.en_name_depart:new1.vi_name_depart}}</div>
                     <div class="news-content-title">
-                        <a href="/News/Detail?id={{new1.news.id}}">{{new1.news.vi_title}}</a>
+                        <a href="/News/Detail?id={{new1.news.id}}">{{lang=="en"?new1.news.en_title:new1.news.vi_title}}</a>
                     </div>
                     <div class="news-content-sub"><span style="color:black">{{new1.name_admin}}</span> - {{timeDiff(new1.news.date_create)}}</div>
                 </div>
@@ -44,9 +44,9 @@
                     <div class="card-deck news-content-sub-content">
                         <div class="card" ng-repeat="x in newsbyview | limitTo : 3:1">
                             <div class="card-body">
-                                <div class="news-content-department">{{x.vi_name_depart}}</div>
+                                <div class="news-content-department"> {{lang=="en"?x.en_name_depart:x.vi_name_depart}}</div>
                                 <div class="news-content-title" style="font-size:20px">
-                                    <a href="/News/Detail?id={{x.news.id}}">{{x.news.vi_title}}</a>
+                                    <a href="/News/Detail?id={{x.news.id}}">{{lang=="en"?x.news.en_title:x.news.vi_title}}</a>
                                 </div>
                                 <div class="news-content-sub"><span style="color:black">{{x.name_admin}}</span> - {{timeDiff(x.news.date_create)}}</div>
                             </div>
@@ -57,14 +57,14 @@
             </div>
             <div class="row mb-5"  ng-repeat="z in departs" id="depart{{z.id}}">
                 <div class="col-12 news-department-title">
-                    {{z.vi_name}}
+                    {{lang=="en"?z.en_name:z.vi_name}}
                     <hr />
                     <span class="see-all" style="float:right"><a href="/News/NewsDep?loai={{z.id}}">{{'SEEALL'| translate}}</a></span>
                 </div>
                 <div class="col-md-4 news-wrapper" ng-repeat="y in allnews | filter : {'id_depart' :z.id}">
                     <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/news/{{y.news.img}}) center">
                         <div class="news-title-wrapper">
-                            <a href="/News/Detail?id={{y.news.id}}">{{y.news.vi_title}}</a>
+                            <a href="/News/Detail?id={{y.news.id}}">{{lang=="en"?y.news.en_title:y.news.vi_title}}</a>
                             <div><span style="color:white">{{y.name_admin}}</span> - {{timeDiff(y.news.date_create)}}</div>
                         </div>
                     </div>

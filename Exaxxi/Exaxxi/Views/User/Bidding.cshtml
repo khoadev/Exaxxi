@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<div class="container-fluid" style="background-color:#f2f2f2; min-height:100vh;padding-top:100px" ng-controller="Bidding">
+    <div class="row">
+        @Html.Partial("~/Views/User/Menu.cshtml")
+
+        <div class="col-md-9">
+            <div class="user-info">
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            {{'ITEM' | translate}}
+                        </th>
+                        <th class="d-none d-sm-block">
+                            {{'ASKPRICE' | translate}}
+                        </th>
+                        <th>
+                            {{'HIGHESTBID' | translate}}
+                        </th>
+                        <th>
+                            {{'LOWESTASK' | translate}}
+                        </th>
+                        <th class="d-none d-sm-block">
+                            {{'EXPIRES' | translate}}
+                        </th>
+                        <th>
+                            From
+                        </th>
+                        <th>
+                            To
+                        </th>
+                    </tr>
+                    <tr ng-repeat="x in bidding">
+                        <td class="font-weight-bold">
+                            {{x.item.name}}
+                        </td>
+                        <td class="d-none d-sm-block">
+                            {{x.post.price}} VND
+                        </td>
+                        <td>
+                            {{x.size.highest_bid}} VND
+                        </td>
+                        <td>
+                            {{x.size.lowest_ask}} VND
+                        </td>
+                        <td class="d-none d-sm-block">
+                            0
+                        </td>
+                        <td>
+                            {{x.post.date_start}}
+                        </td>
+                        <td>
+                            {{x.post.date_end}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        //Show Department
+        exaxxiApp.controller('Bidding', function ($scope, $http) {
+             $http.get("/api/PostsAPI/TakeBid/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+                .then(function (response) { $scope.bidding = response.data; });
+
+        });
+    </script>
+}

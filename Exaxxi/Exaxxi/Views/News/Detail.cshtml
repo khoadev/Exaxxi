@@ -39,7 +39,7 @@
                             <img src="../images/news/{{x.news.img}}" alt="" class="img-fluid">
                         </div>
                         <div class="col-8 pl-0">
-                            <a href="News/Details?id={{x.id}}"> <p>{{x.news.vi_title}}<span class="content-right-first-date">{{timeDiff(x.news.date_create)}}</span></p></a>
+                            <a href="News/Details?id={{x.id}}"> <p>{{lang=="en"?x.news.en_title:x.news.vi_title}}<span class="content-right-first-date">{{timeDiff(x.news.date_create)}}</span></p></a>
                         </div>
                     </div>
 

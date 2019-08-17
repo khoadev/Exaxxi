@@ -58,7 +58,7 @@
                                     {{x.lowest_ask | currency:"":0:3}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Lowest Ask | Sold: {{x.sold}}</span>
+                                <span class="product-sub-title">{{ 'LOWESTASK' | translate }} | {{ 'SOLD' | translate }}: {{x.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -74,12 +74,12 @@
             <!-- Start divider-section -->
             <div class="see-all">
                 <a href="/Product">
-                    See All
+                    {{ 'SEEALL' | translate }}
                 </a>
             </div>
             <hr>
             <div class="divider-wrapper">
-                <p class="title-divider">Highest Bid</p>
+                <p class="title-divider"> {{ 'HIGHESTBID' | translate }}</p>
             </div>
         </div> <!-- End divider-section -->
     </div>
@@ -114,7 +114,7 @@
                                     {{x.highest_bid | currency:"":0:3}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Highest Bid | Sold: {{x.sold}}</span>
+                                <span class="product-sub-title">{{ 'HIGHESTBID' | translate }} |  {{ 'SOLD' | translate }}: {{x.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -130,12 +130,12 @@
             <!-- Start divider-section -->
             <div class="see-all">
                 <a href="/Product">
-                    See All
+                    {{ 'SEEALL' | translate }}
                 </a>
             </div>
             <hr>
             <div class="divider-wrapper">
-                <p class="title-divider">Lowest Asks</p>
+                <p class="title-divider">{{ 'LOWESTASK' | translate }}</p>
             </div>
         </div> <!-- End divider-section -->
     </div>
@@ -169,7 +169,7 @@
                                     {{x.lowest_ask | currency:"":0:3}}<br>
                                     <span style="color: #dbd9d9">VND</span><br>
                                 </div>
-                                <span class="product-sub-title">Lowest Ask | Sold: {{x.sold}}</span>
+                                <span class="product-sub-title">{{ 'LOWESTASK' | translate }} |  {{ 'SOLD' | translate }}: {{x.sold}}</span>
                             </div>
                         </div>
                     </div> <!-- End product-title-wrapper -->
@@ -184,12 +184,12 @@
         <!-- Start divider-section -->
         <div class="see-all">
             <a href="/Product">
-                See All
+                {{ 'SEEALL' | translate }}
             </a>
         </div>
         <hr>
         <div class="divider-wrapper">
-            <p class="title-divider">Popular Brands</p>
+            <p class="title-divider"> {{ 'POPBRAND' | translate }}</p>
         </div>
     </div> <!-- End divider-section -->
 </div>
@@ -248,7 +248,7 @@
         <!-- Start divider-section -->
         <div class="see-all">
             <a href="/News">
-                See All
+                {{ 'SEEALL' | translate }}
             </a>
         </div>
         <hr>
@@ -269,29 +269,31 @@
             </div>
             <div class="col-sm-6 col-lg-6" style="background: #f2f2f2">
                 <p class="news-category">
-                    {{news1.vi_name_depart}}
+                    {{lang=="en"?news1.en_name_depart:news1.vi_name_depart}}
                 </p><br>
-                <a class="news-title" href="/News/Detail?id={{news1.news.id}}">
+                    <a class="news-title" href="/News/Detail?id={{news1.news.id}}">
 
-                    {{news1.news.vi_title}}
-                </a><br>
+                        {{lang=="en"?news1.news.en_title:news1.news.vi_title}}
+
+                    </a><br>
                     <p class="news-detail">
                         {{timeDiff(news1.news.date_create)}}<br>
-                        <div ng-bind-html="trustAsHtml(news1.news.vi_content)"></div>
+                        @*<div ng-bind-html="trustAsHtml(news1.news.vi_content)"></div>*@
 
                     </p>
             </div>
         </div>
         <div ng-repeat="x in news | limitTo : 5:1 " class="col-md-12 col-lg-4" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url(../images/{{x.news.img}}) center;">
             <p class="news-category">
-                {{x.vi_name_depart}}
+                {{lang=="en"?x.en_name_depart:x.vi_name_depart}}
             </p><br>
-            <a class="news-title-2" href="/News/Detail?id={{x.news.id}}">
-                {{x.news.vi_title}}
-            </a><br>
+                <a class="news-title-2" href="/News/Detail?id={{x.news.id}}">
+                    {{lang=="en"?x.news.en_title:x.news.vi_title}}
+
+                </a><br>
                 <p class="news-detail-2">
                     {{timeDiff(x.news.date_create)}}<br>
-                    <div ng-bind-html="trustAsHtml(x.news.vi_content)"></div>
+                    @*<div ng-bind-html="trustAsHtml(x.news.vi_content)"></div>*@
                 </p>
         </div>
 
@@ -336,9 +338,7 @@
                 });
         });
         exaxxiApp.controller('getnewsCtrl', function ($scope, $http, $sce) {
-            $scope.trustAsHtml = function(html) {
-              return $sce.trustAsHtml(html);
-            }
+            
             $scope.timeDiff = function (time) {
                 var now = Date.now();
                 var teo = new Date(time).getTime();

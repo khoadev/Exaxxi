@@ -1,28 +1,36 @@
 ﻿@model PagedList.Core.IPagedList<Exaxxi.ViewModels.NewsViewModel>
 
-<div class="container">
-    <div class="row" style="margin-top:50px">
+<div class="container" style="padding:80px 0px">
+    <div class="row">
         <div class="col-12" ng-controller="ShowDepartment">
             <ul class="list-unstyled news-department-list">
-                <li class="d-inline-block"><a href="/news/NewsDep?loai={{x.id}}" ng-repeat="x in dep">{{x.vi_name}}</a></li>
+                <li class="d-inline-block"><a href="/news/NewsDep?loai={{x.id}}" ng-repeat="x in dep">{{lang=="en"?x.en_name:x.vi_name}}</a></li>
             </ul>
             <div class="news-department-title">
-                {{dep_name.vi_name}}
+                {{lang=="en"?dep_name.en_name:dep_name.vi_name}}
             </div>
         </div>
     </div>
     <div class="row">
         @using Exaxxi.Common;
+        @{
+            var lang = "{{lang}}";
+        }
+
+
         @foreach (var tintuc in Model)
         {
-        <div class="col-md-4 news-wrapper">
-            <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/news/@tintuc.news.img) center">
-                <div class="news-title-wrapper">
-                    <a href="/news/Detail?id=@tintuc.news.id">@tintuc.news.vi_title</a>
-                    <div><span style="color:white">@tintuc.name_admin</span> - @info.Day(tintuc.news.date_create)</div>
+
+            <div class="col-md-4 news-wrapper">
+                <div class="news-content" style="background:linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url(../images/news/@tintuc.news.img) center">
+                    <div class="news-title-wrapper">
+                        <a  class="title" href="/news/Detail?id=@tintuc.news.id">
+                           
+                        </a>
+                        <div><span style="color:white">@tintuc.name_admin</span> - @info.Day(tintuc.news.date_create)</div>
+                    </div>
                 </div>
             </div>
-        </div>
         }
     </div>
     <pager class="pager-container" list="@Model" asp-action="NewsDep" asp-controller="News" asp-route-loai="@ViewBag.Id_Dep" />
@@ -38,6 +46,26 @@
             $http.get("/api/DepartmentsAPI/" + @ViewBag.Id_Dep)
                 .then(function (response) { $scope.dep_name = response.data; });
         });
-    </script>
-}
+       
 
+    </script>
+    @foreach (var tintuc in Model)
+    {
+        <script>
+             exaxxiApp.run(function($rootScope,$translate) {
+                var x = document.getElementsByClassName("title");
+                if ( $rootScope.lang  == "en") {
+
+                    for (i = 0; i < x.length; i++) {
+                        x[i].innerHTML = "@tintuc.news.en_title";
+                    }
+                }
+                else {
+                    for (i = 0; i < x.length; i++) {
+                        x[i].innerHTML = "@tintuc.news.vi_title";
+                    }
+                }
+         });
+        </script>
+    }
+   }

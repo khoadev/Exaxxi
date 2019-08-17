@@ -19,7 +19,13 @@
                     <a id="buy" href="/User/Buying" class="@if (actionName == "Buying") { @Html.Raw("user-panel-active")}"><i class="fas fa-shopping-cart if-fw mr-3"></i>{{'BUYING'| translate}}</a>
                 </li>
                 <li>
+                    <a id="buy" href="/User/Bidding" class="@if (actionName == "Bidding") { @Html.Raw("user-panel-active")}"><i class="fas fa-shopping-cart if-fw mr-3"></i>{{'Bidding'| translate}}</a>
+                </li>
+                <li>
                     <a id="sel" href="/User/Selling" class="@if (actionName == "Selling") { @Html.Raw("user-panel-active")}"><i class="fas fa-money-bill-wave fa-fw mr-3"></i>{{'SELLING'| translate}}</a>
+                </li>
+                <li>
+                    <a id="sel" href="/User/Asking" class="@if (actionName == "Asking") { @Html.Raw("user-panel-active")}"><i class="fas fa-money-bill-wave fa-fw mr-3"></i>Asking</a>
                 </li>
                 <li>
                     <a id="fol" href="/User/Following" class="@if (actionName == "Following") { @Html.Raw("user-panel-active")}"><i class="fas fa-newspaper fa-fw mr-3"></i>{{'FOLLOWING'| translate}}</a>

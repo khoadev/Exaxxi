@@ -282,9 +282,14 @@
               location.reload();
             };
         });
-         exaxxiApp.run(function($rootScope,$translate) {
-          $rootScope.lang = $translate.use();
-        });
+         exaxxiApp.run(function($rootScope,$translate,$sce) {
+             $rootScope.lang = $translate.use();
+             localStorage.setItem("lang", $translate.use());
+             $rootScope.trustAsHtml = function(html) {
+              return $sce.trustAsHtml(html);
+            }
+         });
+
         exaxxiApp.controller('searchCtrl', function ($scope, $http) {
             $scope.search = function () {
                 $http.get("/api/PostsAPI/Search")
