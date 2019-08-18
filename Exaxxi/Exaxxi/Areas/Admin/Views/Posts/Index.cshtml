@@ -5,8 +5,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách bài post</h4>
-                <p class="card-category"></p>
+                <h4 class="card-title ">Danh Sách Bài Post</h4>
+                <p class="card-category">Quản lý danh sách bài post</p>
             </div>
             <div ng-controller="Post">                
                 <div class="card-body">
@@ -42,8 +42,8 @@
                                     <td>{{x.post.price | currency:"":0:3}} VND</td>
                                     <td>{{x.usernameSell}}</td>
                                     <td style="text-align:center">
-                                        <span ng-if="x.post.kind == 1">Mua</span>
-                                        <span ng-if="x.post.kind == 2">Bán</span>
+                                        <span ng-if="x.post.kind == 1">Bán</span>
+                                        <span ng-if="x.post.kind == 2">Mua</span>
                                     </td>
                                 </tr>
                             </tbody>

@@ -14,27 +14,27 @@
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="lowest_ask" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Giá mua thấp nhất</label>
                         <input asp-for="lowest_ask" class="form-control" disabled />
                         <span asp-validation-for="lowest_ask" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="highest_bid" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Giá bán cao nhất</label>
                         <input asp-for="highest_bid" class="form-control" disabled />
                         <span asp-validation-for="highest_bid" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="last_sale" class="bmd-label-floating"></label>
+                        <label lass="bmd-label-floating">Khuyến mãi gần nhất (Last Sale)</label>
                         <input asp-for="last_sale" class="form-control" disabled />
                         <span asp-validation-for="last_sale" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="size.VN" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Size VN</label>
                         <input asp-for="size.VN" class="form-control" disabled />
                         <span asp-validation-for="size.VN" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="item" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Thuộc sản phẩm</label>
                         <input asp-for="item.name" class="form-control" disabled />
                         <span asp-validation-for="item.name" class="text-danger"></span>
                     </div>

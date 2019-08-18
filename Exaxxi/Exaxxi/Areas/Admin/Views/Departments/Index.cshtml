@@ -7,8 +7,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách chủng loại</h4>
-                <p class="card-category">Quản lý danh sách chủng loại sản phẩm</p>
+                <h4 class="card-title ">Danh Sách Chủng Loại</h4>
+                <p class="card-category">Quản lý danh sách chủng loại</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -59,13 +59,13 @@
                                                 <i class="material-icons">edit</i>
                                             </button>
                                         </a>
-                                        <a asp-action="Details" asp-route-id="@item.id">
+                                        @*<a asp-action="Details" asp-route-id="@item.id">
                                             <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
                                                 <i class="material-icons">
                                                     info
                                                 </i>
                                             </button>
-                                        </a>
+                                        </a>*@
                                         <button ng-click="Delete(@item.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                             <i class="material-icons">close</i>
                                         </button>
@@ -92,7 +92,7 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                var isConfirm = confirm("Bạn có chắc chắn muốn xóa?")
                 if (isConfirm) {
                     $http.delete(url, config).then(function (response) {
                         window.location.reload();
