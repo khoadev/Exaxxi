@@ -13,6 +13,10 @@ namespace Exaxxi.Models
         [Required]
         [MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
         public string name { get; set; }
+        [Display(Name = "Tên thư mục")]
+        [Required]
+        [MaxLength(50,ErrorMessage = "tối đa 50 kí tự")]
+        public string folder { get; set; }
         [Display(Name ="Thông tin sản phẩm tiếng việt")]
         [DataType(DataType.Text)]
         public string vi_info { get; set; }
@@ -24,6 +28,9 @@ namespace Exaxxi.Models
         [Required]
         [Display(Name = "Hình")]
         public string img { get; set; }
+        [Required]
+        [Display(Name = "Hình 3d")]
+        public string img3d { get; set; }
         [Display(Name = "Biến động giá")]
         public float volatility { get; set; }
         [Display(Name = "Giá giao dịch thấp nhất")]

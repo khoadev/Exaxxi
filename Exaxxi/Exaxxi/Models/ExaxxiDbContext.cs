@@ -34,7 +34,7 @@ namespace Exaxxi.Models
         // genos - C9UR2EM
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9LUKN91\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-9IBF91T\SQLEXPRESS;Initial Catalog=Exaxxi;Integrated Security=True");
         }
         public ExaxxiDbContext(DbContextOptions<ExaxxiDbContext> options) : base(options)
         {
@@ -546,9 +546,11 @@ namespace Exaxxi.Models
                 {
                     id = 1,
                     name = "YEEZY BOOST 350 V2 ",
+                    folder = "YEEZY BOOST 350 V2 ",
                     vi_info = "<h2>#01. Yeezy 350 V2 Static</h2>< p >< img alt = 'Giày Yeezy Boost 350 V2 Static' src = 'https://a.ipricegroup.com/media/Sneaker/Yeezy/Giay_Yeezy_Boost_350_V2_Static.jpg' title = 'Giày Yeezy Boost 350 V2 Static' /></ p >< p > &nbsp;</ p > < p > Yeezy 350 V2 Static th & uacute; vị ở chỗ, n & oacute; được l&agrave; m ra d & agrave; nh cho những người đ & atilde; sở hữu đ & ocirc; i OG Creams v&agrave; Wave Runners. C & aacute; c chi tiết trắng đen được kết hợp một c&aacute; ch s&aacute; ng tạo tr & ecirc; n nền vải Primeknit v & agrave; cảm gi&aacute; c thoải m & aacute; i khi mang tr&ecirc; n d&ograve; ng 350 V2 như mọi khi. Giới sưu tầm gi&agrave; y sneaker đang v&ocirc; c & ugrave; ng tr&ocirc; ng chờ ng & agrave; y ra mắt dự đo & aacute; n v&agrave; o cuối 2018 n & agrave; y.</ p > ",
                     en_info = "<h2>#01. Yeezy 350 V2 Static</h2>< p >< img alt = 'Giày Yeezy Boost 350 V2 Static' src = 'https://a.ipricegroup.com/media/Sneaker/Yeezy/Giay_Yeezy_Boost_350_V2_Static.jpg' title = 'Giày Yeezy Boost 350 V2 Static' /></ p >< p > &nbsp;</ p > < p > Yeezy 350 V2 Static th & uacute; vị ở chỗ, n & oacute; được l&agrave; m ra d & agrave; nh cho những người đ & atilde; sở hữu đ & ocirc; i OG Creams v&agrave; Wave Runners. C & aacute; c chi tiết trắng đen được kết hợp một c&aacute; ch s&aacute; ng tạo tr & ecirc; n nền vải Primeknit v & agrave; cảm gi&aacute; c thoải m & aacute; i khi mang tr&ecirc; n d&ograve; ng 350 V2 như mọi khi. Giới sưu tầm gi&agrave; y sneaker đang v&ocirc; c & ugrave; ng tr&ocirc; ng chờ ng & agrave; y ra mắt dự đo & aacute; n v&agrave; o cuối 2018 n & agrave; y.</ p > ",
                     img = "yeezy.jpg",
+                    img3d = "yeezy.jpg",
                     volatility = 0,
                     trade_max = 3500000,
                     trade_min = 3000000,
@@ -562,9 +564,11 @@ namespace Exaxxi.Models
                 {
                     id = 2,
                     name = "Yeezy Boost 700 V2",
+                    folder = "Yeezy Boost 700 V2",
                     vi_info = "Thực hiện một tuyên bố với adidas Yeezy Boost 700 V2 Vanta trên đôi chân của bạn. Yeezy Boost 700 V2 này đi kèm với đế trên màu đen, đế giữa màu đen và đế màu đen. Những đôi giày thể thao này được phát hành vào tháng 6 năm 2019 và được bán lẻ với giá 300 đô la.",
                     en_info = "Make a statement with the adidas Yeezy Boost 700 V2 Vanta on your feet. This Yeezy Boost 700 V2 comes with a black upper, black midsole, and a black sole. These sneakers released in June 2019 and retailed for $300. Provide the world with some Yeezy vibes after grabbing these on StockX.",
                     img = "yeezy2.jpg",
+                    img3d = "yeezy2.jpg",
                     volatility = 0,
                     trade_max = 5000000,
                     trade_min = 4000000,
@@ -578,9 +582,11 @@ namespace Exaxxi.Models
                 {
                     id = 3,
                     name = "Yeezy 500 Super Moon",
+                    folder = "Yeezy 500 Super Moon",
                     vi_info = "Những chiếc Yeezy 500 Super Moon Yellows mới này đang nóng hơn cả một ngọn lửa Jackson Hole. Colorway mới nhất trong dòng Yeezy 500, chúng sử dụng đệm adiPrene thay cho BOOST và có vẻ ngoài to hơn sẽ phát triển trên bạn (tin tưởng chúng tôi). Cặp màu vàng toàn mặt trăng này là colorway đầu tiên bị rơi, như là một phần của gói Yeezy season 6, tiếp theo là bản phát hành rộng hơn vào tháng 6 năm 2018. Người hâm mộ của Ye cần phải thực hiện 'No Mistakes' và thêm colorway Yeezy 500 này vào bộ sưu tập càng sớm càng tốt.",
                     en_info = "These new Yeezy 500 Super Moon Yellows are coming in hotter than a Jackson Hole bonfire. The latest colorway in the Yeezy 500 line, these use adiPrene cushioning in place of BOOST and feature a chunkier look that will grow on you (trust us). This all-moon yellow pair was the first colorway that dropped, as part of the Yeezy season 6 bundle, followed by a wider release in June of 2018. Fans of Ye need to make 'No Mistakes' and add this Yeezy 500 colorway into the collection asap.",
                     img = "yeezy3.jpg",
+                    img3d = "yeezy3.jpg",
                     volatility = 0,
                     trade_max = 6000000,
                     trade_min = 5000000,
@@ -594,9 +600,11 @@ namespace Exaxxi.Models
                 {
                     id = 4,
                     name = "Yeezy Powerphase Calabasas Core Black",
+                    folder = "Yeezy Powerphase Calabasas Core Black",
                     vi_info = "Colorway thứ ba của dòng, adidas Yeezy Powerphase Calabasas này có bảng màu đen đơn sắc.Ngoài ra còn có nhãn hiệu Adidas màu xanh lá cây bên cạnh logo Trefoil màu đỏ.Colorway cổ điển này được phát hành vào tháng 3 năm 2017 với giá $ 120.",
                     en_info = "The third colorway of the series, this adidas Yeezy Powerphase Calabasas features a monochromatic core black color palette. There is also Adidas branding in green next to a red Trefoil logo. This classic colorway released in March 2017 for $120.",
                     img = "yeezy4.jpg",
+                    img3d = "yeezy4.jpg",
                     volatility = 0,
                     trade_max = 7000000,
                     trade_min = 5500000,
@@ -610,9 +618,11 @@ namespace Exaxxi.Models
                 {
                     id = 5,
                     name = "Yeezy Boost 750 Light Grey Glow In the Dark",
+                    folder = "Yeezy Boost 750 Light Grey Glow In the Dark",
                     vi_info = "Giày adidas hợp tác đầu tiên của Kanye West, Yeezy Boost 750 OG, được phát hành trên toàn thế giới vào tháng 2 năm 2017 với số lượng cực kỳ hạn chế. Các thiết kế giống như giày cao chót vót thể hiện sự khác biệt hoàn toàn so với các thiết kế trước đó của West, với phần trên bằng da lộn màu nâu nhạt được gắn trên một khung sườn, dụng cụ cao su được trang bị Boost trong một bóng râm trắng tinh tế. Thiết kế tối giản được tạo điểm nhấn với dây buộc quá khổ, chi tiết đục lỗ trên hộp ngón chân, và một dây đeo chân giữa rộng trong một chế tạo twill tonal. Một dây kéo ẩn ở phía bên cung cấp dễ dàng bật và tắt.",
                     en_info = "Kanye West’s very first collaborative adidas shoe, the Yeezy Boost 750 ‘OG’ released worldwide February 2017 in extremely limited quantities. The towering boot-like builds showcases a radical departure from West’s previous designs, featuring a light brown all-suede upper mounted atop a partially ribbed, Boost-equipped rubber tooling in a subtle off-white shade. The minimalist design is accented with oversized rope laces, perforated detailing on the toe box, and a wide midfoot strap in a tonal twill fabrication. A hidden zipper on the lateral side provides easy on and off.",
                     img = "yeezy5.jpg",
+                    img3d = "yeezy5.jpg",
                     volatility = 0,
                     trade_max = 4500000,
                     trade_min = 4000000,
@@ -627,9 +637,11 @@ namespace Exaxxi.Models
                 {
                     id = 6,
                     name = "Yeezy Desert Boot Oil",
+                    folder = "Yeezy Desert Boot Oil",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy6.jpg",
+                    img3d = "yeezy6.jpg",
                     volatility = 0,
                     trade_max = 8000000,
                     trade_min = 6000000,
@@ -643,9 +655,11 @@ namespace Exaxxi.Models
                 {
                     id = 7,
                     name = "Yeezy Boost 950 Pirate Black",
+                    folder = "Yeezy Boost 950 Pirate Black",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy7.jpg",
+                    img3d = "yeezy7.jpg",
                     volatility = 0,
                     trade_max = 8000000,
                     trade_min = 6000000,
@@ -660,9 +674,11 @@ namespace Exaxxi.Models
                 {
                     id = 16,
                     name = "Yeezy 500 Soft Vision",
+                    folder = "Yeezy 500 Soft Vision",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy16.jpg",
+                    img3d = "yeezy16.jpg",
                     volatility = 0,
                     trade_max = 8300000,
                     trade_min = 6600000,
@@ -676,9 +692,11 @@ namespace Exaxxi.Models
                 {
                     id = 8,
                     name = "Yeezy Classic",
+                    folder = "Yeezy Classic",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy8.jpg",
+                    img3d = "yeezy8.jpg",
                     volatility = 0,
                     trade_max = 1000000,
                     trade_min = 600000,
@@ -691,9 +709,11 @@ namespace Exaxxi.Models
                 {
                     id = 9,
                     name = "Yeezy Boost 500 Bone White",
+                    folder = "Yeezy Boost 500 Bone White",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy9.jpg",
+                    img3d = "yeezy9.jpg",
                     volatility = 0,
                     trade_max = 11000000,
                     trade_min = 6000000,
@@ -708,9 +728,11 @@ namespace Exaxxi.Models
                 {
                     id = 10,
                     name = "Yeezy Boost 500 Bone White V2",
+                    folder = "Yeezy Boost 500 Bone White V2",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy9.jpg",
+                    img3d = "yeezy9.jpg",
                     volatility = 0,
                     trade_max = 11000000,
                     trade_min = 6000000,
@@ -725,9 +747,11 @@ namespace Exaxxi.Models
                 {
                     id = 11,
                     name = "Yeezy Boost 500 Bone White V3",
+                    folder = "Yeezy Boost 500 Bone White V3",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy9.jpg",
+                    img3d = "yeezy9.jpg",
                     volatility = 0,
                     trade_max = 11000000,
                     trade_min = 6000000,
@@ -742,9 +766,11 @@ namespace Exaxxi.Models
                 {
                     id = 12,
                     name = "Yeezy 500 Soft Vision V2",
+                    folder = "Yeezy 500 Soft Vision V2",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy16.jpg",
+                    img3d = "yeezy16.jpg",
                     volatility = 0,
                     trade_max = 8300000,
                     trade_min = 6600000,
@@ -759,9 +785,11 @@ namespace Exaxxi.Models
                 {
                     id = 13,
                     name = "Yeezy 500 Soft Vision V4",
+                    folder = "Yeezy 500 Soft Vision V4",
                     vi_info = "Khen ngợi Coachella phù hợp với adidas Yeezy Desert Boot Oil. Boot Yeezy này đi kèm với đế trên, đế dầu và đế dầu. Những đôi giày thể thao này được phát hành vào tháng 4 năm 2019 và bán lẻ với giá 200 đô la. Mua một số khởi động mới cho Dịch vụ Chủ nhật, ngay tại đây trên StockX.",
                     en_info = "Compliment the Coachella fit with the adidas Yeezy Desert Boot Oil. This Yeezy Boot comes with an oil upper, oil midsole, and an oil sole. These sneakers released in April 2019 and retailed for $200. Buy some fresh boots for Sunday Service, right here on StockX.",
                     img = "yeezy16.jpg",
+                    img3d = "yeezy16.jpg",
                     volatility = 0,
                     trade_max = 8300000,
                     trade_min = 6600000,
@@ -776,9 +804,11 @@ namespace Exaxxi.Models
                 {
                     id = 14,
                     name = "Yeezy Powerphase Calabasas Core Black v2",
+                    folder = "Yeezy Powerphase Calabasas Core Black v2",
                     vi_info = "Colorway thứ ba của dòng, adidas Yeezy Powerphase Calabasas này có bảng màu đen đơn sắc.Ngoài ra còn có nhãn hiệu Adidas màu xanh lá cây bên cạnh logo Trefoil màu đỏ.Colorway cổ điển này được phát hành vào tháng 3 năm 2017 với giá $ 120.",
                     en_info = "The third colorway of the series, this adidas Yeezy Powerphase Calabasas features a monochromatic core black color palette. There is also Adidas branding in green next to a red Trefoil logo. This classic colorway released in March 2017 for $120.",
                     img = "yeezy4.jpg",
+                    img3d = "yeezy4.jpg",
                     volatility = 0,
                     trade_max = 7000000,
                     trade_min = 5500000,
@@ -792,9 +822,11 @@ namespace Exaxxi.Models
                 {
                     id = 15,
                     name = "Yeezy Powerphase Calabasas Core Black v3",
+                    folder = "Yeezy Powerphase Calabasas Core Black v3",
                     vi_info = "Colorway thứ ba của dòng, adidas Yeezy Powerphase Calabasas này có bảng màu đen đơn sắc.Ngoài ra còn có nhãn hiệu Adidas màu xanh lá cây bên cạnh logo Trefoil màu đỏ.Colorway cổ điển này được phát hành vào tháng 3 năm 2017 với giá $ 120.",
                     en_info = "The third colorway of the series, this adidas Yeezy Powerphase Calabasas features a monochromatic core black color palette. There is also Adidas branding in green next to a red Trefoil logo. This classic colorway released in March 2017 for $120.",
                     img = "yeezy4.jpg",
+                    img3d = "yeezy4.jpg",
                     volatility = 0,
                     trade_max = 7000000,
                     trade_min = 5500000,
