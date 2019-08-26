@@ -161,19 +161,14 @@
                     "num_item_selled": 0,
                     "captcha": captcha
                 };
-                $.ajax({
-                    url: "/api/UsersAPI/PostRegister",
-                    type: "POST",
-                    data: JSON.stringify(register),
-                    contentType: "application/json",
-                    success: function () {
+                $http.post("/api/UsersAPI/PostRegister", JSON.stringify(register)).
+                    then(function (data) {                   
                         alert("Đăng ký thành công!");
                         window.location = "/Login";
-                    },
-                    error: function (notfound) {
-                        alert(notfound.responseText);
-                    }
-                });
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
             });
         });
 
