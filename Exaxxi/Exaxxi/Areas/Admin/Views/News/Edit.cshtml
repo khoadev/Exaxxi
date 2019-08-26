@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title">Chỉnh Sửa</h4>
-                <p class="card-category">News</p>
+                <p class="card-category">Tin Tức</p>
             </div>
             <div class="card-body">
                 <form asp-action="Edit" asp-controller="News" enctype="multipart/form-data">
@@ -47,7 +47,7 @@
                         <span asp-validation-for="en_content" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="id_department" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Thuộc chủng loại</label>
                         <select asp-for="id_department" class="form-control" id="departmentname"></select>
                         <span asp-validation-for="id_department" class="text-danger"></span>
                     </div>

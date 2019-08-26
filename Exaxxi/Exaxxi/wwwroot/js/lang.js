@@ -103,7 +103,7 @@ var translationsVI = {
     BRANDNAME: "Tên Hãng",
     SORTBY: 'Sắp Xếp',
     DEFAULT: 'Mặc Định',
-    LOWESTASK: 'Giá Mua Thấp Nhất',
+    LOWESTASK: 'Giá Thấp Nhất',
     LOWESTASKDE: "Giá thấp nhất mà ai đó đang bán.",
     HIGHESTBID: "Giá Bán Cao Nhất",
     HIGHESTBIDDE: "Giá cao nhất mà ai đó sẽ trả.",

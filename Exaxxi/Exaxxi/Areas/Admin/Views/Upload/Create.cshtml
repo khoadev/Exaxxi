@@ -10,18 +10,29 @@
                 <p class="card-category">Tạo thư mục lưu trữ</p>
             </div>
             <div class="card-body">
-                <form asp-action="CreateFolder2" asp-controller="Upload" asp-area="Admin" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label class="bmd-label-floating">
-                            Name
-                        </label>
-                        <input type="text" name="name" id="name" class="form-control" />
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Tạo Thư Mục</button>
+                <div>
+                    <form asp-action="CreateFolder2" asp-controller="Upload" asp-area="Admin" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">
+                                Name
+                            </label>
+                            <input type="text" name="name" id="name" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right">Tạo Thư Mục</button>
 
-                </form>
-                    
+                    </form>
+                </div><br />
+                
+                <div class="row">
+                    <div class="col-md-3" style="border: 1px dotted red; height: 500px;">
+                        <span>Tên thư mục</span>
+                    </div>
+                    <div class="col-md-9" style="border: 1px dotted blue; height: 500px;">
+
+                    </div>
+                </div>
             </div>
+           
         </div>
     </div>
 </div>

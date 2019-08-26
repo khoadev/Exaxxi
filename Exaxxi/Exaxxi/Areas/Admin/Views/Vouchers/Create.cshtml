@@ -4,16 +4,16 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Tạo Mới</h2>
 
-<h4>Voucher</h4>
+<h4>Khuyến Mãi (Voucher)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="code" class="control-label"></label>
+                <label class="control-label">Code khuyến mãi</label>
                 <input asp-for="code" class="form-control" />
                 <span asp-validation-for="code" class="text-danger"></span>
             </div>
@@ -26,8 +26,8 @@
                 <span asp-validation-for="kind" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="value" class="control-label"></label>
-                <input asp-for="value" class="form-control" />
+                <label class="control-label">Giá trị khuyến mãi</label>
+                <input asp-for="value" type="number" min="0" class="form-control" />
                 <span asp-validation-for="value" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,18 +41,18 @@
                 <span asp-validation-for="date_end" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="count" class="control-label"></label>
-                <input asp-for="count" class="form-control" />
+                <label class="control-label">Số lần sử dụng</label>
+                <input asp-for="count" type="number" min="1" class="form-control" />
                 <span asp-validation-for="count" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Tạo Mới" class="btn btn-primary pull-right" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Quay về</a>
 </div>
 

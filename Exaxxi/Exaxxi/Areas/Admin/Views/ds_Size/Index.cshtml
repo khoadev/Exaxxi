@@ -7,8 +7,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách tiêu chuẩn kích thước</h4>
-                <p class="card-category"></p>
+                <h4 class="card-title ">Danh Sách Tiêu Chuẩn Kích Thước</h4>
+                <p class="card-category">Quản lý danh sách tiêu chuẩn kích thước</p>
             </div>
             <div class="card-body" ng-controller="DSSize">
                 <div class="table-responsive">
@@ -31,7 +31,7 @@
                                 <th>
                                     Centimet
                                 </th>
-                                <th class="text-right"><a asp-action="Create">Thêm</a></th>
+                                <th class="text-right"><a asp-action="Create">Tạo Mới</a></th>
                             </tr>
                         </thead>
                         <tbody >
@@ -61,13 +61,13 @@
                                             <i class="material-icons">edit</i>
                                         </button>
                                     </a>
-                                    <a href="/Admin/ds_Size/Details/{{x.id}}">
+                                    @*<a href="/Admin/ds_Size/Details/{{x.id}}">
                                         <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
                                             <i class="material-icons">
                                                 info
                                             </i>
                                         </button>
-                                    </a>
+                                    </a>*@
                                     <button ng-click="Delete(x.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                         <i class="material-icons">close</i>
                                     </button>
@@ -94,7 +94,7 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                var isConfirm = confirm("Bạn có chắc chắn muốn xóa?")
                 if (isConfirm) {
                     $http.delete(url, config).then(function (response) {
                         window.location.reload();

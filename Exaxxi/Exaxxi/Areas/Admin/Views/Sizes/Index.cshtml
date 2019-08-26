@@ -7,8 +7,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách size</h4>
-                <p class="card-category"></p>
+                <h4 class="card-title ">Danh Sách Size</h4>
+                <p class="card-category">Quản lý danh sách size</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -46,13 +46,13 @@
                                     <td>
                                         @Convert.ToDouble(item.last_sale).ToString("#,###") @if (Convert.ToDouble(item.last_sale) > 0) { @Html.Raw("VND");} else { @Html.Raw("<span style='color:red'>Chưa có thông tin</span>"); }
                                     </td>
-                                    <td>
+                                    <td style="text-align:center">
                                         @Html.DisplayFor(modelItem => item.size.VN)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.item.name)
                                     </td>
-                                    <td class="td-actions text-right">
+                                    <td class="td-actions" style="text-align:center">
                                         <a asp-action="Details" asp-route-id="@item.id">
                                             <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
                                                 <i class="material-icons">

@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách thể loại</h4>
-                <p class="card-category">Quản lý danh sách thể loại</p>
+                <h4 class="card-title ">Danh Sách Khuyến Mãi (Voucher)</h4>
+                <p class="card-category">Quản lý danh sách khuyến mãi</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -57,8 +57,8 @@
                                     {{x.count}}
                                 </td>
                                 <td>
-                                    <a href="/Admin/Vouchers/Edit/{{x.id}}">Edit</a> |                                    
-                                    <a href="javascript:void()" style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Delete</a>
+                                    <a href="/Admin/Vouchers/Edit/{{x.id}}">Sửa</a> |                                    
+                                    <a href="javascript:void()" style="cursor: pointer;" id="delete" class="delete" ng-click="Delete(x.id)">Xóa</a>
                                 </td>
                             </tr>
                           
@@ -81,7 +81,7 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                var isConfirm = confirm("Bạn có chắc chắn muốn xóa?")
                 if (isConfirm) {
                     $http.delete(url, config).then(function (response) {
                         window.location.reload();

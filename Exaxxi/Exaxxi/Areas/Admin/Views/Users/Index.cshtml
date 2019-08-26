@@ -7,8 +7,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách Khách Hàng</h4>
-                <p class="card-category"></p>
+                <h4 class="card-title ">Danh Sách Khách Hàng</h4>
+                <p class="card-category">Quản lý danh sách khách hàng</p>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -22,16 +22,16 @@
                                 <th>
                                     Email
                                 </th>
-                                <th>
+                                <th style="text-align:center">
                                     Cấp độ bán
                                 </th>
-                                <th>
+                                <th style="text-align:center">
                                     Điểm người mua
                                 </th>
                                 <th>
                                     Trạng thái
                                 </th>
-                                <th><i class="fas fa-cog" style="color:#808080"></i></th>
+                                <th style="text-align:center"><i class="fas fa-cog" style="color:#808080"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,10 +48,10 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.email)
                                 </td>
-                                <td>
+                                <td style="text-align:center">
                                     @Html.DisplayFor(modelItem => item.level_seller)
                                 </td>
-                                <td>
+                                <td style="text-align:center">
                                     @Html.DisplayFor(modelItem => item.score_buyer)
                                 </td>
                                 <td>
@@ -64,7 +64,7 @@
                                         @Html.Raw("Đã khóa");
                                     }
                                 </td>
-                                <td class="td-actions text-right">
+                                <td class="td-actions" style="text-align:center">
                                     <a asp-action="Edit" asp-route-id="@item.id">
                                         <button type="button" rel="tooltip" title="Edit" class="btn btn-primary btn-link btn-sm">
                                             <i class="material-icons">edit</i>

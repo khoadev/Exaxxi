@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header card-header-primary">
                 <h4 class="card-title">Chỉnh Sửa</h4>
-                <p class="card-category">Size</p>
+                <p class="card-category">Sản Phẩm</p>
             </div>
             <div class="card-body">
                 <form asp-action="Edit" asp-controller="Items" enctype="multipart/form-data">
@@ -53,17 +53,17 @@
                         <span asp-validation-for="trade_max" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="sold" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Số lượng đã bán</label>
                         <input asp-for="sold" class="form-control" />
                         <span asp-validation-for="sold" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="id_admin" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Admin</label>
                         <select asp-for="id_admin" class="form-control" id="admin"></select>
                         <span asp-validation-for="id_admin" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="id_category" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Thể Loại</label>
                         <select asp-for="id_category" class="form-control" id="category"></select>
                         <span asp-validation-for="id_category" class="text-danger"></span>
                     </div>
@@ -127,9 +127,20 @@
                 });
             });
     </script>
+   
     <script>
-        CKEDITOR.replace("vi_info");
-        CKEDITOR.replace("en_info");
-    </script>
+        $(document).ready(function () {
+            CKEDITOR.replace('vi_info', {
+                height: 400,
+                filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
+                filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
+            });
+        });
 
+        CKEDITOR.replace('en_info', {
+            height: 400,
+            filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
+            filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
+        });
+    </script>
 }
