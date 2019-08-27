@@ -129,7 +129,7 @@
                                         Search Result:
                                     </div>
                                 </div>
-                                <div class="row search-result-product-wrapper" ng-repeat="x in names  | filter:key">
+                                <div class="row search-result-product-wrapper" ng-repeat="x in names  | filter: {item: {name: key}} ">
                                     <div class="col-3 col-md-2" align="center">
                                         <img src="~/images/{{x.item.img}}" class="search-img" />
                                     </div>
