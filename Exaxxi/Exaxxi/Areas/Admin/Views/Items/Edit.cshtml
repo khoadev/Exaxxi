@@ -28,6 +28,9 @@
                         @*<input asp-for="img" class="hidden form-control" />*@
                     </div>
                     <div class="form-group">
+                        <a asp-controller="Items" asp-action="Edit3d"  asp-route-id="@Model.id" class=" bmd-label-floating">sửa hình 3d</a>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="vi_info" class=" bmd-label-floating"></label>
                         <textarea asp-for="vi_info" class="form-control"></textarea>
                         <span asp-validation-for="vi_info" class="text-danger"></span>
@@ -127,7 +130,7 @@
                 });
             });
     </script>
-   
+
     <script>
         $(document).ready(function () {
             CKEDITOR.replace('vi_info', {

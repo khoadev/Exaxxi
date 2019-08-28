@@ -158,7 +158,24 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             return View(items);
         }
+        public IActionResult Edit3d()
+        {
+            if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            return View();
+        }
+        public void Deletefolder(int id)
+        {
+            var items = _api.getAPI($"api/ItemsAPI/GetNameItems/{id}", HttpContext.Session.GetString("token")).Result;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads", items);
+            //string pathString = System.IO.Path.Combine(path, items);
+            //System.IO.Directory.Delete(pathString);
+            System.IO.Directory.Delete(path, true);
 
+
+        }
         // POST: Admin/Items/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

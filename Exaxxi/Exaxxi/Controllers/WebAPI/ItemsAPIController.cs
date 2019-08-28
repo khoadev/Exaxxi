@@ -74,6 +74,23 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
+        [HttpGet("GetNameItems/{id}")]
+        public IActionResult GetNameItems(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = _context.Items.FirstOrDefault(p => p.id == id).name;
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
 
         [Route("CountItems")]
         public IActionResult CountItems()
