@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<div class="row" ng-controller="editDsSize">
+<div class="row" ng-controller="edititem">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
@@ -11,7 +11,7 @@
                 <p class="card-category">Sản Phẩm</p>
             </div>
             <div class="card-body">
-                <form asp-action="Edit" asp-controller="Items" enctype="multipart/form-data">
+                <form asp-action="Edit" asp-controller="Items" asp-area="Admin" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="id" />
                     <div class="form-group">
@@ -27,9 +27,25 @@
                         <input type="file" id="img" name="img">
                         @*<input asp-for="img" class="hidden form-control" />*@
                     </div>
-                    <div class="form-group">
-                        <a asp-controller="Items" asp-action="Edit3d"  asp-route-id="@Model.id" class=" bmd-label-floating">sửa hình 3d</a>
-                    </div>
+                    <span ng-if="item.folder != '0'">
+                        <div class="form-group">
+                            <label>
+                                Nếu bạn muốn sửa ảnh thì vui lòng xóa ảnh cũ
+                            </label>
+                            <a asp-controller="Items" asp-action="Deletefolder" asp-route-id="@Model.id" class=" bmd-label-floating" style="color: red;">Xóa hình 3d</a> trong thư mục {{item.folder}}
+                        </div>
+                    </span>
+                   
+                    <span ng-if="item.folder == '0'">
+                        <div class="form-group">
+                            <label asp-for="img3d" class=" btn btn-primary">
+                                Chọn Hình 3d 
+                            </label>
+                            <input type="file" id="img3d" name="img3d" multiple>
+                            @*<input asp-for="img" class="hidden form-control" />*@
+                        </div>
+                    </span>
+                    
                     <div class="form-group">
                         <label asp-for="vi_info" class=" bmd-label-floating"></label>
                         <textarea asp-for="vi_info" class="form-control"></textarea>
@@ -144,6 +160,13 @@
             height: 400,
             filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
             filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
+        });
+         app.controller('edititem', function ($scope, $http) {
+
+             $http.get("/api/ItemsAPI/GetItemsEdit/" +@Model.id)
+                 .then(function (rp) { $scope.item = rp.data; });
+
+
         });
     </script>
 }
