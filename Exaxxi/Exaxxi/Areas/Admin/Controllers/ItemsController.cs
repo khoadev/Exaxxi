@@ -137,7 +137,7 @@ namespace Exaxxi.Areas.Admin.Controllers
 
                     using (var myfile3d = new FileStream(fullname3d, FileMode.Create))
                     {
-                        await img.CopyToAsync(myfile3d);
+                        await file3d.CopyToAsync(myfile3d);
                     }
                     items.img3d = file3d.FileName;
 
@@ -148,7 +148,7 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             // hinh 3d
 
-            
+
             //Post sang API xử lý
             if (_api.postAPI(items, "api/ItemsChange", HttpContext.Session.GetString("token")).Result)
             {
@@ -215,6 +215,24 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             try
             {
+                if (img3d == null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
+                    string pathString = System.IO.Path.Combine(path, items.name);
+                    System.IO.Directory.CreateDirectory(pathString);
+                    pathString = System.IO.Path.Combine(pathString, items.name);
+                    if (!System.IO.File.Exists(pathString))
+                    {
+                        using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                        {
+
+
+                        }
+
+                    }
+                }
+                //tao thu muc
+
                 //Nhận file POST qua
                 if (img == null || img.Length == 0)
                 {
@@ -230,27 +248,12 @@ namespace Exaxxi.Areas.Admin.Controllers
                         }
                         else
                         {
-                            //tao thu muc
-                            var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
-                            string pathString = System.IO.Path.Combine(path, items.name);
-                            System.IO.Directory.CreateDirectory(pathString);
-                            pathString = System.IO.Path.Combine(pathString, items.name);
-                            if (!System.IO.File.Exists(pathString))
-                            {
-                                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
-                                {
 
-
-                                }
-
-                            }
-
-                            string fullname3d = Path.Combine
-                            (Directory.GetCurrentDirectory(), "wwwroot", "uploads", items.name, file3d.FileName);
+                            string fullname3d = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", items.name, file3d.FileName);
 
                             using (var myfile3d = new FileStream(fullname3d, FileMode.Create))
                             {
-                                await img.CopyToAsync(myfile3d);
+                                await file3d.CopyToAsync(myfile3d);
                             }
                             items.img3d = file3d.FileName;
 
@@ -282,27 +285,13 @@ namespace Exaxxi.Areas.Admin.Controllers
                         }
                         else
                         {
-                            //tao thu muc
-                            var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
-                            string pathString = System.IO.Path.Combine(path, items.name);
-                            System.IO.Directory.CreateDirectory(pathString);
-                            pathString = System.IO.Path.Combine(pathString, items.name);
-                            if (!System.IO.File.Exists(pathString))
-                            {
-                                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
-                                {
-
-
-                                }
-
-                            }
 
                             string fullname3d = Path.Combine
                             (Directory.GetCurrentDirectory(), "wwwroot", "uploads", items.name, file3d.FileName);
 
                             using (var myfile3d = new FileStream(fullname3d, FileMode.Create))
                             {
-                                await img.CopyToAsync(myfile3d);
+                                await file3d.CopyToAsync(myfile3d);
                             }
                             items.img3d = file3d.FileName;
 
@@ -312,7 +301,7 @@ namespace Exaxxi.Areas.Admin.Controllers
                     }
                 }
 
-               
+
                 var result = await _api.putAPI(items, $"api/ItemsChange/{id}", HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
 
