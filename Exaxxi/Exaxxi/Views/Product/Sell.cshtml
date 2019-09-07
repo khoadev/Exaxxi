@@ -49,7 +49,7 @@
                                             {{'TRANSFEE'| translate}}
                                         </div>
                                         <div class="col-6 text-right">                                            
-                                            <input id="t_fee" type="text" value="{{service_fee.value * 100}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />%
+                                            <input id="t_fee" type="text" value="{{enter_ask != null ? service_fee.value * enter_ask : 0}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -73,7 +73,7 @@
                                             {{'TOTAL'| translate}}
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_ask" value="{{(enter_ask + (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND                                            
+                                            <input id="total_ask" value="{{(enter_ask - (enter_ask * (service_fee.value +  0.03))) > 0 ? (enter_ask + (enter_ask * (service_fee.value +  0.03))) : 0}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND                                            
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                             {{'TRANSFEE'| translate}}
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="t_fee" type="text" value="{{service_fee.value * 100}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />%
+                                            <input id="t_fee" type="text" value="{{service_fee.value * name[0].size.highest_bid}}" style="border:none; text-align:center; font-weight:bold; width:80px; background:#FFF" disabled />VND 
                                         </div>
                                     </div>
                                     <div class="row checkout-estimated">
@@ -148,7 +148,7 @@
                                             {{'TOTAL'| translate}}
                                         </div>
                                         <div class="col-6 text-right">
-                                            <input id="total_sell" value="{{name[0].size.highest_bid + (name[0].size.highest_bid * (service_fee.value +  0.03))}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
+                                            <input id="total_sell" value="{{name[0].size.highest_bid - (name[0].size.highest_bid * (service_fee.value +  0.03))}}" style="border:none; text-align:center; font-weight:bold; width:110px; background:#FFF" disabled />VND
                                         </div>
                                     </div>
                                 </div>

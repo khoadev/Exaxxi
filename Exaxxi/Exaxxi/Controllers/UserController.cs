@@ -85,6 +85,14 @@ namespace Exaxxi.Controllers
 
             return View();
         }
+        public IActionResult Bidding()
+        {
+            return View();
+        }
+        public IActionResult Asking()
+        {
+            return View();
+        }
 
     }
 }

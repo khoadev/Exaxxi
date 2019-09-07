@@ -7,8 +7,8 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Chỉnh Sửa</h4>
-                <p class="card-category">Items</p>
+                <h4 class="card-title">Tạo Mới</h4>
+                <p class="card-category">Sản Phẩm</p>
             </div>
             <div class="card-body">
                 <form asp-action="Create" asp-controller="Items" enctype="multipart/form-data">
@@ -23,46 +23,53 @@
                         <label asp-for="img" class=" btn btn-primary">
                             Chọn Hình
                         </label>
-                        <input type="file" id="img" name="img">
+                        <input type="file" id="img" name="img" required>
                         @*<input asp-for="img" class="hidden form-control" />*@
                     </div>
                     <div class="form-group">
-                        <label asp-for="vi_info" class=" bmd-label-floating"></label>
+                        <label asp-for="img3d" class=" btn btn-primary">
+                            Chọn Hình 3d
+                        </label>
+                        <input type="file" id="img3d" name="img3d" multiple>
+                        @*<input asp-for="img" class="hidden form-control" />*@
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="vi_info"></label><br />
                         <textarea asp-for="vi_info" class="form-control"></textarea>
                         <span asp-validation-for="vi_info" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="en_info" class="bmd-label-floating"></label>
+                        <label asp-for="en_info"></label><br />
                         <textarea asp-for="en_info" class="form-control"></textarea>
                         <span asp-validation-for="en_info" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="volatility" class="bmd-label-floating"></label>
-                        <input asp-for="volatility" class="form-control" />
+                        <input asp-for="volatility" type="number" min="0" class="form-control" />
                         <span asp-validation-for="volatility" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="trade_min" class="bmd-label-floating"></label>
-                        <input asp-for="trade_min" class="form-control" />
+                        <input type="number" min="1" asp-for="trade_min" class="form-control" />
                         <span asp-validation-for="trade_min" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="trade_max" class="bmd-label-floating"></label>
-                        <input asp-for="trade_max" class="form-control" />
+                        <input type="number" min="1" asp-for="trade_max" class="form-control" />
                         <span asp-validation-for="trade_max" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="sold" class="bmd-label-floating"></label>
-                        <input asp-for="sold" class="form-control" />
+                        <label class="bmd-label-floating">Số lượng đã bán</label>
+                        <input type="number" min="0" asp-for="sold" class="form-control" />
                         <span asp-validation-for="sold" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="id_admin" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Admin</label>
                         <select asp-for="id_admin" class="form-control" id="admin"></select>
                         <span asp-validation-for="id_admin" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="id_category" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Thể Loại</label>
                         <select asp-for="id_category" class="form-control" id="category"></select>
                         <span asp-validation-for="id_category" class="text-danger"></span>
                     </div>
@@ -117,9 +124,20 @@
             });
         });
     </script>
-    <script>
-        CKEDITOR.replace("vi_info");
-        CKEDITOR.replace("en_info");
+   <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('vi_info', {
+                height: 400,
+                filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
+                filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
+            });
+        });
+
+        CKEDITOR.replace('en_info', {
+            height: 400,
+            filebrowserUploadUrl: '/Admin/Upload/UploadCKEditor',
+            filebrowserBrowseUrl: '/Admin/Upload/FileBrowse'
+        });
     </script>
 }
 

@@ -16,5 +16,6 @@ namespace Exaxxi.Models
         public int kind { get; set; }
         public Sizes size { get; set; }
         public ds_Size dsSize { get; set; }
+        public Posts post { get; set; }
     }
 }

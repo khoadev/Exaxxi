@@ -15,6 +15,7 @@ using AutoMapper;
 using PagedList.Core;
 using Exaxxi.Common;
 using Exaxxi.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Exaxxi.Areas.Admin.Controllers
 {
@@ -24,10 +25,11 @@ namespace Exaxxi.Areas.Admin.Controllers
     {
         CallAPI _api = new CallAPI();
         private readonly IMapper mapper;
-
-        public ItemsController(IMapper _map)
+        private IHostingEnvironment hostingEnvironment;
+        public ItemsController(IMapper _map, IHostingEnvironment hostingEnvironment)
         {
             mapper = _map;
+            this.hostingEnvironment = hostingEnvironment;
         }
         // GET: Admin/Items
         public IActionResult Index()
@@ -36,7 +38,7 @@ namespace Exaxxi.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-           
+
             return View();
         }
 
@@ -76,7 +78,7 @@ namespace Exaxxi.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,vi_info,en_info,img,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items, IFormFile img)
+        public async Task<IActionResult> Create([Bind("id,name,vi_info,en_info,img,img3d,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items, IFormFile img, List<IFormFile> img3d)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
@@ -84,19 +86,69 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
             //Nhận file POST qua
             if (img == null || img.Length == 0)
-                return Content("Không File nào được chọn!");
-
-            //Save File da upload vao thu muc MyFiles
-            string fullname = Path.Combine
-                (Directory.GetCurrentDirectory(), "wwwroot", "images", "item", img.FileName);
-
-            using (var myfile = new FileStream(fullname, FileMode.Create))
             {
-                await img.CopyToAsync(myfile);
+                return Content("Không File nào được chọn!");
+            }
+            else
+            {
+                //Save File da upload vao thu muc MyFiles
+                string fullname = Path.Combine
+                    (Directory.GetCurrentDirectory(), "wwwroot", "images", "item", img.FileName);
+
+                using (var myfile = new FileStream(fullname, FileMode.Create))
+                {
+                    await img.CopyToAsync(myfile);
+                }
+                //Gán tên file vào img để lưu vào DB
+
+
+                items.img = img.FileName;
+
             }
 
-            //Gán tên file vào img để lưu vào DB
-            items.img = img.FileName;
+
+            foreach (var file3d in img3d)
+            {
+                if (img3d == null || file3d.Length == 0)
+                {
+                    items.img3d = "NULL";
+                    items.folder = "0";
+
+                }
+                else
+                {
+                    //tao thu muc
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
+                    string pathString = System.IO.Path.Combine(path, items.name);
+                    System.IO.Directory.CreateDirectory(pathString);
+                    pathString = System.IO.Path.Combine(pathString, items.name);
+                    if (!System.IO.File.Exists(pathString))
+                    {
+                        using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                        {
+
+
+                        }
+
+                    }
+
+                    string fullname3d = Path.Combine
+                    (Directory.GetCurrentDirectory(), "wwwroot", "uploads", items.name, file3d.FileName);
+
+                    using (var myfile3d = new FileStream(fullname3d, FileMode.Create))
+                    {
+                        await file3d.CopyToAsync(myfile3d);
+                    }
+                    items.img3d = file3d.FileName;
+
+                    items.folder = items.name;
+                }
+
+            }
+
+            // hinh 3d
+
+
             //Post sang API xử lý
             if (_api.postAPI(items, "api/ItemsChange", HttpContext.Session.GetString("token")).Result)
             {
@@ -104,6 +156,24 @@ namespace Exaxxi.Areas.Admin.Controllers
             }
 
             return View(items);
+        }
+
+
+
+        public IActionResult Deletefolder(int id)
+        {
+            var name = _api.getAPI($"api/ItemsAPI/GetNameItems/{id}", HttpContext.Session.GetString("token")).Result;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads", name);
+            //string pathString = System.IO.Path.Combine(path, items);
+            //System.IO.Directory.Delete(pathString);
+            if (System.IO.File.Exists(path))
+            {
+
+                System.IO.Directory.Delete(path, true);
+            }
+            var result = _api.getAPI($"api/ItemsChange/FolderItems/{id}", HttpContext.Session.GetString("token"));
+
+            return RedirectToAction("Edit", new { id = id });
         }
 
         // GET: Admin/Items/Edit/5
@@ -126,13 +196,12 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             return View(items);
         }
-
         // POST: Admin/Items/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,vi_info,en_info,img,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items, IFormFile img)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,vi_info,en_info,img,img3d,volatility,trade_min,trade_max,active,lowest_ask,highest_bid,sold,id_admin,id_category")] Items items, IFormFile img, List<IFormFile> img3d)
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idAdmin").ToString()))
             {
@@ -143,18 +212,60 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            try
             {
-                try
+                if (img3d == null)
                 {
-                    //Nhận file POST qua
-                    if (img == null || img.Length == 0)
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
+                    string pathString = System.IO.Path.Combine(path, items.name);
+                    System.IO.Directory.CreateDirectory(pathString);
+                    pathString = System.IO.Path.Combine(pathString, items.name);
+                    if (!System.IO.File.Exists(pathString))
                     {
-                        return Content("Không File nào được chọn!");
+                        using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                        {
+
+
+                        }
+
+                    }
+                }
+                //tao thu muc
+
+                //Nhận file POST qua
+                if (img == null || img.Length == 0)
+                {
+                    var nameImg = _api.getAPI($"api/ItemsAPI/img/{id}", HttpContext.Session.GetString("token")).Result;
+                    items.img = nameImg.ToString();
+                    foreach (var file3d in img3d)
+                    {
+                        if (img3d == null || file3d.Length == 0)
+                        {
+                            items.img3d = "NULL";
+                            items.folder = "0";
+
+                        }
+                        else
+                        {
+
+                            string fullname3d = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", items.name, file3d.FileName);
+
+                            using (var myfile3d = new FileStream(fullname3d, FileMode.Create))
+                            {
+                                await file3d.CopyToAsync(myfile3d);
+                            }
+                            items.img3d = file3d.FileName;
+
+                            items.folder = items.name;
+                        }
 
                     }
 
 
+                }
+                else
+                {
                     //Save File da upload vao thu muc MyFiles
                     string fullname = Path.Combine
                         (Directory.GetCurrentDirectory(), "wwwroot", "images", "item", img.FileName);
@@ -164,22 +275,44 @@ namespace Exaxxi.Areas.Admin.Controllers
                         await img.CopyToAsync(myfile);
                     }
                     items.img = img.FileName;
-                    var result = await _api.putAPI(items, $"api/ItemsChange/{id}", HttpContext.Session.GetString("token"));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ItemsExists(items.id))
+                    foreach (var file3d in img3d)
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        if (img3d == null || file3d.Length == 0)
+                        {
+                            items.img3d = "NULL";
+                            items.folder = "0";
+
+                        }
+                        else
+                        {
+
+                            string fullname3d = Path.Combine
+                            (Directory.GetCurrentDirectory(), "wwwroot", "uploads", items.name, file3d.FileName);
+
+                            using (var myfile3d = new FileStream(fullname3d, FileMode.Create))
+                            {
+                                await file3d.CopyToAsync(myfile3d);
+                            }
+                            items.img3d = file3d.FileName;
+
+                            items.folder = items.name;
+                        }
+
                     }
                 }
+
+
+                var result = await _api.putAPI(items, $"api/ItemsChange/{id}", HttpContext.Session.GetString("token"));
                 return RedirectToAction(nameof(Index));
+
             }
-            return View(items);
+            catch (DbUpdateConcurrencyException)
+            {
+
+                return View(items);
+            }
+
+
         }
 
 

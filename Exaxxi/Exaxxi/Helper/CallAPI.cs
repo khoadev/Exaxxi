@@ -15,7 +15,7 @@ namespace Exaxxi.Helper
     {
         public HttpClient Initial(string token = null)
         {
-            var Client = new HttpClient();
+             var Client = new HttpClient();
 
             Client.BaseAddress = new Uri("http://localhost:51340");
             if (!string.IsNullOrEmpty(token))

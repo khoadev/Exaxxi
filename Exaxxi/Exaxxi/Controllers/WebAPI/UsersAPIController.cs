@@ -42,14 +42,14 @@ namespace Exaxxi.Controllers.WebAPI
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsers([FromRoute] int id)
+        public IActionResult GetUsers([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var users = await _context.Users.FindAsync(id);
+            var users = _context.Users.Include(u => u.service_fee).Where(r => r.id == id).FirstOrDefault();
 
             if (users == null)
             {
@@ -136,29 +136,64 @@ namespace Exaxxi.Controllers.WebAPI
         }
 
         [AllowAnonymous, Route("PostRegister")]
-        public IActionResult PostRegister([FromBody] RegisterViewModel model)
+        public IActionResult PostRegister([FromBody] JObject json)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            dynamic data = json;
+            string name = data.name;
+            string email = data.email;
+            string password = data.password;
+            string confirm_password = data.confirm_password;
+            string phone = data.phone;
+            string address = data.address;
+            int id_city = data.id_city;
+            int num_item_selled = data.num_item_selled;
+            string captcha = data.captcha;
+            
+            if (password != confirm_password)
+            {
+                return BadRequest("Mật khẩu nhập lại không đúng");
+            }
+            if (password.Length < 8)
+            {
+                return BadRequest("Mật khẩu tối thiểu 8 ký tự");
+            }
+            Regex rgx = new Regex(info.RegEx);
+            if (!rgx.IsMatch(password))
+            {
+                return BadRequest("Mật khẩu phải có ký tự Hoa, Số, Thường");
+            }
             //Validate Google recaptcha below
-            if (!GoogleRecaptchaHelper.IsReCaptchaPassedAsync(model.captcha, "6Lfwz6IUAAAAAM_gyYa0tzAoeyVYKZ5rkOxT_d6h"))
+            if (!GoogleRecaptchaHelper.IsReCaptchaPassedAsync(captcha, "6Lfwz6IUAAAAAM_gyYa0tzAoeyVYKZ5rkOxT_d6h"))
             {
                 return BadRequest("Vui Lòng Nhập Captcha");
             }
 
-            model.password = bf.Encrypt_CBC(model.password);
-            Users account = model.toUsers();
+            password = bf.Encrypt_CBC(password);
+            Users account = new Users();
+            account.name = name;
+            account.email = email;
+            account.password = password;
+            account.phone = phone;
+            account.address = address;
+            account.id_city = id_city;
+            account.num_item_selled = num_item_selled;
+            account.level_seller = 1;
+            account.score_buyer = 0;
+            account.date_registion = DateTime.Now;
+            account.active = true;
 
             _context.Add(account);
             _context.SaveChanges();
 
             //mailer
-            ml.SendMail("Exaxxi Site", model.email, "Register in Exaxxi", "Chúc mừng bạn đã đăng ký thành công!");
+            ml.SendMail("Exaxxi Site", email, "Register in Exaxxi", "Chúc mừng bạn đã đăng ký thành công!");
 
-            return Ok(model);
+            return Ok();
         }
 
         [AllowAnonymous, Route("RenewPassword")]

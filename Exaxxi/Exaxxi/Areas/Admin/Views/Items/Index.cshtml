@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title ">Danh sách sản phẩm</h4>
-                <p class="card-category"></p>
+                <h4 class="card-title ">Danh Sách Sản Phẩm</h4>
+                <p class="card-category">Quản lý danh sách sản phẩm</p>
             </div>
             <div class="card-body">
                 {{sortBy}}
@@ -89,18 +89,18 @@
                                             <i class="material-icons">edit</i>
                                         </button>
                                     </a>
-                                    <a href="/Admin/Items/Details/{{x.items.id}}">
-                                        <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
-                                            <i class="material-icons">
-                                                info
-                                            </i>
-                                        </button>
-                                    </a>
+                                    @*<a href="/Admin/Items/Details/{{x.items.id}}">
+                                            <button type="button" rel="tooltip" title="Detail" class="btn btn-primary btn-link btn-sm">
+                                                <i class="material-icons">
+                                                    info
+                                                </i>
+                                            </button>
+                                        </a>*@
                                     <button ng-click="Delete(x.items.id)" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
                                         <i class="material-icons">close</i>
                                     </button>
                                 </td>
-</tbody>
+                        </tbody>
                     </table>
 
                 </div>
@@ -125,8 +125,10 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+
+                var isConfirm = confirm("Bạn có chắc chắn muốn xóa?")
                 if (isConfirm) {
+                    $http.get('/Admin/Items/Deletefolder/' + id);
                     $http.delete(url, config).then(function (response) {
                         window.location.reload();
                     });
@@ -139,24 +141,24 @@
                 .then(function (response) { $scope.name = response.data; });
             $http.get("/api/ItemsAPI/GetItemsAd/" + 0)
                 .then(function (response) { $scope.getItem = response.data; });
-            
-             $scope.sort = function(keyname){
+
+            $scope.sort = function (keyname) {
                 $scope.sortBy = keyname;   //set the sortBy to the param passed
                 $scope.reverse = !$scope.reverse; //if true make it false and vice versa
             }
             $scope.change = function () {
                 var x;
-                
+
                 if ($("#select").val() == '') {
-                       x = 0;
+                    x = 0;
                 }
-                   if ($("#select").val() != '') {
-                       x = $("#select").val();
+                if ($("#select").val() != '') {
+                    x = $("#select").val();
                 }
                 $http.get("/api/ItemsAPI/GetItemsAd/" + x)
                     .then(function (response) { $scope.getItem = response.data; console.log($scope.getItem); });
-                }
-            });
-       
+            }
+        });
+
     </script>
 }

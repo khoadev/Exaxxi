@@ -11,10 +11,13 @@ namespace Exaxxi.Common
 
         public void SendMail(string mailName, string to_email, string subject, string body)
         {
-            var message = new MimeMessage();
+            
+            var message = new MimeMessage();           
+            
             message.From.Add(new MailboxAddress(mailName, "tdd3107973@gmail.com"));
             message.To.Add(new MailboxAddress("Hi", to_email));
             message.Subject = subject;
+            
             message.Body = new TextPart("plain")
             {
                 Text = body

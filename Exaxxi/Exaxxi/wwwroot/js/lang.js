@@ -88,6 +88,8 @@
     PERSONALINFO: "Personal Info",
     EDITINFO: "Edit Personal Info",
     EDIT: "Edit",
+    SOLD: "Sold",
+    POPBRAND: "POPULAR BRANDS",
 };
 
 var translationsVI = {
@@ -101,7 +103,7 @@ var translationsVI = {
     BRANDNAME: "Tên Hãng",
     SORTBY: 'Sắp Xếp',
     DEFAULT: 'Mặc Định',
-    LOWESTASK: 'Giá Mua Thấp Nhất',
+    LOWESTASK: 'Giá Thấp Nhất',
     LOWESTASKDE: "Giá thấp nhất mà ai đó đang bán.",
     HIGHESTBID: "Giá Bán Cao Nhất",
     HIGHESTBIDDE: "Giá cao nhất mà ai đó sẽ trả.",
@@ -179,5 +181,6 @@ var translationsVI = {
     MARKETVAL: "Giá Thị Trường",
     PERSONALINFO: "Thông Tin Cá Nhân",
     EDITINFO: "Chỉnh Sửa Thông Tin",
-    EDIT: "Chỉnh Sửa",
+    SOLD: "Đã Bán",
+    POPBRAND: "HÃNG BÁN CHẠY",
 };

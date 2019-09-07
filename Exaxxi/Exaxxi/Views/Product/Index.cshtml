@@ -13,7 +13,7 @@
             <div>
                 <div class="filter-depart-wrapper" ng-controller="ShowDepartment" ng-show="@ViewBag.idCate_f==''">
                     <!--start filter-depart-wrapper-->
-                    <a ng-repeat="x in name" href="/Product/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'filter-depart-active' : ''}}">{{x.vi_name}}</a>
+                    <a ng-repeat="x in name" href="/Product/Index?id={{x.id}}" class="{{ x.id == @ViewBag.Id_Depart ? 'filter-depart-active' : ''}}">{{lang=="en"?x.en_name:x.vi_name}}</a>
                 </div> <!--end filter-depart-wrapper-->
             </div>
 
@@ -67,7 +67,7 @@
                 <!--start filter-size-wrapper-->
                 <div class="filter-name-header" translate>{{'SIZE'}}</div>
                 <label class="checkbox-container" ng-repeat="x in name">
-                    {{x.centimet}} cm
+                    {{x.vn}} cm
                     <input type="checkbox" ng-model="sizeModel[x.id]" ng-change="save()">
                     <span class="checkmark"></span>
                 </label>

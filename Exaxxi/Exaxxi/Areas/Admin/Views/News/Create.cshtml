@@ -8,8 +8,8 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Create News</h4>
-                <p class="card-category">News</p>
+                <h4 class="card-title">Tạo Mới</h4>
+                <p class="card-category">Tin Tức</p>
             </div>
             <div class="card-body">
                 <form asp-action="Create" asp-controller="News" enctype="multipart/form-data">
@@ -28,7 +28,7 @@
                         <label asp-for="img" class="bmd-label-floating btn btn-primary">
                             Chose Picture
                         </label>
-                        <input type="file" id="img" name="img">
+                        <input type="file" id="img" name="img" required>
                         <span asp-validation-for="img" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -43,7 +43,7 @@
                     </div>
                     <input type="hidden" asp-for="id_admin" value="@HttpContextAccessor.HttpContext.Session.GetInt32("idAdmin")" />
                     <div class="form-group">
-                        <label asp-for="id_department" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Thuộc chủng loại</label>
                         <select asp-for="id_department" class="form-control" id="departmentname" name="id_department"></select>
                     </div>
                     <div class="form-group">

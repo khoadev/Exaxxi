@@ -49,17 +49,17 @@
                         <span asp-validation-for="items.trade_max" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="items.sold" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Số lượng đã bán</label>
                         <input asp-for="items.sold" class="form-control" disabled />
                         <span asp-validation-for="items.sold" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="nameAdmin" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Admin</label>
                         <input asp-for="nameAdmin" class="form-control" id="admin" disabled>
                         <span asp-validation-for="nameAdmin" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="nameCate" class="bmd-label-floating"></label>
+                        <label class="bmd-label-floating">Thể Loại</label>
                         <input asp-for="nameCate" class="form-control" id="category" disabled />
                         <span asp-validation-for="nameCate" class="text-danger"></span>
                     </div>
@@ -74,10 +74,7 @@
                             </label>
                         </div>
                     </div>
-                    <a asp-action="Index">Quay Về</a>
-                    <a asp-action="Edit" asp-route-id="@Model.items.id">
-                        <button type="button" class="btn btn-primary pull-right">Chỉnh Sửa</button>
-                    </a>
+                    <a asp-action="Index" class="btn btn-primary pull-right">Quay Về</a>
                 </form>
             </div>
         </div>

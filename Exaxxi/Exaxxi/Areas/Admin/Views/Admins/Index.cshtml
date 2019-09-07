@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                    <h4 class="card-title ">Danh sách Admin</h4>
+                    <h4 class="card-title ">Danh Sách Admin</h4>
                     <p class="card-category">Quản lý danh sách admin</p>
                 </div>
                 <div class="card-body">
@@ -140,7 +140,7 @@
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     }
                 }
-                var isConfirm = confirm("bạn có chắc chắn muốn xóa")
+                var isConfirm = confirm("Bạn có chắc chắn muốn xóa?")
                 if (isConfirm) {
                     $http.delete(url, config).then(function (response) {
                         window.location.reload();
