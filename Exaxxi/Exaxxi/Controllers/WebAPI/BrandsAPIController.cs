@@ -32,6 +32,19 @@ namespace Exaxxi.Controllers.WebAPI
                 return _context.Brands.Where(p => p.id_department == idde && p.active == true);  
 
         }
+        [HttpGet("GetBrandsIndex/{idde}")]
+        public IEnumerable<Brands> GetBrandsIndex(int idde)
+        {
+          
+                return _context.Brands.Where(p => p.id_department == idde);  
+
+        }
+        [HttpGet("img/{id}")]
+        public IActionResult GetBrandsImg(int id)
+        {
+            var data = _context.Brands.Where(p => p.id == id).FirstOrDefault().img;
+            return Ok(data);
+        }
         // GET: api/Brands
         [HttpGet]
         public IEnumerable<Brands> GetBrands()
