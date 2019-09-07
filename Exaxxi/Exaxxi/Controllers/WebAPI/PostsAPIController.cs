@@ -270,5 +270,25 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(post);
         }
+        [Route("LoadAllPostOfItem/{id_item}/{kind}")]
+        public IActionResult LoadAllPostOfItem([FromRoute] int id_item, [FromRoute] int kind)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var post = _context.Posts.Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
+                        .Where(w => w.c.b.id_item == id_item && w.c.a.kind == kind && w.c.a.status == 0)
+                        .GroupBy(g => new { price = g.c.a.price, size = g.d.VN }).Select(s => new
+                        {
+                            Size = s.First().d.VN,
+                            Price = s.First().c.a.price,
+                            Available = s.Count()
+                        })
+                        .OrderBy(o => o.Price);
+            if (post == null) return NotFound();
+            return Ok(post);
+        }
     }
 }
