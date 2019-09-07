@@ -224,7 +224,7 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             try
             {
-                if (img3d == null)
+                if (img3d != null)
                 {
                     var path = Path.Combine(Directory.GetCurrentDirectory(), hostingEnvironment.WebRootPath, "uploads");
                     string pathString = System.IO.Path.Combine(path, items.name);

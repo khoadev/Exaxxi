@@ -138,20 +138,22 @@ namespace Exaxxi.Areas.Admin.Controllers
                 //Nhận file POST qua
                 if (img == null || img.Length == 0)
                 {
-                    return Content("Không File nào được chọn!");
+                    var nameImg = _api.getAPI($"api/BrandsAPI/img/{id}", HttpContext.Session.GetString("token")).Result;
+                    brands.img = nameImg.ToString();
 
                 }
-
-
-                //Save File da upload vao thu muc MyFiles
-                string fullname = Path.Combine
-                    (Directory.GetCurrentDirectory(), "wwwroot", "images", "brand", img.FileName);
-
-                using (var myfile = new FileStream(fullname, FileMode.Create))
+                else
                 {
-                    await img.CopyToAsync(myfile);
+                    //Save File da upload vao thu muc MyFiles
+                    string fullname = Path.Combine
+                        (Directory.GetCurrentDirectory(), "wwwroot", "images", "brand", img.FileName);
+
+                    using (var myfile = new FileStream(fullname, FileMode.Create))
+                    {
+                        await img.CopyToAsync(myfile);
+                    }
+                    brands.img = img.FileName;
                 }
-                brands.img = img.FileName;
                 var result = await _api.putAPI(brands, $"api/BrandsChange/{id}", HttpContext.Session.GetString("token"));
             }
             catch (DbUpdateConcurrencyException)

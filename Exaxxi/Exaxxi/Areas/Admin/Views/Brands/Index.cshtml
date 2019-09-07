@@ -95,7 +95,7 @@
             $scope.change = function () {
                 var x;
                 x = $scope.selectedItem.id;
-                $http.get("/api/BrandsAPI/GetBrandsAd/" + x)
+                $http.get("/api/BrandsAPI/GetBrandsIndex/" + x)
                     .then(function (response) { $scope.getItem = response.data; });
             }
         });
