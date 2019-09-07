@@ -27,6 +27,11 @@ namespace Exaxxi.Controllers.WebAPI
         {
             return _context.Departments.OrderBy(p=>p.order);
         }
+        [Route("DepActive_1")]
+        public IEnumerable<Departments> DepActive_1()
+        {
+            return _context.Departments.OrderBy(p => p.order).Where(g => g.active == true);
+        }
         [HttpGet("DepartHasNews")]
         public IEnumerable<Departments> DepartHasNews()
         {

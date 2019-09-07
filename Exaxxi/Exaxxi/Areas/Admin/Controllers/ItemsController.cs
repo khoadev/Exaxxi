@@ -150,6 +150,15 @@ namespace Exaxxi.Areas.Admin.Controllers
 
 
             //Post sang API xử lý
+            if(items.lowest_ask == null)
+            {
+                items.lowest_ask = 0;
+            }
+            if (items.highest_bid == null)
+            {
+                items.highest_bid = 0;
+            }
+
             if (_api.postAPI(items, "api/ItemsChange", HttpContext.Session.GetString("token")).Result)
             {
                 return RedirectToAction(nameof(Index));

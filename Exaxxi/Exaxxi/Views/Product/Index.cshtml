@@ -103,7 +103,7 @@
                     <div class="card card-block">
                         <!-- Start card -->
                         <div class="product-img-wrapper">
-                            <img src="~/images/{{x.img}}" class="product-img">
+                            <img src="~/images/item/{{x.img}}" class="product-img" style="width:100%; height:220px">
                         </div>
                         <div class="product-title-wrapper">
                             <!-- Start product-title-wrapper -->
@@ -115,7 +115,8 @@
                                 </div>
                                 <div class="col-6 col-sm-6 col-md-6 " align="right">
                                     <div class="product-price">
-                                        <p ng-show="sort!='highest_bid'">{{x.lowest_ask| currency:"":0:3}} VND</p>
+                                        <p ng-style="x.lowest_ask === 0 && {'color':'red'}">{{x.lowest_ask == 0 ? "New" : (x.lowest_ask| currency:"":0:3)}}</p>
+                                        <p ng-show="sort!='highest_bid'">{{}} VND</p>                                    
                                         <p ng-hide="sort!='highest_bid'">{{x.highest_bid| currency:"":0:3}} VND</p>
                                         <span class="product-sub-title"></span>
                                     </div>

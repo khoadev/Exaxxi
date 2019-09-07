@@ -90,7 +90,6 @@ namespace Exaxxi.Areas.Admin.Controllers
 
             if (_api.postAPI(brands, "api/BrandsChange", HttpContext.Session.GetString("token")).Result)
             {
-                IEnumerable<Brands> result = JsonConvert.DeserializeObject<List<Brands>>(_api.getAPI("api/BrandsChange", HttpContext.Session.GetString("token")).Result);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -133,44 +132,40 @@ namespace Exaxxi.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            try
             {
-                try
+                //Nhận file POST qua
+                if (img == null || img.Length == 0)
                 {
-                    //Nhận file POST qua
-                    if (img == null || img.Length == 0)
-                    {
-                        return Content("Không File nào được chọn!");
+                    return Content("Không File nào được chọn!");
 
-                    }
-
-
-                    //Save File da upload vao thu muc MyFiles
-                    string fullname = Path.Combine
-                        (Directory.GetCurrentDirectory(), "wwwroot", "images", "brand", img.FileName);
-
-                    using (var myfile = new FileStream(fullname, FileMode.Create))
-                    {
-                        await img.CopyToAsync(myfile);
-                    }
-                    brands.img = img.FileName;
-                    var result = await _api.putAPI(brands, $"api/BrandsChange/{id}", HttpContext.Session.GetString("token"));
                 }
-                catch (DbUpdateConcurrencyException)
+
+
+                //Save File da upload vao thu muc MyFiles
+                string fullname = Path.Combine
+                    (Directory.GetCurrentDirectory(), "wwwroot", "images", "brand", img.FileName);
+
+                using (var myfile = new FileStream(fullname, FileMode.Create))
                 {
-                    if (!BrandsExists(brands.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    await img.CopyToAsync(myfile);
                 }
-                return RedirectToAction(nameof(Index));
+                brands.img = img.FileName;
+                var result = await _api.putAPI(brands, $"api/BrandsChange/{id}", HttpContext.Session.GetString("token"));
             }
-
-            return View(brands);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BrandsExists(brands.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
 

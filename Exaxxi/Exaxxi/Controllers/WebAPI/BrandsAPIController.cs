@@ -29,7 +29,7 @@ namespace Exaxxi.Controllers.WebAPI
         public IEnumerable<Brands> GetBrandsAd(int idde)
         {
           
-                return _context.Brands.Where(p => p.id_department == idde && p.active == true);  
+                return _context.Brands.Where(p => p.id_department == idde);  
 
         }
         // GET: api/Brands
