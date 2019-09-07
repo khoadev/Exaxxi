@@ -55,7 +55,12 @@ namespace Exaxxi.Controllers.WebAPI
                         });
             }
         }
-
+        [HttpGet("img/{id}")]
+        public IActionResult GetItemsImg(int id)
+        {
+            var data = _context.Items.Where(p => p.id == id && p.active == true).FirstOrDefault().img;
+            return Ok(data);
+        }
         // GET: api/Items
         [HttpGet("GetItemsEdit/{id}")]
         public async Task<IActionResult> GetItemsEdit(int id)
@@ -66,6 +71,23 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             var items = await _context.Items.FindAsync(id);
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+        }
+        [HttpGet("GetNameItems/{id}")]
+        public IActionResult GetNameItems(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var items = _context.Items.FirstOrDefault(p => p.id == id).name;
 
             if (items == null)
             {

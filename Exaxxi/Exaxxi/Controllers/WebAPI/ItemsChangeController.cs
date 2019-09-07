@@ -23,6 +23,23 @@ namespace Exaxxi.Controllers.WebAPI
         {
             _context = context;
         }
+
+     
+        [HttpGet]
+        [Route("FolderItems/{id}")]
+        public IActionResult FolderItems(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Items.First(p => p.id == id).folder = "0";
+            _context.SaveChanges();
+           
+            return Ok();
+        }
+
         // PUT: api/Items/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItems([FromRoute] int id, [FromBody] Items items)
@@ -57,6 +74,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return NoContent();
         }
+        
         // update lowest ask and highest bid of item
         [AllowAnonymous]
         [Route("UpdatePrice")]
@@ -121,7 +139,7 @@ namespace Exaxxi.Controllers.WebAPI
 
             return Ok(items);
         }
-        
+
         private bool ItemsExists(int id)
         {
             return _context.Items.Any(e => e.id == id);

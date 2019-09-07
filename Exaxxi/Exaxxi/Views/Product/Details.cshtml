@@ -83,15 +83,15 @@
                                     </div>
 
                                     @*<div class="modal-footer">
-                                            <button class="btn" style="background-color:#0E5396; color:white">
-                                                Confirm
-                                            </button>
-                                        </div>*@
+                            <button class="btn" style="background-color:#0E5396; color:white">
+                                Confirm
+                            </button>
+                        </div>*@
                                 </div>
                             </div>
                         </div>
                         @*<p>Condition <span>New</span></p>
-                            <h5>100% Authentic</h5>*@
+            <h5>100% Authentic</h5>*@
                     </div> <!-- End right-first -->
 
 
@@ -126,8 +126,8 @@
                                                             @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
                                                             {
                                                                 @*<div class="size-right">
-                                                                    @ViewBag.Sizes[i++].lowest_ask VND
-                                                                </div>*@
+                                                        @ViewBag.Sizes[i++].lowest_ask VND
+                                                    </div>*@
                                                             }
                                                         </label>
                                                     </div>
@@ -162,6 +162,44 @@
                             </div>
                         </a>
                     </div>
+
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all ask</button>
+                    <!-- The Modal -->
+                    <div class="modal fade" id="viewallask">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">View all ask</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                Size
+                                            </th>
+                                            <th>
+                                                Ask Price
+                                            </th>
+                                            <th>
+                                                Available
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="detail-content-right-final" style="border:1px solid #ab1113">
                         <div class="float-right detail-right">
                             <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid | currency:"":0:3}} VND</h3>
@@ -174,7 +212,43 @@
                             </div>
                         </a>
                     </div> <!-- End right-final -->
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all bids</button>
+                    <!-- The Modal -->
+                    <div class="modal fade" id="viewallask">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
 
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">View all bids</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                Size
+                                            </th>
+                                            <th>
+                                                Bid Price
+                                            </th>
+                                            <th>
+                                                Available
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div> <!-- End content-right -->
 
             </div> <!-- End Row -->
@@ -217,7 +291,9 @@
 
             $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + sizeVN)
                 .then(function (response) {
-                $scope.name = response.data;
+
+                    $scope.name = response.data;
+                    console.log($scope.name);
                     $http.get("/api/OrdersAPI/TakeLastSale/"+@ViewBag.IdItem)
                     .then(function (response) { $scope.lastsale = response.data;});
                 });
