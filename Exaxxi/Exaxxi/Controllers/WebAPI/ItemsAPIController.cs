@@ -292,6 +292,15 @@ namespace Exaxxi.Controllers.WebAPI
                 .Take(10)
                 .Select(m => m.c.a);
         }
+
+        [Route("TakeItemById_cate/{id}")]
+        public IEnumerable<Items> TakeItemById_cate(int id)
+        {
+            int a = _context.Items.Where(b => b.id == id).First().id_category;
+            return _context.Items
+               .Where(b => b.id_category == a && b.id != id).Take(5);
+        }
+
         [Route("HighestBidNew/{id_depart}")]
         public IEnumerable<Items> GetItemshighestbid(int id_depart)
         {

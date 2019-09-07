@@ -1,284 +1,331 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-<div ng-controller="Item_Attribute" style="padding:100px 0px">
-    <div class="content-wrapper" style="padding-bottom: 80px;">
-        <!-- Start content wrapper-->
-        <div class="container">
-            <!-- Start Container -->
-            <div class="row">
-                <!-- Start Row -->
-                <div class="col-sm-5 detail-content-left">
-                    <!-- Start content-left -->
-                    <!--<img src="images/3dimage/1.jpg" id="product-image-3d" class="img-fluid" style="margin-bottom:10px;">
+    <div ng-controller="Item_Attribute" style="padding:100px 0px">
+        <div class="content-wrapper" style="padding-bottom: 80px;">
+            <!-- Start content wrapper-->
+            <div class="container">
+                <!-- Start Container -->
+                <div class="row">
+                    <!-- Start Row -->
+                    <div class="col-sm-5 detail-content-left">
+                        <!-- Start content-left -->
+                        <!--<img src="images/3dimage/1.jpg" id="product-image-3d" class="img-fluid" style="margin-bottom:10px;">
                     <div id="slider-range-min"></div>-->
-                    <button type="button" class="btn btn-primary btn-360" data-toggle="modal" data-target="#imgModal">
-                        <img src="~/images/icons/360-icon-1.jpg" />
-                    </button>
-                    <img class="img-fluid" src="~/images/{{name[0].item.img}}" />
-                    <!-- The Modal -->
-                    <div class="modal fade" id="imgModal">
-                        <div class="modal-dialog modal-full">
-                            <div class="modal-content">
+                        <button type="button" class="btn btn-primary btn-360" data-toggle="modal" data-target="#imgModal">
+                            <img src="~/images/icons/360-icon-1.jpg" />
+                        </button>
+                        <img class="img-fluid" src="~/images/{{name[0].item.img}}" />
+                        <!-- The Modal -->
+                        <div class="modal fade" id="imgModal">
+                            <div class="modal-dialog modal-full">
+                                <div class="modal-content">
 
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title">3D</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">3D</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="img-container">
+                                            <div class="img360">
+                                                <img id="myImg" class="img-fluid" src="~/images/3dimage/{{name[0].item.img}}" />
+                                            </div>
+                                        </div>
+                                        <div id="preload-imgs"></div>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal"> {{'CLOSE'| translate}}</button>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="img-container">
-                                        <div class="img360">
-                                            <img id="myImg" class="img-fluid" src="~/images/3dimage/{{name[0].item.img}}" />
+                    </div> <!-- End content-left-->
+
+                    <div class="col-sm-7 detail-content-right">
+                        <!-- Start content-right -->
+
+                        <div class="detail-content-right-first">
+                            <!-- Start right-first -->
+                            <h6>{{name[0].brand_name}}</h6>
+                            <h3>{{name[0].item.name}} <i data-toggle="modal" data-target="#followingModal" style="color:#808080; cursor:pointer" class="fas fa-heart"></i></h3>
+                            <div class="modal fade" id="followingModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"> {{'FOLLOWING'| translate}}</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="detail-second-left">
+                                                <!-- Start second-left -->
+                                                @{ foreach (var item in ViewBag.dsSize)
+                                                    {
+                                                        <div class="size-wrapper">
+                                                            <label for="follow" class="size-label">
+                                                                <div class="size-left is-following" ng-click="Click(@item.VN)">
+                                                                    @item.VN
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div> <!-- End second-left -->
+                                        </div>
+
+                                        @*<div class="modal-footer">
+                                            <button class="btn" style="background-color:#0E5396; color:white">
+                                                Confirm
+                                            </button>
+                                        </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            @*<p>Condition <span>New</span></p>
+                            <h5>100% Authentic</h5>*@
+                        </div> <!-- End right-first -->
+
+
+                        <div class="detail-content-right-second">
+                            <!-- Start right-second -->
+                            <div class="size">
+                                <a style="cursor:pointer; color:aliceblue; font-size:22px" data-toggle="modal" data-target="#sizeModal" class="btn btn-info">{{'SIZE'| translate}}</a> <span style="color:black">&nbsp;<input id="sizeVN" type="number" value="@ViewBag.SizeVN" style="width:80px; border:none; background-color:#FFF" disabled /></span>
+                            </div>
+                            <div class="modal fade" id="sizeModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">{{'CHOOSESIZE'| translate}}</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="detail-second-left">
+                                                <!-- Start second-left -->
+                                                @{ var i = 0;
+                                                    foreach (var item in ViewBag.dsSize)
+                                                    {
+                                                        <div class="size-wrapper">
+                                                            <input class="d-none" id="size" name="size" type="radio" />
+                                                            <label for="size" class="size-label">
+                                                                <div class="size-left">
+                                                                    <input ng-click="btn_size(@item.VN)" type="button" value="@item.VN" style="background-color:#0e5396; color:#FFF; border:none" />
+                                                                </div>
+                                                                @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
+                                                                {
+                                                                    @*<div class="size-right">
+                                                                        @ViewBag.Sizes[i++].lowest_ask VND
+                                                                    </div>*@
+                                                                }
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div> <!-- End second-left -->
                                         </div>
                                     </div>
-                                    <div id="preload-imgs"></div>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"> {{'CLOSE'| translate}}</button>
                                 </div>
                             </div>
+
+
+                            <div class="detail-second-right" style="display: flex;">
+                                <!-- Start second-right -->
+                                <div><p>{{'LASTSALE'| translate}}<br> <h3>{{lastsale | currency:"":0:3}} VND</h3></p></div>
+                                @*<div><h6>▲+20.000VND(20%)</h6></div>*@
+
+                            </div> <!-- End second-right -->
+
+                        </div> <!-- End right-second -->
+
+                        <div class="detail-content-right-final">
+                            <!-- Start right-final -->
+                            <div class="float-right detail-right">
+                                <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask | currency:"":0:3}} VND</h3>
+                                @*<p style="color: black; transform: translateY(-7px)">View All Asks</p>*@
+                            </div>
+                            <a ng-click="check_buy()" style="cursor:pointer">
+                                <div class="detail-left">
+                                    <h3 style=" font-family: coolrg;">{{'BUY'| translate}}</h3>
+                                    <span style="font-family: coolcond; font-size:20px;">{{'LOWESTASK'| translate}}</span>
+                                </div>
+                            </a>
                         </div>
-                    </div>
 
-                </div> <!-- End content-left-->
-
-                <div class="col-sm-7 detail-content-right">
-                    <!-- Start content-right -->
-
-                    <div class="detail-content-right-first">
-                        <!-- Start right-first -->
-                        <h6>{{name[0].brand_name}}</h6>
-                        <h3>{{name[0].item.name}} <i data-toggle="modal" data-target="#followingModal" style="color:#808080; cursor:pointer" class="fas fa-heart"></i></h3>
-                        <div class="modal fade" id="followingModal">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all ask</button>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="viewallask">
                             <div class="modal-dialog">
                                 <div class="modal-content">
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title"> {{'FOLLOWING'| translate}}</h4>
+                                        <h4 class="modal-title">View all ask</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <div class="detail-second-left">
-                                            <!-- Start second-left -->
-                                            @{ foreach (var item in ViewBag.dsSize)
-                                                {
-                                                    <div class="size-wrapper">
-                                                        <label for="follow" class="size-label">
-                                                            <div class="size-left is-following" ng-click="Click(@item.VN)">
-                                                                @item.VN
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                }
-                                            }
-                                        </div> <!-- End second-left -->
+                                        <table class="table">
+                                            <tr>
+                                                <th>
+                                                    Size
+                                                </th>
+                                                <th>
+                                                    Ask Price
+                                                </th>
+                                                <th>
+                                                    Available
+                                                </th>
+                                            </tr>
+                                        </table>
                                     </div>
 
-                                    @*<div class="modal-footer">
-                            <button class="btn" style="background-color:#0E5396; color:white">
-                                Confirm
-                            </button>
-                        </div>*@
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        @*<p>Condition <span>New</span></p>
-            <h5>100% Authentic</h5>*@
-                    </div> <!-- End right-first -->
-
-
-                    <div class="detail-content-right-second">
-                        <!-- Start right-second -->
-                        <div class="size">
-                            <a style="cursor:pointer; color:aliceblue; font-size:22px" data-toggle="modal" data-target="#sizeModal" class="btn btn-info">{{'SIZE'| translate}}</a> <span style="color:black">&nbsp;<input id="sizeVN" type="number" value="@ViewBag.SizeVN" style="width:80px; border:none; background-color:#FFF" disabled /></span>
-                        </div>
-                        <div class="modal fade" id="sizeModal">
+                        <div class="detail-content-right-final" style="border:1px solid #ab1113">
+                            <div class="float-right detail-right">
+                                <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid | currency:"":0:3}} VND</h3>
+                                @*<p style="color: black; transform: translateY(-7px)">View All Bids</p>*@
+                            </div>
+                            <a ng-click="check_sell()" style="cursor:pointer">
+                                <div class="detail-left" style="background-color: #ab1113">
+                                    <h3 style=" font-family: coolrg;">{{'SELL'| translate}}</h3>
+                                    <span style="font-family: coolcond;font-size:20px">{{'HIGHESTBID'| translate}}</span>
+                                </div>
+                            </a>
+                        </div> <!-- End right-final -->
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all bids</button>
+                        <!-- The Modal -->
+                        <div class="modal fade" id="viewallask">
                             <div class="modal-dialog">
                                 <div class="modal-content">
 
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">{{'CHOOSESIZE'| translate}}</h4>
+                                        <h4 class="modal-title">View all bids</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
 
                                     <!-- Modal body -->
                                     <div class="modal-body">
-                                        <div class="detail-second-left">
-                                            <!-- Start second-left -->
-                                            @{ var i = 0;
-                                                foreach (var item in ViewBag.dsSize)
-                                                {
-                                                    <div class="size-wrapper">
-                                                        <input class="d-none" id="size" name="size" type="radio" />
-                                                        <label for="size" class="size-label">
-                                                            <div class="size-left">
-                                                                <input ng-click="btn_size(@item.VN)" type="button" value="@item.VN" style="background-color:#0e5396; color:#FFF; border:none" />
-                                                            </div>
-                                                            @if (ViewBag.Sizes.Count > i && ViewBag.Sizes[i].id_ds_size == item.id)
-                                                            {
-                                                                @*<div class="size-right">
-                                                        @ViewBag.Sizes[i++].lowest_ask VND
-                                                    </div>*@
-                                                            }
-                                                        </label>
-                                                    </div>
-                                                }
-                                            }
-                                        </div> <!-- End second-left -->
+                                        <table class="table">
+                                            <tr>
+                                                <th>
+                                                    Size
+                                                </th>
+                                                <th>
+                                                    Bid Price
+                                                </th>
+                                                <th>
+                                                    Available
+                                                </th>
+                                            </tr>
+                                        </table>
                                     </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
+                    </div> <!-- End content-right -->
+
+                </div> <!-- End Row -->
+            </div> <!-- End Container -->
+        </div> <!-- End content wrapper-->
 
 
-                        <div class="detail-second-right" style="display: flex;">
-                            <!-- Start second-right -->
-                            <div><p>{{'LASTSALE'| translate}}<br> <h3>{{lastsale | currency:"":0:3}} VND</h3></p></div>
-                            @*<div><h6>▲+20.000VND(20%)</h6></div>*@
 
-                        </div> <!-- End second-right -->
-
-                    </div> <!-- End right-second -->
-
-                    <div class="detail-content-right-final">
-                        <!-- Start right-final -->
-                        <div class="float-right detail-right">
-                            <h3 style="color: #0E5396; font-weight: bold;">{{name[0].size.lowest_ask | currency:"":0:3}} VND</h3>
-                            @*<p style="color: black; transform: translateY(-7px)">View All Asks</p>*@
-                        </div>
-                        <a ng-click="check_buy()" style="cursor:pointer">
-                            <div class="detail-left">
-                                <h3 style=" font-family: coolrg;">{{'BUY'| translate}}</h3>
-                                <span style="font-family: coolcond; font-size:20px;">{{'LOWESTASK'| translate}}</span>
-                            </div>
-                        </a>
+        <div class="jumbotron">
+            <!-- Start Jumbotron -->
+            <div class="container">
+                <!-- Start container -->
+                <div class="row">
+                    <!-- Start Row -->
+                    @*<div class="col-sm-4">
+                        <h3>{{'DETAIL'| translate}}</h3>
+                        <p style="margin-bottom: 0">Style: XXX-XXX</p>
+                        <p style="margin-bottom: 0">Colour:Blue</p>
+                        <p style="margin-bottom: 0">Retail Price:100.000VND</p>
+                        <p style="margin-bottom: 0">Release Date:2019-04-12</p>
+                    </div>*@
+                    <div class="col-sm-8">
+                        <h3>{{'DESCR'| translate}}</h3>
+                        <p ng-bind-html="trustAsHtml(name[0].item.vi_info)">
+                        </p>
                     </div>
+                </div> <!-- End Row -->
+            </div> <!-- End container -->
+        </div> <!-- End Jumbotron -->
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all ask</button>
-                    <!-- The Modal -->
-                    <div class="modal fade" id="viewallask">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title">View all ask</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <table class="table">
-                                        <tr>
-                                            <th>
-                                                Size
-                                            </th>
-                                            <th>
-                                                Ask Price
-                                            </th>
-                                            <th>
-                                                Available
-                                            </th>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="detail-content-right-final" style="border:1px solid #ab1113">
-                        <div class="float-right detail-right">
-                            <h3 style="color: brown; font-weight: bold; ">{{name[0].size.highest_bid | currency:"":0:3}} VND</h3>
-                            @*<p style="color: black; transform: translateY(-7px)">View All Bids</p>*@
-                        </div>
-                        <a ng-click="check_sell()" style="cursor:pointer">
-                            <div class="detail-left" style="background-color: #ab1113">
-                                <h3 style=" font-family: coolrg;">{{'SELL'| translate}}</h3>
-                                <span style="font-family: coolcond;font-size:20px">{{'HIGHESTBID'| translate}}</span>
-                            </div>
-                        </a>
-                    </div> <!-- End right-final -->
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all bids</button>
-                    <!-- The Modal -->
-                    <div class="modal fade" id="viewallask">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title">View all bids</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <table class="table">
-                                        <tr>
-                                            <th>
-                                                Size
-                                            </th>
-                                            <th>
-                                                Bid Price
-                                            </th>
-                                            <th>
-                                                Available
-                                            </th>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- End content-right -->
-
-            </div> <!-- End Row -->
-        </div> <!-- End Container -->
-    </div> <!-- End content wrapper-->
-
-
-
-    <div class="jumbotron">
-        <!-- Start Jumbotron -->
-        <div class="container">
-            <!-- Start container -->
-            <div class="row">
-                <!-- Start Row -->
-                @*<div class="col-sm-4">
-                    <h3>{{'DETAIL'| translate}}</h3>
-                    <p style="margin-bottom: 0">Style: XXX-XXX</p>
-                    <p style="margin-bottom: 0">Colour:Blue</p>
-                    <p style="margin-bottom: 0">Retail Price:100.000VND</p>
-                    <p style="margin-bottom: 0">Release Date:2019-04-12</p>
-                </div>*@
-                <div class="col-sm-8">
-                    <h3>{{'DESCR'| translate}}</h3>
-                    <p ng-bind-html="trustAsHtml(name[0].item.vi_info)">
-                    </p>
+        <div class="container" ng-show="related.length != 0">
+            <div class="divider-section">
+                <!-- Start divider-section -->
+                <div class="divider-wrapper">
+                    <p class="title-divider">Related Product</p>
                 </div>
-            </div> <!-- End Row -->
-        </div> <!-- End container -->
-    </div> <!-- End Jumbotron -->
-</div>
+            </div> <!-- End divider-section -->
+        </div>
+
+        <div class="container" style="position:relative" ng-show="related.length != 0">
+            <!-- Start best seller container -->
+            <div class="horizon-prev" id="lowest-prev">
+                <i class="fas fa-angle-left fa-2x"></i>
+            </div>
+            <div class="horizon-next" id="lowest-next">
+                <i class="fas fa-angle-right fa-2x"></i>
+            </div>
+            <div class="row flex-row flex-nowrap scroll-content" id="lowest-scroll-content" style="overflow-x: auto">
+                <!-- Start row -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 xx-content" ng-repeat="x in related ">
+                    <div class="card card-block">
+                        <!-- Start card -->
+                        <div class="product-img-wrapper">
+                            <img src="~/images/{{x.img}}" class="product-img">
+                        </div>
+                        <div class="product-title-wrapper">
+                            <!-- Start product-title-wrapper -->
+                            <div class="row">
+                                <div class="col-6 col-sm-6 col-md-6 product-name">
+                                    <a href="/Product/Details?id={{x.id}}">
+                                        {{x.name}}
+                                    </a>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-6 " align="right">
+                                    <div class="product-price">
+                                        {{x.lowest_ask | currency:"":0:3}}<br>
+                                        <span style="color: #dbd9d9">VND</span><br>
+                                    </div>
+                                    <span class="product-sub-title">{{ 'LOWESTASK' | translate }} |  {{ 'SOLD' | translate }}: {{x.sold}}</span>
+                                </div>
+                            </div>
+                        </div> <!-- End product-title-wrapper -->
+                    </div> <!-- End card -->
+                </div>
+            </div> <!-- End row -->
+        </div>
+     </div>
 
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.19/jquery.touchSwipe.min.js"></script>
@@ -293,9 +340,13 @@
                 .then(function (response) {
 
                     $scope.name = response.data;
-                    console.log($scope.name);
+                    $scope.cate = response.data[0].item.id_category;
+
                     $http.get("/api/OrdersAPI/TakeLastSale/"+@ViewBag.IdItem)
-                    .then(function (response) { $scope.lastsale = response.data;});
+                        .then(function (response) { $scope.lastsale = response.data; });
+
+                    $http.get("/api/ItemsAPI/TakeItemById_cate/" + $scope.cate)
+                        .then(function (response) { $scope.related = response.data;});
                 });
             
             $scope.check_buy = function () {

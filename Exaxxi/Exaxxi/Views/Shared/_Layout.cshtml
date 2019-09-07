@@ -39,12 +39,19 @@
         <div id="sidenav-logsign"><a asp-controller="Login" asp-action="Register" translate>{{ 'SIGNUP' }}</a>/<a asp-controller="Login" asp-action="Login" id="sidenav-logsign-login-text" translate>{{ 'SIGNIN' }}</a></div>
         <a asp-controller="Home" asp-action="Index">Exaxxi</a>
         <div id="sidenav-sub-section" ng-controller="browseCtrl">
-            <!-- Start sidenav-sub... -->
-            <div ng-repeat="x in brandcates | filter: {'id_department' : @ViewBag.Id_Depart}">
-                <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#id{{x.id}}">{{x.name}}</a>
-                <div id="id{{x.id}}" class="collapse sidenav-product">
-                    <!-- Start sidenav-product -->
-                    <a href="/Product/Index?idCate_f={{y.id}}" ng-repeat="y in cates | filter:{'id_brand' : x.id} ">{{y.name}}</a>
+
+            <div ng-repeat="x in deps">
+                <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#dep_id{{x.id}}">
+                    {{lang=="vi"?x.vi_name:x.en_name}}
+                </a>
+                <div id="dep_id{{x.id}}" class="collapse sidenav-product">
+                    <div ng-repeat="y in brandcates | filter: {'id_department' : x.id}">
+                        <a href="#" class="sidenav-sub-link" data-toggle="collapse" data-target="#brand_id{{y.id}}">{{y.name}}</a>
+                        <div id="brand_id{{y.id}}" class="collapse sidenav-product">
+                            <!-- Start sidenav-product -->
+                            <a href="/Product/Index?idCate_f={{z.id}}" ng-repeat="z in cates | filter:{'id_brand' : y.id} ">{{z.name}}</a>
+                        </div> <!-- End sidenav-product -->
+                    </div>
                 </div> <!-- End sidenav-product -->
             </div>
         </div> <!-- End sidenav-sub-... -->
