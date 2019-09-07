@@ -163,7 +163,7 @@
                         </a>
                     </div>
 
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all ask</button>
+                    <button id="btn_viewallask" class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all ask</button>
                     <!-- The Modal -->
                     <div class="modal fade" id="viewallask">
                         <div class="modal-dialog">
@@ -189,6 +189,11 @@
                                                 Available
                                             </th>
                                         </tr>
+                                        <tr ng-repeat="item in allask">
+                                            <td>{{item.size}}</td>
+                                            <td>{{item.price}}</td>
+                                            <td>{{item.available}}</td>
+                                        </tr>
                                     </table>
                                 </div>
 
@@ -212,7 +217,7 @@
                             </div>
                         </a>
                     </div> <!-- End right-final -->
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all bids</button>
+                    <button id="btn_viewallbid" class="btn btn-primary" data-toggle="modal" data-target="#viewallask">View all bids</button>
                     <!-- The Modal -->
                     <div class="modal fade" id="viewallask">
                         <div class="modal-dialog">
@@ -237,6 +242,11 @@
                                             <th>
                                                 Available
                                             </th>
+                                        </tr>
+                                        <tr ng-repeat="item in allbid">
+                                            <td>{{item.size}}</td>
+                                            <td>{{item.price}}</td>
+                                            <td>{{item.available}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -336,6 +346,14 @@
                 $http.get("/api/ItemsAPI/Detail/" + @ViewBag.IdItem + "/" + vn)
                     .then(function (response) { window.location = "/Product/Details?id=" + @ViewBag.IdItem + "&size=" + vn; });
             };
+            $("#btn_viewallask").on('click', function () {
+                $http.get("/api/PostsAPI/LoadAllPostOfItem/" +@ViewBag.IdItem+"/1")
+                    .then(function (response) { $scope.allask = response.data });
+            })
+            $("#btn_viewallbid").on('click', function () {
+                $http.get("/api/PostsAPI/LoadAllPostOfItem/" +@ViewBag.IdItem+"/2")
+                    .then(function (response) { $scope.allask = response.data });
+            })
         });
 
     </script>
