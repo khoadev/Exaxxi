@@ -73,8 +73,8 @@
                                     <div class="col-12 flex-nowrap browse-radio-wrapper custom-scrollbar" style="{{takedivCount<6 ? 'justify-content: center;' : ''}}" id="browse-radio-wrapper">
 
                                         <div class="browse-radio" ng-repeat="x in deps">
-                                            <input class="d-none " type="radio" name="department" id="{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''" />
-                                            <label for="{{x.id}}" class="{{x.id==selectedObj.id?'label-checked':''}}">
+                                            <input class="d-none " type="radio" name="department" id="label{{x.id}}" ng-model="$parent.selectedObj" ng-value="x" ng-init="$index==0?(selectedObj.id=x.id):''" />
+                                            <label for="label{{x.id}}" class="{{x.id==selectedObj.id?'label-checked':''}}" ng-mouseover="activeOnHover(x.id)">
                                                 {{lang=="en"?x.en_name:x.vi_name}}
                                             </label>
                                         </div>
@@ -141,7 +141,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 search-empty-result-text" ng-show="(names | filter:key).length == 0">Nothing here</div>
+                                    <div class="col-12 search-empty-result-text" ng-show="(names | filter:key).length == 0"><a  asp-action="Contact" asp-controller="User">Your product haven't been listed here yet. Make a request now</a></div>
                                 </div>
                                 <div class="dropdown-divider"></div>
                             </li>
@@ -309,6 +309,10 @@
                 .then(function (response) { $scope.brandcates = response.data; });
             $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.cates = response.data; });
+            $scope.activeOnHover = function (x) {
+                alert("#label" + x);
+                $("#label3").prop("checked", true);
+            };
         });
         exaxxiApp.controller("footerCtrl", function ($scope, $http) {
             $http.get("/api/CategoriesAPI")

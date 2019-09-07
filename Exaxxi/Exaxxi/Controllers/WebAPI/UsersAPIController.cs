@@ -251,6 +251,7 @@ namespace Exaxxi.Controllers.WebAPI
             dynamic data = json;            
             string re_pro_cate = data.re_pro_cate;
             string re_pro_name = data.re_pro_name;
+            string re_pro_link = data.re_pro_link;
             string re_desc_pro = data.re_desc_pro;
             string email_user = data.email_user;
 
@@ -268,7 +269,7 @@ namespace Exaxxi.Controllers.WebAPI
             }            
 
             //mailer
-            ml.SendMail("Exaxxi Site", email_user, "Request Product!", $"Product's category: {re_pro_cate}.\nProduct's name: {re_pro_name}.\nDescribe: {re_desc_pro}.");
+            ml.SendMail("Exaxxi Site", email_user, "Request Product!", $"Product's category: {re_pro_cate}.\nProduct's name: {re_pro_name}.\nProduct's link: {re_pro_link}.\nDescribe: {re_desc_pro}.");
 
             return Ok();
         }

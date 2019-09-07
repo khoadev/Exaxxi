@@ -6,12 +6,19 @@
                 <h1>
                     {{'REFORM' | translate}}
                 </h1>
+                <h6>
+                    If you expect to sell or buy any products that you haven't been found here,
+                    just send us a request, we will post it immediately
+                </h6>
             </div>
             <div class="form-group">
                 <input id="re_pro_cate" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'CATENAME' | translate}}">
             </div>
             <div class="form-group">
                 <input id="re_pro_name" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'PRONAME' | translate}}">
+            </div>
+            <div class="form-group">
+                <input id="re_pro_link" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Link to product's picture">
             </div>
             <div class="form-group">
                 <textarea id="re_desc_pro" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'DESCPRO' | translate}}" rows="3"></textarea>
@@ -30,11 +37,13 @@
             $("#re_btn").on("click", function () {
                 var re_pro_cate = $("#re_pro_cate").val();
                 var re_pro_name = $("#re_pro_name").val();
+                var re_pro_link = $("#re_pro_link").val();
                 var re_desc_pro = $("#re_desc_pro").val();
 
                 var info = {
                     "re_pro_cate": re_pro_cate,
                     "re_pro_name": re_pro_name,
+                    "re_pro_link": re_pro_link,
                     "re_desc_pro": re_desc_pro,
                     "email_user": $scope.email_user.email,
                 };
