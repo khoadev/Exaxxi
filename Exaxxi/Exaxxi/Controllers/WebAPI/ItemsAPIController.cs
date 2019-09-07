@@ -89,7 +89,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet("img/{id}")]
         public IActionResult GetItemsImg(int id)
         {
-            var data = _context.Items.Where(p => p.id == id && p.active == true).FirstOrDefault().img;
+            var data = _context.Items.Where(p => p.id == id).FirstOrDefault().img;
             return Ok(data);
         }
         // GET: api/Items
