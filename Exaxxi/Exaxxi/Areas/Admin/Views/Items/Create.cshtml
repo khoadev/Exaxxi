@@ -30,7 +30,7 @@
                         <label asp-for="img3d" class=" btn btn-primary">
                             Chọn Hình 3d
                         </label>
-                        <input type="file" id="img3d" name="img3d" multiple>
+                        <input type="file" id="img3d" name="img3d" multiple required>
                         @*<input asp-for="img" class="hidden form-control" />*@
                     </div>
                     <div class="form-group">
@@ -50,12 +50,12 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="trade_min" class="bmd-label-floating"></label>
-                        <input type="number" min="1" asp-for="trade_min" class="form-control" />
+                        <input type="number" min="0" asp-for="trade_min" class="form-control" />
                         <span asp-validation-for="trade_min" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="trade_max" class="bmd-label-floating"></label>
-                        <input type="number" min="1" asp-for="trade_max" class="form-control" />
+                        <input type="number" min="0" asp-for="trade_max" class="form-control" />
                         <span asp-validation-for="trade_max" class="text-danger"></span>
                     </div>
                     <div class="form-group">

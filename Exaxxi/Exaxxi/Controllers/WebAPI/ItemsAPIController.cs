@@ -55,6 +55,37 @@ namespace Exaxxi.Controllers.WebAPI
                         });
             }
         }
+        // GET: api/Items
+        [HttpGet("GetItemsIndex/{idcate}")]
+        public IEnumerable<ItemViewAdmin> GetItemsIndex(int idcate)
+        {
+            if (idcate == 0)
+            {
+                return _context.Items
+                        .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Select(g => new ItemViewAdmin
+                        {
+                            items = g.c.a,
+                            nameAdmin = g.c.b.name,
+                            nameCate = g.d.name
+
+                        });
+            }
+            else
+            {
+                return _context.Items
+                        .Join(_context.Admins, a => a.id_admin, b => b.id, (a, b) => new { a, b })
+                        .Join(_context.Categories, c => c.a.id_category, d => d.id, (c, d) => new { c, d })
+                        .Select(g => new ItemViewAdmin
+                        {
+                            items = g.c.a,
+                            nameAdmin = g.c.b.name,
+                            nameCate = g.d.name
+
+                        });
+            }
+        }
         [HttpGet("img/{id}")]
         public IActionResult GetItemsImg(int id)
         {

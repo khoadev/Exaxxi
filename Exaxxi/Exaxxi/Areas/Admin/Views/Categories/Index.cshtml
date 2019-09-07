@@ -88,7 +88,7 @@
                     return false;
                 }
             }
-            $http.get("/api/DepartmentsAPI")
+            $http.get("/api/DepartmentsAPI/DepActive_1")
                 .then(function (response) { $scope.name = response.data; $scope.selectedItem1 = $scope.name[0]; $scope.change1(); });
             $scope.change1 = function () {
                 var x1 = $scope.selectedItem1.id;

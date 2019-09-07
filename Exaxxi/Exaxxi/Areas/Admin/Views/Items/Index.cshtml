@@ -56,15 +56,15 @@
                                 </td>
 
                                 <td>
-                                    <img src="~/images/item/{{x.items.img}}" width="20" height="100" />
+                                    <img src="~/images/item/{{x.items.img}}" style="width:150px; height:100px" />
 
                                 </td>
                                 <td>
-                                    {{x.items.lowest_ask | currency:"":0:3}} VND
+                                    {{x.items.lowest_ask | currency:"":0:3}} <b>VND</b>
 
                                 </td>
                                 <td>
-                                    {{x.items.volatility | currency:"":0:3}} VND
+                                    {{x.items.volatility | currency:"":0:3}} <b>VND</b>
 
                                 </td>
                                 <td>
@@ -139,7 +139,7 @@
             }
             $http.get("/api/CategoriesAPI")
                 .then(function (response) { $scope.name = response.data; });
-            $http.get("/api/ItemsAPI/GetItemsAd/" + 0)
+            $http.get("/api/ItemsAPI/GetItemsIndex/" + 0)
                 .then(function (response) { $scope.getItem = response.data; });
 
             $scope.sort = function (keyname) {
@@ -155,7 +155,7 @@
                 if ($("#select").val() != '') {
                     x = $("#select").val();
                 }
-                $http.get("/api/ItemsAPI/GetItemsAd/" + x)
+                $http.get("/api/ItemsAPI/GetItemsIndex/" + x)
                     .then(function (response) { $scope.getItem = response.data; console.log($scope.getItem); });
             }
         });

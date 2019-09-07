@@ -115,6 +115,21 @@ namespace Exaxxi.Controllers.WebAPI
             }
 
             _context.Items.Add(items);
+            var id_brand = _context.Categories.Where(p => p.id == items.id_category).FirstOrDefault().id_brand;
+            var id_dep = _context.Brands.Where(g => g.id == id_brand).FirstOrDefault().id_department;
+
+            var id_ds_size = _context.ds_Size.Where(h => h.id_Depart == id_dep).FirstOrDefault().id;
+            
+            //Save Sizes
+            Sizes sizes = new Sizes();
+            sizes.lowest_ask = 0;
+            sizes.highest_bid = 0;
+            sizes.last_sale = 0;
+            sizes.id_ds_size = id_ds_size;
+            sizes.id_item = items.id;
+
+            _context.Sizes.Add(sizes);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetItems", new { id = items.id }, items);
