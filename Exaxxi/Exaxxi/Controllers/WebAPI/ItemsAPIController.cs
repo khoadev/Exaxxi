@@ -89,7 +89,7 @@ namespace Exaxxi.Controllers.WebAPI
         [HttpGet("img/{id}")]
         public IActionResult GetItemsImg(int id)
         {
-            var data = _context.Items.Where(p => p.id == id && p.active == true).FirstOrDefault().img;
+            var data = _context.Items.Where(p => p.id == id).FirstOrDefault().img;
             return Ok(data);
         }
         // GET: api/Items
@@ -323,6 +323,15 @@ namespace Exaxxi.Controllers.WebAPI
                 .Take(10)
                 .Select(m => m.c.a);
         }
+
+        [Route("TakeItemById_cate/{id}")]
+        public IEnumerable<Items> TakeItemById_cate(int id)
+        {
+            int a = _context.Items.Where(b => b.id == id).First().id_category;
+            return _context.Items
+               .Where(b => b.id_category == a && b.id != id).Take(5);
+        }
+
         [Route("HighestBidNew/{id_depart}")]
         public IEnumerable<Items> GetItemshighestbid(int id_depart)
         {
