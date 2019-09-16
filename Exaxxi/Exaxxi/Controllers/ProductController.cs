@@ -74,7 +74,11 @@ namespace Exaxxi.Controllers
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
-                return RedirectToAction("Index", "Login");
+                ViewBag.idUser = 0;
+            }
+            else
+            {
+                ViewBag.idUser = HttpContext.Session.GetInt32("idUser");
             }
 
             ViewBag.SizeVN = size;
@@ -235,7 +239,11 @@ namespace Exaxxi.Controllers
         {
             if (String.IsNullOrEmpty(HttpContext.Session.GetInt32("idUser").ToString()))
             {
-                return RedirectToAction("Index", "Login");
+                ViewBag.idUser = 0;
+            }
+            else
+            {
+                ViewBag.idUser = HttpContext.Session.GetInt32("idUser");
             }
             ViewBag.SizeVN = size;
             ViewBag.level_seller = 0;

@@ -92,7 +92,7 @@ namespace Exaxxi.Controllers.WebAPI
             var idPost = _context.Posts
                 .Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Items, c => c.b.id_item, d => d.id, (c, d) => new { c, d })
-                .Where(p => p.d.id == id_item && p.c.a.price == pricePost && p.c.a.kind == kind);
+                .Where(p => p.d.id == id_item && p.c.a.price == pricePost && p.c.a.kind == kind && p.c.a.date_start <= DateTime.Now && p.c.a.date_end >= DateTime.Now);
             if (idPost.Count() == 0)
                 return NotFound();
             else

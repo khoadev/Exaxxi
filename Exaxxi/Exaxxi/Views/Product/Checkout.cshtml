@@ -40,8 +40,8 @@
                                 </div>
                                 <div class="row">
                                     @*<div class="col-12 checkout-suggestion">
-                                        {{'GOODBID'| translate}} {{name[0].size.lowest_ask | currency:"":0:3}} VND
-                                    </div>*@
+                                            {{'GOODBID'| translate}} {{name[0].size.lowest_ask | currency:"":0:3}} VND
+                                        </div>*@
                                 </div>
                                 <div class="checkout-estimated-wrapper">
                                     <div class="row checkout-estimated">
@@ -108,8 +108,8 @@
                                 </div>
                                 <div class="row">
                                     @*<div class="col-12 checkout-suggestion">
-                                        You are about to purchase this product at the lowest Ask price
-                                    </div>*@
+                                            You are about to purchase this product at the lowest Ask price
+                                        </div>*@
                                 </div>
                                 <div class="checkout-estimated-wrapper">
                                     <div class="row checkout-estimated">
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @*KHANG design*@                                
+                                @*KHANG design*@
                                 <div class="row checkout-estimated">
                                     <div class="col-4">
                                         {{'VOUCHER'| translate}}:
@@ -145,8 +145,8 @@
                                     <input id="voucher" type="text" class="col-6" style="height:30px" />
                                     <button type="button" ng-click="check_voucher()" id="check_voucher" class="btn checkout-btn isbuy col-2" style="height:30px; font-size:13px">
                                         {{'CHECK'| translate}}
-                                    </button>                                                                                                           
-                                </div>                                
+                                    </button>
+                                </div>
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <button id="buy" class="btn checkout-btn isbuy col-4">
@@ -162,75 +162,80 @@
             </div>
         </div>
         <div class="col-lg-5 order-first order-lg-last" style=" padding:20px 30px">
-            <div class="row">
-                <div class="col-12" style="background:white;">
-                    <div class="row">
-                        <div class="col-12 p-3">
-                            <form>
-                                <div class="form-group">
-                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter Email" value="">
-                                </div>
-                                <div class="form-group">
-                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter Password" value="">
-                                </div>
-                                <button class="col-12 btn btn-danger">
-                                    Log In
-                                </button>
-                            </form>
+            @using Microsoft.AspNetCore.Http
+            @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+            @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idUser").ToString()))
+            {
+                <div class="row">
+                    <div class="col-12" style="background:white;">
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <form>
+                                    <div class="form-group">
+                                        <input id="email" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter Email" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="password" type="password" class="form-control checkout-input" style="font-size:20px" placeholder="Enter Password" value="">
+                                    </div>
+                                    <button id="login" class="col-12 btn btn-danger">
+                                        Log In
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12" style="background:white;">
-                    <div class="row">
-                        <div class="col-12 p-3">
-                            <div class="checkout-card-title text-center">
-                                {{'SHIPDETAIL' | translate}}
-                            </div>
-                            <form>
-                                <div class="form-group">
-                                    <input id="account" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'ENACC' | translate}}" value="{{user_info.name}}">
+             }
+                <div class="row">
+                    <div class="col-12" style="background:white;">
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <div class="checkout-card-title text-center">
+                                    {{'SHIPDETAIL' | translate}}
                                 </div>
-                                <div class="form-group">
-                                    <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'ENPHONE' | translate}}" value="{{user_info.phone}}">
+                                <form>
+                                    <div class="form-group">
+                                        <input id="account" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'ENACC' | translate}}" value="{{user_info.name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="phone" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'ENPHONE' | translate}}" value="{{user_info.phone}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'ENADD' | translate}}" rows="3">{{user_info.address}}</textarea>
+                                    </div>
+                                    <div class="forn-group" style="margin:5px 0 15px 0">
+                                        <p style="font-family:coolrg;">{{'PLACE' | translate}}:</p>
+                                        <select id="id_city" class="form-control">
+                                            <option ng-repeat="x in list_city" value="{{x.id}}" ng-selected="user_info.id_city == x.id">{{x.name}}</option>
+                                        </select>
+                                    </div>
+                                </form>
+                                <div class="mb-2" style="font-family:coolrg;">
+                                    {{'PAYMETH' | translate}}:
                                 </div>
-                                <div class="form-group">
-                                    <textarea id="address" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="{{'ENADD' | translate}}" rows="3">{{user_info.address}}</textarea>
+                                <div class="checkout-payment">
+                                    <input class="d-none" id="payment1" value="Cash On Deliery (COD)" name="payment" type="radio" checked="checked" />
+                                    <label for="payment1" class="checkout-payment-wrapper">
+                                        {{'COD' | translate}} (COD)<br />
+                                        <span class="checkout-payment-desc">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                        </span>
+                                    </label>
                                 </div>
-                                <div class="forn-group" style="margin:5px 0 15px 0">
-                                    <p style="font-family:coolrg;">{{'PLACE' | translate}}:</p>
-                                    <select id="id_city" class="form-control">
-                                        <option ng-repeat="x in list_city" value="{{x.id}}" ng-selected="user_info.id_city == x.id">{{x.name}}</option>
-                                    </select>
-                                </div>
-                            </form>
-                            <div class="mb-2" style="font-family:coolrg;">
-                                {{'PAYMETH' | translate}}:
-                            </div>
-                            <div class="checkout-payment">
-                                <input class="d-none" id="payment1" value="Cash On Deliery (COD)" name="payment" type="radio" checked="checked" />
-                                <label for="payment1" class="checkout-payment-wrapper">
-                                    {{'COD' | translate}} (COD)<br />
+                                @*<div class="checkout-payment">
+                                <input class="d-none" id="payment2" value="Credit / Debit" name="payment" type="radio" />
+                                <label for="payment2" class="checkout-payment-wrapper">
+                                    Credit / Debit<br />
                                     <span class="checkout-payment-desc">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                     </span>
                                 </label>
+                            </div>*@
                             </div>
-                            @*<div class="checkout-payment">
-                            <input class="d-none" id="payment2" value="Credit / Debit" name="payment" type="radio" />
-                            <label for="payment2" class="checkout-payment-wrapper">
-                                Credit / Debit<br />
-                                <span class="checkout-payment-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                </span>
-                            </label>
-                        </div>*@
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -246,7 +251,7 @@
                 });
 
             //Take Info User
-            $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+            $http.get("/api/UsersAPI/" + @ViewBag.idUser)
                 .then(function (response) {
                     $scope.user_info = response.data;
                     if ($scope.user_info.score_buyer > 4) {
@@ -258,9 +263,9 @@
                                 $scope.shipping_fee = response.data;
                             });
                     }
-                    
+                }, function (err) {
+                    console.log(err);
                 });
-
             //Take List Areas
             $http.get("/api/CitysAPI")
                 .then(function (response) { $scope.list_city = response.data });
@@ -276,122 +281,139 @@
                             $scope.shipping_fee = response.data;
 
                         }
-                        
+
                     });
             });
             var id_voucher = null;
             var discount = null;
             //Buy
             $("#buy").on('click', function () {
-                var account = $("#account").val();
-                var phone = $("#phone").val();
-                var address = $("#address").val();
-                var id_city = $("#id_city").val();
-                var shipping = $("#shipping").val();
-                var total_buy = $("#total_buy").val();
+                $http.get("/Login/Check").then(function (rs) {
 
-                var payment = $("input[name=payment]:checked").val();
-                if (typeof payment === "undefined") {
-                    alert("Vui lòng chọn phương thức thanh toán");
-                    return false;
-                }
+                    if (rs.data == true) {
+                        var account = $("#account").val();
+                        var phone = $("#phone").val();
+                        var address = $("#address").val();
+                        var id_city = $("#id_city").val();
+                        var shipping = $("#shipping").val();
+                        var total_buy = $("#total_buy").val();
 
-                var info = {
-                    "account": account,
-                    "phone": phone,
-                    "address": address,
-                    "id_city": id_city,
-                    "payment": payment,
-                    "city": id_city,
-                    "shipping": shipping,
-                    "total": total_buy,
-                    "id_voucher": id_voucher,
-                    "discount": discount
-                };
+                        var payment = $("input[name=payment]:checked").val();
+                        if (typeof payment === "undefined") {
+                            alert("Vui lòng chọn phương thức thanh toán");
+                            return false;
+                        }
 
-                $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
-                    then(function (data) {
+                        var info = {
+                            "account": account,
+                            "phone": phone,
+                            "address": address,
+                            "id_city": id_city,
+                            "payment": payment,
+                            "city": id_city,
+                            "shipping": shipping,
+                            "total": total_buy,
+                            "id_voucher": id_voucher,
+                            "discount": discount
+                        };
 
-                        $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
-                            then(function () {
-                                // 0:=>buy
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
+                        $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
+                            then(function (data) {
+
+                                $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
+                                    then(function () {
+                                        // 0:=>buy
+                                        window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
+                                    });
+
+                            })
+                            .catch(function onError(response) {
+                                alert(response.data);
                             });
-
-                    })
-                    .catch(function onError(response) {
-                        alert(response.data);
-                    });
-            });
-        $scope.enter_bid = parseFloat($("#enter_bid").val());
-        $("#enter_bid").keyup(function () {
-            //alert($("#value_buy").val());
-            if (parseFloat($("#enter_bid").val()) >= parseFloat($("#value_buy").val()) && parseFloat($("#value_buy").val()) > 0) {
-                $("#enter_bid").blur();
-                $("#enter_bid").val($("#value_buy").val());
-                $("#total_bid").val(parseFloat($scope.shipping_fee) + parseFloat($("#enter_bid").val()));
-            }
-        });
-           //Bid
-        $("#bid").on('click', function () {
-                var enter_bid = $("#enter_bid").val();
-                var exp_day = $("#exp_day").val();
-                var account = $("#account").val();
-                var phone = $("#phone").val();
-                var address = $("#address").val();
-                var id_city = $("#id_city").val();
-                var shipping_bid = $("#shipping_bid").val();
-                var total_bid = $("#total_bid").val();
-
-                if (enter_bid == "") {
-                    alert("Vui lòng nhập giá tiền");
-                    return false;
-            }
-            if (parseFloat(enter_bid) >= parseFloat($("#value_buy").val())) {
-                        alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
-                        return false;
                     }
-
-                payment = $("input[name=payment]:checked").val();
-                if (typeof payment === "undefined") {
-                    alert("Vui lòng chọn phương thức thanh toán");
-                    return false;
+                    else {
+                        sessionStorage.setItem('url', location.href);
+                        window.location="/Login";
+                    }
+                });
+            });
+            $scope.enter_bid = parseFloat($("#enter_bid").val());
+            $("#enter_bid").keyup(function () {
+                //alert($("#value_buy").val());
+                if (parseFloat($("#enter_bid").val()) >= parseFloat($("#value_buy").val()) && parseFloat($("#value_buy").val()) > 0) {
+                    $("#enter_bid").blur();
+                    $("#enter_bid").val($("#value_buy").val());
+                    $("#total_bid").val(parseFloat($scope.shipping_fee) + parseFloat($("#enter_bid").val()));
                 }
+            });
+            //Bid
+            $("#bid").on('click', function () {
+                $http.get("/Login/Check").then(function (rs) {
+                    if (rs.data == true) {
+                        var enter_bid = $("#enter_bid").val();
+                        var exp_day = $("#exp_day").val();
+                        var account = $("#account").val();
+                        var phone = $("#phone").val();
+                        var address = $("#address").val();
+                        var id_city = $("#id_city").val();
+                        var shipping_bid = $("#shipping_bid").val();
+                        var total_bid = $("#total_bid").val();
 
-                var info = {
-                    "enter_bid": enter_bid,
-                    "exp_day": exp_day,
-                    "account": account,
-                    "phone": phone,
-                    "address": address,
-                    "id_city": id_city,
-                    "payment": payment,
-                    "city": id_city,
-                    "shipping": shipping_bid,
-                    "total": total_bid,
-                };
+                        if (enter_bid == "") {
+                            alert("Vui lòng nhập giá tiền");
+                            return false;
+                        }
+                        if (parseFloat(enter_bid) >= parseFloat($("#value_buy").val())) {
+                            alert("Giá tiền bạn nhập vượt quá giá tiền của sản phẩm!");
+                            return false;
+                        }
 
-                $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
-                    then(function (data) {
-                        $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
-                            then(function () {
-                                // 1:=>bid
-                                window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1" + "&size=" + @ViewBag.SizeVN;
+                        payment = $("input[name=payment]:checked").val();
+                        if (typeof payment === "undefined") {
+                            alert("Vui lòng chọn phương thức thanh toán");
+                            return false;
+                        }
+
+                        var info = {
+                            "enter_bid": enter_bid,
+                            "exp_day": exp_day,
+                            "account": account,
+                            "phone": phone,
+                            "address": address,
+                            "id_city": id_city,
+                            "payment": payment,
+                            "city": id_city,
+                            "shipping": shipping_bid,
+                            "total": total_bid,
+                        };
+
+                        $http.post("/api/ItemsAPI/BuyBid", JSON.stringify(info)).
+                            then(function (data) {
+                                $http.post("/Product/Set_SessionCheckout", JSON.stringify(data.data)).
+                                    then(function () {
+                                        // 1:=>bid
+                                        window.location = "/Product/Last_Checkout?id=" +@ViewBag.IdItem + "&act=1" + "&size=" + @ViewBag.SizeVN;
+                                    });
+                            })
+                            .catch(function onError(response) {
+                                alert(response.data);
                             });
-                    })
-                    .catch(function onError(response) {
-                        alert(response.data);
-                    });
+                    }
+                    else {
+                        sessionStorage.setItem('url', location.href);
+                        window.location = "/Login";
+                    }
+                });
             });
             $scope.check_voucher = function () {
                 var code = $("#voucher").val();
                var dis = $("#value_buy").val();
                 $http.get("/api/VouchersAPI/Check/" + code + "/" + dis).then(function (rs) {
                     $scope.voucher = rs.data;
-                    
-                    
+
+
                     alert("Thêm Mã Thành Công!");
-                   
+
                     $("#voucher").prop('disabled', true);
                     $("#check_voucher").prop('disabled', true);
                     var lasttotal = $("#total_buy").val() - $scope.voucher.discount;
@@ -401,7 +423,7 @@
                     else {
                         $("#total_buy").val("0");
                     }
-                    
+
                     id_voucher = $scope.voucher.id_voucher;
                     discount = $scope.voucher.discount;
                 },
@@ -410,6 +432,26 @@
                         alert("Mã giảm giá không hợp lệ!");
                     });
             }
+            $("#login").on('click', function () {
+                var username = $("#email").val();
+                var password = $("#password").val();
+                var login = {
+                    "username": username,
+                    "password": password,
+                };
+                $http.post("/api/UsersAPI/PostUserLogin", JSON.stringify(login)).
+                    then(function (data) {
+
+                        $http.post("/Login/Login", JSON.stringify(data.data)).
+                            then(function () {
+                                window.location = location.href;
+                            });
+
+                    })
+                    .catch(function onError(response) {
+                        alert(response.data);
+                    });
+            });
         });
     </script>
 }

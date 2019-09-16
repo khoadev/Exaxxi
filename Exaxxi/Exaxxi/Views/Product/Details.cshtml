@@ -358,27 +358,13 @@
 
             $scope.check_buy = function () {
                 $http.get("/Login/Check").then(function (rs) {
-
-                    if (rs.data == true) {
                         window.location.href = "/Product/Checkout?id=" +@ViewBag.IdItem + "&size=" + @ViewBag.SizeVN;
-                    }
-                    else {
-                        sessionStorage.setItem('url', location.href);
-                        window.open("/Login");
-                    }
                 });
             };
 
             $scope.check_sell = function () {
                 $http.get("/Login/Check").then(function (rs) {
-
-                    if (rs.data == true) {
                         window.location.href = "/Product/Sell?id=" +@ViewBag.IdItem + "&size=" + @ViewBag.SizeVN;
-                    }
-                    else {
-                        sessionStorage.setItem('url', location.href);
-                        window.open("/Login");
-                    }
                 });
             };
 

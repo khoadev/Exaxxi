@@ -40,8 +40,7 @@ namespace Exaxxi.Controllers.WebAPI
                     size = p.g.e.d.VN,
                     nameItem = p.g.f.name,
                     usernameSell = p.h.name,
-                    
-                }).Where(i => i.post.status == 0);
+                }).Where(i => i.post.status == 0 && i.post.date_start <= DateTime.Now && i.post.date_end >= DateTime.Now);
         }
 
         [HttpGet("GetPostsSell")]
@@ -60,7 +59,7 @@ namespace Exaxxi.Controllers.WebAPI
                     nameItem = p.i.g.f.name,
                     usernameSell = p.i.h.name,
                     order = p.k
-                }).Where(i => i.post.status == 1);
+                }).Where(i => i.post.status == 1 && i.post.date_start <= DateTime.Now && i.post.date_end >= DateTime.Now);
         }
 
         [HttpGet("GetNameBuy")]
@@ -174,7 +173,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask && k.c.a.e.g.status == 0)
+                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 1 && k.c.a.e.g.price == k.c.a.e.h.lowest_ask && k.c.a.e.g.status == 0 && k.c.a.e.g.date_start <= DateTime.Now && k.c.a.e.g.date_end >= DateTime.Now)
                 .OrderByDescending(h => h.c.a.e.g.date_start)
                 .Take(10)
                 .Select(m => new PostViewModel
@@ -194,7 +193,7 @@ namespace Exaxxi.Controllers.WebAPI
                 .Join(_context.Items, e => e.h.id_item, f => f.id, (e, f) => new { e, f }).Distinct()
                 .Join(_context.Categories, a => a.f.id_category, b => b.id, (a, b) => new { a, b })
                 .Join(_context.Brands, c => c.b.id_brand, d => d.id, (c, d) => new { c, d })
-                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 2 && k.c.a.e.g.price == k.c.a.e.h.highest_bid && k.c.a.e.g.status == 0)
+                .Where(k => k.c.a.f.active == true && k.d.id_department == id_depart && k.c.a.e.g.kind == 2 && k.c.a.e.g.price == k.c.a.e.h.highest_bid && k.c.a.e.g.status == 0 && k.c.a.e.g.date_start <= DateTime.Now && k.c.a.e.g.date_end >= DateTime.Now)
                 .OrderByDescending(h => h.c.a.e.g.date_start)
                 .Take(10)
                 .Select(m => new PostViewModel
@@ -226,7 +225,7 @@ namespace Exaxxi.Controllers.WebAPI
             if(id_item > 0)
             {
                 var list = _context.Posts.Join(_context.Sizes, p => p.id_size, s => s.id, (p, s) => new { p, s })
-                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 1 && r.p.status == 0);
+                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 1 && r.p.status == 0 && r.p.date_start <= DateTime.Now && r.p.date_end >= DateTime.Now);
                 if(id_size > 0)
                 {
                     list = list.Where(h => h.s.id == id_size);
@@ -247,7 +246,7 @@ namespace Exaxxi.Controllers.WebAPI
             if (id_item > 0)
             {
                 var list = _context.Posts.Join(_context.Sizes, p => p.id_size, s => s.id, (p, s) => new { p, s })
-                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 2 && r.p.status == 0);
+                                                  .Where(r => r.s.id_item == id_item && r.p.kind == 2 && r.p.status == 0 && r.p.date_start <= DateTime.Now && r.p.date_end >= DateTime.Now);
                 if (id_size > 0)
                 {
                     list = list.Where(h => h.s.id == id_size);
@@ -264,7 +263,7 @@ namespace Exaxxi.Controllers.WebAPI
             {
                 return BadRequest(ModelState);
             }
-            var post = _context.Posts.Include(p => p.user).Where(r => r.id_size == id_size && r.price >= price && r.kind == 2 && r.status == 0).OrderBy(o => o.price).FirstOrDefault();
+            var post = _context.Posts.Include(p => p.user).Where(r => r.id_size == id_size && r.price >= price && r.kind == 2 && r.status == 0 && r.date_start <= DateTime.Now && r.date_end >= DateTime.Now).OrderBy(o => o.price).FirstOrDefault();
 
             if (post == null) return NotFound();
 
@@ -279,7 +278,7 @@ namespace Exaxxi.Controllers.WebAPI
             }
             var post = _context.Posts.Join(_context.Sizes, a => a.id_size, b => b.id, (a, b) => new { a, b })
                         .Join(_context.ds_Size, c => c.b.id_ds_size, d => d.id, (c, d) => new { c, d })
-                        .Where(w => w.c.b.id_item == id_item && w.c.a.kind == kind && w.c.a.status == 0)
+                        .Where(w => w.c.b.id_item == id_item && w.c.a.kind == kind && w.c.a.status == 0 && w.c.a.date_start <= DateTime.Now && w.c.a.date_end >= DateTime.Now)
                         .GroupBy(g => new { price = g.c.a.price, size = g.d.VN }).Select(s => new
                         {
                             Size = s.First().d.VN,

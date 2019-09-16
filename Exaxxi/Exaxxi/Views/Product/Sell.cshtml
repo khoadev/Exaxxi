@@ -169,6 +169,30 @@
         <div class="col-lg-5 order-first order-lg-last" style=" padding:20px 30px">
             <div class="row">
                 <div class="col-12" style="background:white;">
+                    @using Microsoft.AspNetCore.Http
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                    @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetInt32("idUser").ToString()))
+                    {
+                        <div class="row">
+                            <div class="col-12" style="background:white;">
+                                <div class="row">
+                                    <div class="col-12 p-3">
+                                        <form>
+                                            <div class="form-group">
+                                                <input id="email" type="text" class="form-control checkout-input" style="font-size:20px" placeholder="Enter Email" value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="password" type="password" class="form-control checkout-input" style="font-size:20px" placeholder="Enter Password" value="">
+                                            </div>
+                                            <button id="login" class="col-12 btn btn-danger">
+                                                Log In
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="col-12 p-3">
                             <div class="checkout-card-title text-center">
@@ -204,14 +228,14 @@
                                 </label>
                             </div>
                             @*<div class="checkout-payment">
-                                <input class="d-none" id="payment" value="Credit / Debit" name="payment" type="radio" checked="checked" />
-                                <label for="payment2" class="checkout-payment-wrapper">
-                                    Credit / Debit<br />
-                                    <span class="checkout-payment-desc">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    </span>
-                                </label>
-                            </div>*@
+                    <input class="d-none" id="payment" value="Credit / Debit" name="payment" type="radio" checked="checked" />
+                    <label for="payment2" class="checkout-payment-wrapper">
+                        Credit / Debit<br />
+                        <span class="checkout-payment-desc">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        </span>
+                    </label>
+                </div>*@
                         </div>
                     </div>
                 </div>
@@ -242,7 +266,7 @@
                 });
 
             //Take Info User
-            $http.get("/api/UsersAPI/" + @HttpContextAccessor.HttpContext.Session.GetInt32("idUser"))
+            $http.get("/api/UsersAPI/" + @ViewBag.idUser)
                 .then(function (response) {
                     $scope.user_info = response.data;
                     //Take Transaction Fee
@@ -254,73 +278,111 @@
                 .then(function (response) { $scope.list_city = response.data });
             //Sell
             $("#sell").on('click', function () {
-                var account = $("#account").val();
-                var phone = $("#phone").val();
-                var address = $("#address").val();
-                var payment = $("input[name=payment]:checked").val();
-                var total = $("#total_sell").val();
-                var payment_fee = @ViewBag.payment_fee;
-                var service_fee = $scope.service_fee.value;
-                var id_city = $("#id_city").val();
-                
-                var info = {
-                    "account": account,
-                    "phone": phone,
-                    "address": address,
-                    "payment": payment,
-                    "total_price": total,
-                    "payment_fee": payment_fee,
-                    "service_fee": service_fee,
-                    "id_city": id_city
-                };
+                $http.get("/Login/Check").then(function (rs) {
 
-                $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
-                    then(function (data) {
-                        // 0:=>sell
-                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
-                    })
-                    .catch(function onError(response) {
-                        alert(response.data);
-                    });
+                    if (rs.data == true) {
+                        var account = $("#account").val();
+                        var phone = $("#phone").val();
+                        var address = $("#address").val();
+                        var payment = $("input[name=payment]:checked").val();
+                        var total = $("#total_sell").val();
+                        var payment_fee = @ViewBag.payment_fee;
+                        var service_fee = $scope.service_fee.value;
+                        var id_city = $("#id_city").val();
+
+                        var info = {
+                            "account": account,
+                            "phone": phone,
+                            "address": address,
+                            "payment": payment,
+                            "total_price": total,
+                            "payment_fee": payment_fee,
+                            "service_fee": service_fee,
+                            "id_city": id_city
+                        };
+
+                        $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
+                            then(function (data) {
+                                // 0:=>sell
+                                window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=0&size=" + @ViewBag.SizeVN;
+                            })
+                            .catch(function onError(response) {
+                                alert(response.data);
+                            });
+                    }
+                    else {
+                        sessionStorage.setItem('url', location.href);
+                        window.location = "/Login";
+                    }
+                });
             });
 
             //Ask
             $("#ask").on('click', function () {
-                    var enter_ask = $("#enter_ask").val();
-                    var exp_day = $("#exp_day").val();
-                    var account = $("#account").val();
-                    var phone = $("#phone").val();
-                    var address = $("#address").val();
-                    var total = $("#enter_ask").val();
-                    var payment_fee = @ViewBag.payment_fee;
-                    var service_fee = $scope.service_fee.value;
-                    var id_city = $("#id_city").val();
+                $http.get("/Login/Check").then(function (rs) {
+
+                    if (rs.data == true) {
+                        var enter_ask = $("#enter_ask").val();
+                        var exp_day = $("#exp_day").val();
+                        var account = $("#account").val();
+                        var phone = $("#phone").val();
+                        var address = $("#address").val();
+                        var total = $("#enter_ask").val();
+                        var payment_fee = @ViewBag.payment_fee;
+                        var service_fee = $scope.service_fee.value;
+                        var id_city = $("#id_city").val();
 
 
-                    if (enter_ask == "") {
-                        alert("Vui lòng nhập giá tiền");
-                        return false;
+                        if (enter_ask == "") {
+                            alert("Vui lòng nhập giá tiền");
+                            return false;
+                        }
+
+                        var payment = $("input[name=payment]:checked").val();
+
+                        var info = {
+                            "enter_ask": enter_ask,
+                            "exp_day": exp_day,
+                            "account": account,
+                            "phone": phone,
+                            "address": address,
+                            "payment": payment,
+                            "total_price": total,
+                            "payment_fee": payment_fee,
+                            "service_fee": service_fee,
+                            "id_city": id_city
+                        };
+
+                        $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
+                            then(function (data) {
+                                // 1:=>ask
+                                window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=1&size=" + @ViewBag.SizeVN;
+                            })
+                            .catch(function onError(response) {
+                                alert(response.data);
+                            });
                     }
-
-                    var payment = $("input[name=payment]:checked").val();
-
-                    var info = {
-                        "enter_ask": enter_ask,
-                        "exp_day": exp_day,
-                        "account": account,
-                        "phone": phone,
-                        "address": address,
-                        "payment": payment,
-                        "total_price": total,
-                        "payment_fee": payment_fee,
-                        "service_fee": service_fee,
-                        "id_city": id_city
-                    };
-
-                    $http.post("/Product/Set_SessionSell", JSON.stringify(info)).
+                    else {
+                        sessionStorage.setItem('url', location.href);
+                        window.location = "/Login";
+                    }
+                });
+            });
+            $("#login").on('click', function () {
+                var username = $("#email").val();
+                var password = $("#password").val();
+                var login = {
+                    "username": username,
+                    "password": password,
+                };
+                $http.post("/api/UsersAPI/PostUserLogin", JSON.stringify(login)).
                     then(function (data) {
-                        // 1:=>ask
-                        window.location = "/Product/Sell_Confirm?id=" +@ViewBag.IdItem + "&act=1&size=" + @ViewBag.SizeVN;
+
+                        $http.post("/Login/Login", JSON.stringify(data.data)).
+                            then(function () {
+                                window.location = location.href;
+                            });
+
                     })
                     .catch(function onError(response) {
                         alert(response.data);
